@@ -1,0 +1,3 @@
+# Predgovor {.unnumbered}
+
+Knjiga je prvenstveno namenjena študentom predmeta Numerična matematika na Fakulteti za računalništvo in informatiko, Univerze v Ljubljani in vsebuje gradivo za vaje in domače naloge. Kljub temu je zasnovana tako, da je primerna za vse, ki bi se radi naučili uporabljati in implementirati osnovne algoritme numerične matematike. Primeri programov so napisnani v programskem jeziku [Julia](https://julialang.org/), ki je zasnovan za učinkovito izvajanje računsko zahtevnih problemov.

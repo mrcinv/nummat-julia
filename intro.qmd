@@ -1,0 +1,5 @@
+# Uvod
+
+Ta knjiga vsebuje gradiva za izvedbo laboratorijskih vaj pri predmetu Numerična matematika na Fakulteti za računalništvo in informatiko, Univerze v Ljubljani. 
+
+Knjiga je napisana kot literarni program. Izvorna koda knjige je namreč tudi program, s katerim so generirane vse slike in prikazane vrednosti v knjigi. Več o literarnem programiranju je opisano v @knuth84.

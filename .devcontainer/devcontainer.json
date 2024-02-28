@@ -1,0 +1,13 @@
+{
+    "name": "Julia Nummat",
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+        // A Feature to install Julia via juliaup. More info: https://github.com/JuliaLang/devcontainer-features/tree/main/src/julia.
+        "ghcr.io/julialang/devcontainer-features/julia:1": {
+            "channel": "release"
+        },
+        "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+            "installTinyTex": true
+        }
+    }
+}

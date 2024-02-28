@@ -1,0 +1,32 @@
+project:
+  type: book
+
+book:
+  title: "Numerična matematika in programski jezik Julia"
+  author: "Martin Vuk"
+  date: "2024-02-20"
+  date-format: "D. M. YYYY"
+  language: sl
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: vaje.qmd
+      chapters:
+      - julia.qmd
+      - koren.qmd
+    #- part: domace.qmd
+    #- part: izpiti.qmd
+    - reference.qmd
+
+bibliography: references.bib
+language: sl.yml
+
+format:
+  html:
+    theme: cosmo
+  typst:
+    toc: true
+    lang: sl
+jupyter: julia-1.10
+
+
