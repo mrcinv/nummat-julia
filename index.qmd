@@ -1,3 +1,18 @@
 # Predgovor {.unnumbered}
 
-Knjiga je prvenstveno namenjena študentom predmeta Numerična matematika na Fakulteti za računalništvo in informatiko, Univerze v Ljubljani in vsebuje gradivo za vaje in domače naloge. Kljub temu je zasnovana tako, da je primerna za vse, ki bi se radi naučili uporabljati in implementirati osnovne algoritme numerične matematike. Primeri programov so napisnani v programskem jeziku [Julia](https://julialang.org/), ki je zasnovan za učinkovito izvajanje računsko zahtevnih problemov.
+Knjiga je prvenstveno namenjena študentom predmeta Numerična matematika na Fakulteti za
+računalništvo in informatiko, Univerze v Ljubljani. Vsebuje gradivo za vaje, domače naloge
+in stare izpitne naloge. 
+
+Vaje so zasnovane za delo v računalniški učilnici. Vaje so zasnovane tako, da omogočajo študentu, samostojno reševanje in ne zgolj prepisovanje s table. Vsaka vaja se začne z opisom naloge in jasnimi navodili, kaj na naj bo končni rezultat. Nato sledijo vedno bolj podrobni namigi, kako se naloge lotiti. Na ta način lahko študentje rešijo nalogo z različno mero samostojnosti. Na koncu je rešitev naloge, ki ji lahko študentje sledijo brez dodatnega dela. Rešitev vključuje matematične izpeljave, programsko kodo in rezultate, ki jih dobimo, če programsko kodo uporabimo. 
+
+Domače naloge so brez rešitev in naj bi jih študenti oziroma bralec rešili povsem samostojno.
+Nekatere stare izpitne naloge so rešene, večina pa nima rešitve. Odločitev, da niso vključene
+rešitve za vse izpitne naloge je namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere nima dostopa do rešitev. 
+
+Kljub temu, da je knjiga namenjena študentom, je zasnovana tako, da je primerna za vse, ki bi se
+radi naučili, kako uporabljati in implementirati osnovne algoritme numerične matematike. Primeri
+programov so napisnani v programskem jeziku [Julia](https://julialang.org/), ki je zasnovan za
+učinkovito izvajanje računsko zahtevnih problemov.
+
+Na tem mestu bi se rad zahvalil Bojanu Orlu, Emilu Žagarju, Petru Kinku, s katerimi sem sodeloval pri numeričnih predmetih na FRI. Veliko idej za naloge, ki so v tej knjigi, prihaja prav od njih. Prav tako bi se zahvalil članom laboratorija LMMRI posebej Neži Mramor Kosta, Damiru Franetiču in Aljažu Zalarju, ki so tako ali drugače prispevali k nastanku te knjige. Moja draga žena Mojca Vilfan je opravila delo urednika, za kar sem ji izjemno hvaležen. Na koncu bi se zahvalil študentom, ki so obiskovali numerične predmete, ki sem jih učil in so me naučili marsikaj novega.

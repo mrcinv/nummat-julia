@@ -6,14 +6,17 @@ book:
   author: "Martin Vuk"
   date: "2024-02-20"
   date-format: "D. M. YYYY"
+  repo-url: https://github.com/mrcinv/nummat-julia
+  repo-actions: [edit]
+  downloads: [pdf]
   language: sl
   chapters:
     - index.qmd
-    - intro.qmd
-    - part: vaje.qmd
-      chapters:
-      - julia.qmd
-      - koren.qmd
+    - 00_uvod.qmd
+    - 01_julia.qmd
+    - 02_koren.qmd
+    - 03_tridiag.md
+    
     #- part: domace.qmd
     #- part: izpiti.qmd
     - reference.qmd
@@ -21,12 +24,17 @@ book:
 bibliography: references.bib
 language: sl.yml
 
+highlight-style: pygments
+
 format:
   html:
     theme: cosmo
-  typst:
+    code-copy: true
+  pdf:
     toc: true
-    lang: sl
+    number-sections: true
+    colorlinks: true
+    papersize: a4
 jupyter: julia-1.10
 
 

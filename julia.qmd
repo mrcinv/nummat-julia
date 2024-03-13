@@ -1,3 +1,0 @@
-# Uvod v programski jezik Julia
-
-V knjigi bomo za implementacijo algoritmov in ilustracijo uporabe izbrali programski jezik [julia](https://julialang.org/). Zavoljo učinkovitega izvajanja, uporabe [dinamičnih tipov](https://docs.julialang.org/en/v1/manual/types/), [funkcij specializiranih glede na signaturo](https://docs.julialang.org/en/v1/manual/methods/) in dobre podporo za interaktivno uporabo, je [julia](https://julialang.org/) zelo primerna za implementacijo numeričnih metod in ilustracijo njihove uporabe.
