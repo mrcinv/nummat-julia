@@ -1,0 +1,4 @@
+name = "WeaveTypst"
+uuid = "091f4331-f819-4261-932b-47f19fa4a491"
+authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
+version = "0.1.0"

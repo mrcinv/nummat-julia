@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "nvarner.typst-lsp",
+    "julialang.language-julia"
+  ]
+}
