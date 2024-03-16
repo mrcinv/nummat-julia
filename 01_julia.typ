@@ -238,8 +238,11 @@ Kodo, ki bo sledila, bomo sedaj pisali v scripto `scripts\demo.jl`.
   caption: [Vsebina datoteke `demo.jl`],
 )
 
-Skripto poženemo z ukazom ```jl include("Vaja00/doc/demo.jl") ``` in dobimo
-sliko lemniskate.
+Skripto poženemo z ukazom 
+```jl
+include("Vaja00/doc/demo.jl") 
+``` 
+in dobimo sliko lemniskate.
 
 #figure(image(width: 60%, "img/01_demo.svg"), caption: [Geronova lemniskata])
 
