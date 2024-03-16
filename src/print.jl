@@ -1,6 +1,36 @@
-using Logging
+using Logging, Suppressor
 
 out(code) = open("out/$(code).out", "w")
+
+"""
+    @capture("name") begin
+      println(1+1)
+      x = "This will be printed last!"
+    end
+
+Capture output and the last result in the file "out/name.out".
+"""
+macro capture(ex, name)
+  return :(
+    begin
+      local result
+      io = out($name)
+      logger = ConsoleLogger(io)
+      output = @capture_out begin
+        result = with_logger($ex, logger)
+      end
+      println(io, output)
+      if result != nothing
+        context = IOContext(io,
+          :limit => true,
+          :displaysize => (20, 40))
+        show(context, "text/plain", result)
+      end
+      close(io)
+    end
+  )
+end
+
 """
     log("bla") do
       # some stuf
@@ -36,4 +66,4 @@ function term(name, x)
   close(io)
 end
 
-export p, term, save_out, logger
+export p, term, save_out, logger, @capture

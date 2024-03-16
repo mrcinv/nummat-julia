@@ -1,3 +1,7 @@
 {
-  "typst-lsp.exportPdf": "never"
+  "typst-lsp.exportPdf": "never",
+  "editor.rulers": [
+    100
+  ],
+  "debug.showBreakpointsInOverviewRuler": true
 }

@@ -57,7 +57,7 @@ show heading: it => [
 	  #counter(math.equation).update(0)
     #it
   ]
-
+  show link: set text(blue.darken(20%))
   set document(title: title)
   set heading(
     numbering: "1.1"

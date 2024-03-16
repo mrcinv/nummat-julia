@@ -6,8 +6,8 @@
   )
 )
 
-#let opomba(title: none, content) = admonition(
-  title: emph[#smallcaps("Opomba!") #h(1em) #title],
+#let opomba(naslov: none, content) = admonition(
+  title: emph[#smallcaps("Opomba!") #h(1em) #naslov],
   color: lime.desaturate(40%),
   content
 )

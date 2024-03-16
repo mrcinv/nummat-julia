@@ -1,32 +1,48 @@
+#import "admonitions.typ": opomba
+
 = Uvod v programski jezik Julia
 
 V knjigi bomo za implementacijo algoritmov in ilustracijo uporabe izbrali programski jezik 
 #link("https://julialang.org/")[julia]. Zavoljo učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov],
-#link("https://docs.julialang.org/en/v1/manual/methods/")[funkcij specializiranih glede na signaturo] in
-dobre podporo za interaktivno uporabo, je #link("https://julialang.org/")[julia] zelo primerna za
+#link("https://docs.julialang.org/en/v1/manual/methods/")[funkcij specializiranih glede na signaturo]
+in dobre podporo za interaktivno uporabo, je #link("https://julialang.org/")[julia] zelo primerna za
 implementacijo numeričnih metod in ilustracijo njihove uporabe. V nadaljevanju sledijo kratka
 navodila, kako začeti z `julio` in si pripraviti delovno okolje v katerem bo pisanje kode steklo
 čim bolj gladko.
 
+Cilj tega poglavja je, da si pripravimo okolje za delo v programskem jeziku _julia_ in ustvarimo prvi program. Na koncu te vaje bomo pripravili svoj prvi paket v _julii_, ki bo vseboval preprosto funkcijo. Napisali bomo teste, ki bodo preverili pravilnost funkcije. Nato bomo napisali skripto, ki funkcijo iz našega paketa uporabi in iz skripte generirali lično pročilo v formatu PDF z ilustracijo uporabe funkcije in kakšnim lepim grafom. 
+
 == Namestitev in prvi koraki
  
-#link("https://julialang.org/downloads/")[Namestite] programski jezik julia. Ko je programski jezik
-nameščen, lahko v terminalu poženete ukaz `julia`, ki odpre interaktivno zanko
-(*Read Eval Print Loop* ali s kratico REPL). V zanko lahko pišemo posamezne ukaze, ki jih nato 
-`julia` prevede in izvede.
+Ko #link("https://julialang.org/downloads/")[namestite] programski jezik julia, lahko v terminalu
+poženete ukaz `julia`, ki odpre interaktivno zanko (angl. _Read Eval Print Loop_ ali s kratico REPL).
+V zanko lahko pišemo posamezne ukaze, ki jih nato `julia` prevede in izvede.
+
+```shell
+$ julia
+julia> 1 + 1
+2
+
+```
 
 == Priprava delovnega okolja
 
-- Odprite terminal (ali windows `cmd`) 
-- Poženite ukaze `julia` in namestite paket #link("https://timholy.github.io/Revise.jl/stable/")[Revise.jl]
+Vnašanje ukazov v interaktivni zanki je lahko uporabno namesto kalkulatorja. Vendar je za resnejše 
+delo bolje kodo shraniti v datoteke. Med razvojem, se datoteke s kodo nenehno spreminjajo, zato je
+treba kodo v interaktivni zanki vseskozi posodabljati. Paket 
+#link("https://timholy.github.io/Revise.jl")[Revise.jl] poskrbi za to, da se nalaganje zgodi
+avtomatično, ko se datoteke spremenijo. Zato najprej namestimo paket _Revise_ in poskrbimo, da se
+zažene ob vsakem zagonu interaktivne zanke.
+
+Odprite terminal in sledite ukazom spodaj.
+
 ```shell
 $ julia
 julia > # pritisnemo `]`, da pridemo v način paketov
 (@v1.10) pkg> add Revise
 (@v1.10) pkg> # pritisnemo vračalko, da pridemo iz načina paketov
 julia> startup = """
-       # copy this file to .julia/config/startup.jl
        try
          using Revise
        catch e
@@ -36,50 +52,82 @@ julia> startup = """
 julia> write(ENV[HOME]*"/.config/julia/startup.jl", startup)
 ```
 
-=== Priprava začetnega okolja
+Okolje za delo z _julio_ je pripravljeno.
 
-Pripravimo mapo, v kateri bomo hranili programe
+#opomba(naslov: [Urejevalniki in programska okolja za _julio_],
+[
+  Za lažje delo z datotekami s kodo potrebujete dober urejevalnik golega besedila, 
+  ki je namenjen programiranju. Če še nimate priljubljenega urejevalnika, priporočam #link("https://code.visualstudio.com/")[VS Code] in #link("https://www.julia-vscode.org/")[razširitev za Julio].
+])
+
+=== Priprava projektne mape
+
+Pripravimo mapo, v kateri bomo hranili programe. Datoteke bomo organizirali tako, da bo vsaka vaja #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket] v svoji
+mapi, korenska mapa pa bo služila kot
+#link("https://pkgdocs.julialang.org/v1/environments/")[delovno okolje]. 
+
+Pripravimo najprej korensko mapo. Imenovali jo bomo `nummat-julia`, lahko si pa izberete tudi drugo ime.
 
 ```shell
 $ mkdir nummat-julia
 $ cd nummat-julia
 $ julia
 ```
-Nato pripravimo [okolje s paketi](https://pkgdocs.julialang.org/v1/environments/)
-
-```jl
-julia > # pritisnemo ], da pridemo v način paketov
-(@v1.10) pkg> activate . # pripravimo virtualno okolje 
-``` 
-
-== Priprava okolja
-
-Ob začetku vsake vaje si najprej ustvarimo direktorij oziroma paket za Julio, kjer bo shranjeno
-naše delo
+Nato v korenski mapi pripravimo #link("https://pkgdocs.julialang.org/v1/environments/")[okolje s paketi] in dodamo nekaj paketov, ki jih bomo potrebovali pri delu v interaktivni 
+zanki.
 
 ```shell
-$ mkdir nummat && cd nummat
+julia > # pritisnemo ], da pridemo v način paketov
+(@v1.10) pkg> activate . # pripravimo virtualno okolje v korenski mapi
+(nummat-julia) pkg> add Plot # paket za risanje grafov 
+```
+
+Priporočljivo je uporabiti tudi program za vodenje različic #link("https://git-scm.com/")[Git]. Z naslednjim ukazom v mapi `nummat-julia` ustvarimo repozitorij za `git` in registriramo novo ustvarjene datoteke.
+
+```shell
+$ git init .
+$ git add .
+$ git commit -m "Začetni vpis"
+```
+
+Priporočam pogosto beleženje sprememb z `git commit`. Pogoste potrditve (angl. commit) olajšajo pregledovanje sprememb in spodbujajo k razdelitvi dela na majhne zaključene probleme, ki so lažje obvladljivi.  
+
+#opomba(naslov: [Na mojem računalniku pa koda dela!], 
+[
+  Izjava #quote[Na mojem računalniku pa koda dela!]
+  je postala sinonim za #link("https://sl.wikipedia.org/wiki/Obnovljivost")[problem ponovljivosti rezultatov], ki jih generiramo z računalnikom. Eden od mnogih faktorjev, ki vplivajo na ponovljivost, je tudi dostop do zunanjih knjižnic/paketov, ki jih naša koda uporablja in jih ponavadi ne hranimo skupaj s kodo. V `julii` lahko pakete, ki jih potrebujemo, deklariramo v datoteki `Project.toml`. Vsak direktorij, ki vsebuje datoteko `Project.toml` definira bodisi #link("https://pkgdocs.julialang.org/v1/environments/")[delovno okolje] ali pa #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket] in omogoča, da preprosto obnovimo vse zunanje pakete, od katerih je odvisna naša koda.
+  
+  Za ponovljivost sistemskega okolja, glej #link("https://www.docker.com/")[docker], #link("https://nixos.org/")[NixOS] in #link("https://guix.gnu.org/")[GNU Guix].
+])
+
+== Priprava paketa za vajo
+
+Ob začetku vsake vaje si bomo v mapi, ki smo jo ustvarili pred tem (`nummmat-julia`) najprej ustvarili direktorij oziroma paket za _julio_, kjer bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave paketa za vsako vajo posebej, se bomo naučili, kako hitro začeti s projektom. Obenem bomo optimizirali način dela (angl. workflow), da bo pri delu čim manj nepotrebnih motenj.
+
+```shell
+$ cd nummat-julia
 $ julia
 julia> # pritisnemo ], da pridemo v način pkg
+(@v1.10) pkg> generate Vaja00 # 00 bomo kasneje nadomestili z zaporedno številko vaje 
 (@v1.10) pkg> activate . 
-(nummat) pkg> generate VajaXY
-(nummat) pkg> develop VajaXY
-(VajaXY) pkg> # pritisnemo tipko za brisanje nazaj, da zopet pridemo v navaden način
+(nummat-julia) pkg> develop Vaja00
+(nummat-julia) pkg> # pritisnemo tipko za brisanje nazaj, da pridemo v navaden način
 julia>
 ```
 
-Zgornji ukazi ustvarijo direktorij `VajaXY` z osnovno struktura 
-#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Jiliji]. Za bolj obsežen projekt,
-ki ga želite objaviti, lahko uporabite #link("https://github.com/JuliaCI/PkgTemplates.jl")[PkgTemplates]
-ali #link("https://github.com/tpapp/PkgSkeleton.jl")[PkgSkeleton].
+Zgornji ukazi ustvarijo direktorij `Vaja00` z osnovno strukturo 
+#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Jiliji]. 
+Za bolj obsežen projekt, ki ga želite objaviti, lahko uporabite
+#link("https://github.com/JuliaCI/PkgTemplates.jl")[PkgTemplates] ali
+#link("https://github.com/tpapp/PkgSkeleton.jl")[PkgSkeleton].
 
 ```shell
-julia> cd("VajaXY") # pritisnemo ;, da pridemo v način lupine
+julia> cd("Vaja00") # pritisnemo ;, da pridemo v način lupine
 shell> tree .
 .
 ├── Project.toml
 └── src
-    └── VajaXY.jl
+    └── Vaja00.jl
 
 1 directory, 2 files
 
@@ -100,10 +148,17 @@ shell> tree .
 ├── scripts
 │   └── demo.jl
 ├── src
-│   └── VajaXY.jl
+│   └── Vaja00.jl
 └── test
     └── runtests.jl
 ```
+
+#opomba(naslov: [V okolju Windows lupina ne dela najbolje],
+[
+  Zgornji ukazi v lupini v okolju Microsoft Windows mogoče ne bodo delovali. V tem
+  primeru lahko mape in datoteke ustvarite v _raziskovalcu_. Lahko pa si okolje za _julio_ ustvarite v
+  #link("https://learn.microsoft.com/en-us/windows/wsl/install")[Linuxu v Windowsih (WSL)].
+])
 
 Ko je direktorij s kodo pripravljen lahko naložimo kodo iz `VajaXY.jl` v ukazni vrstici
 
@@ -175,16 +230,6 @@ Za pripravo posameznih poročil lahko uporabite [IJulia](https://github.com/Juli
            |   └─ index.md
            └─ scripts
               └─ demo.jl
-
-== Delovno okolje
-
-Za hitrejše in lažje delo z programskim jezikom `julia` uporabite [Revise](https://timholy.github.io/Revise.jl/stable/). Pred začetkom dela poženite
-
-```julia
-julia> using Revise
-```
-
-Namestite `startup.jl` v `.julia/config/startup.jl`, da se `Revise` zažene ob zagonu `julia`.
 
 == Generiranje PDF dokumentov
 

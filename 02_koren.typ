@@ -9,7 +9,7 @@ mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo 
 
 
 #opomba(
-  title: [Implementacija elementarnih funkcij v julii],
+  naslov: [Implementacija elementarnih funkcij v julii],
 [ Lokacijo metod, ki računajo določeno funkcijo lahko dobite z ukazoma ```jl methods``` in ```@match```. Tako bo ukaz ```jl methods(sqrt)``` izpisal implementacije kvadratnega korena za vse podatkovne tipe, ki jih julia podpira. Ukaz ```jl @which(sqrt(2.0))``` pa razkrije metodo, ki 
 računa koren za vrednost `2.0`, to je za števila s plavajočo vejico.]
 )
@@ -56,7 +56,7 @@ Preskusimo funkcijo na številu 3.
 #out("out/02_koren_3.out")
 
 #opomba(
-  title: "Metoda navadne iteracije in tangentna metoda",
+  naslov: "Metoda navadne iteracije in tangentna metoda",
   [Metoda računanja kvadratnega korena s Heronovim obrazcem je poseben primer 
   #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[tangentne metode], ki je poseben
   primer #link("https://sl.wikipedia.org/wiki/Metoda_navadne_iteracije")[metode fiksne točke]. Obe metodi, si bomo podrobneje ogledali, v poglavju o nelinearnih enačbah.
