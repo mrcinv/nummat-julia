@@ -4,7 +4,7 @@
 #set text(lang: "sl")
 
 #show: doc => conf(
-  title: [Numerična matematika in programski jezik Julia],
+  title: [Numerična matematika #linebreak() v programskem jeziku Julia],
   authors: ("Martin Vuk",),
   doc,
 )

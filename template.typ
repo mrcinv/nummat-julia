@@ -63,7 +63,7 @@
   ]
   set document(title: title)
   set heading(numbering: "1.1")
-  set page(paper: "a4", numbering: "1")
+  set page(paper: "a4", numbering: none)
   set par(justify: true)
   set align(center)
   v(1fr)
@@ -74,6 +74,6 @@
   v(2fr)
   text(18pt, datetime.today().display("[year]"))
   set align(left)
-  pagebreak()
+  set page(numbering: "1")
   doc
 }

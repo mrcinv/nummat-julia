@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb
+#import "julia.typ": jlb, jl, repl, code_box, pkg
 
 = Uvod v programski jezik Julia
 
@@ -15,26 +15,102 @@ primerna za implementacijo numeričnih metod in ilustracijo njihove uporabe. V
 nadaljevanju sledijo kratka navodila, kako začeti z `julio` in si pripraviti
 delovno okolje v katerem bo pisanje kode steklo čim bolj gladko.
 
-Cilj tega poglavja je, da si pripravimo okolje za delo v programskem jeziku _julia_ in
-ustvarimo prvi program. Na koncu te vaje bomo pripravili svoj prvi paket v _julii_,
-ki bo vseboval preprosto funkcijo. Napisali bomo teste, ki bodo preverili
-pravilnost funkcije. Nato bomo napisali skripto, ki funkcijo iz našega paketa
-uporabi in iz skripte generirali lično pročilo v formatu PDF z ilustracijo
-uporabe funkcije in kakšnim lepim grafom. 
+Cilji tega poglavja so
+- da se naučimo uporabljati Julio v interaktivni ukazni zanki,
+- da si pripravimo okolje za delo v programskem jeziku Julia,
+- da ustvarimo prvi paket in
+- da ustvarimo prvo poročilo v formatu PDF.
+
+Tekom te vaje bomo pripravili svoj prvi paket v Juliji,
+ki bo vseboval parametrično enačbo #link(
+  "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
+)[Geronove lemniskate]. Napisali bomo teste, ki bodo preverili
+pravilnost funkcij v paketu. Nato bomo napisali skripto, ki uporabi funkcijo iz našega paketa
+in nariše sliko Geronove lemniskate. Na koncu bomo pripravili lično poročilo v formatu PDF. 
 
 == Namestitev in prvi koraki
  
-Ko #link("https://julialang.org/downloads/")[namestite] programski jezik julia,
-lahko v terminalu poženete ukaz `julia`, ki odpre interaktivno zanko (angl. _Read Eval Print Loop_ ali
-s kratico REPL). V zanko lahko pišemo posamezne ukaze, ki jih nato `julia`
-prevede in izvede.
+Sledite #link("https://julialang.org/downloads/")[navodilom] in namestite programski jezik Julia.
+Nato lahko v terminalu poženete ukaz `julia`. Ukaz odpre interaktivno ukazno zanko 
+(angl. _Read Eval Print Loop_ ali s kratico REPL) in v terminalu se pojavi ukazni poziv 
+#text(green)[`julia>`]. 
+Za ukazni poziv lahko napišemo posamezne ukaze, ki jih nato `julia` prevede, izvede in izpiše 
+rezultate. Poskusimo najprej s preprostimi izrazi
 
-```shell
-$ julia
-julia> 1 + 1
-2
+#code_box[
+#repl("1 + 1", "2")
+#repl("sin(pi)", "0.0")
+#repl("x = 1; 2x + x^2", "3")
+]
 
-```
+=== Funkcije
+
+Funkcije lahko definiramo na več načinov.
+
+#code_box[
+#repl("f(x) = x^2 + sin(x)",
+"f (generic function with 1 method)"
+)
+#repl("f(pi/2)", "3.4674011002723395")
+]
+
+Za funkcije, ki zahtevajo več kode, uporabimo ```jl function```.
+
+#code_box[
+#repl(
+"function g(x, y)
+  z = x + y
+  return z^2
+end",
+"g (generic function with 1 method)")
+]
+
+=== Vektorji in matrike
+
+Vektorje lahko vnesemo z oglatimi oklepaji ```jl []```:
+
+#code_box[
+#repl("v = [1, 2, 3]", 
+"3-element Vector{Int64}:
+  1
+  2
+  3")
+#repl("v[1] # prvi indeks je 1", "1")
+#repl("v[2:end] # zadnja dva elementa",
+"2-element Vector{Int64}:
+ 2
+ 3")
+#repl("sin.(v) # funkcije lahko apliciramo na elementih (operator .)", 
+"3-element Vector{Float64}:
+ 0.8414709848078965
+ 0.9092974268256817
+ 0.1411200080598672")
+]
+
+Matrike vnesemo tako, da elemente v vrstici ločimo s presledki, vrstice pa s podpičji.
+
+#code_box[
+#repl("M = [1 2 3; 4 5 6]", 
+"2×3 Matrix{Int64}:
+ 1  2  3
+ 4  5  6
+")
+#repl("M[1, :] # prva vrstica",
+"3-element Vector{Int64}:
+ 1
+ 2
+ 3")
+]
+
+=== Paketi
+
+#opomba(naslov: [Različni načini ukazne zanke])[
+Julia ukazna zanka (REPL) pozna več načinov, ki so namenjeni različnim opravilom.
+- Osnovni način s pozivom #text(green)[`julia>`] je namenjen vnosu kode v Juliji.
+- Paketni način s pozivom #text(blue)[`pkg>`] je namenjen upravljanju s paketi. V paketni način pridemo, če vnesemo znak `]`.
+- Način za pomoč s pozivom #text(yellow)[`help?>`] je namenjen pomoči. V način za pomoč pridemo z znakom `?`.
+- Lupinski način s pozivom #text(red)[`shell>`] je namenjen izvajanju ukazov v sistemski lupini. V lupinski način vstopimo z znakom `;`.
+]
 
 == Priprava delovnega okolja
 
@@ -46,22 +122,24 @@ vseskozi posodabljati. Paket
 nalaganje zgodi avtomatično, ko se datoteke spremenijo. Zato najprej namestimo
 paket _Revise_ in poskrbimo, da se zažene ob vsakem zagonu interaktivne zanke.
 
-Odprite terminal in sledite ukazom spodaj.
+Odprite julia in sledite ukazom spodaj.
 
-```shell
-$ julia
-julia > # pritisnemo `]`, da pridemo v način paketov
-(@v1.10) pkg> add Revise
-(@v1.10) pkg> # pritisnemo vračalko, da pridemo iz načina paketov
-julia> startup = """
-       try
-         using Revise
-       catch e
-         @warn "Error initializing Revise" exception=(e, catch_backtrace())
-       end
-"""
-julia> write(ENV[HOME]*"/.config/julia/startup.jl", startup)
-```
+#code_box[
+#repl("# pritisnemo ], da pridemo v paketni način", none)
+#pkg("add Revise", none)
+#pkg("# pritisnemo Backspace, da pridemo iz paketnega načina", none)
+#repl(
+"startup = \"\"\"
+  try
+    using Revise
+  catch e
+    @warn \"Error initializing Revise\" exception=(e, catch_backtrace())
+  end
+\"\"\"", "...")
+#repl("path = homedir() * \"/.julia/config\") # ustvarimo direktorij", none)
+#repl("write(path * \"/startup.jl\", startup) # zapišemo startup.jl", none)
+]
+
 
 Okolje za delo z _julio_ je pripravljeno.
 
@@ -84,12 +162,16 @@ svoji mapi, korenska mapa pa bo služila kot
 Pripravimo najprej korensko mapo. Imenovali jo bomo `nummat-julia`, lahko si pa
 izberete tudi drugo ime.
 
-```shell
+#code_box[
+```sh
 $ mkdir nummat-julia
 $ cd nummat-julia
 $ julia
 ```
-Nato v korenski mapi pripravimo #link("https://pkgdocs.julialang.org/v1/environments/")[okolje s paketi] in
+]
+
+Nato v korenski mapi pripravimo 
+#link("https://pkgdocs.julialang.org/v1/environments/")[okolje s paketi] in
 dodamo nekaj paketov, ki jih bomo potrebovali pri delu v interaktivni zanki.
 
 ```shell
@@ -231,17 +313,25 @@ lemniskata_x(1.2)
 ```
 Nadaljujemo, ko se prepričamo, da lahko kličemo funkcije iz paketa `Vaja00`.
 
-Kodo, ki bo sledila, bomo sedaj pisali v scripto `scripts\demo.jl`. 
+Kodo, ki bo sledila, bomo sedaj pisali v scripto `Vaja00\doc\demo.jl`. 
 
 #figure(
-  jlb("Vaja00/doc/demo.jl", "# 01demo"),
+  jl("Vaja00/doc/demo.jl", 4, 11),
   caption: [Vsebina datoteke `demo.jl`],
 )
 
-Skripto poženemo z ukazom ```jl include("Vaja00/doc/demo.jl")``` in dobimo sliko
-lemniskate.
+Skripto poženemo z ukazom:
+
+```jl 
+include("Vaja00/doc/demo.jl")
+```
+Rezultat je slika lemniskate.
 
 #figure(image(width: 60%, "img/01_demo.svg"), caption: [Geronova lemniskata])
+
+#opomba(naslov: [Poganjanje ukaz za ukazom v VsCode])[
+  Če uporabljate urejevalnik #link("https://code.visualstudio.com/")[VsCode] in #link("https://github.com/julia-vscode/julia-vscode")[razširitev za Julio], lahko ukaze iz skripte poganjate vrstico za vrstico kar iz urejevalnika. Če pritisnete kombinacijo tipk `Shift + Enter`, se bo izvedla vrstica v kateri je trenutno kazalka.
+]
 
 == Testi
 
@@ -317,57 +407,110 @@ Teste poženemo tako, da v `pkg` načinu poženemo ukaz `test Vaja00`
 (nummat-julia) pkg> test Vaja00 
 ```
 
-=== Dokumentacija
+== Dokumentacija
 
-Za pisanje dokumentacijo lahko uporabimo format
-[Markdown](https://en.wikipedia.org/wiki/Markdown). S paketom
-[Documenter](https://documenter.juliadocs.org/stable/) lahko komentarje v kodi
-in markdown dokumentente združimo in generiramo HTML ali PDF dokumentacijo s
-povezavo na izvorno kodo.
+Dokumentacija programske kode je sestavljena iz različnih besedil in drugih virov, npr. videov, ki so namenjeni uporabnikom in razvijalcem programa ali knjižnice. Dokumentacija lahko vključuje komentarje v kodi, navodila za namestitev in uporabo programa in druge vire v raznih formatih z razlagami ozadja, teorije in drugih zadev povezanih s projektom. Dobra dokumentacija lahko veliko pripomore k uspehu določenega programa. Sploh to velja za knjižnice. 
 
-Za pripravo posameznih poročil lahko uporabite
-[IJulia](https://github.com/JuliaLang/IJulia.jl),
-[Weave.jl](https://github.com/JunoLab/Weave.jl),
-[Literate.jl](https://github.com/fredrikekre/Literate.jl) ali
-[Quadro](https://quarto.org/docs/computations/julia.html).
+Tudi, če kode ne bo uporabljal nihče drug in verjamite, slabo dokumentirane kode, nihče ne želi uporabljati, bodimo prijazni do nas samih v prihodnosti in pišimo dobro dokumentacijo.
 
-== Organizacija direktorijev
+Pisali bomo 3 vrste dokumentacije:
+- dokumentacijo posameznih funkcij in tipov, 
+- navodila za uporabnika v datoteki `README.md`,
+- poročilo v formatu PDF
 
-- `vaje` direktorij z vajami
-- `vaje/Vaja00` vsaka vaja ima svoj direktorij
-- posamezen direktorij za vajo je organiziran kot paket s kodo, testi in dokumentacijo
+#opomba(naslov: [Zakaj format PDF])[
+  Izbira formata PDF je mogoče presenetljiva za pisanje dokumentacije programske kode. V praksi so precej bolj uporabne HTML strani. Dokumentacija v obliki HTML strani, ki se generira avtomatično v procesu #link("https://en.wikipedia.org/wiki/Continuous_integration")[nenehne integracije] je postala _de facto_ standard.
+  
+  V kontekstu popravljanja domačih nalog in poročil na vajah pa ima format PDF še vedno prednosti. Saj ga je lažje pregledovati in popravljati.
+]
+
+=== Dokumentacija funkcij in tipov
+
+Funkcije in tipe v Julii dokumentiramo tako, da pred definicijo dodamo niz z opisom funkcije. Več o tem si lahko preberete #link("https://docs.julialang.org/en/v1/manual/documentation/")[v priročniku za Julio].
+
+=== Generiranje PDF poročila
+
+Za pisanje dokumentacijo bomo uporabili format
+#link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki 
+ga bomo dodali kot komentarje v kodi. Knjižnica 
+#link("https://github.com/JunoLab/Weave.jl")[Weave.jl] poskrbi za generiranje PDF poročila.
+
+Za generiranje PDF dokumentov je potrebno namestiti
+#link("https://tug.org/")[TeX/LaTeX]. Priporočam namestitev
+#link("https://yihui.org/tinytex/")[TinyTeX] ali #link("https://tug.org/texlive/")[TeX Live], ki pa vsebuje vso izvorno kodo in zasede več prostora na disku. Po #link("https://yihui.org/tinytex/#installation")[namestitvi] programa TinyTex moramo  dodamo še nekaj `LaTeX` paketov, ki jih potrebuje paket Weave. V terminalu izvedemo naslednji ukaz
+
 ``` 
-nummat-julia 
-└── Vaja00 
-├── Project.toml 
-├── README.md 
-├── src 
-| └─ Vaja00.jl 
-├── test 
-| └─ runtests.jl 
-├── doc 
-| ├─ makedocs.jl 
-| └─ index.md 
-└─scripts
-  └─ demo.jl 
+tlmgr install microtype upquote minted 
 ```
 
-== Generiranje PDF dokumentov
+Poročilo pripravimo v obliki demo skripte. Uporabili bom kar
+`Vaja00/doc/demo.jl`, ki smo jo ustvarili, da smo generirali sliko.
 
-Za generiranje PDF dokumentov s paketi
-[Documenter](https://documenter.juliadocs.org/stable/) ali
-[Weave.jl](https://github.com/JunoLab/Weave.jl) je potrebno namestiti
-[TeX/LaTeX](https://tug.org/). Priporočam uporabo
-[TinyTeX](https://yihui.org/tinytex/). Po
-[namestitvi](https://yihui.org/tinytex/#installation) tinytex, dodamo še nekaj
-`LaTeX` paketov, tako da v terminalu izvedemo naslednji ukaz
+V datoteko dodamo besedilo v obliki komentarjev. Komentarje, ki se začnejo z ```jl #'``` paket `Weave` uporabi kot tekst v formatu #link("https://weavejl.mpastell.com/stable/publish/#Supported-Markdown-syntax")[Markdown], medtem ko se koda in navadni komentarji v poročilu izpišejo kot koda. 
 
-``` tlmgr install microtype upquote minted```
+#figure(
+  ```jl
+  #read("Vaja00/doc/demo.jl")
+  ```,
+  caption: [Vsebina `Vaje00/doc/demo.jl`, po tem, ko smo dodali komentarje s tekstom v formatu Markdown]
+)
+
+Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo še eno skripto `Vaje00\doc\makedocs.jl`, v katero dodamo naslednje vrstice
+
+#figure(raw(
+read("Vaja00/doc/makedocs.jl"), lang: "jl"),
+caption: [Program za generiranje PDF dokumenta]
+)
+Skripto poženemo v julii s 
+```jl
+include("Vaja00/doc/makedocs.jl").
+```
+
+Poleg paketa Weave.jl je na voljo še nekaj alternativ:
+
+- #link("https://github.com/JuliaLang/IJulia.jl")[IJulia],
+- #link("https://github.com/fredrikekre/Literate.jl")[Literate.jl] ali
+- #link("https://quarto.org/docs/computations/julia.html")[Quadro].
+
+=== Povezave
+
+Nekaj zanimivih povezav povezanih s pisanjem dokumentacije:
+
+- #link("https://docs.julialang.org/en/v1/manual/documentation/")[Pisanje dokumentacije] v jeziku Julia.
+- #link("https://documenter.juliadocs.org/stable/")[Documenter.jl] je najbolj razširjen paket za pripravo dokumentacije v Julii.
+- #link("https://diataxis.fr/")[Diátaxis] je sistematičen pristop k pisanju dokumentacije.
+- #link("https://www.writethedocs.org/guide/docs-as-code/")[Dokumentacija kot koda] je ime za način dela, pri katerem z dokumentacijo ravnamo na enak način, kot ravnamo s kodo.
+
+== Zaključek
+
+Za konec preverimo, če vse dela kot bi moralo.
+
+Ustvarili smo direktorij `nummat-julia` in direktorij s prvim 
+paketom `nummat-julia\Vaja00`. V terminalu poženemo ukaz `tree .` da preverimo, če smo ustvarili vse datoteke. 
+
+```shell
+$ tree .
+nummat-julia 
+├── Project.toml 
+├── Manifest.toml 
+├── README.md 
+├── Vaja00
+| ├── Project.toml 
+| ├── Manifest.toml
+| ├── doc
+| |  ├─ makedocs.jl  
+| |  └─ demo.jl
+| ├─ src 
+| | └─ Vaja00.jl 
+| ├─ pdf 
+| | ├─ demo.pdf
+| | └─ ...
+| └── test 
+|   └─ runtests.jl 
+```
 
 == Povezave
 
-- [Način dela za Gitlab (Gitlab
-  Flow)](https://docs.gitlab.com/ee/topics/gitlab_flow.html).
 - [Priporočila za stil
   Julia](https://docs.julialang.org/en/v1/manual/style-guide/).
 - [Naveti za delo z
