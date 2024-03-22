@@ -2,12 +2,7 @@
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "f04f82859af74aa9a02fc69315561e70b4be37f8"
-
-[[deps.ArgCheck]]
-git-tree-sha1 = "a3a402a35a2f7e0b87828ccabbd5ebfbebe356b4"
-uuid = "dce04be8-c92d-5529-be00-80e4d2c0e197"
-version = "2.3.0"
+project_hash = "69fe63480c1b76159004d3b39523ccb880495f63"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -23,6 +18,12 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 git-tree-sha1 = "2dc09997850d68179b69dafb58ae806167a32b1b"
 uuid = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
 version = "0.1.8"
+
+[[deps.BookUtils]]
+deps = ["IOCapture", "Logging", "Suppressor"]
+path = "BookUtils"
+uuid = "e6ff181e-9e14-41e7-8e4c-ab5eece3b993"
+version = "0.1.0"
 
 [[deps.Bzip2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -255,6 +256,12 @@ deps = ["DocStringExtensions", "InteractiveUtils", "REPL"]
 git-tree-sha1 = "0341077e8a6b9fc1c2ea5edc1e93a956d2aec0c7"
 uuid = "eafb193a-b7ab-5a9e-9068-77385905fa72"
 version = "0.5.2"
+
+[[deps.IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "8b72179abc660bfab5e28472e019392b97d0985c"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.4"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
@@ -562,12 +569,6 @@ deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 version = "1.10.0"
 
-[[deps.PkgSkeleton]]
-deps = ["ArgCheck", "Dates", "DocStringExtensions", "LibGit2", "Pkg", "TOML", "UUIDs", "UnPack"]
-git-tree-sha1 = "5aea54278270da049a5911802d5ca30ddd63bec3"
-uuid = "d254efa0-af53-535e-b7f1-03c1c9fbcbe7"
-version = "1.2.0"
-
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
 git-tree-sha1 = "1f03a2d339f42dca4a4da149c7e15e9b896ad899"
@@ -781,11 +782,6 @@ version = "1.5.1"
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 
-[[deps.UnPack]]
-git-tree-sha1 = "387c1f73762231e86e0c9c5443ce3b4a0a9a0c2b"
-uuid = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
-version = "1.0.2"
-
 [[deps.Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
@@ -823,6 +819,11 @@ version = "0.2.0"
 [[deps.Vaja00]]
 path = "Vaja00"
 uuid = "a103309b-f9c6-47a9-a678-e0adbc43f6c2"
+version = "0.1.0"
+
+[[deps.Vaja02Koren]]
+path = "Vaja02Koren"
+uuid = "9bbcb4c0-c107-4924-8fed-0ddfa30c35b8"
 version = "0.1.0"
 
 [[deps.Vulkan_Loader_jll]]

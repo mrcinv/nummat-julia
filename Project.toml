@@ -1,12 +1,6 @@
-name = "NumMat"
-uuid = "ec117ab5-8c07-4591-bb0c-50ab16e4f032"
-authors = ["Martin Vuk <martin.vuk@fri.uni-lj.si>"]
-version = "0.1.0"
-
 [deps]
-Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
-PkgSkeleton = "d254efa0-af53-535e-b7f1-03c1c9fbcbe7"
+BookUtils = "e6ff181e-9e14-41e7-8e4c-ab5eece3b993"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-Suppressor = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
 Vaja00 = "a103309b-f9c6-47a9-a678-e0adbc43f6c2"
+Vaja02Koren = "9bbcb4c0-c107-4924-8fed-0ddfa30c35b8"
 Weave = "44d3d7a6-8a23-5bf8-98c5-b353f8df5ec9"

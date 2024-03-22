@@ -1,1 +1,3 @@
 *.pdf
+# coverage files
+*.cov 

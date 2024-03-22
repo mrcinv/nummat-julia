@@ -1,9 +1,30 @@
 using Logging, Suppressor
+import IOCapture
 
 out(code) = open("out/$(code).out", "w")
 
+context(io) = IOContext(io, :limit => true, :displaysize => (20, 40))
+pp(io, x) = show(context(io), "text/plain", x)
+
 """
-    @capture("name") begin
+    capture("name") do
+      println(1+1)
+      x = "This will be printed last!"
+    end
+
+Capture output and the last result in the file "out/name.out".
+"""
+function capture(f, code)
+  io = out(code)
+  value = redirect_stdio(f; stdin=nothing, stdout=io, stderr=io)
+  if !isnothing(value)
+    pp(io, value)
+  end
+  close(io)
+end
+
+"""
+    @capture("name") do
       println(1+1)
       x = "This will be printed last!"
     end
@@ -21,10 +42,7 @@ macro capture(ex, name)
       end
       println(io, output)
       if result != nothing
-        context = IOContext(io,
-          :limit => true,
-          :displaysize => (20, 40))
-        show(context, "text/plain", result)
+        pp(io, result)
       end
       close(io)
     end
@@ -66,4 +84,4 @@ function term(name, x)
   close(io)
 end
 
-export p, term, save_out, logger, @capture
+export p, term, save_out, logger, @capture, capture

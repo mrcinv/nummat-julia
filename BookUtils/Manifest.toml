@@ -1,0 +1,28 @@
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.10.2"
+manifest_format = "2.0"
+project_hash = "290c7d328274a8087b539691102784456a05ea82"
+
+[[deps.IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "8b72179abc660bfab5e28472e019392b97d0985c"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.4"
+
+[[deps.Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[deps.Random]]
+deps = ["SHA"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[deps.SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
+
+[[deps.Suppressor]]
+deps = ["Logging"]
+git-tree-sha1 = "6cd9e4a207964c07bf6395beff7a1e8f21d0f3b2"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.6"

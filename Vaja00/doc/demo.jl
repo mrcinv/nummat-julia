@@ -10,3 +10,4 @@ using Plots
 plot(x, y, label=false, title="Geronova lemniskata")
 # 01demo
 savefig("img/01_demo.svg")
+

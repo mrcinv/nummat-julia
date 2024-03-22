@@ -74,7 +74,7 @@ Okolje za delo z _julio_ je pripravljeno.
   ],
 )
 
-=== Priprava projektne mape
+== Priprava projektne mape
 
 Pripravimo mapo, v kateri bomo hranili programe. Datoteke bomo organizirali
 tako, da bo vsaka vaja #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket] v
@@ -208,14 +208,14 @@ Ko je direktorij s paketom `Vaja00` pripravljen, lahko začnemo s pisanjem kode.
 Za vajo bomo narisali 
 #link(
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
-)[Geronove lemniskato]. Najprej koordinatne funkcije
+)[Geronove lemniskato]. Najprej definiramo koordinatne funkcije
 
 $
   x(t) = (t^2 - 1) / (t^2 + 1) #h(2em)
-  y(t) = 2t(t^2 - 1) / (t^2 + 1)^2
+  y(t) = 2t(t^2 - 1) / (t^2 + 1)^2.
 $
 
-definiramo v datoteki `Vaja00/src/Vaja00.jl`.
+Definicije shranimo v datoteki `Vaja00/src/Vaja00.jl`.
 
 #figure(
   raw(lang: "jl", block: true, read("Vaja00/src/Vaja00.jl")),
@@ -238,44 +238,88 @@ Kodo, ki bo sledila, bomo sedaj pisali v scripto `scripts\demo.jl`.
   caption: [Vsebina datoteke `demo.jl`],
 )
 
-Skripto poženemo z ukazom 
-```jl
-include("Vaja00/doc/demo.jl") 
-``` 
-in dobimo sliko lemniskate.
+Skripto poženemo z ukazom ```jl include("Vaja00/doc/demo.jl")``` in dobimo sliko
+lemniskate.
 
 #figure(image(width: 60%, "img/01_demo.svg"), caption: [Geronova lemniskata])
 
-=== Testi
+== Testi
 
 V prejšnjem razdelku smo definirali funkcije in napisali skripto, s katero smo
-omenjene funkcije uporabili. Vstopna točka za teste je `test\runtests.jl`. Paket
-[Test](https://docs.julialang.org/en/v1/stdlib/Test/) omogoča pisanje enotskih
-testov, ki se lahko avtomatično izvedejo v sistemu [nenehne integracije
-(Continuous Integration)](https://en.wikipedia.org/wiki/Continuous_integration).
+omenjene funkcije uporabili. Naslednji korak je, da dodamo teste, s katerimi
+preiskusimo pravilnost napisane kode. 
 
-V juliji teste pišemo z makroji #link("https://docs.julialang.org/en/v1/stdlib/Test/#Test.@test")[\@test] in #link(
+#opomba(
+  naslov: [Avtomatsko testiranje programov],
+  [Pomembno je, da pravilnost programov preverimo. Najlažje to naredimo "na roke",
+    tako da program poženemo in preverimo rezultat. Testiranja "na roke" ima veliko
+    pomankljivosti od tega, da zahteva čas, da je lahko nekonsistentno, in dovzetno
+    za napake. Alternativa ročnemu testiranju programov so avtomatski testi.
+    Avtomatski testi so preprosti programi, ki izvedejo testirani program in
+    rezultate preverijo. Avtomoatski testi so pomemben del #link(
+      "https://sl.wikipedia.org/wiki/Agilne_metode_razvoja_programske_opreme",
+    )[agilnega razvoja programske opreme] in omogočajo avtomatizacijo procesov
+    razvoja programske, ki se imenuje #link(
+      "https://en.wikipedia.org/wiki/Continuous_integration",
+    )[nenehna integracija].],
+)
+
+Uporabili bomo paket #link("https://docs.julialang.org/en/v1/stdlib/Test/")[Test],
+ki olajša pisanje testov. Vstopna točka za teste je datoteka `test\runtests.jl`.
+
+Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri
+rezultat.Najbolj enostavno je rezultat kar primerjati z v naprej znanim
+rezultatom, za katerega smo prepričani, da je pravilen. Uporabili bomo makroje #link("https://docs.julialang.org/en/v1/stdlib/Test/#Test.@test")[\@test] in #link(
   "https://docs.julialang.org/en/v1/stdlib/Test/#Test.@testset",
-)[\@testset]. Če `test/runtests.jl` lahko napišemo
+)[\@testset] iz paketa `Test`. 
 
-```jl
-using Test, Vaja00
+V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki smo
+ju definirali:
 
-@test Vaja00.funkcija_ki_vrne_ena() == 1
-```
+#figure(
+  raw(read("Vaja00/test/runtests.jl"), lang: "jl"),
+  caption: [Testi za paket `Vaja00`],
+)
 
-Lahko teste poženemo tako, da v `pkg` načinu poženemo ukaz `test`
+Za primerjavo rezultatov smo uporabili operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].
+
+#opomba(
+  naslov: [Primerjava števil s plavajočo vejico],
+  [Pri računanju s števili s plavajočo vejico se izogibajmo primerjanju števil z
+  operatorjem `==` bit po bit. Pri izračunih pride do zaokrožitvenih napak. Zato
+  se različni načini izračuna za isto število praviloma razlikujejo na zadnjih
+  decimalkah v zapisu s plavajočo vejico. Na primer izraz // auto format hack
+  ```jl asin(sin(pi/4)) - pi/4 ``` 
+  ne vrne točne ničle ampak vrednost `-1.1102230246251565e-16`, ki pa je zelo
+  majhno število. Za primerjavo dveh vrednosti `a` in `b` zato ponavadi uporabimo
+  izraz
+  $
+    |a - b| < epsilon,
+  $
+  kjer je $epsilon$ večji, kot pričakovana zaokrožitvena napaka. Funkcija
+  `isapprox` je namenjena ravno zgornji primerjavi.],
+)
+
+Preden lahko poženemo teste, moramo ustvariti testno okolje. Sledimo #link(
+  "https://docs.julialang.org/en/v1/stdlib/Test/#Workflow-for-Testing-Packages",
+)[priporočilom za testiranje paketov]. V mapi `Vaje00/test` ustvarimo novo
+okolje in dodamo paket `Test`.
 
 ```shell
-(Vaja00) pkg> test
+(nummat-julia) pkg> activate Vaje00/test
+(test) pkg> add Test
+(test) pkg> activate .
+```
 
-    Testing Running tests...
-    Testing Vaja00 tests passed
+Teste poženemo tako, da v `pkg` načinu poženemo ukaz `test Vaja00`
+
+```shell 
+(nummat-julia) pkg> test Vaja00 
 ```
 
 === Dokumentacija
 
-Za pisanje dokumentacijo navadno uporabimo format
+Za pisanje dokumentacijo lahko uporabimo format
 [Markdown](https://en.wikipedia.org/wiki/Markdown). S paketom
 [Documenter](https://documenter.juliadocs.org/stable/) lahko komentarje v kodi
 in markdown dokumentente združimo in generiramo HTML ali PDF dokumentacijo s
@@ -291,22 +335,21 @@ Za pripravo posameznih poročil lahko uporabite
 
 - `vaje` direktorij z vajami
 - `vaje/Vaja00` vsaka vaja ima svoj direktorij
-- posamezen direktorij za vajo je organiziran kot paket s kodo, testi in
-  dokumentacijo
-```
-nummat-julia
-  └── Vaja00
-    ├── Project.toml
-    ├── README.md
-    ├── src
-    |   └─ Vaja00.jl
-    ├── test
-    |   └─ runtests.jl
-    ├── doc
-    |   ├─  makedocs.jl
-    |   └─ index.md
-    └─ scripts
-      └─ demo.jl
+- posamezen direktorij za vajo je organiziran kot paket s kodo, testi in dokumentacijo
+``` 
+nummat-julia 
+└── Vaja00 
+├── Project.toml 
+├── README.md 
+├── src 
+| └─ Vaja00.jl 
+├── test 
+| └─ runtests.jl 
+├── doc 
+| ├─ makedocs.jl 
+| └─ index.md 
+└─scripts
+  └─ demo.jl 
 ```
 
 == Generiranje PDF dokumentov
@@ -319,9 +362,7 @@ Za generiranje PDF dokumentov s paketi
 [namestitvi](https://yihui.org/tinytex/#installation) tinytex, dodamo še nekaj
 `LaTeX` paketov, tako da v terminalu izvedemo naslednji ukaz
 
-```
-tlmgr install microtype upquote minted
-```
+``` tlmgr install microtype upquote minted```
 
 == Povezave
 
