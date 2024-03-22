@@ -131,3 +131,13 @@ podrobnost.
     A(k:n, k+1:n) = A(k:n, k+1:n) -2*u*(u^T*A(k:n, k+1:n))/(u^T*u).
   $
 ]
+
+== Pokritost kode s testi
+
+Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode, ki se izvede med testi, imenujemo #link("https://en.wikipedia.org/wiki/Code_coverage")[pokritost kode (angl. Code Coverage)]. V julii lahko pokritost kode dobimo, če dodamo 
+argument ```jl coverage=true``` metodi `Pkg.test`:
+
+```jl
+import Pkg
+Pkg.test("DomacaXY"; coverage=true)
+```
