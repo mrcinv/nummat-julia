@@ -18,9 +18,18 @@ računa koren za vrednost `2.0`, to je za števila s plavajočo vejico.]
 
 Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren števila `x`. Poskrbi, da bo rezultat pravilen na 10 decimalnih mest in da bo časovna zahtevnost neodvisna od argumenta `x`. 
 
-== Računajne kvadratnega korena z babilonskim obrazcem
+=== Podrobna navodila
 
-Z računajnjem kvadratnega korena so se ukvarjali pred 3500 leti v Babilonu. O tem si lahko več preberete v [članku v reviji Presek](http://www.presek.si/21/1160-Domajnko.pdf). Moderna verzija metode računanja približka predstavlja rekurzivno 
+- Zapiši enačbo, ki ji zadošča kvadratni koren. 
+- Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za račnanje kvadratnega korena.
+- Kako je konvergenca odvisna od vrednosti `x`?
+- Nariši graf potrebnega števila korakov v odvisnoti od argumenta `x`.
+- Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Julii).
+- Implementiraj funkcijo `koren(x)`, tako da je časovna zahtevnost neodvisna od argumenta `x`. Grafično preveri, da funkcija dosega zahtevano natančnost za poljubne vrednosti argumenta `x`. 
+
+== Računajne kvadratnega korena s Heronovim obrazcem
+
+Z računajnjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. Moderna verzija metode računanja približka predstavlja rekurzivno 
 zaporedje, ki konvergira k vrednosti kvadratnega korena danega števila $x$. Zaporedje približkov lahko izračunamo, tako da uporabimo rekurzivno formulo
 
 $ a_(n+1) = 1/2 dot.c (a_n + x/(a_n)). $ <eq:02heron>
@@ -43,7 +52,7 @@ Vidimo, da se približki začnejo ponavljati že po 4. koraku. To pomeni, da se 
 Napišimo zgornji algoritem še kot funkcijo:
 #figure(
   jlb(
-    "src/koren.jl",
+    "Vaja02Koren/src/koren.jl",
     "# koren_heron"
   ),
   caption: [Funkcija, ki računa kvadrani koren s Heronovim obrazcem.]
