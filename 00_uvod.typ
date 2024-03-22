@@ -19,8 +19,7 @@ Na tem mestu bi se rad zahvalil Bojanu Orlu, Emilu Žagarju, Petru Kinku, s kate
 
 #heading(numbering: none)[Uvod]
 
-Ta knjiga vsebuje gradiva za izvedbo laboratorijskih vaj pri predmetu Numerična matematika
-na Fakulteti za računalništvo in informatiko, Univerze v Ljubljani. 
+Ta knjiga vsebuje gradiva za izvedbo laboratorijskih vaj pri predmetu Numerična matematika na Fakulteti za računalništvo in informatiko, Univerze v Ljubljani. Kljub temu je namenjena vsem, ki bi se želili bolje spoznati z uporabo numeričnih metod in se naučiti uporabljati programski jezik #link("https://julialang.org/")[Julia]. Predpostavljamo, da je bralec vešč programiranja v kakem drugem programskem jeziku in knjige ni namenjena prvemu stiku s programiranjem.
 
 Knjige o numerični matematiki se pogosto posvečajo predvsem matematičnim vprašanjem. Vsebina te knjige pa poskuša nasloviti bolj praktične vidike numerične matematike. Tako so primeri, če je le mogoče, povezani s problemom praktične narave s področja fizke, matematičnega modeliranja in računalništva, pri katerih lahko za rešitev problema uporabimo numerične metode.  
 
