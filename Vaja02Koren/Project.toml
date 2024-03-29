@@ -2,3 +2,6 @@ name = "Vaja02Koren"
 uuid = "9bbcb4c0-c107-4924-8fed-0ddfa30c35b8"
 authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
 version = "0.1.0"
+
+[deps]
+Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"

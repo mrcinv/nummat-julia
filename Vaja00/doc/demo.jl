@@ -9,7 +9,7 @@ y = lemniskata_y.(t) # tako da imenu funkcije dodamo .
 #' Za risanje grafov uporabimo paket `Plots`.
 using Plots
 plot(x, y, label=false, title="Geronova lemniskata")
-#' Zadnji rezultat pred tekstom se izpiše v dokument. Če rezultat 
+#' Zadnji rezultat pred tekstom se izpiše v dokument. Če je rezultat 
 #' tipa, ki predstavlja plot, se v dokument vstavi slika.
 savefig("img/01_demo.svg")
 
