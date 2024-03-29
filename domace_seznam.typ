@@ -9,6 +9,7 @@
 }
 #let dobrabarva = green.darken(40%)
 #let slababarva = red
+#show link: set text(blue)
 
 = Navodila za pripravo domačih nalog 
 
@@ -23,7 +24,7 @@ Spodaj je seznam delov, ki naj jih vsebuje domača naloga.
 - koda (`src\DomacaXY.jl`) 
 - testi (`test\runtests.jl`)
 - dokument `README.md`
-- demo skripta, s katerim generirate rezultate za poročilo
+- demo skripta, s katero ustvarite rezultate za poročilo
 - poročilo v formatu PDF
 
 Preden oddate domačo nalogo, uporabite naslednji _kontrolni seznam_:
@@ -35,7 +36,7 @@ Preden oddate domačo nalogo, uporabite naslednji _kontrolni seznam_:
   - opis naloge
   - navodila kako uporabiti kodo
   - navodila, kako pognati teste
-  - navodila, kako generirati poročilo
+  - navodila, kako ustvariti poročilo
 - _README_ ni predolg
 - poročilo vsebuje naslednje:
   - ime in priimek avtorja
@@ -63,7 +64,7 @@ izpustimo.
 
 Opis rešitve naj bo zgolj okviren. Izogibajte se uporabi programerskih izrazov
 ampak raje uporabljajte matematične. Na primer izraz #text(slababarva)[uporabimo for zanko],
-lahko nadomestimo z #text(dobrabarva)[postopek ponavljamo]. Od bralca zahteva
+lahko nadomestimo s #text(dobrabarva)[postopek ponavljamo]. Od bralca zahteva
 splošen opis manj napora in dobi širšo sliko. Če želite dodati izpeljave, jih
 napišite z matematičnimi formulami, ne v programskem jeziku. Koda sodi zgolj v
 del, kjer je opisana uporaba za konkreten primer.
@@ -132,12 +133,61 @@ podrobnost.
   $
 ]
 
-== Pokritost kode s testi
+Če implementacija vsebuje posebnosti, kot na primer uporaba posebne podatkovne
+strukture ali algoritma, jih lahko opišemo v poročilu. Vendar pazimo, da bralca
+ne obremenjujemo s podrobnostmi.
 
-Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode, ki se izvede med testi, imenujemo #link("https://en.wikipedia.org/wiki/Code_coverage")[pokritost kode (angl. Code Coverage)]. V julii lahko pokritost kode dobimo, če dodamo 
-argument ```jl coverage=true``` metodi `Pkg.test`:
+#dobro(
+  [Posebnosti implementacije opišemo v grobem in se ne spuščamo v podrobnosti],
+)[
+Za tri-diagonalne matrike definiramo posebno podatkovno strukturo `Tridiag`, ki
+hrani le neničelne elemente matrike. Julia omogoča, da LU razcep tri-diagonalne
+matrike, implementiramo kot specializirano metodo funkcije `lu` iz paketa
+`LinearAlgebra`. Pri tem upoštevamo posebnosti tri-diagonalne matrike in
+algoritem za LU razcep prilagodimo tako, da se časovna in prostorska zahtevnost
+zmanjšata na $cal(O)(n)$.
+]
 
+Pazimo, da v poročilu ne povzemamo direktno posameznih korakov kode.
+
+#slabo(
+  [Opisovanje, kaj počnejo posamezni koraki kode, ne sodi v poročilo.],
+)[
+Za tri-diagonalne matrike definiramo podatkovni tip `Tridiag`, ki ima 3 atribute
+`s`, `d` in `z`. Atribut `s` vsebuje elemente pod diagonalo, ...
+
+LU razcep implementiramo kot metodo za funkcijo `LinearAlgebra.lu`. V `for`
+zanki izračunamo naslednje:
+1. element `l[i]=a[i, i-1]/a[i-1, i-1]`
+2. ...
+ 
+]
+ 
+== Kako pisati teste
+ 
+Nekaj nasvetov, kako lahko testiramo kodo.
+- Na roke izračunajte rešitev za preprost primer in jo primerjajte z rezultati
+  funkcije.
+- Ustvarite testne podatke, za katere je znana rešitev. Na primer za testiranje
+  kode, ki reši sistem `Ax=b`, izberete `A` in `x` in izračunate desne strani
+  `b=A*x`.
+- Preverite lastnost rešitve. Za enačbe `f(x)=0`, lahko rešitev, ki jo izračuna
+  program preprosto vstavite nazaj v enačbo in preverite, če je enačba
+izpolnjena.
+- Red metode lahko preverite tako, da naredite simulacijo in primerjate red
+metode z redom programa, ki ga eksperimentalno določite.
+- Če je le mogoče, v testih ne uporabljamo rezultatov, ki jih proizvede koda sama.
+  Ko je koda dovolj časa v uporabi, lahko rezultate kode same uporabimo za #link("https://en.wikipedia.org/wiki/Regression_testing")[regresijske teste].
+ 
+=== Pokritost kode s testi
+ 
+Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode,
+ki se izvede med testi, imenujemo #link(
+  "https://en.wikipedia.org/wiki/Code_coverage",
+)[pokritost kode (angl. Code Coverage)]. V julii lahko pokritost kode dobimo, če
+dodamo argument ```jl coverage=true``` metodi `Pkg.test`:
+ 
 ```jl
-import Pkg
-Pkg.test("DomacaXY"; coverage=true)
-```
+import Pkg Pkg.test("DomacaXY"; coverage=true) ```
+
+Za poročanje o pokritosti kode lahko uporabite paket #link("https://github.com/JuliaCI/Coverage.jl")[Coverage.jl].
