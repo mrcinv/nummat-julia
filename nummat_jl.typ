@@ -17,5 +17,9 @@
 
 #include "03_laplace.typ"
 
+//#include "06_spektralno_grucenje.typ"
+
+#include "domace.typ"
+
 
 
