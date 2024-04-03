@@ -1,17 +1,16 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, out
+#import "julia.typ": jlb, out, repl, blk, code_box, pkg
 
 = Računanje kvadratnega korena
 
 Računalniški procesorji navadno implementirajo le osnovne številske operacije:
 seštevanje, množenje in deljenje. Za računanje drugih matematičnih funkcij 
-mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo elementarnih funkcij v standardni knjižnici. Tako tudi `julia`. V tej vaji si bomo ogledali, kako implementirati korensko funkcijo.
+mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo elementarnih funkcij v standardni knjižnici. V tej vaji si bomo ogledali, kako implementirati korensko funkcijo.
 
 
 #opomba(
   naslov: [Implementacija elementarnih funkcij v julii],
-[ Lokacijo metod, ki računajo določeno funkcijo lahko dobite z ukazoma ```jl methods``` in ```@match```. Tako bo ukaz ```jl methods(sqrt)``` izpisal implementacije kvadratnega korena za vse podatkovne tipe, ki jih julia podpira. Ukaz ```jl @which(sqrt(2.0))``` pa razkrije metodo, ki 
-računa koren za vrednost `2.0`, to je za števila s plavajočo vejico.]
+[ Lokacijo metod, ki računajo določeno funkcijo lahko dobite z ukazoma ```jl methods``` in ```@match```. Tako bo ukaz ```jl methods(sqrt)``` izpisal implementacije kvadratnega korena za vse podatkovne tipe, ki jih julia podpira. Ukaz ```jl @which(sqrt(2.0))``` pa razkrije metodo, ki računa koren za vrednost `2.0`, to je za števila s plavajočo vejico.]
 )
 
 == Naloga
@@ -21,41 +20,65 @@ Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren
 === Podrobna navodila
 
 - Zapiši enačbo, ki ji zadošča kvadratni koren. 
-- Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za račnanje kvadratnega korena.
+- Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.
 - Kako je konvergenca odvisna od vrednosti `x`?
-- Nariši graf potrebnega števila korakov v odvisnoti od argumenta `x`.
-- Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Julii).
+- Nariši graf potrebnega števila korakov v odvisnosti od argumenta `x`.
+- Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Juliji).
 - Implementiraj funkcijo `koren(x)`, tako da je časovna zahtevnost neodvisna od argumenta `x`. Grafično preveri, da funkcija dosega zahtevano natančnost za poljubne vrednosti argumenta `x`. 
 
-== Računajne kvadratnega korena s Heronovim obrazcem
+== Računanje kvadratnega korena s Heronovim obrazcem
 
-Z računajnjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. Moderna verzija metode računanja približka predstavlja rekurzivno 
-zaporedje, ki konvergira k vrednosti kvadratnega korena danega števila $x$. Zaporedje približkov lahko izračunamo, tako da uporabimo rekurzivno formulo
+Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
-$ a_(n+1) = 1/2 dot.c (a_n + x/(a_n)). $ <eq:02heron>
+#code_box(
+    [
+        #pkg("generate Vaja02Koren", none, env: "nummat-julia")
+        #pkg("develop Vaje02Koren//", none, env: "nummat-julia")
+    ]
+)
 
-Če izberemo začetni približek, zgornja formula določa zaporedje, ki vedno konvergira bodisi k $sqrt(x)$ ali $-sqrt(x)$, odvisno od izbire začetnega približka. Poleg tega, da zaporedje hitro konvergira k limiti, je program, ki računa člene izjemno preprost. Poglejmo si za primer, kako izračunamo $sqrt(2)$:
+Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. ČE želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
 
-```jl
-#| output: true
-let
-    x = 1.5
-    for n = 1:5
-        x = (x + 2 / x) / 2
-        println(x)
-    end
-end
-```
+$ y^2 = x. $ <eq:02koren>
 
+Da bi poiskali vrednost $sqrt(x)$, moramo rešiti _nelinearno enačbo_ @eq:02koren. Za numerično reševanje nelinearnih enačb obstaja cela vrsta metod. Ena najbolj popularnih metod je #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonova ali tangentna] metoda, ki jo bomo uporabili tudi mi. Pri Newtonovi metodi rešitev enačbe 
+
+$ f(x) = 0 $
+
+poiščemo z rekurzivnim zaporedjem približkov
+
+$ x_(n+1) = x_n - f(x_n)/(f'(x_n)). $ <eq:02newton>
+
+Če zaporedje @eq:02newton konvergira, potem konvergira k rešitvi enačbe $f(x)=0$.
+
+Enačbo @eq:02koren najprej preoblikujemo v obliko, ki je primerna za reševanje z Newtonovo metodo. Premaknemo vse člene na eno stran, da je na drugi strani nič
+
+$ 
+y^2 - x = 0,
+$
+
+V formulo za Newtonovo metodo vstavimo funkcijo $f(y) = y^2 - x$ in odvod $f'(y) = 2y$, da dobimo formulo
+
+$
+y_(n+1) &= y_n - (y_n^2 - x)/(2y_n) = (2y_n^2 - y_n^2 + x)/(2y_n) = 1/2((y_n^2 + x)/(y_n))\
+y_(n+1) &= 1/2(y_n + x/y_n) 
+$ <eq:02heron>
+
+Rekurzivno formulo @eq:02heron imenujemo #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Haronov obrazec]. Zgornja formula določa zaporedje, ki vedno konvergira bodisi k $sqrt(x)$ ali $-sqrt(x)$, odvisno od izbire začetnega približka. Poleg tega, da zaporedje hitro konvergira k limiti, je program, ki računa člene izjemno preprost. Poglejmo si za primer, kako izračunamo $sqrt(2)$:
+
+#code_box([
+#repl(blk("scripts/02_koren.jl","# koren1"), read("out/02_koren_1.out"))
+]
+)
 Vidimo, da se približki začnejo ponavljati že po 4. koraku. To pomeni, da se zaporedje ne bo več spreminjalo in smo dosegli najboljši približek, kot ga lahko predstavimo z 64 bitnimi števili s plavajočo vejico. 
 
-Napišimo zgornji algoritem še kot funkcijo:
+Napišimo zgornji algoritem še kot funkcijo.
 #figure(
   jlb(
     "Vaja02Koren/src/koren.jl",
     "# koren_heron"
   ),
-  caption: [Funkcija, ki računa kvadrani koren s Heronovim obrazcem.]
+  caption: [Funkcija, ki računa kvadratni koren s Heronovim obrazcem.]
 )
 
 
