@@ -33,9 +33,11 @@ Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 #code_box(
     [
         #pkg("generate Vaja02", none, env: "nummat-julia")
-        #pkg("develop Vaje02Koren//", none, env: "nummat-julia")
+        #pkg("develop Vaja02//", none, env: "nummat-julia")
     ]
 )
+
+Tako bomo imeli v delovnem okolju dostop do vseh funkcij, ki jih bomo definirali v paketu `Vaja02`.
 
 === Izbira algoritma
 
