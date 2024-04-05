@@ -821,9 +821,9 @@ path = "Vaja00"
 uuid = "a103309b-f9c6-47a9-a678-e0adbc43f6c2"
 version = "0.1.0"
 
-[[deps.Vaja02Koren]]
+[[deps.Vaja02]]
 deps = ["Logging"]
-path = "Vaja02Koren"
+path = "Vaja02"
 uuid = "9bbcb4c0-c107-4924-8fed-0ddfa30c35b8"
 version = "0.1.0"
 

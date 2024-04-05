@@ -1,4 +1,4 @@
-using BookUtils, Vaja02Koren
+using BookUtils, Vaja02
 
 @capture("02_koren_1") do
   # koren1
@@ -43,7 +43,7 @@ savefig("img/02_koren_tangenta.svg")
 
 # koren7
 plot(sqrt, 0, 20, label="y=sqrt(x)")
-plot!(Vaja02Koren.zacetni, 0, 20, label="y = zacetni(x)")
+plot!(Vaja02.zacetni, 0, 20, label="y = zacetni(x)")
 # koren7
 savefig("img/02_koren_zacetni.svg")
 

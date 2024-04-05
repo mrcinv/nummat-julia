@@ -32,7 +32,7 @@ Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
 #code_box(
     [
-        #pkg("generate Vaja02Koren", none, env: "nummat-julia")
+        #pkg("generate Vaja02", none, env: "nummat-julia")
         #pkg("develop Vaje02Koren//", none, env: "nummat-julia")
     ]
 )
@@ -77,7 +77,7 @@ Vidimo, da se približki začnejo ponavljati že po 4. koraku. To pomeni, da se 
 Napišimo zgornji algoritem še kot funkcijo.
 #figure(
   jlb(
-    "Vaja02Koren/src/koren.jl",
+    "Vaja02/src/koren.jl",
     "# koren_heron"
   ),
   caption: [Funkcija, ki računa kvadratni koren s Heronovim obrazcem.]
@@ -154,7 +154,7 @@ $ <eq:02pogoj>
 funkcijo, ki sama določi število korakov iteracije.
 
 #figure(
-    jlb("Vaja02Koren/src/koren.jl", "# koren2"),
+    jlb("Vaja02/src/koren.jl", "# koren2"),
     caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije.]
 ) <code:02-koren-x-y0>
 
@@ -221,7 +221,7 @@ Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
 #figure(
     code_box(
-        jlb("Vaja02Koren/src/koren.jl", "# zacetni")
+        jlb("Vaja02/src/koren.jl", "# zacetni")
     ),
     caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
 )
@@ -243,7 +243,7 @@ Ko smo enkrat izbrali dober začetni približek, tudi Newtonova iteracija hitrej
 lahko definiramo metodo ```jl koren(x) ``` brez dodatnega argumenta.
 
 #figure(
-    jlb("Vaja02Koren/src/koren.jl", "# koren_x"),
+    jlb("Vaja02/src/koren.jl", "# koren_x"),
     caption: [Funkcija `koren(x)`.]
 ) <code:02-koren-x>
 
