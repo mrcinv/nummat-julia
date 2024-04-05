@@ -21,5 +21,6 @@
 
 #include "domace.typ"
 
+#bibliography("reference.yml")
 
 

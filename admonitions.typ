@@ -1,6 +1,6 @@
 #let admonition(title: none, color: none, content) = align(center,
   box(
-    width: 95%,
+    width: 98%,
     align(left,
       stack(
         dir: ttb,

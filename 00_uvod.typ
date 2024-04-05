@@ -13,7 +13,7 @@ matematičnim vprašanjem. Vsebina te knjige pa poskuša nasloviti bolj
 praktične vidike numerične matematike. Tako so primeri, če je le 
 mogoče, povezani s problemom praktične narave s področja fizke, 
 matematičnega modeliranja in računalništva, pri katerih lahko za 
-rešitev problema uporabimo numerične metode.  
+rešitev problema uporabimo numerične metode. Za podrobnejši opis metod in izpeljave si lahko ogledate v učbeniku prof. Orla _Osnove numerične matematike_ @orel. 
 
 Bralcu svetujemo, da vso kodo napiše in preskusi sam. Še bolje je, 
 če kodo razširi in spreminja. Bralca spodbujamo, da se čim bolj igra 

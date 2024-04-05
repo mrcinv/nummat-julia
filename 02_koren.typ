@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, out, repl, blk, code_box, pkg
+#import "julia.typ": jlb, out, repl, blk, code_box, pkg, readlines
 
 = Računanje kvadratnega korena
 
@@ -26,7 +26,7 @@ Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren
 - Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Juliji).
 - Implementiraj funkcijo `koren(x)`, tako da je časovna zahtevnost neodvisna od argumenta `x`. Grafično preveri, da funkcija dosega zahtevano natančnost za poljubne vrednosti argumenta `x`. 
 
-== Računanje kvadratnega korena s Heronovim obrazcem
+== Rešitev naloge
 
 Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
@@ -37,7 +37,9 @@ Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
     ]
 )
 
-Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. ČE želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
+=== Izbira algoritma
+
+Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. če želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
 
 $ y^2 = x. $ <eq:02koren>
 
@@ -95,163 +97,174 @@ Preskusimo funkcijo na številu 3.
   ]
 )
 
+=== Določitev števila korakov
+
+Funkcija `koren_heron(x, x0, n)` ni uporabna za splošno rabo, saj mora uporabnik poznati tako začetni približek, kot tudi število korakov, ki so potrebni, da dosežemo želeno natančnost. Da bi bila funkcija zares uporabna, bi morala sama izbrati začetni približek, kot tudi število korakov. Najprej bomo poskrbeli, da je število korakov ravno dovolj veliko, da dosežemo želeno natančnost. 
+
+#opomba(naslov: [Relativna in absolutna napaka])[
+    Kako vemo, kdaj smo dosegli želeno natančnost? Navadno nekako ocenimo napako približka in jo primerjamo z želeno natančnostjo. To lahko storimo na dva načina, tako da preverimo, če je absolutna napaka manjša od *absolutne tolerance* ali pa  če je relativna napaka manjša od *relativne tolerance*. 
+
+    Julia za namen primerjave dveh števil ponuja funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[`isapprox`], ki pove ali sta dve vrednosti približno enaki. Funkcija `isapprox` omogoča relativno in absolutno primerjavo vrednosti. Primerjava števil z relativno toleranco $delta$ se 
+    prevede na neenačbo
+
+    $
+        | a - b | < delta(max(|a|, |b|))
+    $ <eq:02-isapprox>
+    
+    Ko uporabljamo relativno primerjavo, moramo biti previdni, če primerjamo vrednosti s številom $0$. Če je namreč eno od števil, ki ju primerjamo, enako 0 in $delta < 1$, potem neenačba  @eq:02-isapprox nikoli ni izpolnjena. *Število $0$ nikoli ni približno enako nobenemu neničelnemu številu, če ju primerjamo z relativno toleranco.*
+]
+
+#opomba(naslov: [Število pravilnih decimalnih mest])[
+    Ko govorimo o številu pravilnih decimalnih mest, imamo navadno v mislih število signifikantnih mest v zapisu s plavajočo vejico. V tem primeru moramo poskrbeti, da je relativna napaka dovolj majhna. Če želimo, da bo 10 signifikantnih mest pravilnih, mora biti relativna napaka manjša od $5 dot 10^(-11)$. Naslednja števila so vsa podana s 5 signifikantnimi mesti:
+    $
+        1/70 approx& 0.014285, quad 1/7 approx& 0.14285\
+        10/7 approx& 1.4285,  quad 10^(10)/7 approx& 1428500000.
+    $
+]
+
+Pri iskanju kvadratnega korena lahko napako ocenimo tako, da primerjamo kvadrat približka z danim argumentom. Pri tem je treba raziskati, kako sta povezani relativni napaki približka za kore in njegovega kvadrata. Naj bo $y$ točna vrednost kvadratnega korena $sqrt(x)$. Če je $hat(y)$ približek z relativno napako $delta$, potem je $hat(y)=y(1+delta)$. Poglejmo si kako je relativna napaka $delta$ povezana z relativno napako kvadrata $hat(y)^2$.
+ $
+ epsilon = (hat(y)^2 - x)/x = ((y(1 + delta))^2 - x)/x =
+ (x(1+delta)^2 - x)/x =  (1 + delta)^2 - 1 = 2delta + delta^2. 
+ $
+Pri tem smo upoštevali, da je $y^2=x$. Relativna napaka kvadrata je enaka $epsilon = 2delta + delta^2$. Ker je $delta^2 << delta$, dobimo dovolj natančno oceno, če $delta^2$ zanemarimo
+
+$
+delta = 1/2(epsilon - delta^2) < epsilon/2.
+$
+
+Od tod dobimo pogoj, kdaj je približek dovolj natančen. Če je
+
+$
+|hat(y)^2 - x| < 2delta dot x
+$
+
+potem je 
+
+$
+|hat(y) - sqrt(x)| < delta dot sqrt(x).
+$ <eq:02pogoj>
+
+#opomba(naslov: [Ocene za napako ni vedno lahko poiskati])[ 
+    V primeru računanja kvadratnega korena je bila analiza napak relativno enostavna in smo lahko dobili točno oceno za relativno napako metode. Večinoma ni tako. Točne ocene za napako ni vedno lahko ali sploh mogoče poiskati. Zato pogosto v praksi napako ocenimo na podlagi različnih indicev brez zagotovila, da je ocena točna.
+
+    Pri iterativnih metodah konstruiramo zaporedje približkov $x_n$, ki konvergira k iskanemu številu. Razlika med dvema zaporednima približkoma $|x_(n+1) - x_n|$ je pogosto dovolj dobra ocena za napako iterativne metode. Toda zgolj dejstvo, da je razlika med zaporednima približkoma majhna, še ne zagotavlja, da je razlika do limite prav tako majhna. Če poznamo oceno za hitrost konvergence (oziroma odvod iteracijske funkcije), lahko izpeljemo zvezo med razliko dveh sosednjih približkov in napako metode. Vendar se v praksi pogosto zanašamo, da sta razlika sosednjih približkov in napaka sorazmerni. Problem nastane, če je konvergenca počasna.]
+
+Če uporabimo pogoj @eq:02pogoj, lahko napišemo 
+funkcijo, ki sama določi število korakov iteracije.
+
+#figure(
+    jlb("Vaja02Koren/src/koren.jl", "# koren2"),
+    caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije.]
+) <code:02-koren-x-y0>
+
 === Izbira začetnega približka
 
-Funkcija `koren_heron(x, x0, n)` ni uporabna za splošno rabo, saj mora uporabnik poznati tako začetni približek, kot tudi število korakov, ki so potrebni, da dosežemo željeno natančnost. Da bi lahko funkcijo uporabljal kdor koli, bi morala funkcija sama izbrati začetni približek, kot tudi število korakov.
-
-Kako bi učinkovito izbrali dober začetni približek? Dokazati je mogoče, da rekurzivno zaporedje konvergira ne glede na izbran začetni približek. Tako lahko uporabimo kar samo število $x$. Malce boljši približek dobimo s Taylorjevem razvojem korenske funkcije okrog števila 1
+Kako bi učinkovito izbrali dober začetni približek? Dokazati je mogoče, da rekurzivno zaporedje @eq:02heron konvergira ne glede na izbran začetni približek. Problem je, da je število korakov iteracije večje, dlje kot je začetni približek oddaljen od rešitve. Če želimo, da bo časovna zahtevnost funkcije neodvisna od argumenta, moramo poskrbeti, da za poljubni argument uporabimo dovolj dober začetni približek. Poskusimo lahko za začetni približek uporabiti kar samo število $x$. Malce boljši približek dobimo s Taylorjevem razvojem korenske funkcije okrog števila 1
 
 $
 sqrt(x) = 1 + 1/2(x-1) + ... approx 1/2 + x/2.
 $ 
 
-Število korakov lahko izberemo avtomatsko tako, da računamo nove približke, dokler relativna napaka ne pade pod v naprej predpisano mejo (v našem primeru bomo izbrali napako tako, da bomo dobili približno 10 pravilnih decimalnih mest). Program implementiramo kot novo metodo za funkcijo `koren`
+Vendar opazimo, da za večja števila, potrebuje iteracija več korakov. 
 
-```jl
-"""
-    y, st_iteracij = koren_babilonski(x, x0)
+#code_box(
+    repl(blk("scripts/02_koren.jl", "# koren5"), read("out/02_koren_5.out"))
+)
 
-Izračunaj vrednost kvadratnega korena danega števila `x` z babilonskim obrazcem z začetnim približkom `x0`. Funkcija vrne 
-vrednost približka za kvadratni koren in število iteracij (kolikokrat zaporedoma smo uporabili babilonski obrazec, da smo dobili zahtevano natančnost).
-"""
-function koren_babilonski(x, x0)
-    a = x0
-    it = 0
-    while abs(a^2 - x) > abs(x) * 0.5e-11
-        a = (a + x / a) / 2
-        it += 1
-    end
-    return a, it
-end
+Začetni približek $1/2 + x/2$ dobro deluje za števila blizu 1, če isto formulo za začetni približek preskusimo za večja števila, dobimo večjo relativno napako. Oziroma potrebujemo več korakov zanke, da pridemo do enake natančnosti. 
 
-y, it = koren_babilonski(10, 0.5 + 10 / 2)
-println("Za izračun korena števila 10, potrebujemo $it korakov.")
-y, it = koren_babilonski(1000, 0.5 + 1000 / 2)
-println("Za izračun korena števila 1000, potrebujemo $it korakov.")
-```
+#code_box(
+    jlb("scripts/02_koren.jl", "# koren6")
+)
 
-Opazimo, da za večje število, potrebujemo več korakov. Poglejmo si, kako se število korakov spreminja, v odvisnosti od števila `x`.
+#figure(
+    image("img/02_koren_tangenta.svg", width: 80%),
+    caption: [Korenska funkcija in tangenta v $x=1$.]
+)
 
-```jl
-#| fig-cap: Število korakov v odvisnosti od argumenta
-using Plots
-plot(x -> koren_babilonski(x, 0.5 + x / 2)[2], 0.0001, 10000, xaxis=:log10, minorticks=true, formatter=identity, label="število korakov")
-```
-
-
-
-Začetni približek $1/2 + x/2$ dobro deluje za števila blizu 1, če isto formulo za začetni približek preskusimo za večja števila, dobimo večjo relativno napako. Oziroma potrebujemo več korakov zanke, da pridemo do enake natančnosti. Razlog je v tem, da je $1/2 + x/2$ dober približek za majhna števila, če pa se od števila 1 oddaljimo, je približek slabši, bolj kot smo oddaljeni od 1:
-
-```jl
-#| fig-cap: Začetni približek v primerjavi z dejansko vrednostjo korena.
-using Plots
-plot(x -> 0.5 + x / 2, 0, 10, label="začetni približek")
-plot!(x -> sqrt(x), 0, 10, label="korenska funkcija")
-```
-
-Da bi dobili boljši približek, si pomagamo s tem, kako so števila predstavljena v računalniku. Realna števila predstavimo s števili s [plavajočo vejico](https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica). Število je zapisano v obliki
+Da bi dobili boljši približek, si pomagamo s tem, kako so števila predstavljena v računalniku. Realna števila predstavimo s #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[števili s plavajočo vejico]. Število je zapisano v obliki
 
 $
  x = m 2^e
 $
 
-kjer je $0.5 <= m<1$ mantisa, $e$ pa eksponent. Za 64 bitna števila s plavajočo vejico se za zapis mantise uporabi 53 bitov (52 bitov za decimalke, en bit pa za predznak), 11 bitov pa za eksponent (glej [IEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754)).
-
-Koren števila $x$ lahko potem izračunamo kot
-
-$
-sqrt(x) = sqrt(m) 2^(e/2)
-$
-
-dober začetni približek dobimo tako, da $sqrt(m)$ aproksimiramo razvojem v Taylorjevo vrsto okrog točke 1 
+kjer je $1 <= m < 2$ mantisa, $e$ pa eksponent. Za 64 bitna števila s plavajočo vejico se za 
+zapis mantise uporabi 53 bitov (52 bitov za decimalke, en bit pa za predznak), 11 bitov pa za 
+eksponent (glej #link("https://en.wikipedia.org/wiki/IEEE_754")[IEE 754 standard]). Koren števila 
+$x$ lahko potem izračunamo kot
 
 $
-sqrt(m) approx 1 + 1/2(m-1) = 1/2 + m/2
+sqrt(x) = sqrt(m) dot 2^(e/2).
 $
 
-Če eksponent delimo z $2$ in zanemarimo ostanek $e = 2d + o$, lahko $sqrt(2^e)$ približno zapišemo kot
+Koren mantise lahko približno ocenimo s tangento v $x=1$
 
 $
-sqrt(2^e) approx 2^d.
+sqrt(m) = 1/2 + m/2.
 $
 
-Celi del števila pri deljenju z 2 lahko dobimo z binarnim premikom v desno (right shift). Potenco števila $2^n$, pa
-z binarnim premikom števila 1 v levo za $n$ mest.
-Tako lahko zapišemo naslednjo funckijo za začetni približek:
+Če eksponent delimo z $2$ in upoštevamo ostanek $e = 2d + o$, lahko $sqrt(2^e)$ zapišemo kot
 
-```jl
-"""
-    zacetni_priblizek(x)
+$
+sqrt(2^e) approx 2^d dot cases(1";" quad  o = 0, sqrt(2)";" quad o=1) 
+$
 
-Izračunaj začetni približek za tangentno metodo za računanje kvadratnega korena števila `x`. 
-"""
-function zacetni_priblizek(x)
-    d = exponent(x) >> 1 # desni premik oziroma deljenje z 2
-    m = significand(x)
-    if d < 0
-        return (0.5 + 0.5 * m) / (1 << -d)
-    end
-    return (0.5 + 0.5 * m) * (1 << d)
-end
-```
+Formula za približek je enaka: 
 
-Primrjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo:
+$
+sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1";" quad  o = 0, sqrt(2)";" quad o=1)
+$
 
-```jl
-#| fig-cap: Izboljšan začetni približek.
-using Plots
-plot(zacetni_priblizek, 0, 1000, label="začetni približek")
-plot!(sqrt, 0, 1000, label="kvadratni koren")
-```
+Potenco števila $2^n$ lahko izračunamo z binarnim premikom števila $1$ v levo za $n$ mest.
+Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
-Oglejmo si sedaj število korakov, če uporabimo izboljšani začetni približek.
+#figure(
+    code_box(
+        jlb("Vaja02Koren/src/koren.jl", "# zacetni")
+    ),
+    caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
+)
 
-```jl
-#| fig-cap: Število korakov v odvisnosti od argumenta za izboljšan začetni približek.
+Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.
 
-using Plots
-plot(x -> koren_babilonski(x, zacetni_priblizek(x))[2], 0.0001, 10000, xaxis=:log10, minorticks=true, formatter=identity, label="število korakov")
-```
+#code_box(
+    jlb("scripts/02_koren.jl", "# koren7")
+)
 
-Opazimo, da se število korakov ne spreminja več z naraščanjem argumenta, to pomeni, da bo časovna zahtevnost tako implemetirane korenske funkcije konstantna in neodvisna od izbire argumenta.
+#figure(
+    image("img/02_koren_zacetni.svg", width: 80%),
+    caption: [Korenska funkcija in začetni približek.]
+)
+
+=== Zaključek
+
+Ko smo enkrat izbrali dober začetni približek, tudi Newtonova iteracija hitreje konvergira, ne glede na velikost argumenta. Tako 
+lahko definiramo metodo ```jl koren(x) ``` brez dodatnega argumenta.
+
+#figure(
+    jlb("Vaja02Koren/src/koren.jl", "# koren_x"),
+    caption: [Funkcija `koren(x)`.]
+) <code:02-koren-x>
+
+#opomba(naslov: [Julia omogoča več definicij iste funkcije])[
+    Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na to, katere argumente podamo funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo ```jl koren(2.0, 1.0)``` se izvede različica @code:02-koren-x-y0, ko pokličemo ```jl koren(2.0)``` se izvede @code:02-koren-x.
+    
+    Metode, ki so definirane za neko funkcijo ```jl fun``` lahko vidimo z ukazom ```jl methods(fun)```. Metodo, ki se uporabi za določen klic funkcije lahko poiščemo z makrojem ```jl @which```, npr. ```jl @which koren(2.0, 1.0)```.
+]
+
+Opazimo, da se število korakov ne spreminja več z naraščanjem argumenta, to pomeni, da je časovna zahtevnost funkcije ```jl koren(x)``` neodvisna od izbire argumenta.
+
+#code_box(
+    repl(blk("scripts/02_koren.jl", "# koren8"), read("out/02_koren_8.out"))
+)
 
 
-```jl
-#| fig-cap: Relativna napaka na [0.5, 2].
-using Plots
-rel_napaka(x) = (koren_babilonski(x, 0.5 + x / 2, 4)^2 - x) / x
-plot(rel_napaka, 0.5, 2)
-```
-
-Sedaj lahko sestavimo funkcijo za računanje korena, ki potrebuje le število in ima konstantno časovno zahtevnost
-
-```jl
-"""
-    y = koren(x)
-
-Izračunaj kvadratni koren danega števila `x` z babilonskim obrazcem. 
-"""
-function koren(x)
-    y = zacetni_priblizek(x)
-    for i = 1:4
-        y = (y + x / y) / 2
-    end
-    return y
-end
-```
-
-Preverimo, da je relativna napaka neodvisna od izbranega števila, prav tako pa za izračun potrebujemo enako število operacij.
-
-```jl
-#| fig-cap: Relativna napaka korenske funkcije.
-plot(x -> (koren(x)^2 - x) / x, 0.001, 1000.0, xaxis=:log, minorticks=true, formatter=identity, label="relativna napaka")
-```
-
-== Hitro računanje obratne vrednosti kvadratnega korena
-
+#opomba(naslov: [Hitro računanje obratne vrednosti kvadratnega korena])[
 Pri razvoju računalniških iger, ki poskušajo verno prikazati 3 dimenzionalni svet na zaslonu, se veliko uporablja normiranje 
 vektorjev. Pri operaciji normiranja je potrebno komponente vektorja deliti s korenom vsote kvadratov komponent. Kot smo 
-spoznali pri računanju kvadratnega korena z babilonskim obrazcem, je posebej problematično poiskati ustrezen začetni približek, ki je dovolj blizu pravi rešitvi. Tega problema so se zavedali tudi inžinirji igre Quake, ki so razvili posebej 
+spoznali pri računanju kvadratnega korena s Heronovim obrazcem, je posebej problematično poiskati ustrezen začetni približek, ki je dovolj blizu pravi rešitvi. Tega problema so se zavedali tudi inženirji igre Quake, ki so razvili posebej 
 zvit, skoraj magičen način za dober začetni približek. Metoda uporabi posebno vrednost `0x5f3759df`, da pride do začetnega 
-približka, nato pa še en korak [tangentne metode](ttps://sl.wikipedia.org/wiki/Newtonova_metoda).
-Več o [računanju obratne vrednosti kvadratnega korena](https://en.wikipedia.org/wiki/Fast_inverse_square_root).
+približka, nato pa še en korak #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonove metode].
+Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanju obratne vrednosti kvadratnega korena].
+]
