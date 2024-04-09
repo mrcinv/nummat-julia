@@ -15,8 +15,35 @@
 
 #include "02_koren.typ"
 
+= Tridiagonalni sistemi
+
 #include "03_laplace.typ"
 
+= Implicitna interpolacija
+
+= Invariantna porazdelitev Markovske verige
+
+= Spektralno gručenje
+
+= Nelinearne enačbe in geometrija
+
+= Konvergenčna območja nelinearnih enačb
+
+= Interpolacija z zlepki
+
+= Aproksimacija z linearnim modelom
+
+= Aproksimacija s polinomi Čebiševa
+
+= Povprečna razdalja med dvema točkama na kvadratu
+
+= Gaussove kvadrature
+
+= Avtomatsko odvajanje z dualnimi števili
+
+= Aproksimacija z dinamičnim modelom
+
+= Perioda geostacionarne orbite
 //#include "06_spektralno_grucenje.typ"
 
 #include "domace.typ"
