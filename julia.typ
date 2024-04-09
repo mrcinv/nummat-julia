@@ -18,10 +18,10 @@
  weight: "bold")[#raw("("+env +") pkg>") #h(0.6em)]
 
 // a single line for REPL
-#let repl_line(command, block, prompt: prompt_jl) = stack(
+#let repl_line(command, block, prompt: prompt_jl, lang:"jl") = stack(
       dir: ltr,
       prompt,
-      raw(lang:"jl", block: block, command)
+      raw(lang: lang, block: block, command)
     )  
 
 // write a single entry to Julia REPL
@@ -42,7 +42,7 @@
 #let pkg(command, out, env: "@v1.10") = stack(
     dir: ttb,
     spacing: 0.6%,
-    repl_line(command, false, prompt: prompt_pkg(env)),
+    repl_line(command, false, prompt: prompt_pkg(env), lang: none),
     if out != none{
       raw(out)
     }

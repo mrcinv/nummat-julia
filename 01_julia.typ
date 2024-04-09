@@ -1,70 +1,60 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, jl, repl, code_box, pkg
+#import "julia.typ": jlb, jl, repl, code_box, pkg, blk
 
 = Uvod v programski jezik Julia
 
-V knjigi bomo za implementacijo algoritmov in ilustracijo uporabe izbrali
-programski jezik 
-#link("https://julialang.org/")[julia]. Zavoljo učinkovitega izvajanja, uporabe
+V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia]. Zavoljo
+učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov],
-#link(
-  "https://docs.julialang.org/en/v1/manual/methods/",
-)[funkcij specializiranih glede na signaturo]
-in dobre podporo za interaktivno uporabo, je #link("https://julialang.org/")[julia] zelo
-primerna za implementacijo numeričnih metod in ilustracijo njihove uporabe. V
-nadaljevanju sledijo kratka navodila, kako začeti z `julio` in si pripraviti
-delovno okolje v katerem bo pisanje kode steklo čim bolj gladko.
+#link("https://docs.julialang.org/en/v1/manual/methods/")[funkcij, specializiranih glede na signaturo],
+in dobre podpore za interaktivno uporabo, je Julia zelo primerna za programiranje numeričnih metod
+in ilustracijo njihove uporabe. V nadaljevanju sledijo kratka navodila, kako začeti z Julio.
 
-Cilji tega poglavja so
-- da se naučimo uporabljati Julio v interaktivni ukazni zanki,
-- da si pripravimo okolje za delo v programskem jeziku Julia,
-- da ustvarimo prvi paket in
-- da ustvarimo prvo poročilo v formatu PDF.
+Cilji tega poglavja so:
+- naučiti se uporabljati Julio v interaktivni ukazni zanki,
+- pripraviti okolje za delo v programskem jeziku Julia,
+- ustvariti prvi paket in
+- ustvariti prvo poročilo v formatu PDF.
 
-Tekom te vaje bomo pripravili svoj prvi paket v Juliji, ki bo vseboval
-parametrično enačbo #link(
-  "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
-)[Geronove lemniskate]. Napisali bomo teste, ki bodo preverili pravilnost
-funkcij v paketu. Nato bomo napisali skripto, ki uporabi funkcijo iz našega
-paketa in nariše sliko Geronove lemniskate. Na koncu bomo pripravili lično
-poročilo v formatu PDF. 
+Tekom te vaje bomo pripravili svoj prvi paket v Juliji, ki bo vseboval parametrično enačbo
+#link("https://sl.wikipedia.org/wiki/Geronova_lemniskata")[Geronove lemniskate], in napisali teste,
+ki bodo preverili pravilnost funkcij v paketu. Nato bomo napisali skripto, ki uporabi funkcije iz
+našega paketa in nariše sliko Geronove lemniskate. Na koncu bomo pripravili lično
+poročilo v formatu PDF.
 
 == Namestitev in prvi koraki
  
-Sledite #link("https://julialang.org/downloads/")[navodilom] in namestite
-programski jezik Julia. Nato lahko v terminalu poženete ukaz `julia`. Ukaz odpre
-interaktivno ukazno zanko (angl. _Read Eval Print Loop_ ali s kratico REPL) in v
-terminalu se pojavi ukazni poziv 
-#text(green)[`julia>`]. Za ukazni poziv lahko napišemo posamezne ukaze, ki jih
-nato `julia` prevede, izvede in izpiše rezultate. Poskusimo najprej s
-preprostimi izrazi
+Sledite #link("https://julialang.org/downloads/")[navodilom], namestite
+programski jezik Julia in v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
+(angl. _Read Eval Print Loop_ ali s kratico REPL) in v terminalu se pojavi ukazni pozivnik
+#text(green)[`julia>`]. Za ukazni pozivnik lahko napišemo posamezne ukaze, ki jih nato Julia
+prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
 
 #code_box[
   #repl("1 + 1", "2")
   #repl("sin(pi)", "0.0")
   #repl("x = 1; 2x + x^2", "3")
-  #repl("# vse kar je za znakom # je komentar, ki se ne izvede", "")
+  #repl("# vse, kar je za znakom #, je komentar, ki se ne izvede", "")
 ]
 
 === Funkcije
 
-Funkcije so v programskem jeziku Julia osnovne enote kode. Lahko jih definiramo
-na več načinov. Kratke funkcije, ki jih lahko definiramo v eni vrstici, lahko
-definiramo z izrazom ```jl ime(x) = ...```.
+Funkcije, ki so v programskem jeziku Julia osnovne enote kode, definiramo na več načinov. Kratke
+enovrstične funkcije definiramo z izrazom ```jl ime(x) = ...```.
 
 #code_box[
   #repl("f(x) = x^2 + sin(x)", "f (generic function with 1 method)")
   #repl("f(pi/2)", "3.4674011002723395")
 ]
-
-Funkcija ima lahko tudi več argumentov.
+#pagebreak()
+Funkcija z več argumentu definiramo podobno:
 
 #code_box[
   #repl("g(x, y) = x + y^2", "g (generic function with 1 method)")
   #repl("g(1, 2)", "5")
 ]
 
-Za funkcije, ki zahtevajo več kode, uporabimo ključno besedo ```jl function```.
+Za funkcije, ki zahtevajo več kode, uporabimo ključno besedo ```jl function```:
 
 #code_box[
   #repl(
@@ -74,37 +64,55 @@ Za funkcije, ki zahtevajo več kode, uporabimo ključno besedo ```jl function```
 end",
     "h (generic function with 1 method)",
   )
+  #repl("h(3, 4)", "49")
 ]
 
 Funkcije lahko uporabljamo kot vsako drugo spremenljivko. Lahko jih podamo kot
-argumente drugim funkcijam, združujemo v podatkovne strukture, kot so seznami,
+argumente drugim funkcijam in jih združujemo v podatkovne strukture, kot so seznami,
 vektorji ali matrike. Funkcije lahko definiramo tudi kot anonimne funkcije. To
-so funkcije, ki jih ne moremo poklicati po imenu, lahko pa jih podajamo kot
-argumente v druge funkcije.
+so funkcije, ki jih vpeljemo brez imena in jih kasneje tudi ne moremo poklicati po imenu.
 
 #code_box[
   #repl("(x, y) -> sin(x) + y", "#1 (generic function with 1 method)")
+]
+
+Anonimne funkcije uporabljamo predvsem kot argumente v drugih funkcijah. Funkcija 
+```jl map(f, v)``` na primer zahteva za prvi argument funkcijo `f`, ki jo nato aplicira na vsak
+element vektorja:
+
+#code_box[
   #repl("map(x -> x^2, [1, 2, 3])", "3-element Vector{Int64}:
   1
   4
   9")
 ]
 
+Vsaka funkcija v programskem jeziku Julia ima lahko več različnih definicij, glede na kombinacijo tipov argumentov, ki jih podamo. Posamezno 
+definicijo funkcije imenujemo
+#link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[metoda]. Ob klicu funkcije Julia izbere najprimernejšo metodo. 
+
+#code_box[
+  #repl("k(x::Number) = x^2", "k (generic function with 1 method)")
+  #repl("k(x::Vector) = x[1]^2 - x[2]^2", "k (generic function with 2 methods)")
+  #repl("k(2)","4")
+  #repl("k([1, 2, 3])", "-3")
+]
+
 === Vektorji in matrike
 
-Vektorje lahko vnesemo z oglatimi oklepaji ```jl []```:
+Vektorje vnesemo z oglatimi oklepaji ```jl []```:
 
 #code_box[
   #repl("v = [1, 2, 3]", "3-element Vector{Int64}:
   1
   2
   3")
-  #repl("v[1] # prvi indeks je 1", "1")
-  #repl("v[2:end] # zadnja dva elementa", "2-element Vector{Int64}:
+  #repl("v[1] # vrne prvo komponento vektorja", "1")
+  #repl("v[2:end] # vrne zadnji dve komponenti vektorja", "2-element Vector{Int64}:
   2
   3")
   #repl(
-    "sin.(v) # funkcije lahko apliciramo na elementih (operator .)",
+    "sin.(v) # funkcijo uporabimo na komponentah vektorja, če imenu dodamo .",
     "3-element Vector{Float64}:
   0.8414709848078965
   0.9092974268256817
@@ -113,22 +121,29 @@ Vektorje lahko vnesemo z oglatimi oklepaji ```jl []```:
 ]
 
 Matrike vnesemo tako, da elemente v vrstici ločimo s presledki, vrstice pa s
-podpičji.
+podpičji:
 
 #code_box[
   #repl("M = [1 2 3; 4 5 6]", "2×3 Matrix{Int64}:
   1  2  3
   4  5  6
 ")
+]
+
+Za razpone indeksov uporabimo ```jl :```, s ključno besedo ```jl end``` označimo zadnji indeks. Julia avtomatično določi razpon indeksov v matriki:
+
+#code_box[
   #repl("M[1, :] # prva vrstica", "3-element Vector{Int64}:
   1
   2
   3")
+  #repl("M[2:end, 1:end-1]", "1×2 Matrix{Int64}:
+ 4  5")
 ]
 
-Osnovne operacije delujejo tudi za vektorje in matrike. Pri tem moramo vedeti,
-da gre za matrične operacije. Tako je `*` operacija množenja matrik ali matrike
-z vektorjem. In ne morda množenja po komponentah.
+Osnovne operacije delujejo tudi na vektorjih in matrikah. Pri tem moramo vedeti,
+da gre za matrične operacije. Tako je na primer `*` operacija množenja matrik ali matrike
+z vektorjem in ne morda množenja po komponentah.
 
 #code_box[
   #repl(
@@ -139,7 +154,7 @@ z vektorjem. In ne morda množenja po komponentah.
   )
 ]
 
-Če želimo operacije izvajati po komponentah, moramo pred operator dodati piko.
+Če želimo operacije izvajati po komponentah, moramo pred operator dodati piko, na kar nas Julia opozori z napako:
 
 #code_box[
 #repl(
@@ -152,45 +167,79 @@ For element-wise addition, use broadcasting with dot syntax: array .+ scalar",)
 ]
 
 Posebej uporaben je operator `\`, ki poišče rešitev sistema linearnih enačb.
-Izraz ```jl A\b``` vrne rešitev matričnega sistema $A x = b$. Operator `\`
-deluje za veliko različnih primerov. Med drugim ga lahko uporabimo tudi za
-iskanje rešitve pre-določenega sistema po metodi najmanjših kvadratov.
+Izraz ```jl A\b``` vrne rešitev matričnega sistema $A x = b$:
+
 #code_box[
-  #repl("A = [1 2; 3 4];", "")
+  #repl("A = [1 2; 3 4]; # podpičje prepreči izpis rezultata", "")
   #repl(
     "x =  A \ [5, 6] # rešimo enačbo A * x = [5, 6]",
     "2-element Vector{Float64}:
   -3.9999999999999987
   4.499999999999999",
   )
-  #repl("A * x # preskus", "2-element Vector{Float64}:
+]
+
+Izračun se izvede v aritmetiki s plavajočo vejico, zato pride do zaokrožitvenih napak in 
+rezultat ni povsem točen. Naredimo še preizkus:
+#code_box[
+  #repl("A * x", "2-element Vector{Float64}:
   5.0
   6.0")
 ]
 
+Operator `\` deluje za veliko različnih primerov. Med drugim ga 
+lahko uporabimo tudi za iskanje rešitve pre-določenega sistema po metodi najmanjših kvadratov:
+
+#code_box[
+  #repl("[1 2; 3 1; 2 2] \ [1, 2, 3] # rešitev za predoločen sistem", "2-element Vector{Float64}:
+ 0.5999999999999999
+ 0.5111111111111114")
+]
+
+=== Moduli
+
+#link("https://docs.julialang.org/en/v1/manual/modules/")[Moduli] pomagajo organizirati 
+funkcije v enote in omogočajo uporabo istega imena za različne funkcije in tipe. Module definiramo z ```jl module ImeModula ... end```:
+
+#code_box[
+  #repl("module KrNeki
+  kaj(x) = x + sin(x)
+  čaj(x) = cos(x) - x
+  export kaj
+end", "Main.KrNeki")
+]
+
+Če želimo funkcije, ki so definirane v modulu ```jl ImeModula```, uporabiti izven modula, moramo modul naložiti z ```jl using ImeModula```. Funkcije, ki so izvožene z ukazom ```jl export ime_funkcije``` lahko kličemo kar po imenu, ostalim funkcijam pa moramo dodati ime modula kot predpono. Modulom, ki niso del paketa in so definirani lokalno, moramo dodati piko, ko jih naložimo: 
+
+#code_box[
+  #repl("using .KrNeki", "")
+  #repl("kaj(1)", "1.8414709848078965")
+  #repl("KrNeki.čaj(1)", "-0.45969769413186023")
+]
+
+Modul lahko naložimo tudi z ukazom ```jl import ImeModula```. 
+V tem primeru moramo vsem funkcijam iz modula dodati ime modula in piko kot predpono.
+
 === Paketi
 
-Nabor funkcij, ki so na voljo v Juliji, je omejen. Dodatne funkcije lahko
-naložimo iz knjižnic. Knjižnica funkcij v Juliji se imenuje paket. Funkcije v
-paketu so združene v #link("https://docs.julialang.org/en/v1/manual/modules/")[module].
+Nabor funkcij, ki so na voljo v Juliji, je omejen, zato pogosto uporabimo knjižnice, ki vsebujejo dodatne funkcije. Knjižnica funkcij v Juliji se imenuje #link("https://julialang.org/packages/")[paket]. Funkcije v paketu so združene v modul, ki ima isto ime kot paket.
 
 Julia ima vgrajen upravljalnik s paketi, ki omogoča dostop do paketov, ki so del
 Julije, kot tudi tistih, ki jih prispevajo uporabniki. Poglejmo si primer, kako
 uporabiti ukaz `norm`, ki izračuna različne norme vektorjev in matrik. Ukaz
-`norm` ni del osnovnega nabora, ampak je del modula `LinearAlgebra`, ki je
+`norm` ni del osnovnega nabora funkcij, ampak je del modula `LinearAlgebra`, ki je že
 vključen v program Julia. Če želimo uporabiti `norm`, moramo najprej uvoziti
-definicije iz modula `LinearAlgebra`.
+funkcije iz modula `LinearAlgebra` z ukazom ```jl using LinearAlgebra```:
 
 #code_box[
   #repl("norm([1, 2, 3]", "ERROR: UndefVarError: `norm` not defined")
   #repl("using LinearAlgebra", none)
-  #repl("norm([1, 2, 3]", "3.7416573867739413")
+  #repl("norm([1, 2, 3])", "3.7416573867739413")
 ]
 
 Če želimo uporabiti pakete, ki niso del osnovnega jezika Julia, jih moramo
-prenesti iz interneta. Za to uporabimo modul `Pkg`. Paketom je namenjen poseben
-paketni način vnosa v ukazni zanki. Do paketnega načina pridemo, če v ukazni
-zanki vpišemo znak `]`.
+prenesti z interneta. Za to uporabimo modul `Pkg`. Paketom je namenjen poseben
+paketni način vnosa v ukazni zanki. Do paketnega načina pridemo, če za pozivnik vnesemo znak `]`.
 
 #opomba(
   naslov: [Različni načini ukazne zanke],
@@ -205,31 +254,34 @@ opravilom.
   pomoč pridemo z znakom `?`.
 - Lupinski način s pozivom #text(red)[`shell>`] je namenjen izvajanju ukazov v
   sistemski lupini. V lupinski način vstopimo z znakom `;`.
+- Iz posebnih načinov pridemo nazaj v osnovni način s pritiskom na vračalko(⌫). 
 ]
 
-Oglejmo si, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl].
-Najprej aktiviramo paketni način z vnosom znaka `]` v ukazno zanko. Nato paket
+Oglejmo si še, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl].
+Najprej aktiviramo paketni način z vnosom znaka `]` za pozivnikom. Nato paket
 dodamo z ukazom `add`.
 
 #code_box[
   #pkg("add Plots", "...")
-  #repl("using Plots", none)
+  #repl("using Plots # naložimo modul s funkcijami iz paketa", none)
   #repl(
-    "plot(x -> x - x^2, -1, 2, title=\"Graf y(x) = x - x^2 na [-1,2]\")",
+    blk("scripts/01_julia.jl","# 01plot"),
     none,
   )
 ]
 
+#figure(
+  image("img/01_graf.svg", width: 60%)
+)
+
 === Datoteke s kodo
 
 Kodo lahko zapišemo tudi v datoteke. Vnašanje ukazov v interaktivni zanki je
-lahko uporabno namesto kalkulatorja. Vendar je za resnejše delo bolje kodo
-shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku Julia končnico
-`.jl`. Definicije funkcij in ukaze zapišemo v tekstovno datoteko s končnico
+uporabno za preproste ukaze na primer namesto kalkulatorja, za resnejše delo pa je bolje kodo shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku Julia končnico
 `.jl`. 
 
-Napišimo preprost skript. Ukaze, ki smo jih vnesli doslej, shranite v datoteko z
-imenom `uvod.jl`. Ukaze iz datoteke poženemo z ukazom v ukazni zanki:
+Napišimo preprost skript. Ukaze, ki smo jih vnesli doslej, shranimo v datoteko z
+imenom `demo.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
 
 #code_box[
   #repl("include(\"demo.jl\")", "")
@@ -242,15 +294,15 @@ ali pa v lupini operacijskega sistema:
 ]
 
 #opomba(
-  naslov: [Urejevalniki in programska okolja za _julio_],
+  naslov: [Urejevalniki in programska okolja za Julijo],
   [
-  Za lažje delo z datotekami s kodo potrebujete dober urejevalnik golega besedila,
+  Za lažje delo z datotekami s kodo potrebujemo dober urejevalnik besedila,
   ki je namenjen programiranju. Če še nimate priljubljenega urejevalnika,
   priporočam #link("https://code.visualstudio.com/")[VS Code] in #link("https://www.julia-vscode.org/")[razširitev za Julio]. 
    
-  Če odprete datoteko s kodo v urejevalniku VsCode, lahko s kombinacijo tipk
+  Če odprete datoteko s kodo v urejevalniku VS Code, lahko s kombinacijo tipk
   `Ctrl + Enter` posamezno vrstico kode
-  pošljemo v ukazno zanko za Julio, da se izvede. Na ta način, združimo prednosti
+  pošljemo v ukazno zanko za Julio, da se izvede. Na ta način združimo prednosti
   interaktivnega dela in zapisovanja kode v datoteke `.jl`.
   ],
 )
@@ -260,13 +312,12 @@ kako organizirati datoteke s kodo tako, da lahko čim več kode ponovno uporabim
 
 == Priprava delovnega okolja
 
-Med razvojem, se datoteke s kodo nenehno spreminjajo, zato je treba kodo v
-interaktivni zanki vseskozi posodabljati. Paket 
+Z vsako spremembo je treba kodo v interaktivni zanki posodobiti. Paket 
 #link("https://timholy.github.io/Revise.jl")[Revise.jl] poskrbi za to, da se
-nalaganje zgodi avtomatično, ko se datoteke spremenijo. Zato najprej namestimo
-paket _Revise_ in poskrbimo, da se zažene ob vsakem zagonu interaktivne zanke.
+nalaganje zgodi avtomatično vsakič, ko se datoteke spremenijo. Zato namestimo
+paket Revise in poskrbimo, da se zažene ob vsakem zagonu interaktivne zanke.
 
-Odprite julia in sledite ukazom spodaj.
+V terminalu poženite program Julia. Naslednji ukazi namestijo paket Revise, ustvarijo mapo `$HOME/.julia/config` in datoteko `startup,jl`, ki naloži paket Revise in se izvede ob vsakem zagonu programa `julia`:
 
 #code_box[
   #repl("# pritisnemo ], da pridemo v paketni način", none)
@@ -286,81 +337,55 @@ end
   #repl("write(path * \"/startup.jl\", startup) # zapišemo startup.jl", none)
 ]
 
+Okolje za delo z Julio je pripravljeno.
 
-Zgornji ukazi ustvarijo mapo `$HOME/.julia/config` in datoteko
-`startup,jl`, ki se izvede ob vsakem zagonu programa `julia`. Okolje za delo z
-Julio je pripravljeno.
+== Priprava korenske mape
 
-== Priprava mape s kodo
-
-V nadaljevanju bomo pripravili mapo, v kateri bomo hranili datoteke s kodo.
-Datoteke bomo organizirali tako, da bo vsaka vaja 
-#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket] v svoji
-mapi, korenska mapa pa bo služila kot
-#link("https://pkgdocs.julialang.org/v1/environments/")[delovno okolje]. Za več informacij 
-o načinu dela si oglejte #link("https://docs.julialang.org/en/v1/manual/workflow-tips/")[nasvete za delo z Julijo].
-
-
-#opomba(
-  naslov: [Razlika med paketom in delovnim okoljem],
-)[
-Julia v datoteki `Project.toml` hrani odvisnosti od paketov. Vsaka mapa, ki
-vsebuje datoteko `Project.toml` je bodisi #link("https://pkgdocs.julialang.org/v1/environments/")[delovno okolje],
-bodisi #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket].
-Delovno okolje je namenjeno interaktivnemu delu ali programom, medtem ko je
-paket namenjen predvsem deljenju funkcij med različnim projekti.
-]
-
-Pripravimo najprej korensko mapo. Imenovali jo bomo `nummat-julia`, lahko si pa
-izberete tudi drugo ime.
+Pripravimo najprej korensko mapo, v kateri bomo hranili vse programe, ki jih bomo napisali v nadaljevanju. Imenovali jo bomo `nummat`:
 
 #code_box[
 ```sh
-$ mkdir nummat-julia
-$ cd nummat-julia
-$ julia
+$ mkdir nummat
 ```
 ]
 
-Nato v korenski mapi pripravimo 
-#link("https://pkgdocs.julialang.org/v1/environments/")[okolje s paketi] in
-dodamo nekaj paketov, ki jih bomo potrebovali pri delu v interaktivni zanki.
+Korenska mapa bo služila kot #link("https://pkgdocs.julialang.org/v1/environments/")[projektno okolje], v katerem bodo zabeleženi vsi paketi, ki jih bomo potrebovali.
 
 #code_box[
-  #pkg("pkg> activate . # pripravimo virtualno okolje v korenski mapi", "") 
+  ```sh
+$ cd nummat
+$ julia
+```
+  #repl("# s pritiskom na ] vključimo paketni način", none)
+  #pkg("activate . # pripravimo projektno okolje v korenski mapi", none) 
+  #pkg("", none, env: "nummat")
 ]
 
-Zgornji ukaz ustvari datoteko `Project.toml` v mapi `nummat-julia`. Delovnemu
-okolju dodamo pakete, ki jih bomo potrebovali v nadaljevanju. Zaenkrat je to le
-paket `Plots`.
-
-#code_box[
-  #pkg("add Plots", "", env: "nummat-julia")
-]
-
+Zgornji ukaz ustvari datoteko `Project.toml` in pripravi novo projektno okolje v mapi `nummat`.
 
 #opomba(
-  naslov: [Na mojem računalniku pa koda dela!],
-  [
-  Izjava #quote[Na mojem računalniku pa koda dela!]
-  je postala sinonim za #link(
-    "https://sl.wikipedia.org/wiki/Obnovljivost",
-  )[problem ponovljivosti rezultatov], ki jih generiramo z računalnikom. Eden od
-  mnogih faktorjev, ki vplivajo na ponovljivost, je tudi dostop do zunanjih
-  knjižnic/paketov, ki jih naša koda uporablja in jih ponavadi ne hranimo skupaj s
-  kodo. V `julii` lahko pakete, ki jih potrebujemo, deklariramo v datoteki
-  `Project.toml`. Vsak direktorij, ki vsebuje datoteko `Project.toml` definira
-  bodisi #link("https://pkgdocs.julialang.org/v1/environments/")[delovno okolje] ali
-  pa #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket] in
-  omogoča, da preprosto obnovimo vse zunanje pakete, od katerih je odvisna naša
-  koda.
-   
-  Za ponovljivost sistemskega okolja, lahko uporabimo #link("https://www.docker.com/")[docker], #link("https://nixos.org/")[NixOS] ali #link("https://guix.gnu.org/")[GNU Guix].
-  ],
-)
+  naslov: [Projektno okolje v Juliji],
+)[Vsako projektno okolje vsebuje datoteko `Project.toml` z informacijami o paketih in zahtevanih različicah paketov, ki jih lahko naložimo z ```jl using X```.  Projektno okolje aktiviramo z ukazom ```jl Pkg.activate("pot/do/mape/z/okoljem")``` oziroma v paketnem načinu z:
 
-Priporočljivo je uporabiti tudi program za vodenje različic #link("https://git-scm.com/")[Git].
-Z naslednjim ukazom v mapi `nummat-julia` ustvarimo repozitorij za `git` in
+#code_box[
+#pkg("activate pot/do/mape/z/okoljem", none)
+]
+
+Uporaba projektnega okolja delno rešuje problem #link(
+    "https://sl.wikipedia.org/wiki/Obnovljivost",
+  )[ponovljivosti], ki ga najlepše ilustriramo z izjavo #quote[Na mojem računalniku pa koda dela!]. Projektno okolje namreč vsebuje tudi datoteko `Manifest.toml`, ki hrani različice in kontrolne vsote za pakete iz `Project.toml` in vse njihove odvisnosti. Ta informacija omogoča, da Julia naloži vedno iste različice vseh odvisnosti, kot v času, ko je bila datoteka `Manifest.toml` zadnjič posodobljena.
+
+Projektna okolja v Juliji so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].]
+
+Projektnemu okolju dodamo pakete, ki jih bomo potrebovali v nadaljevanju. Zaenkrat je to le
+paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki omogoča risanje grafov:
+
+#code_box[
+  #pkg("add Plots", "", env: "nummat")
+]
+
+Zelo priporočamo uporabo programa za vodenje različic #link("https://git-scm.com/")[Git].
+Z naslednjim ukazom v mapi `nummat` ustvarimo repozitorij za `git` in
 registriramo novo ustvarjene datoteke.
 
 #code_box[
@@ -389,7 +414,7 @@ za programsko kodo na primer #link("https://github.com/")[Github] ali
 == Priprava paketa za vajo
 
 Ob začetku vsake vaje si bomo v mapi, ki smo jo ustvarili v prejšnjem poglavju
-(`nummat-julia`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
+(`nummat`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
 v katerem bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave
 paketa za vsako vajo posebej, se bomo naučili, kako hitro začeti s projektom.
 Obenem bomo optimizirali način dela (angl. workflow), da bo pri delu čim manj
@@ -397,20 +422,20 @@ nepotrebnih motenj.
 
 #code_box[
 ```shell
-$ cd nummat-julia
+$ cd nummat
 $ julia
 ```
 #pkg("generate Vaja00", none) 
 #pkg("activate . ", none)
 #pkg(
-  "develop ./Vaja00 # paket dodamo delovnemu okolju",
+  "develop ./Vaja00 # paket dodamo projektnemu okolju",
   none,
-  env: "nummat-julia",
+  env: "nummat",
 )
 ]
 
 
-Zgornji ukazi ustvarijo direktorij `Vaja00` z osnovno strukturo 
+Zgornji ukazi ustvarijo mapo `Vaja00` z osnovno strukturo 
 #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Juliji].
 
 #code_box[
@@ -593,7 +618,7 @@ Test Summary: | Pass  Total  Time
 Koordinata x  |    2      2  0.1s
 Test Summary: | Pass  Total  Time
 Koordinata y  |    2      2  0.0s
-     Testing Vaja00 tests passed", env:"nummat-julia") 
+     Testing Vaja00 tests passed", env:"nummat") 
 ] 
 
 == Dokumentacija

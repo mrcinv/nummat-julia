@@ -12,7 +12,7 @@
 )
 #let admtitle(type, title) = emph[#smallcaps(type) #h(1em) #title]
 #let opomba(naslov: none, content) = admonition(
-  title: admtitle("Opomba!", naslov),
+  title: emph(naslov),
   color: lime.desaturate(40%),
   content,
 )

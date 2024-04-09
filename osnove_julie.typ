@@ -60,7 +60,7 @@ REPL način paketov (`pkg>`):
 #rect([
   ```jl
   if 1 == 2
-    println("Ena je enako dva.")
+    print("Ena je enako dva.")
   end
   ```
   ])
