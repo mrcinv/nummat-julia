@@ -206,5 +206,6 @@ $ git push -u origin domaca-1
 Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na Githubu/Gitlabu. Nato na 
 Githubu ustvarite zahtevo za združitev (angl. Pull request). 
 - Kliknete na zavihek `Pull requests` in nato na zelen gumb `Create pull request`.
-- Na desni strani izberete vejo `domaca-1` in kliknete na gumb `Create`
-- v komentarju za novo ustvarjeno zahtevo me povabite k pregledu.To storite tako, da v komentar dodate moje uporabniško `@mrcinv` ime npr `@mrcinv Prosim za pregled.`. 
+- Na desni strani izberete vejo `domaca-1` in kliknete na gumb `Create draft pull request`.
+- Ko je koda pripravljena na pregled, kliknite na gumb `Ready for review`.
+- V komentarju za novo ustvarjeno zahtevo me povabite k pregledu.To storite tako, da v komentar dodate moje uporabniško `@mrcinv` ime npr `@mrcinv Prosim za pregled.`. 
