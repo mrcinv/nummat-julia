@@ -1,4 +1,5 @@
-#import "admonitions.typ": admonition, admtitle
+#import "admonitions.typ": admonition, admtitle, opomba
+
 #let dobro(naslov, vsebina) = {
   let title = admtitle("Dobro!", naslov)
   admonition(title: title, color: lime.desaturate(40%), vsebina)
@@ -209,3 +210,9 @@ Githubu ustvarite zahtevo za združitev (angl. Pull request).
 - Na desni strani izberete vejo `domaca-1` in kliknete na gumb `Create draft pull request`.
 - Ko je koda pripravljena na pregled, kliknite na gumb `Ready for review`.
 - V komentarju za novo ustvarjeno zahtevo me povabite k pregledu.To storite tako, da v komentar dodate moje uporabniško `@mrcinv` ime npr `@mrcinv Prosim za pregled.`. 
+
+#opomba(naslov: [Pri domačih nalogah se posvetujte s kolegi])[
+Nič ni narobe, če za pomoč pri domači nalogi prosite kolega. Seveda morate kodo in poročilo napisati samo, lahko pa kolega prosite za pregled ali za pomoč, če vam kaj ne dela. 
+
+Domačo nalogo tudi napišete v skupini, vendar morate v tem primeru rešiti toliko različnih nalog, kot je študentov v skupini.
+]
