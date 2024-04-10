@@ -191,3 +191,20 @@ dodamo argument ```jl coverage=true``` metodi `Pkg.test`:
 import Pkg Pkg.test("DomacaXY"; coverage=true) ```
 
 Za poročanje o pokritosti kode lahko uporabite paket #link("https://github.com/JuliaCI/Coverage.jl")[Coverage.jl].
+
+== Priprava zahteve za združitev na Github
+
+Za lažjo komunikacijo predlagam, da rešitev domače naloge postavite v svojo vejo in ustvarite zahtevo za združitev (_Pull request_ na Githubu oziroma _Merge request_ na Gitlabu). V nadaljevanju bomo opisali, kako to storiti, če repozitorij z domačimi nalogami gostite na Githubu. Postopek za Gitlab in druge platforme je podoben.
+
+Najprej ustvarite vejo na svoji delovni kopiji repozitorija in jo potisnete na 
+Github ali Gitlab. Ime veje naj bo `domača-X`, se pravi `domaca-1` za 1. domačo nalogo in tako naprej. To storite z ukazom
+
+```sh
+$ git checkout -b domaca-1
+$ git push -u origin domaca-1
+```
+Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na Githubu/Gitlabu. Nato na 
+Githubu ustvarite zahtevo za združitev (angl. Pull request). 
+- Kliknete na zavihek `Pull requests` in nato na zelen gumb `Create pull request`.
+- Na desni strani izberete vejo `domaca-1` in kliknete na gumb `Create`
+- v komentarju za novo ustvarjeno zahtevo me povabite k pregledu.To storite tako, da v komentar dodate moje uporabniško `@mrcinv` ime npr `@mrcinv Prosim za pregled.`. 
