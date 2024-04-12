@@ -1,7 +1,7 @@
 #' # Geronova lemniskata
 #' Komentarji, ki se začnejo s `#'` se prevedejo v Markdown in 
 #' v PDF dokumentu nastopajo kot tekst.
-using Vaja00
+using Vaja01
 #' Krivuljo narišemo tako, da koordinati tabeliramo za veliko število parametrov. 
 t = range(-5, 5, 300) # generiramo zaporedje 300 vrednosti na [-5, 5]
 x = lemniskata_x.(t) # funkcijo apliciramo na elemente zaporedja

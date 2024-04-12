@@ -1,4 +1,4 @@
-using Vaja00, Test
+using Vaja01, Test
 
 @testset "Koordinata x" begin
   @test lemniskata_x(1.0) ≈ 0.0

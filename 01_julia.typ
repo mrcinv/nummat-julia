@@ -308,7 +308,8 @@ ali pa v lupini operacijskega sistema:
 )
 
 Priporočam, da večino kode napišete v datoteke. V nadaljevanju bomo spoznali,
-kako organizirati datoteke s kodo tako, da lahko čim več kode ponovno uporabimo.
+kako organizirati datoteke v projekte in pakete tako, da lahko kodo uporabimo na več 
+mestih.
 
 == Priprava delovnega okolja
 
@@ -365,7 +366,7 @@ Zgornji ukaz ustvari datoteko `Project.toml` in pripravi novo projektno okolje v
 
 #opomba(
   naslov: [Projektno okolje v Juliji],
-)[Vsako projektno okolje vsebuje datoteko `Project.toml` z informacijami o paketih in zahtevanih različicah paketov, ki jih lahko naložimo z ```jl using X```.  Projektno okolje aktiviramo z ukazom ```jl Pkg.activate("pot/do/mape/z/okoljem")``` oziroma v paketnem načinu z:
+)[Projektno okolje je mapa, ki vsebuje datoteko `Project.toml` z informacijami o paketih in zahtevanih različicah paketov.  Projektno okolje aktiviramo z ukazom ```jl Pkg.activate("pot/do/mape/z/okoljem")``` oziroma v paketnem načinu z:
 
 #code_box[
 #pkg("activate pot/do/mape/z/okoljem", none)
@@ -375,7 +376,8 @@ Uporaba projektnega okolja delno rešuje problem #link(
     "https://sl.wikipedia.org/wiki/Obnovljivost",
   )[ponovljivosti], ki ga najlepše ilustriramo z izjavo #quote[Na mojem računalniku pa koda dela!]. Projektno okolje namreč vsebuje tudi datoteko `Manifest.toml`, ki hrani različice in kontrolne vsote za pakete iz `Project.toml` in vse njihove odvisnosti. Ta informacija omogoča, da Julia naloži vedno iste različice vseh odvisnosti, kot v času, ko je bila datoteka `Manifest.toml` zadnjič posodobljena.
 
-Projektna okolja v Juliji so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].]
+Projektna okolja v Juliji so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].
+]
 
 Projektnemu okolju dodamo pakete, ki jih bomo potrebovali v nadaljevanju. Zaenkrat je to le
 paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki omogoča risanje grafov:
@@ -384,7 +386,21 @@ paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki omogoča ris
   #pkg("add Plots", "", env: "nummat")
 ]
 
-Zelo priporočamo uporabo programa za vodenje različic #link("https://git-scm.com/")[Git].
+== Vodenje različic s programom Git
+
+Priporočamo uporabo programa za vodenje različic #link("https://git-scm.com/")[Git]. V nadaljevanju bomo opisali, kako pripraviti v korenski mapi `nummat` pripraviti Git repozitorij in vpisati datoteke, ki smo jih do sedaj ustvarili.
+
+#opomba(naslov: [Sistem za vodenje različic Git])[
+  #link("https://git-scm.com/")[Git] je sistem za vodenje različic, ki je postal _de facto_
+standard v razvoju programske opreme pa tudi drugod, kjer se dela s tekstovnimi
+datotekami. Priporočamo, da si bralec ustvari svoj Git repozitorij, kjer si uredi
+kodo in zapiske, ki jo bo napisal pri spremljanju te knjige. 
+
+Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, ali pa ga repliciramo na lastnem strežniku ali na enem od javnih spletnih skladišč
+programske kode, na primer #link("https://github.com/")[Github] ali
+#link("https://gitlab.com/")[Gitlab].]
+
+
 Z naslednjim ukazom v mapi `nummat` ustvarimo repozitorij za `git` in
 registriramo novo ustvarjene datoteke.
 
@@ -396,58 +412,51 @@ $ git commit -m "Začetni vpis"
 ```
 ]
 
-Priporočam pogosto beleženje sprememb z `git commit`. Pogoste potrditve (angl.
-commit) olajšajo pregledovanje sprememb in spodbujajo k razdelitvi dela na
-majhne zaključene probleme, ki so lažje obvladljivi.
-
-#opomba(naslov: [Sistem za vodenje različic Git])[
-  #link("https://git-scm.com/")[Git] je sistem za vodenje različic, ki je postal _de facto_
-standard v razvoju programske opreme pa tudi drugod, kjer se dela s tekstovnimi
-datotekami. Predlagam, da si bralec naredi svoj Git repozitorij, kjer si uredi
-kodo in zapiske, ki jo bo napisal pri spremljanju te knjige. Git repozitorij
-lahko hranimo zgolj lokalno na lastnem računalniku. Če želimo svojo kodo deliti
-ali pa zgolj hraniti varnostno kopijo, ki je dostopna na internetu, lahko
-repozitorij repliciramo na lastnem strežniku ali na enem od javnih spletnih skladišč
-za programsko kodo na primer #link("https://github.com/")[Github] ali
-#link("https://gitlab.com/")[Gitlab].]
+Z ukazoma `git status` in `git diff` lahko pregledamo, kaj se je spremenilo od zadnjega vpisa. Ko smo zadovoljni s spremembami, jih zabeležimo z ukazoma `git add` in `git commit`. Priporočamo redno uporabo ukaza `git commit`. Pogosti vpisi namreč precej olajšajo nadzor nad spremembami kode in spodbujajo k razdelitvi dela na majhne zaključene probleme, ki so lažje obvladljivi.
 
 == Priprava paketa za vajo
 
-Ob začetku vsake vaje si bomo v mapi, ki smo jo ustvarili v prejšnjem poglavju
-(`nummat`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
+Ob začetku vsake vaje bomo v korenski mapi (`nummat`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
 v katerem bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave
-paketa za vsako vajo posebej, se bomo naučili, kako hitro začeti s projektom.
-Obenem bomo optimizirali način dela (angl. workflow), da bo pri delu čim manj
-nepotrebnih motenj.
+paketa za vsako vajo posebej se bomo naučili, kako hitro začeti s projektom.
+Obenem bomo optimizirali način dela (angl. workflow) in odpravili ozka grla v postopkih priprave projekta. Ponavljanje vedno istih postopkov nas prisili, da postopke kar se da poenostavimo in ponavljajoča se opravila avtomatiziramo. Na dolgi rok se tako lahko bolj posvečamo dejanskemu reševanju problemov.
+
+V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo prestavili vso kodo, ki jo bomo napisali v tem poglavju. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
 
 #code_box[
 ```shell
 $ cd nummat
 $ julia
 ```
-#pkg("generate Vaja00", none) 
-#pkg("activate . ", none)
-#pkg(
-  "develop ./Vaja00 # paket dodamo projektnemu okolju",
-  none,
-  env: "nummat",
-)
+#repl(" # pritisnemo ] za vstop v paketni način", none)
+#pkg("generate Vaja01", none)
 ]
 
-
-Zgornji ukazi ustvarijo mapo `Vaja00` z osnovno strukturo 
-#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Juliji].
+Ukaz `generate` ustvari mapo `Vaja01` z osnovno strukturo 
+#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Juliji]:
 
 #code_box[
 ```shell
-$ tree Vaja00
-Vaja00
+$ tree Vaja01
+Vaja01
 ├── Project.toml
 └── src
-    └── Vaja00.jl
+    └── Vaja01.jl
 
 1 directory, 2 files
 ```
+]
+
+
+Paket nato dodamo v projektno okolje v korenski mapi `nummat`:
+
+#code_box[ 
+#pkg("activate . ", none)
+#pkg(
+  "develop ./Vaja01 # paket dodamo projektnemu okolju",
+  none,
+  env: "nummat",
+)
 ]
 
 
@@ -462,18 +471,18 @@ pripravljene šablone
 enostavnosti, bomo v sklopu te knjige projekte ustvarjali s `Pkg.generate`.
 ]
 
-Paketu `Vaje00` dodamo še teste, skripte in README dokument, tako da bo imela mapa naslednjo strukturo.
+Paketu `Vaja01` dodamo še teste, skripte in README dokument, tako da bo imela mapa naslednjo strukturo.
 
 #code_box[
 ```shell
-$ tree Vaje00
-Vaje00
+$ tree Vaja01
+Vaja01
 ├── Manifest.toml
 ├── Project.toml
 ├── doc
 │   └── demo.jl
 ├── src
-│   └── Vaja00.jl
+│   └── Vaja01.jl
 └── test
     └── runtests.jl
 ```
@@ -481,7 +490,7 @@ Vaje00
 
 == Koda
 
-Ko je mapa s paketom `Vaja00` pripravljena, lahko začnemo s pisanjem kode. Za vajo bomo narisali 
+Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo s pisanjem kode. Za vajo bomo narisali 
 #link(
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
 )[Geronove lemniskato]. Najprej definiramo koordinatne funkcije
@@ -491,34 +500,34 @@ $
   y(t) = 2t(t^2 - 1) / (t^2 + 1)^2.
 $
 
-Definicije shranimo v datoteki `Vaja00/src/Vaja00.jl`.
+Definicije shranimo v datoteki `Vaja01/src/Vaja01.jl`.
 
 #figure(
-  code_box(raw(lang: "jl", block: true, read("Vaja00/src/Vaja00.jl"))),
-  caption: [Vsebina datoteke `Vaja00.jl`.],
+  code_box(raw(lang: "jl", block: true, read("Vaja01/src/Vaja01.jl"))),
+  caption: [Vsebina datoteke `Vaja01.jl`.],
 )
 
 V ukazni zanki lahko sedaj pokličemo novo definirani funkciji.
 
 #code_box[
 #pkg("activate .", none)
-#repl("using Vaja00", none)
+#repl("using Vaja01", none)
 #repl("lemniskata_x(1.2)", "0.180327868852459")
 ]
 
-Nadaljujemo šele, ko se prepričamo, da lahko pokličemo funkcije iz paketa `Vaja00`.
+Nadaljujemo šele, ko se prepričamo, da lahko pokličemo funkcije iz paketa `Vaja01`.
 
-Kodo, ki bo sledila, bomo sedaj pisali v scripto `Vaja00\doc\demo.jl`. 
+Kodo, ki bo sledila, bomo sedaj pisali v scripto `Vaja01\doc\demo.jl`. 
 
 #figure(
-  code_box(jl("Vaja00/doc/demo.jl", 4, 11)), 
+  code_box(jl("Vaja01/doc/demo.jl", 4, 11)), 
   caption: [Vsebina datoteke `demo.jl`]
 )
 
 Skripto poženemo z ukazom:
 
 #code_box[
-#repl("include(\"Vaja00/doc/demo.jl\")", none)
+#repl("include(\"Vaja01/doc/demo.jl\")", none)
 ]
 
 Rezultat je slika lemniskate.
@@ -574,8 +583,8 @@ ju definirali:
 
 #figure(
   code_box(
-  raw(read("Vaja00/test/runtests.jl"), lang: "jl")),
-  caption: [Testi za paket `Vaja00`],
+  raw(read("Vaja01/test/runtests.jl"), lang: "jl")),
+  caption: [Testi za paket `Vaja01`],
 )
 
 Za primerjavo rezultatov smo uporabili operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].
@@ -598,19 +607,19 @@ Za primerjavo rezultatov smo uporabili operator `≈`, ki je alias za funkcijo #
 
 Preden lahko poženemo teste, moramo ustvariti testno okolje. Sledimo #link(
   "https://docs.julialang.org/en/v1/stdlib/Test/#Workflow-for-Testing-Packages",
-)[priporočilom za testiranje paketov]. V mapi `Vaje00/test` ustvarimo novo
+)[priporočilom za testiranje paketov]. V mapi `Vaja01/test` ustvarimo novo
 okolje in dodamo paket `Test`.
 
 #code_box[
-#pkg("activate Vaje00/test", none)
+#pkg("activate Vaja01/test", none)
 #pkg("add Test", none, env: "test")
 #pkg("activate .", none, env: "test")
 ]
 
-Teste poženemo tako, da v paketnem načinu poženemo ukaz `test Vaja00`.
+Teste poženemo tako, da v paketnem načinu poženemo ukaz `test Vaja01`.
 
 #code_box[
-#pkg("test Vaja00", "Testing Vaja00 
+#pkg("test Vaja01", "Testing Vaja01 
      Testing Running tests
      ...
      ...
@@ -618,7 +627,7 @@ Test Summary: | Pass  Total  Time
 Koordinata x  |    2      2  0.1s
 Test Summary: | Pass  Total  Time
 Koordinata y  |    2      2  0.0s
-     Testing Vaja00 tests passed", env:"nummat") 
+     Testing Vaja01 tests passed", env:"nummat") 
 ] 
 
 == Dokumentacija
@@ -683,7 +692,7 @@ $ tlmgr install microtype upquote minted
 ]
 
 Poročilo pripravimo v obliki demo skripte. Uporabili bom kar
-`Vaja00/doc/demo.jl`, ki smo jo ustvarili, da smo generirali sliko.
+`Vaja01/doc/demo.jl`, ki smo jo ustvarili, da smo generirali sliko.
 
 V datoteko dodamo besedilo v obliki komentarjev. Komentarje, ki se začnejo z
 ```jl #'```, paket `Weave` uporabi kot tekst v formatu #link(
@@ -693,21 +702,21 @@ koda.
 
 #figure(
   code_box[
-  #raw(lang: "jl", block:true, read("Vaja00/doc/demo.jl"))
+  #raw(lang: "jl", block:true, read("Vaja01/doc/demo.jl"))
   ],
-  caption: [Vsebina `Vaje00/doc/demo.jl`, po tem, ko smo dodali komentarje s tekstom v
+  caption: [Vsebina `Vaja01/doc/demo.jl`, po tem, ko smo dodali komentarje s tekstom v
   formatu Markdown],
 )
 
 Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo še eno skripto
-`Vaje00\doc\makedocs.jl`, v katero dodamo naslednje vrstice
+`Vaja01\doc\makedocs.jl`, v katero dodamo naslednje vrstice
 
 #figure(code_box(
-  raw(read("Vaja00/doc/makedocs.jl"), lang: "jl")
+  raw(read("Vaja01/doc/makedocs.jl"), lang: "jl")
   ),
   caption: [Program za generiranje PDF dokumenta],
 )
-Skripto poženemo v julii z ukazom ```jl include("Vaja00/doc/makedocs.jl")```. Poročilo najdemo  v datoteki `Vaja00/pdf/demo.pdf`.
+Skripto poženemo v julii z ukazom ```jl include("Vaja01/doc/makedocs.jl")```. Poročilo najdemo  v datoteki `Vaja01/pdf/demo.pdf`.
 
 Poleg paketa Weave.jl je na voljo še nekaj programov, ki so primerni za pripravo poročil:
 

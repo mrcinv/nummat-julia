@@ -1,6 +1,6 @@
 # 01cov
 import Pkg
-Pkg.test("Vaja00"; coverage=true)
+Pkg.test("Vaja01"; coverage=true)
 # 01cov
 
 using Plots
