@@ -421,7 +421,12 @@ v katerem bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave
 paketa za vsako vajo posebej se bomo naučili, kako hitro začeti s projektom.
 Obenem bomo optimizirali način dela (angl. workflow) in odpravili ozka grla v postopkih priprave projekta. Ponavljanje vedno istih postopkov nas prisili, da postopke kar se da poenostavimo in ponavljajoča se opravila avtomatiziramo. Na dolgi rok se tako lahko bolj posvečamo dejanskemu reševanju problemov.
 
-V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo prestavili vso kodo, ki jo bomo napisali v tem poglavju. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
+Za vajo bomo ustvarili paket `Vaja01`, s katerim bomo narisali 
+#link(
+  "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
+)[Geronovo lemniskato].
+
+V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo postavili kodo, ki jo bomo napisali v tem poglavju. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
 
 #code_box[
 ```shell
@@ -447,8 +452,7 @@ Vaja01
 ```
 ]
 
-
-Paket nato dodamo v projektno okolje v korenski mapi `nummat`:
+Paket `Vaja01` nato dodamo v projektno okolje v korenski mapi `nummat`, da bomo lahko kodo iz paketa uporabili v programih in ukazni zanki:
 
 #code_box[ 
 #pkg("activate . ", none)
@@ -459,8 +463,6 @@ Paket nato dodamo v projektno okolje v korenski mapi `nummat`:
 )
 ]
 
-
-
 #opomba(
   naslov: [Za obsežnejši projekti uporabite šablone],
 )[
@@ -468,56 +470,41 @@ Za obsežnejši projekt ali projekt, ki ga želite objaviti, je bolje uporabiti 
 pripravljene šablone
 #link("https://github.com/JuliaCI/PkgTemplates.jl")[PkgTemplates] ali
 #link("https://github.com/tpapp/PkgSkeleton.jl")[PkgSkeleton]. Zavoljo
-enostavnosti, bomo v sklopu te knjige projekte ustvarjali s `Pkg.generate`.
+enostavnosti bomo v sklopu te knjige projekte ustvarjali s `Pkg.generate`.
 ]
 
-Paketu `Vaja01` dodamo še teste, skripte in README dokument, tako da bo imela mapa naslednjo strukturo.
+Osnovna struktura paketa je pripravljena. Paketu bomo v nadaljevanju dodali še: 
+- kodo (@sec:01koda),
+- teste (@sec:01testi) in
+- dokumentacijo (@sec:01docs).
 
-#code_box[
-```shell
-$ tree Vaja01
-Vaja01
-├── Manifest.toml
-├── Project.toml
-├── doc
-│   └── demo.jl
-├── src
-│   └── Vaja01.jl
-└── test
-    └── runtests.jl
-```
-]
+== Koda <sec:01koda>
 
-== Koda
-
-Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo s pisanjem kode. Za vajo bomo narisali 
+Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo. Napisali bomo funkcije, ki izračunajo koordinate  
 #link(
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
-)[Geronove lemniskato]. Najprej definiramo koordinatne funkcije
+)[Geronove lemniskate]:
 
 $
   x(t) = (t^2 - 1) / (t^2 + 1) #h(2em)
   y(t) = 2t(t^2 - 1) / (t^2 + 1)^2.
 $
 
-Definicije shranimo v datoteki `Vaja01/src/Vaja01.jl`.
+V urejevalniku odpremo datoteko `Vaja01/src/Vaja01.jl` in vanjo shranimo definiciji:
 
 #figure(
   code_box(raw(lang: "jl", block: true, read("Vaja01/src/Vaja01.jl"))),
-  caption: [Vsebina datoteke `Vaja01.jl`.],
 )
 
-V ukazni zanki lahko sedaj pokličemo novo definirani funkciji.
+Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` zato sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih 
+programih. V ukazni zanki lahko sedaj pokličemo novo definirani funkciji:
 
 #code_box[
-#pkg("activate .", none)
 #repl("using Vaja01", none)
 #repl("lemniskata_x(1.2)", "0.180327868852459")
 ]
 
-Nadaljujemo šele, ko se prepričamo, da lahko pokličemo funkcije iz paketa `Vaja01`.
-
-Kodo, ki bo sledila, bomo sedaj pisali v scripto `Vaja01\doc\demo.jl`. 
+Kodo, ki bo sledila, bomo pisali v skripto `Vaja01\doc\demo.jl`:
 
 #figure(
   code_box(jl("Vaja01/doc/demo.jl", 4, 11)), 
@@ -538,15 +525,15 @@ Rezultat je slika lemniskate.
 )
 
 #opomba(
-  naslov: [Poganjanje ukaz za ukazom v VsCode],
+  naslov: [Poganjanje ukaz za ukazom v VS Code],
 )[
-Če uporabljate urejevalnik #link("https://code.visualstudio.com/")[VsCode] in
+Če uporabljate urejevalnik #link("https://code.visualstudio.com/")[VS Code] in
  #link("https://github.com/julia-vscode/julia-vscode")[razširitev za Julio], lahko ukaze
 iz skripte poganjate vrstico za vrstico kar iz urejevalnika. Če pritisnete kombinacijo tipk
 `Shift + Enter`, se bo izvedla vrstica v kateri je trenutno kazalka.
 ]
 
-== Testi
+== Testi <sec:01testi>
 
 V prejšnjem razdelku smo definirali funkcije in napisali skripto, s katero smo
 omenjene funkcije uporabili. Naslednji korak je, da dodamo teste, s katerimi
@@ -630,7 +617,7 @@ Koordinata y  |    2      2  0.0s
      Testing Vaja01 tests passed", env:"nummat") 
 ] 
 
-== Dokumentacija
+== Dokumentacija <sec:01docs>
 
 Dokumentacija programske kode je sestavljena iz različnih besedil in drugih
 virov, npr. videov, ki so namenjeni uporabnikom in razvijalcem programa ali
@@ -639,7 +626,7 @@ namestitev in uporabo programa in druge vire v raznih formatih z razlagami
 ozadja, teorije in drugih zadev povezanih s projektom. Dobra dokumentacija lahko
 veliko pripomore k uspehu določenega programa. Sploh to velja za knjižnice. 
 
-Tudi, če kode ne bo uporabljal nihče drug in verjamite, slabo dokumentirane
+Tudi, če kode ne bo uporabljal nihče drug in verjemite, slabo dokumentirane
 kode, nihče ne želi uporabljati, bodimo prijazni do nas samih v prihodnosti in
 pišimo dobro dokumentacijo.
 
@@ -738,3 +725,53 @@ Navedimo še nekaj zanimivih povezav, ki so povezane s pisanjem dokumentacije:
     "https://www.writethedocs.org/guide/docs-as-code/",
   )[Dokumentacija kot koda] je ime za način dela, pri katerem z dokumentacijo
   ravnamo na enak način, kot ravnamo s kodo.
+
+== Zaključek
+
+Ustvarili smo svoj prvi paket, ki vsebuje kodo, avtomatske teste in dokumentacijo. Mapa `Vaja01` bi morala imeti naslednjo strukturo:
+
+#code_box[
+```shell
+$ tree Vaja01
+Vaja01
+├── Manifest.toml
+├── Project.toml
+├── README.md
+├── doc
+│   └── demo.jl
+│   └── makedocs.jl
+├── src
+│   └── Vaja01.jl
+└── test
+    └── runtests.jl
+```
+]
+
+Preden nadaljujete, preverite ponovno, če vse deluje tako kot bi moralo. V Juliji aktivirajte projektno okolje:
+
+#code_box[
+  #repl("# pritisnite ] za vstop v paketni način", none)
+  #pkg("activate .", none)
+]
+
+Nato najprej poženemo teste:
+
+#code_box[
+  #pkg("test Vaja01", "...
+  Testing Vaja01 tests passed", env: "nummat")
+]
+
+Na koncu pa poženemo še demo:
+
+#code_box[
+  #repl("include(\"Vaja01/doc/demo.jl\")", none)
+]
+
+in generiramo PDF:
+
+#code_box[
+  #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
+]
+
+Priporočam, da si pred branjem naslednjih poglavij vzamete čas in poskrbite, da se zgornji
+ukazi izvedejo brez napak. 

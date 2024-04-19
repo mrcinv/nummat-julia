@@ -61,7 +61,7 @@ $
 
 kjer je $s t lr((i))$ stopnja $i$-tega vozlišča, $N lr((i))$ pa množica
 indeksov sosednjih vozlišč. Če nekatera vozlišča fiksiramo, bodo ostala
-zavzela ravnovesno lego med fiksiranimi vozlišči.
+zavzela ravnovesno lego med fiksiranimi vozlišči. Za risanje grafa lahko uporabite #link("https://github.com/JuliaPlots/GraphRecipes.jl")[GraphRecipes.jl]. 
 
 Za primere, ki jih boste opisali, poiščite optimalni $omega$, pri
 katerem SOR najhitreje konvergira in predstavite odvisnost hitrosti
@@ -158,15 +158,15 @@ tip `SimetricnaTridiagonalna` definirajte metode za naslednje funkcije:
 #link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
 Napišite funkcijo `Q, R = qr(T)`, ki izvede QR razcep matrike `T` tipa
 `Tridiagonalna` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
-trikotna dvodiagonalna matrika tipa `ZgornjeDvodiagonalna`, v `Q` pa naj
+trikotna tridiagonalna matrika tipa `ZgornjeTridiagonalna`, v `Q` pa naj
 bo matrika tipa `Givens`.
 #link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih].
 
-Podatkovna tipa `ZgornjeDvodiagonalna` in `Givens` definirajte sami
+Podatkovna tipa `ZgornjeTridiagonalna` in `Givens` definirajte sami
 (glejte tudi nalogo
 #ref(<qr-razcep-zgornje-hessenbergove-matrike>). Poleg tega
 implementirajte množenje `Base.*` matrik tipa `Givens` in
-`ZgornjeDvodiagonalna`.
+`ZgornjeTridiagonalna`.
 
 Uporabite QR razcep za QR iteracijo simetrične tridiagonalne matrike.
 Napišite funkcijo `lastne_vrednosti, lastni_vektorji = eigen(T)`, ki
