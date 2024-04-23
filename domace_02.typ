@@ -139,6 +139,8 @@ $ P = 1 / 2 integral_(t_1)^(t_2) lr((x(t) dot(y)(t) - dot(x)(t) y(t))) d t. $
 Naloge so namenjen tistim, ki jih je strah eksperimentiranja ali pa za
 to preprosto nimajo interesa ali časa. Rešiti morate eno od obeh nalog:
 
+=== Gradientni spust z iskanjem po premici
+
 === Ineterpolacija z baricentrično formulo
 <ineterpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
