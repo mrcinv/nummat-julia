@@ -1,4 +1,5 @@
 #import "admonitions.typ": admonition, admtitle, opomba
+#import "julia.typ": code_box, repl, pkg
 
 #let dobro(naslov, vsebina) = {
   let title = admtitle("Dobro!", naslov)
@@ -31,7 +32,7 @@ Spodaj je seznam delov, ki naj jih vsebuje domača naloga.
 Preden oddate domačo nalogo, uporabite naslednji _kontrolni seznam_:
 
 - vse funkcije imajo dokumentacijo
-- testi pokrivajo vso kodo (glej #link("https://github.com/JuliaCI/Coverage.jl")[Coverage.jl])
+- testi pokrivajo večino kode
 - _README_ vsebuje naslednje:
   - ime in priimek avtorja
   - opis naloge
@@ -173,25 +174,39 @@ Nekaj nasvetov, kako lahko testiramo kodo.
   kode, ki reši sistem `Ax=b`, izberete `A` in `x` in izračunate desne strani
   `b=A*x`.
 - Preverite lastnost rešitve. Za enačbe `f(x)=0`, lahko rešitev, ki jo izračuna
-  program preprosto vstavite nazaj v enačbo in preverite, če je enačba
-izpolnjena.
+  program preprosto vstavite nazaj v enačbo in preverite, če je enačba izpolnjena.
 - Red metode lahko preverite tako, da naredite simulacijo in primerjate red
 metode z redom programa, ki ga eksperimentalno določite.
 - Če je le mogoče, v testih ne uporabljamo rezultatov, ki jih proizvede koda sama.
   Ko je koda dovolj časa v uporabi, lahko rezultate kode same uporabimo za #link("https://en.wikipedia.org/wiki/Regression_testing")[regresijske teste].
  
-=== Pokritost kode s testi
+=== Pokritost kode s testi <sec:pokritost-testi>
  
 Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode,
 ki se izvede med testi, imenujemo #link(
   "https://en.wikipedia.org/wiki/Code_coverage",
-)[pokritost kode (angl. Code Coverage)]. V julii lahko pokritost kode dobimo, če
+)[pokritost kode (angl. Code Coverage)]. V juliji lahko pokritost kode dobimo, če
 dodamo argument ```jl coverage=true``` metodi `Pkg.test`:
  
-```jl
-import Pkg Pkg.test("DomacaXY"; coverage=true) ```
+#code_box(
+  repl("import Pkg; Pkg.test(\"DomacaXY\"; coverage=true)", none)
+)
 
-Za poročanje o pokritosti kode lahko uporabite paket #link("https://github.com/JuliaCI/Coverage.jl")[Coverage.jl].
+Zgornji ukaz bo za vsako datoteko iz mape `src` ustvaril ustrezno datoteko s končnico `.cov`, v kateri je shranjena informacija o tem, kateri deli kode so bili uporabljeni med izvajanjem testov.
+
+#pagebreak()
+Za poročanje o pokritosti kode lahko uporabite paket #link("https://github.com/JuliaCI/Coverage.jl")[Coverage.jl]. Povzetek o pokritosti kode s testi lahko pripravite z naslednjim programom:
+
+#code_box[
+  ```jl
+  using Coverage
+  cov = process_folder("DomacaXY")
+  pokrite_vrstice, vse_vrstice = get_summary(cov)
+  delez = pokrite_vrstice / vse_vrstice
+  println("Pokritost kode s testi: $(round(delez*100))%.")
+  ```
+]
+
 
 == Priprava zahteve za združitev na Github
 
