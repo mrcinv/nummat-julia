@@ -61,16 +61,12 @@ kot je opisano v
 <funkcija-kvantilov-za-n01>
 Napišite učinkovito funkcijo, ki izračuna funkcijo kvantilov za normalno
 porazdeljeno slučajno spremenljivko. Funkcija kvantilov je inverzna
-funkcija porazdelitvene funkcije.
-
-=== Inverzna funkcija za funkcijo preživetja za $N lr((0 , 1))$
-<funkcija-preživetja>
-Napišite učinkovito funkcijo, ki izračuna inverzno funkcijo $F^(-1)(p)$ za funkcijo
-preživetja za normalno porazdelitev:
-
+funkcija $Phi^(-1)(x)$ porazdelitvene funkcije:
 $
-  F(x) = 1/(sqrt(2pi)) integral_x^infinity e^(-t^2/2) d t.
+  Phi(x) = 1/(sqrt(2pi)) integral_(-infinity)^x e^(-t^2/2) d t.
 $
+
+Poskrbite, da bo relativna napaka za majhne vrednosti (negativne vrednosti z veliko absolutno vrednostjo) $x$ dovolj majhna.
 
 === Integralski sinus \(težja)
 <integralski-sinus-težja>
