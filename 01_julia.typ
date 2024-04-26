@@ -181,6 +181,7 @@ Izraz ```jl A\b``` vrne rešitev matričnega sistema $A x = b$:
 
 Izračun se izvede v aritmetiki s plavajočo vejico, zato pride do zaokrožitvenih napak in 
 rezultat ni povsem točen. Naredimo še preizkus:
+
 #code_box[
   #repl("A * x", "2-element Vector{Float64}:
   5.0
@@ -257,9 +258,7 @@ opravilom.
 - Iz posebnih načinov pridemo nazaj v osnovni način s pritiskom na vračalko(⌫). 
 ]
 
-Oglejmo si še, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl].
-Najprej aktiviramo paketni način z vnosom znaka `]` za pozivnikom. Nato paket
-dodamo z ukazom `add`.
+Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl]. Najprej aktiviramo paketni način z vnosom znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`.
 
 #code_box[
   #pkg("add Plots", "...")
@@ -311,14 +310,15 @@ Priporočam, da večino kode napišete v datoteke. V nadaljevanju bomo spoznali,
 kako organizirati datoteke v projekte in pakete tako, da lahko kodo uporabimo na več 
 mestih.
 
-== Priprava delovnega okolja
+== Avtomatsko posodabljanje kode
 
-Z vsako spremembo je treba kodo v interaktivni zanki posodobiti. Paket 
-#link("https://timholy.github.io/Revise.jl")[Revise.jl] poskrbi za to, da se
-nalaganje zgodi avtomatično vsakič, ko se datoteke spremenijo. Zato namestimo
+Ko uporabimo kodo iz datoteke v interaktivni zanki, je treba ob vsaki spremembi
+datoteko ponovno naložiti z ukazom `include`.
+Paket #link("https://timholy.github.io/Revise.jl")[Revise.jl] poskrbi za to, da se
+nalaganje zgodi avtomatično vsakič, ko se datoteke spremenijo. Zato najprej namestimo
 paket Revise in poskrbimo, da se zažene ob vsakem zagonu interaktivne zanke.
 
-V terminalu poženite program Julia. Naslednji ukazi namestijo paket Revise, ustvarijo mapo `$HOME/.julia/config` in datoteko `startup,jl`, ki naloži paket Revise in se izvede ob vsakem zagonu programa `julia`:
+Naslednji ukazi namestijo paket Revise, ustvarijo mapo `$HOME/.julia/config` in datoteko `startup,jl`, ki naloži paket Revise in se izvede ob vsakem zagonu programa `julia`:
 
 #code_box[
   #repl("# pritisnemo ], da pridemo v paketni način", none)
@@ -342,7 +342,7 @@ Okolje za delo z Julio je pripravljeno.
 
 == Priprava korenske mape
 
-Pripravimo najprej korensko mapo, v kateri bomo hranili vse programe, ki jih bomo napisali v nadaljevanju. Imenovali jo bomo `nummat`:
+Programe, ki jih bomo napisali v nadaljevanju, bomo hranili v mapi `nummat`. Ustvarimo jo z ukazom:
 
 #code_box[
 ```sh
@@ -380,11 +380,22 @@ Projektna okolja v Juliji so podobna #link("https://docs.python.org/3/library/ve
 ]
 
 Projektnemu okolju dodamo pakete, ki jih bomo potrebovali v nadaljevanju. Zaenkrat je to le
-paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki omogoča risanje grafov:
+paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki ga potrebujemo za risanje grafov:
 
 #code_box[
   #pkg("add Plots", "", env: "nummat")
 ]
+
+Datoteka `Project.toml` vsebuje le ime paketa `Plots` in identifikacijski niz:
+
+#code_box[
+  ```
+  [deps]
+  Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+  ```
+]
+
+Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje,  so zabeležena  v datoteki `Manifest.toml`. 
 
 == Vodenje različic s programom Git
 
@@ -426,7 +437,7 @@ Za vajo bomo ustvarili paket `Vaja01`, s katerim bomo narisali
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
 )[Geronovo lemniskato].
 
-V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo postavili kodo, ki jo bomo napisali v tem poglavju. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
+V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo postavili kodo. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
 
 #code_box[
 ```shell
@@ -496,25 +507,33 @@ V urejevalniku odpremo datoteko `Vaja01/src/Vaja01.jl` in vanjo shranimo definic
   code_box(raw(lang: "jl", block: true, read("Vaja01/src/Vaja01.jl"))),
 )
 
-Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` zato sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih 
-programih. V ukazni zanki lahko sedaj pokličemo novo definirani funkciji:
+Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih 
+programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 
 #code_box[
 #repl("using Vaja01", none)
 #repl("lemniskata_x(1.2)", "0.180327868852459")
 ]
 
-Kodo, ki bo sledila, bomo pisali v skripto `Vaja01\doc\demo.jl`:
+V datoteko `Vaja01\doc\demo.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
 
 #figure(
   code_box(jl("Vaja01/doc/demo.jl", 4, 11)), 
-  caption: [Vsebina datoteke `demo.jl`]
 )
 
-Skripto poženemo z ukazom:
+Program `demo.jl` poženemo z ukazom:
 
 #code_box[
 #repl("include(\"Vaja01/doc/demo.jl\")", none)
+]
+
+#opomba(
+  naslov: [Poganjanje ukaz za ukazom v VS Code],
+)[
+Če uporabljate urejevalnik #link("https://code.visualstudio.com/")[VS Code] in
+ #link("https://github.com/julia-vscode/julia-vscode")[razširitev za Julio], lahko ukaze
+iz programa poganjate vrstico za vrstico kar iz urejevalnika. Če pritisnete kombinacijo tipk
+`Shift + Enter`, se bo izvedla vrstica v kateri je trenutno kazalka.
 ]
 
 Rezultat je slika lemniskate.
@@ -524,20 +543,10 @@ Rezultat je slika lemniskate.
   caption: [Geronova lemniskata]
 )
 
-#opomba(
-  naslov: [Poganjanje ukaz za ukazom v VS Code],
-)[
-Če uporabljate urejevalnik #link("https://code.visualstudio.com/")[VS Code] in
- #link("https://github.com/julia-vscode/julia-vscode")[razširitev za Julio], lahko ukaze
-iz skripte poganjate vrstico za vrstico kar iz urejevalnika. Če pritisnete kombinacijo tipk
-`Shift + Enter`, se bo izvedla vrstica v kateri je trenutno kazalka.
-]
-
 == Testi <sec:01testi>
 
-V prejšnjem razdelku smo definirali funkcije in napisali skripto, s katero smo
-omenjene funkcije uporabili. Naslednji korak je, da dodamo teste, s katerimi
-preiskusimo pravilnost napisane kode. 
+Naslednji korak je, da dodamo avtomatske teste, s katerimi preizkusimo pravilnost kode, ki 
+smo je napisali v prejšnjem poglavju. Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri rezultat. 
 
 #opomba(
   naslov: [Avtomatsko testiranje programov],
@@ -557,11 +566,7 @@ preiskusimo pravilnost napisane kode.
 )
 
 Uporabili bomo paket #link("https://docs.julialang.org/en/v1/stdlib/Test/")[Test],
-ki olajša pisanje testov. Vstopna točka za teste je datoteka `test\runtests.jl`.
-
-Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri
-rezultat. Najbolj enostavno je rezultat primerjati z v naprej znanim
-rezultatom, za katerega smo prepričani, da je pravilen. Uporabili bomo makroje #link("https://docs.julialang.org/en/v1/stdlib/Test/#Test.@test")[\@test] in #link(
+ki olajša pisanje testov. Vstopna točka za teste je datoteka `test\runtests.jl`. Uporabili bomo makroje #link("https://docs.julialang.org/en/v1/stdlib/Test/#Test.@test")[\@test] in #link(
   "https://docs.julialang.org/en/v1/stdlib/Test/#Test.@testset",
 )[\@testset] iz paketa `Test`.
 
@@ -571,10 +576,10 @@ ju definirali:
 #figure(
   code_box(
   raw(read("Vaja01/test/runtests.jl"), lang: "jl")),
-  caption: [Testi za paket `Vaja01`],
+  caption: [Rezultat funkcij primerjamo s pravilno vrednostjo.],
 )
 
-Za primerjavo rezultatov smo uporabili operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].
+Za primerjavo rezultatov smo uporabili .
 
 #opomba(
   naslov: [Primerjava števil s plavajočo vejico],
@@ -588,8 +593,7 @@ Za primerjavo rezultatov smo uporabili operator `≈`, ki je alias za funkcijo #
   $
     |a - b| < epsilon,
   $
-  kjer je $epsilon$ večji, kot pričakovana zaokrožitvena napaka. Funkcija
-  `isapprox` je namenjena ravno približni primerjavi.],
+  kjer je $epsilon$ večji, kot pričakovana zaokrožitvena napaka. V Juliji lahko za približno primerjavo števil in vektorjev uporabimo operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].],
 )
 
 Preden lahko poženemo teste, moramo ustvariti testno okolje. Sledimo #link(

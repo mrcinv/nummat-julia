@@ -1,6 +1,7 @@
 [deps]
 BookUtils = "e6ff181e-9e14-41e7-8e4c-ab5eece3b993"
 GraphRecipes = "bd48cda9-67a9-57be-86fa-5b3c104eda73"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Vaja01 = "a103309b-f9c6-47a9-a678-e0adbc43f6c2"
 Vaja02 = "9bbcb4c0-c107-4924-8fed-0ddfa30c35b8"
