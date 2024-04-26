@@ -3,3 +3,12 @@ orel:
   title: Osnove numerične matematike
   author: Orel, B.
   date: 2020
+knuth84:
+  type: article
+  title: Literate programming
+  author: D. E. Knuth
+  journal: The Computer Journal
+  volume: 27
+  date: 1984
+  pages: 97-111
+  doi: https://doi.org/10.1093/comjnl/27.2.97
