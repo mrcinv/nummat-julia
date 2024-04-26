@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, jl, repl, code_box, pkg, blk
+#import "julia.typ": jlb, jl, repl, code_box, pkg, blk, readlines
 
 = Uvod v programski jezik Julia
 
@@ -280,16 +280,16 @@ uporabno za preproste ukaze na primer namesto kalkulatorja, za resnejše delo pa
 `.jl`. 
 
 Napišimo preprost skript. Ukaze, ki smo jih vnesli doslej, shranimo v datoteko z
-imenom `demo.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
+imenom `01uvod.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
 
 #code_box[
-  #repl("include(\"demo.jl\")", "")
+  #repl("include(\"01uvod.jl\")", "")
 ]
 
 ali pa v lupini operacijskega sistema:
 
 #code_box[
-  #raw("$ julia demo.jl")
+  #raw("$ julia 01uvod.jl")
 ]
 
 #opomba(
@@ -505,7 +505,8 @@ V urejevalniku odpremo datoteko `Vaja01/src/Vaja01.jl` in vanjo shranimo definic
 
 #figure(
   code_box(raw(lang: "jl", block: true, read("Vaja01/src/Vaja01.jl"))),
-)
+  caption: [Definicije funkcij v paketu `Vaja01`.]
+)<pr:Vaja01>
 
 Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih 
 programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
@@ -515,16 +516,16 @@ programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 #repl("lemniskata_x(1.2)", "0.180327868852459")
 ]
 
-V datoteko `Vaja01\doc\demo.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
+V datoteko `Vaja01\doc\01uvod.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
 
 #figure(
-  code_box(jl("Vaja01/doc/demo.jl", 4, 11)), 
+  code_box(jl("Vaja01/doc/01uvod.jl", 4, 11)), 
 )
 
-Program `demo.jl` poženemo z ukazom:
+Program `01uvod.jl` poženemo z ukazom:
 
 #code_box[
-#repl("include(\"Vaja01/doc/demo.jl\")", none)
+#repl("include(\"Vaja01/doc/01uvod.jl\")", none)
 ]
 
 #opomba(
@@ -625,18 +626,18 @@ Koordinata y  |    2      2  0.0s
 
 Dokumentacija programske kode je sestavljena iz različnih besedil in drugih
 virov, npr. videov, ki so namenjeni uporabnikom in razvijalcem programa ali
-knjižnice. Dokumentacija lahko vključuje komentarje v kodi, navodila za
-namestitev in uporabo programa in druge vire v raznih formatih z razlagami
-ozadja, teorije in drugih zadev povezanih s projektom. Dobra dokumentacija lahko
-veliko pripomore k uspehu določenega programa. Sploh to velja za knjižnice. 
+knjižnice. Dokumentacija vključuje komentarje v kodi, navodila za
+namestitev in uporabo programa in druge vire z razlagami ozadja,
+teorije in drugih zadev, povezanih s projektom. Dobra dokumentacija lahko veliko
+pripomore k uspehu določenega programa. To še posebej velja za knjižnice.
 
-Tudi, če kode ne bo uporabljal nihče drug in verjemite, slabo dokumentirane
-kode, nihče ne želi uporabljati, bodimo prijazni do nas samih v prihodnosti in
-pišimo dobro dokumentacijo.
+Slabo dokumentirane kode, nihče ne želi uporabljati. Tudi če vemo, da kode ne bo 
+uporabljal nihče drug razen nas samih, bodimo prijazni do samega sebe v prihodnosti
+in pišimo dobro dokumentacijo.
 
-V tej knjigi bomo pisali 3 vrste dokumentacije:
+V tej knjigi bomo pisali tri vrste dokumentacije:
 
-- dokumentacijo posameznih funkcij in tipov, 
+- dokumentacijo za posamezne funkcije v sami kodi, 
 - navodila za uporabnika v datoteki `README.md`,
 - poročilo v formatu PDF.
 
@@ -644,34 +645,48 @@ V tej knjigi bomo pisali 3 vrste dokumentacije:
   naslov: [Zakaj format PDF],
 )[
   Izbira formata PDF je mogoče presenetljiva za pisanje dokumentacije programske
-  kode. V praksi so precej bolj uporabne HTML strani. Dokumentacija v obliki HTML
+  kode. V praksi so precej uporabnejše HTML strani. Dokumentacija v obliki HTML
   strani, ki se generira avtomatično v procesu #link(
     "https://en.wikipedia.org/wiki/Continuous_integration",
-  )[nenehne integracije] je postala _de facto_ standard.
-   
-  V kontekstu popravljanja domačih nalog in poročil na vajah pa ima format PDF še
-  vedno prednosti. Saj ga je lažje pregledovati in popravljati.
+  )[nenehne integracije], je postala _de facto_ standard. V kontekstu popravljanja domačih nalog in poročil za vaje pa ima format PDF še vedno prednosti, saj ga je lažje pregledovati in popravljati.
 ]
 
 === Dokumentacija funkcij in tipov
 
-Funkcije in tipe v Julii dokumentiramo tako, da pred definicijo dodamo niz z
-opisom funkcije. Več o tem si lahko preberete #link(
+Funkcije in podatkovne tipe v Juliji dokumentiramo tako, da pred definicijo dodamo niz z
+opisom funkcije, kot smo to naredili v programu @pr:Vaja01. Več o tem si lahko preberete #link(
   "https://docs.julialang.org/en/v1/manual/documentation/",
-)[v priročniku za Julio].
+)[v poglavju o dokumentacij] priročnika za Julijo.
 
-=== Generiranje PDF poročila
+=== README dokument
 
-Za pisanje dokumentacijo bomo uporabili format
-#link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot
-komentarje v kodi. Knjižnica 
-#link("https://github.com/JunoLab/Weave.jl")[Weave.jl] poskrbi za generiranje
-PDF poročila.
+Dokument README(preberi me) je namenjen najbolj osnovnim informacijam o paketu. Dokument je vstopna točka za dokumentacijo in navadno vsebuje 
+- kratek opis projekta,
+- povezavo na dokumentacijo,
+- navodila za osnovno uporabo in
+- navodila za namestitev.
+#figure(
+code_box(
+  raw(lang:"md", read("Vaja01/README.md"))
+),
+caption: [README.md vsebuje osnove informacije o projektu.]
+)
+
+
+=== PDF poročilo
+
+Za pripravo dokumentov v formatu PDF priporočamo uporabo naslednjih programov
+- #link("https://tug.org/")[TeX/LaTeX],
+- #link("https://pandoc.org/")[pandoc],
+- #link("https://asciidoctor.org/")[AsciiDoctor],
+- #link("https://typst.app/")[Typst].
+
+V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@knuth84).   
+Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot komentarje v kodi.
 
 Za generiranje PDF dokumentov je potrebno namestiti
 #link("https://tug.org/")[TeX/LaTeX]. Priporočam namestitev
-#link("https://yihui.org/tinytex/")[TinyTeX] ali #link("https://tug.org/texlive/")[TeX Live],
-ki pa zasede več prostora na disku.
+#link("https://yihui.org/tinytex/")[TinyTeX] ali #link("https://tug.org/texlive/")[TeX Live], ki pa zasede več prostora na disku.
 Po #link("https://yihui.org/tinytex/#installation")[namestitvi] programa
 TinyTex moramo dodati še nekaj `LaTeX` paketov, ki jih potrebuje paket Weave. V
 terminalu izvedemo naslednji ukaz
@@ -682,9 +697,8 @@ $ tlmgr install microtype upquote minted
 ```
 ]
 
-Poročilo pripravimo v obliki demo skripte. Uporabili bom kar
-`Vaja01/doc/demo.jl`, ki smo jo ustvarili, da smo generirali sliko.
-
+Poročilo pripravimo v obliki literarnega programa. Uporabili bom kar
+`Vaja01/doc/01uvod.jl`, ki smo jo ustvarili, da smo pripravili sliko.
 V datoteko dodamo besedilo v obliki komentarjev. Komentarje, ki se začnejo z
 ```jl #'```, paket `Weave` uporabi kot tekst v formatu #link(
   "https://weavejl.mpastell.com/stable/publish/#Supported-Markdown-syntax",
@@ -693,30 +707,47 @@ koda.
 
 #figure(
   code_box[
-  #raw(lang: "jl", block:true, read("Vaja01/doc/demo.jl"))
+  #raw(lang: "jl", block:true, readlines("Vaja01/doc/01uvod.jl", 1, 13))
   ],
-  caption: [Vsebina `Vaja01/doc/demo.jl`, po tem, ko smo dodali komentarje s tekstom v
-  formatu Markdown],
+  caption: [Vrstice, ki se začnejo z znakoma `#'`, so v formatu Markdown],
 )
 
-Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo še eno skripto
-`Vaja01\doc\makedocs.jl`, v katero dodamo naslednje vrstice
+Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo program
+`Vaja01\doc\makedocs.jl`, ki pripravi pdf dokument:
 
 #figure(code_box(
   raw(read("Vaja01/doc/makedocs.jl"), lang: "jl")
   ),
-  caption: [Program za generiranje PDF dokumenta],
+  caption: [Program za pripravo PDF dokumenta],
 )
-Skripto poženemo v julii z ukazom ```jl include("Vaja01/doc/makedocs.jl")```. Poročilo najdemo  v datoteki `Vaja01/pdf/demo.pdf`.
 
-Poleg paketa Weave.jl je na voljo še nekaj programov, ki so primerni za pripravo poročil:
+Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Juliji. Preden poženemo program `makedocs.jl`, moramo projektnemu okolju `nummat` dodati paket `Weave.jl`.
+
+#code_box[
+  #pkg("add Weave", none, env: "nummat")
+  #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
+]
+ 
+Poročilo se shrani v datoteko `Vaja01/pdf/demo.pdf`.
+
+#figure(
+  rect(
+  image("img/01uvod.pdf.png", width: 60%)
+  ),
+  caption: [Poročilo v PDF formatu]
+)
+
+#opomba(
+  naslov: [Alternativni paketi za pripravo PDF dokumentov],
+)[
+Poleg paketa `Weave.jl` je na voljo še nekaj programov, ki so primerni za pripravo PDF dokumentov s programi v Juliji:
 
 - #link("https://github.com/JuliaLang/IJulia.jl")[IJulia],
-- #link("https://github.com/fredrikekre/Literate.jl")[Literate.jl] ali
+- #link("https://github.com/fredrikekre/Literate.jl")[Literate.jl] in
 - #link("https://quarto.org/docs/computations/julia.html")[Quadro].
+]
 
-Navedimo še nekaj zanimivih povezav, ki so povezane s pisanjem dokumentacije:
-
+#opomba(naslov: [Povezave, ki so povezane s pisanjem dokumentacije.])[
 - #link(
     "https://docs.julialang.org/en/v1/manual/documentation/",
   )[Pisanje dokumentacije] v jeziku Julia.
@@ -728,7 +759,8 @@ Navedimo še nekaj zanimivih povezav, ki so povezane s pisanjem dokumentacije:
 - #link(
     "https://www.writethedocs.org/guide/docs-as-code/",
   )[Dokumentacija kot koda] je ime za način dela, pri katerem z dokumentacijo
-  ravnamo na enak način, kot ravnamo s kodo.
+  ravnamo na enak način kot s kodo.
+]
 
 == Zaključek
 
@@ -742,7 +774,7 @@ Vaja01
 ├── Project.toml
 ├── README.md
 ├── doc
-│   └── demo.jl
+│   └── 01uvod.jl
 │   └── makedocs.jl
 ├── src
 │   └── Vaja01.jl
@@ -768,7 +800,7 @@ Nato najprej poženemo teste:
 Na koncu pa poženemo še demo:
 
 #code_box[
-  #repl("include(\"Vaja01/doc/demo.jl\")", none)
+  #repl("include(\"Vaja01/doc/01uvod.jl\")", none)
 ]
 
 in generiramo PDF:
