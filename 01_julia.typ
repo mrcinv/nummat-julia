@@ -774,11 +774,13 @@ Vaja01
 ├── Project.toml
 ├── README.md
 ├── doc
-│   └── 01uvod.jl
+│   ├── 01uvod.jl
 │   └── makedocs.jl
 ├── src
 │   └── Vaja01.jl
 └── test
+    ├── Manifest.toml
+    ├── Project.toml
     └── runtests.jl
 ```
 ]
@@ -803,11 +805,11 @@ Na koncu pa poženemo še demo:
   #repl("include(\"Vaja01/doc/01uvod.jl\")", none)
 ]
 
-in generiramo PDF:
+in pripravimo poročilo:
 
 #code_box[
   #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
 ]
 
-Priporočam, da si pred branjem naslednjih poglavij vzamete čas in poskrbite, da se zgornji
-ukazi izvedejo brez napak. 
+Priporočamo, da si pred branjem naslednjih poglavij vzamete čas in poskrbite, da se zgornji
+ukazi izvedejo brez napak.
