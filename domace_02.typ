@@ -150,14 +150,12 @@ to preprosto nimajo interesa ali časa. Rešiti morate eno od obeh nalog:
 <ineterpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
 $lr([a , b])$ izračuna polinomski interpolant, v Čebiševih točkah.
-Vrednosti naj računa z #emph[baricentrično Lagrangevo interpolacijo,] po
+Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangevo interpolacijo,] po
 formuli
 
 $ l(x) = cases(delim: "{", frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j)) & quad x eq.not x_j, f lr((x_j)) & quad "sicer") $
 
-kjer so vrednosti uteži $lambda_j$ izbrane, tako da je
-$product_(i eq.not j) lr((x_j - x_i)) = 1$. Čebiševe točke so
-podane na intervalu $lr([- 1 , 1])$ s formulo
+Čebiševe točke so podane na intervalu $lr([- 1 , 1])$ s formulo
 
 $ x_k = cos((2k -1)/(2n) pi), quad k = 0,1 med dots med n-1, $
 
