@@ -41,7 +41,7 @@
 
 = Avtomatsko odvajanje z dualnimi števili
 
-= Aproksimacija z dinamičnim modelom
+#include "16_nde.typ"
 
 = Perioda geostacionarne orbite
 //#include "06_spektralno_grucenje.typ"
