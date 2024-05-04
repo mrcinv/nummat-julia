@@ -212,19 +212,26 @@ Za poročanje o pokritosti kode lahko uporabite paket #link("https://github.com/
 
 Za lažjo komunikacijo predlagam, da rešitev domače naloge postavite v svojo vejo in ustvarite zahtevo za združitev (_Pull request_ na Githubu oziroma _Merge request_ na Gitlabu). V nadaljevanju bomo opisali, kako to storiti, če repozitorij z domačimi nalogami gostite na Githubu. Postopek za Gitlab in druge platforme je podoben.
 
-Najprej ustvarite vejo na svoji delovni kopiji repozitorija in jo potisnete na 
-Github ali Gitlab. Ime veje naj bo `domača-X`, se pravi `domaca-1` za 1. domačo nalogo in tako naprej. To storite z ukazom
+Preden začnete z delom, ustvarite vejo na svoji delovni kopiji repozitorija in jo 
+potisnete na Github ali Gitlab. Ime veje naj bo `domača-X`, se pravi `domaca-1` za 1. 
+domačo nalogo in tako naprej. To storite z ukazom
 
 ```sh
 $ git checkout -b domaca-1
 $ git push -u origin domaca-1
 ```
-Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na Githubu/Gitlabu. Nato na 
-Githubu ustvarite zahtevo za združitev (angl. Pull request). 
+
+Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na Githubu/Gitlabu. 
+
+Med delom sproti dodajate vnose z `git commit` in jih prenesete na splet z ukazom `git push`. Ko je domača naloga končana, na Githubu ustvarite zahtevo za združitev (angl. Pull request).
 - Kliknete na zavihek `Pull requests` in nato na zelen gumb `Create pull request`.
 - Na desni strani izberete vejo `domaca-1` in kliknete na gumb `Create draft pull request`.
 - Ko je koda pripravljena na pregled, kliknite na gumb `Ready for review`.
-- V komentarju za novo ustvarjeno zahtevo me povabite k pregledu.To storite tako, da v komentar dodate moje uporabniško `@mrcinv` ime npr `@mrcinv Prosim za pregled.`. 
+- V komentarju za novo ustvarjeno zahtevo povabite asistenta k pregledu. To storite tako, da v komentar dodate uporabniško ime asistenta (npr. `@mojZlobniAsistent`).
+
+```
+@mojZlobniAsistent Prosim za pregled.
+``` 
 
 #opomba(naslov: [Pri domačih nalogah se posvetujte s kolegi])[
 Nič ni narobe, če za pomoč pri domači nalogi prosite kolega. Seveda morate kodo in poročilo napisati samo, lahko pa kolega prosite za pregled ali za pomoč, če vam kaj ne dela. 
