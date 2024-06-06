@@ -15,7 +15,7 @@
 
 #include "02_koren.typ"
 
-= Tridiagonalni sistemi
+#include "03a_tridiagonalni_sistemi.typ"
 
 #include "03_laplace.typ"
 
