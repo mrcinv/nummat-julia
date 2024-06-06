@@ -1,3 +1,4 @@
+#import "admonitions.typ": opomba
 = Spektralno razvrščanje v gruče
 <spektralno-razvrščanje-v-gruče>
 
@@ -13,10 +14,10 @@ Najprej ustvarimo #emph[podobnostni uteženi graf], ki povezuje točke, ki
 so si v nekem smislu blizu. Podobnostni graf lahko ustvarimo na več
 načinov:
 
-- #strong[ε-okolice]: s točko #emph[xᵢ] povežemo vse točke, ki ležijo v
+- #strong[$ε$-okolice]: s točko $x_k$ povežemo vse točke, ki ležijo v
   ε-okolici te točke
-- #strong[k-najbližji sosedi]: #emph[xₖ] povežemo z #emph[xᵢ], če je
-  #emph[xₖ] med #emph[k] najbližjimi točkami. Tako dobimo usmerjen graf,
+- #strong[$k$ najbližji sosedi]: $x_k$ povežemo z $x_i$, če je
+  $x_i$ med $k$ najbližjimi točkami. Tako dobimo usmerjen graf,
   zato ponavadi upoštevmo povezavo v obe smeri.
 - #strong[poln utežen graf]: povežemo vse točke, vendar povezave utežimo
   glede na razdaljo. Pogosto uporabljena utež je nam znana
@@ -34,7 +35,7 @@ in Laplaceovo matriko
 
 $ L eq D minus W comma $
 
-kjer je $D eq lr([d_(i j)])$ diagonalna matrika z elemetni
+kjer je $D eq lr([d_(i j)])$ diagonalna matrika z elementi
 $d_(i i) eq sum_j w_(i j)$. Laplaceova matrika $L$ je simetrična,
 nenegativno definitna in ima vedno eno lastno vrednost 0 za lastni
 vektor iz samih enic.
@@ -47,20 +48,20 @@ prvi pogled se zdi, da bi lahko bile komponente kar naše gruče, a se
 izkaže, da to ni najbolje.
 
 - Poiščemo #emph[k] najmanjših lastnih vrednosti za Laplaceovo matriko
-  in izračunamonjihove lastne vektorje.
-- Označimo matriko lastnih vektorjev #emph[Q\=\[v₁, v₂, …,vₖ\]]. Stolpci
-  #emph[Qᵀ] ustrezajo koordinatam točk v novem prostoru.
-- Za stolpce matrike #emph[Qᵀ] izvedemo nek drug algoritem gručenja
-  \(npr. algoritem #emph[k] povprečij).
+  in izračunamo njihove lastne vektorje.
+- Označimo matriko lastnih vektorjev $Q=[v_1, v_2, dots,v_k]$. Stolpci
+  $Q^T$ ustrezajo koordinatam točk v novem prostoru.
+- Za stolpce matrike $Q^T$ izvedemo nek drug algoritem gručenja
+  (npr. algoritem $k$ povprečij).
 
-!!! note "Algoritem k-povprečij"
+#opomba(naslov: [Algoritem $k$ povprečij])[
 
-```
 Izberemo si število gruč $k$. Najprej točke naključno razdelimo v $k$ gruč. 
-Nato naslednji postopek ponavljamo, dokler ne konvergira
-* izračunamo center posamezne gruče $c_i=\frac{1}{|G_i|}\sum_{j\in G_i}\mathbf{x}_i$
-* vsako točko razvrstimo v gručo, ki ima najbližji center
-```
+Nato naslednji postopek ponavljamo, dokler se rezultat ne spreminja več
+- izračunamo center posamezne gruče $bold(c)_i= 1/(|G_i|)sum_(j in G_i) bold(x)_i$,
+- vsako točko razvrstimo v gručo, ki ima najbližji center.
+
+]
 
 == Primer
 <primer>
@@ -77,7 +78,7 @@ scatter(x, y, title="Oblak točk v ravnini")
 savefig("06_oblak.png")
 ```
 
-#figure([#image("06_oblak.png")],
+#figure([],
   caption: [
     Oblak točk
   ]
@@ -96,9 +97,9 @@ spy(sparse(Matrix(L)), title="Porazdelitev neničelnih elementov v laplaceovi ma
 savefig("06_laplaceova_matrika_grafa.png")
 ```
 
-#figure([#image("06_laplaceova_matrika_grafa.png")],
+#figure([],
   caption: [
-    Neničelni elementi laplaceove matrike
+    Neničelni elementi Laplaceove matrike
   ]
 )
 
@@ -113,7 +114,7 @@ scatter(razcep.values[1:20], title="Prvih 20 lastnih vrednosti laplaceove matrik
 savefig("06_lastne_vrednosti.png")
 ```
 
-#figure([#image("06_lastne_vrednosti.png")],
+#figure([],
   caption: [
     Lastne vrednosti laplaceove matrike
   ]
@@ -124,7 +125,7 @@ scatter(razcep.vectors[:,4], razcep.vectors[:,5], title="Vložitev s komponentam
 savefig("06_vlozitev.png")
 ```
 
-#figure([#image("06_vlozitev.png")],
+#figure([],
   caption: [
     Vložitev točk v nov prostor
   ]
@@ -230,7 +231,7 @@ plot(p1,p2)
 savefig("06_gruce.png")
 ```
 
-#figure([#image("06_gruce.png")],
+#figure([],
   caption: [
     Gruče
   ]

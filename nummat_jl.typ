@@ -25,7 +25,7 @@
 
 = Invariantna porazdelitev Markovske verige
 
-= Spektralno gručenje
+#include "06_spektralno_grucenje.typ"
 
 = Nelinearne enačbe in geometrija
 
