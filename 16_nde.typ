@@ -31,9 +31,12 @@ table(
 ),
 caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$.]
 )
-5. 
+5. Napisane funkcije uporabite, da poiščete rešitev začetnega problema za poševni met z zračnim uporom. Kako daleč leti telo preden pade na tla? Koliko časa leti? 
+6. Ocenite napako, tako da rezultat izračunajte z dvakrat manjšim korakom.  
+
 
 == Hermitova interpolacija
 
 Približne metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom]. Hermitov zlepek je na intervalu $(x_i, x_(i+1))$ enak kubičnemu polinomu, ki se z rešitvijo ujema v vrednostih in odvodih v krajiščih intervala $x_i$ in $x_(i+1)$.
 
+== Poševni met z zračnim uporom
