@@ -17,10 +17,15 @@ računalnikom, pri čemer lahko bralec naloge rešuje z različno mero samostojn
 začne z opisom naloge in jasnimi navodili, kaj je njen cilj oziroma končni rezultat. Sledijo
 podrobnejša navodila, kako se naloge lotiti, na koncu pa je rešitev z razlago posameznih korakov.
 Rešitev vključuje matematične izpeljave, programsko kodo in rezultate, ki jih dobimo, če programsko
-kodo uporabimo.
+kodo uporabimo. 
 
-Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Podane so le rešitve
-za nekatere stare izpitne naloge. Odločitev, da niso vključene rešitve za vse izpitne naloge je
+V zbirki je več vaj, kot jih je mogoče predstaviti v 
+15 tednih, kolikor traja en semester. Poleg tega je smiselno vsaj 
+dvoje vaj posvetiti izdelavi domačih nalog. Nekatere vaje (na primer 
+vaja o minimalnih ploskvah) so toliko obsežne, da potrebujemo 2 
+tedna, da jih v celoti obravnavamo. V praksi se je izkazalo, da je mogoče v enem semestru v celoti obravnavati 10 do 12 vaj.
+
+Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da niso vključene rešitve za domače naloge je
 namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere
 nima dostopa do rešitev.
 
