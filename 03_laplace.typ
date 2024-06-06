@@ -23,7 +23,16 @@ ploskve.
       "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG",
     )[olimpijskega stadiona v Münchnu].],
 )
-
+Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje linearnih sistemov enačb. Prav tako se bomo naučili, kako zgradimo matriko sistema in desne strani enačb za spremenljivke, ki niso podane z vektorjem ampak kot elementi matrike. V okviru te vaje opravi naslednje naloge.
+ 
+- Izpelji matematični model za minimalne ploskve s pravokotnim tlorisom.
+- Zapiši problem iskanja minimalne ploskve kot #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem] za #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo] na pravokotniku.
+- Robni problem diskretiziraj in zapiši v obliki sistema linearnih enačb.
+- Reši sistem linearnih enačb z LU razcepom. Uporabi knjižnico #link("https://docs.julialang.org/en/v1/stdlib/SparseArrays/")[SparseArrays] za varčno hranjenje matrike sistema.
+- Preveri, kako se število neničelnih elementov poveča pri LU razcepu razpršene matrike.
+- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija) in reši sistem enačb 
+  direktno na elementih matrike višinskih vrednosti ploskve brez eksplicitne uporabe matrike sistema.
+- Nariši primer minimalne ploskve in animiraj konvergenco iterativnih metod.
 
 == Matematično ozadje
 <matematično-ozadje>
@@ -111,13 +120,13 @@ vozlišče v mreži je povezano s 4 sosednjimi vozlišči. Vozlišče bo v ravno
 ko bo vsota vseh sil nanj enaka 0. Predpostavimo, da so vozlišča povezana z
 idealnimi vzmetmi in je sila sorazmerna z razliko. Če zapišemo enačbo za
 komponente sile v smeri $z$, dobimo za točko
-$lr((x_i comma y_j comma u_(i j)))$ enačbo
+$(x_i comma y_j comma u_(i j))$ enačbo
 
 $
   u_(i-1,j) + u_(i,j-1) - 4u_(i,j) + u_(i+1,j) + u_(i,j+1) = 0.
 $ 
 
-Za $u_(i j)$ imamo tako sistem linearnih enačb. Ker pa so vrednotsi na robu
+Za $u_(i j)$ imamo tako sistem linearnih enačb. Ker pa so vrednosti na robu
 določene z robnimi pogoji, moramo elemente $u_(0 j)$,
 $u_(n plus 1 comma j)$, $u_(i 0)$ in $u_(i m plus 1)$ prestaviti na desno stran
 in jih upoštevati kot konstante.
@@ -129,48 +138,76 @@ Sisteme linearnih enačb običajno zapišemo v matrični obliki
 $ A bold(x) = bold(b), $
 
 kjer je $A$ kvadratna matrika, $bold(x)$ in $bold(b)$ pa vektorja. Spremenljivke
-$u_(i, j)$ razvrstimo po stolpcih v vektor.
-
-!!! note "Razvrstitev po stolpih"
-
-``` Eden od načinov, kako lahko elemente matrike razvrstimo v vektor, je, da
-stolpce matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$ lahko
-izrazimo z indeksi $i,j$ v matriki s formulo
-$$k = i+(n-1)j.$$
-```
+$u_(i, j)$ razvrstimo po stolpcih v vektor $bold(x)$, tako da je 
+$
+bold(x) = [u_(11), u_(21) med dots med u_(n 1), u_(12), u_(22) med dots med u_(1n) med dots med u_(m-1 n), u_(m n)]^T.
+$
 
 Za $n eq m eq 3$ dobimo $9 times 9$ matriko
 
-```math L = \begin{bmatrix} -4& 1& 0& 1& 0& 0& 0& 0& 0\\ 1& -4& 1& 0& 1& 0& 0&
-0& 0\\ 0& 1& -4& 0& 0& 1& 0& 0& 0\\ 1& 0& 0& -4& 1& 0& 1& 0& 0\\ 0& 1& 0& 1& -4&
-1& 0& 1& 0\\ 0& 0& 1& 0& 1& -4& 0& 0& 1\\ 0& 0& 0& 1& 0& 0& -4& 1& 0\\ 0& 0& 0&
-0& 1& 0& 1& -4& 1\\ 0& 0& 0& 0& 0& 1& 0& 1& -4\\ \end{bmatrix}, ```
+$
+A^(9, 9) = mat(-4, 1, 0, 1, 0, 0, 0, 0, 0; 1, -4, 1, 0, 1, 0, 0,
+0, 0; 0, 1, -4, 0, 0, 1, 0, 0, 0; 1, 0, 0, -4, 1, 0, 1, 0, 0; 0, 1, 0, 1, -4,
+1, 0, 1, 0; 0, 0, 1, 0, 1, -4, 0, 0, 1; 0, 0, 0, 1, 0, 0, -4, 1, 0; 0, 0, 0,
+0, 1, 0, 1, -4, 1; 0, 0, 0, 0, 0, 1, 0, 1, -4), 
+$
 
 ki je sestavljena iz $3 times 3$ blokov
 
-```math \begin{bmatrix}-4&1&0\cr 1&-4&1\cr 0&1&-4\end{bmatrix},\quad
-\begin{bmatrix}1&0&0\cr 0&1&0\cr 0&0&1\end{bmatrix}. ```
+$
+L^(3, 3) = mat(-4,1,0; 1,-4,1; 0,1,-4),quad
+I^(3, 3) = mat(1,0,0; 0,1,0; 0,0,1). 
+$
 
-desne strani pa so
+in desne strani
 
-```math \mathbf{b} = -[u_{01}+u_{10}, u_{20}, \ldots u_{n0}+u_{n+1,1},u_{02},
-0,\ldots u_{n+1,2}, u_{03}, 0\ldots u_{n, m+1},u_{n,m+1}+u_{n+1,m}]^T. ```
+$
+bold(b) = -[u_(0 1)+u_(1 0), u_(2 0) dots u_(n 0) + u_(n+1 1), u_(0 2),
+0 dots u_(n+1, 2), u_(0 3), 0 dots u_(n m+1), u_(n m+1) + u_(n+1 m)]^T. 
+$
+
+#opomba(naslov: [Razvrstitev po stolpih in operator $vec$])[
+Eden od načinov, kako lahko elemente matrike razvrstimo v vektor, je po stolpcih. Stolpce
+matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$ lahko
+izrazimo z indeksi $i,j$ v matriki s formulo
+$ k = i+(n-1)j. $ Ta način preoblikovanja matrike v vektor bomo označili s posebnim operatorjem $vec$:
+$ 
+vec: RR^(n times m) -> RR^(n dot m).
+$ 
+]
 
 == Izpeljava s Kronekerjevim produktom
 
-Množenje vektorja $bold(x) = "vec"(Z)$ z matriko $L$ lahko prestavimo kot
-množenje z matriko
+Množenje vektorja $bold(x) = "vec"(U)$ z matriko $A$ lahko prestavimo kot
+množenje matrike $U$ z matriko $L$ z leve in desne:   
 
 $
-  "vec"(L Z + Z L) = L "vec"(Z).
+  A "vec"(Z) = "vec"(L U + Z U),
 $
 
-Ker velja $"vec"(A X B) = A times.circle B dot "vec"(X)$ je
+kjer je $L$ Laplaceova matrika v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji in zgornji obdiagonali:
 
 $
-  L^(N, N) = L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n)
+L = mat(
+  -2, 1, 0, dots, 0;
+  1, -2, 1, dots, dots.v;
+  dots.v, dots.down, dots.down, dots.down, 0;
+  0, dots, 1, -2, 1;
+  0, dots, 0,  1, -2;
+).
 $
 
+Ker velja $"vec"(A X B) = A times.circle B dot "vec"(X)$, lahko matriko $A$ zapišemo s #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom] $times.circle$ matrik $L$ in $I$:
+
+$
+  A dot "vec"(U) &= "vec"(L U + U L) = "vec"(L U I + I U L) \
+  A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
+$
+
+#opomba(naslov:[Kroneckerjev produkt in operator $vec$ v Juliji])[
+Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in računanje Kronekerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja 
+zgradimo matriko.
+]
 == Primer
 <primer>
 ```julia robni_problem = RobniProblemPravokotnik( LaplaceovOperator{2}, ((0,
