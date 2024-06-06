@@ -12,3 +12,7 @@ end
   # p(x) = x^3; p'(x) = 3x^2 
   @test Vaja16.hermiteint(2, [1, 3], [1, 27], [3, 27]) ≈ 8
 end
+
+@testset "Eulerjeva metoda" begin
+
+end

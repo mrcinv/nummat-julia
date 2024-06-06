@@ -45,7 +45,7 @@
 
 #include "16_nde.typ"
 
-#include "17_nde_aproks.typ"
+#include "17_nde_aproksimacija.typ"
 
 = Perioda geostacionarne orbite
 

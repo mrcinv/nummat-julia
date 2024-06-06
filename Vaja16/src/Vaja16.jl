@@ -1,4 +1,7 @@
 module Vaja16
+
+export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK2Kontrola
+
 """
   zp = ZacetniProblem(f!, u0 tspan, p)
 
@@ -35,7 +38,7 @@ end
 
 struct Euler end
 
-function resi(p::ZacetniProblem, metoda::Euler, n=100)
+function resi(p::ZacetniProblem, ::Euler, n=100)
   t0, t1 = p.tint
   f = p.f
   p = p.p
@@ -51,7 +54,7 @@ end
 
 struct RK2 end
 
-function resi(zp::ZacetniProblem, metoda::RK2, n=100)
+function resi(zp::ZacetniProblem, ::RK2, n=100)
   t0, t1 = zp.tint
   f = zp.f
   par = zp.p
@@ -68,7 +71,7 @@ end
 
 struct RK2Kontrola
 
-function resi(zp::ZacetniProblem, metoda::RK2Kontrola, ε = 1e-8)
+function resi(zp::ZacetniProblem, ::RK2Kontrola, ε = 1e-8)
   t0, t1 = zp.tint
   f = zp.f
   zp = zp.p
