@@ -30,6 +30,10 @@ dokumentacijo, teste in demo.
 == Naloge s funkcijami
 <naloge-s-funkcijami>
 
+Implementacija funkcije naj zadošča naslednjim zahtevam:
+- relativna napaka je manjša od $5 dot 10^(-11)$ za vse argumente in
+- časovna zahtevnost je omejena s konstanto, ki je neodvisna od argumenta.
+
 #minitoc(title: [Naloge], target: heading.where(depth: 3))
 
 
@@ -172,9 +176,9 @@ ne bo presegla $10^(- 6)$.
 
 === Gauss-Legendrove kvadrature
 <gauss-legendrove-kvadrature>
-Izpelji Gauss-Legendreovo integracijsko pravilo na dveh točkah
+Izpelji #link("https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreovo integracijsko pravilo] na dveh točkah
 
-$ integral_0^h f lr((x)) d x = A f lr((x_1)) plus B f lr((x_2)) plus R_f $
+$ integral_0^h f(x) d x = A f(x_1) + B f(x_2) + R_f $
 
 vključno s formulo za napako $R_f$. Izpelji sestavljeno pravilo za
 $integral_a^b f lr((x)) d x$ in napiši program, ki to pravilo uporabi za
@@ -183,4 +187,5 @@ vrednosti je potrebnih, za izračun približka za
 
 $ integral_0^5 frac(sin x, x) d x $
 
-na 10 decimalk natančno.
+na 10 decimalk natančno. _Namig_: Najprej izpelji pravilo na intervalu $[-1, 1]$ in ga 
+nato prevedi na poljuben interval $[x_i, x_(i+1)]$. Za oceno napake uporabite izračun z dvojnim številom korakov.

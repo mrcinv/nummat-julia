@@ -61,7 +61,14 @@ $
 
 kjer je $s t lr((i))$ stopnja $i$-tega vozlišča, $N lr((i))$ pa množica
 indeksov sosednjih vozlišč. Če nekatera vozlišča fiksiramo, bodo ostala
-zavzela ravnovesno lego med fiksiranimi vozlišči. Za risanje grafa lahko uporabite #link("https://github.com/JuliaPlots/GraphRecipes.jl")[GraphRecipes.jl]. 
+zavzela ravnovesno lego med fiksiranimi vozlišči. Napišite funkcijo 
+`ravnovesni_sistem`, ki za dani graf in koordinate vozlišč, ki so 
+fiksirana, vrne matriko sistema in desne strani enačb za posamezne 
+koordinate za vozlišča, ki niso fiksirana. 
+
+Za primer lahko upodobite [graf krožno lestev](https://en.wikipedia.org/wiki/Ladder_graph#Circular_ladder_graph), kjer polovica vozlišč enakomerno razporedite na enotski krožnici.
+
+Za risanje grafa lahko uporabite #link("https://github.com/JuliaPlots/GraphRecipes.jl")[GraphRecipes.jl]. 
 
 Za primere, ki jih boste opisali, poiščite optimalni $omega$, pri
 katerem SOR najhitreje konvergira in predstavite odvisnost hitrosti
