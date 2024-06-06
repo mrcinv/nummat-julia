@@ -19,7 +19,9 @@
 
 #include "03_laplace.typ"
 
-= Implicitna interpolacija
+#include "04_implicitna_interpolacija.typ"
+
+#include "05_fizikalna_graf.typ"
 
 = Invariantna porazdelitev Markovske verige
 
@@ -37,14 +39,15 @@
 
 = Povprečna razdalja med dvema točkama na kvadratu
 
-= Gaussove kvadrature
+= Porazdelitvena funkcija normalne porazdelitve
 
 = Avtomatsko odvajanje z dualnimi števili
 
 #include "16_nde.typ"
 
+#include "17_nde_aproks.typ"
+
 = Perioda geostacionarne orbite
-//#include "06_spektralno_grucenje.typ"
 
 #include "domace.typ"
 
