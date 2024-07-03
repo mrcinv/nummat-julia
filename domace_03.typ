@@ -101,6 +101,18 @@ $ x^(̈) & eq x plus 2 dot(y) minus mu^(‾) / R^3 lr((x plus mu)) minus mu / r^
 y^(̈) & eq y minus 2 dot(x) minus mu^(‾) / R^3 y minus mu / r^3 y comma\
 z^(̈) & eq minus mu^(‾) / R^3 z minus mu / r^3 z dot.basic $
 
+=== Perioda geostacionarne orbite
+
+Oblika planeta Zemlja ni čisto pravilna krogla. Zato tudi gravitacijsko polje ne deluje v vseh smereh enako. Gravitacijsko polje lahko zapišemo kot odvod gravitacijskega potenciala
+
+$
+F_g(bold(r)) = m dot gradient V(bold(r)),
+$
+
+kjer je $V(bold(r))$ skalarna funkcija položaja $bold(r)$.
+#link("https://en.wikipedia.org/wiki/Gravity_of_Earth")[Zemljina gravitacija]
+#link("https://en.wikipedia.org/wiki/Geopotential_model")[Zemljin gravitacijski potencial].
+
 == Lažja naloga \(ocena največ 9)
 <lažja-naloga-ocena-največ-9>
 Naloga je namenjena tistim, ki jih je strah eksperimentiranja ali pa za

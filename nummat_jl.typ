@@ -21,33 +21,27 @@
 
 #include "04_implicitna_interpolacija.typ"
 
-#include "05_fizikalna_graf.typ"
+#include "04a_fizikalna_graf.typ"
 
-= Invariantna porazdelitev Markovske verige
+#include "05_page_rank.typ"
 
 #include "06_spektralno_grucenje.typ"
 
-= Nelinearne enačbe in geometrija
+#include "07_nelinearne_geometrija.typ"
 
-= Konvergenčna območja nelinearnih enačb
+#include "08_konvergencna_obmocja.typ"
 
-= Interpolacija z zlepki
+#include "09_hermitov_zlepek.typ"
 
-= Aproksimacija z linearnim modelom
+#include "11_porazdelitvena_funkcija.typ"
 
-= Aproksimacija s polinomi Čebiševa
+#include "12_povprecna_razdalja.typ"
 
-= Povprečna razdalja med dvema točkama na kvadratu
+#include "13_avtomatsko_odvajanje.typ"
 
-= Porazdelitvena funkcija normalne porazdelitve
+#include "14_nde.typ"
 
-= Avtomatsko odvajanje z dualnimi števili
-
-#include "16_nde.typ"
-
-#include "17_nde_aproksimacija.typ"
-
-= Perioda geostacionarne orbite
+#include "15_nde_aproksimacija.typ"
 
 #include "domace.typ"
 

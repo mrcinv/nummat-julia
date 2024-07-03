@@ -1,0 +1,1 @@
+= Invariantna porazdelitev Markovske verige

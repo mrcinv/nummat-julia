@@ -1,0 +1,1 @@
+= Porazdelitvena funkcija normalne porazdelitve

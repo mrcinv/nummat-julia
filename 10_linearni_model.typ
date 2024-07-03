@@ -1,0 +1,1 @@
+= Aproksimacija z linearnim modelom

@@ -1,6 +1,4 @@
-= Aproksimacija z dinamičnim modelom
-
-== Reševanje začetnega problema za NDE
+= Reševanje začetnega problema za NDE
 
 Navadna diferencialna enačba 
 

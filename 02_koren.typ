@@ -20,7 +20,7 @@ Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren
 === Podrobna navodila
 
 - Zapiši enačbo, ki ji zadošča kvadratni koren. 
-- Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.
+- Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[Newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.
 - Kako je konvergenca odvisna od vrednosti `x`?
 - Nariši graf potrebnega števila korakov v odvisnosti od argumenta `x`.
 - Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Juliji).

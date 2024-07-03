@@ -1,0 +1,1 @@
+= Avtomatsko odvajanje z dualnimi števili
