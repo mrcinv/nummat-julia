@@ -2,6 +2,15 @@
 
 = Tridiagonalni sistemi
 <tridiagonalni-sistemi>
+
+== Naloga
+<naloga>
+
+- Ustvari podatkovni tip za tri diagonalno matriko in implementiraj operacije množenja z vektorjem `*` in reševanja sistema  $A x=b$ `\`.   
+- Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da se od izhodišča oddaljimo za $k$ korakov.
+  - Zapiši fundamentalno matriko za Markovsko verigo, ki modelira slučajni sprehod za prvih $k$ korakov.
+  - Reši sistem s fundamentalno matriko in vektorjem enic.   
+
 == Slučajni sprehod
 <slučajni-sprehod>
 Poglejmo si primer
@@ -20,11 +29,6 @@ using Plots
 scatter(cumsum(2*round.(rand(100)).-1))
 savefig("sprehod.png")
 ```
-
-=== Naloga
-<naloga>
-Izračunaj povprečno število korakov, ki jih potrebujemo, da se od
-izhodišča oddaljimo za $k$ korakov.
 
 === Markovske verige
 <markovske-verige>
@@ -85,9 +89,9 @@ v stanju $i$.
 
 Pričakovano število korakov, da dosežemo absorpcijsko stanje iz
 začetnega stanja $i$ je $i$-ta komponenta produkta fundamentalne matrike
-$N$ z vektorjem samih enic
+$N$ z vektorjem samih enic.
 
-$ bold(k) = N bold(1) = lr((I - Q))^(- 1) bold(1) dot.basic $
+$ bold(k) = N bold(1) = lr((I - Q))^(- 1) bold(1). $
 
 Če želimo poiskati pričakovano število korakov, moramo rešiti sistem
 linearnih enačb

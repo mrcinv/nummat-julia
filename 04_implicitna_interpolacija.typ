@@ -1,5 +1,21 @@
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
+
+Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta #link("https://en.wikipedia.org/wiki/Marching_cubes")[sprehod po kockah] in #link("https://en.wikipedia.org/wiki/Marching_squares")[sprehod po kvadratih] omogočajo učinkovito predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
+
+== Naloga
+
+- Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij (RBF), ki 
+  vsebuje središča RBF $bold(x)_i$ in koeficiente $a_i$ v linearni kombinaciji
+  $ F(bold(x)) = sum_(i=1)^n a_i phi(||bold(x) - bold(x_i)||). $
+- Napiši sistem za koeficiente v linearni kombinaciji RBF, če so podane
+  vrednosti $z_i=F(bold(x_i))$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $z_i$
+  in centre $bold(x_i)$ poišče koeficiente $a_1, a_2 dots a_n$. Katero metodo za reševanja sistema lahko uporabimo?
+- Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F$ v dani točki. 
+
+
+== Interpolacija z radialnimi baznimi funkcijami
+
 #link("https://en.wikipedia.org/wiki/Radial_basis_function")[Radialne bazne funkcije \(RBF)] so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne točke
 
 $ f(bold(x)) = phi lr((parallel bold(x) - bold(x)_0 parallel)) $
@@ -50,12 +66,6 @@ contour!(x, y, f, levels = [0])
 Točke ležijo na nivojnici funkcije
 $f lr((x , y)) eq lr((x^2 plus y^2))^2 plus 4 x lr((x^2 plus y^2)) - 4 y^2$
 za nivo $f lr((x , y)) eq 0$.
-
-=== Danes bomo spoznali
-<danes-bomo-spoznali>
-+ kako napisatni sistem enačb za praktičen primer
-+ primerno izbiro metode za reševanje
-+ implementacija v programskem jeziku in težave
 
 == Opis krivulj z implicitno interpolacijo
 <opis-krivulj-z-implicitno-interpolacijo>
@@ -143,3 +153,4 @@ bistveno zmanjšata.
   basis functions, SMI 2001 International Conference on Shape Modeling
   and Applications, Genova Italy, \(2001)
   #link("https://www.cs.jhu.edu/~misha/Fall13b/Papers/Morse01.pdf")[pdf]
+- Predstavitev s #link("https://en.wikipedia.org/wiki/Signed_distance_function")[predznačeno funkcijo razdalje]
