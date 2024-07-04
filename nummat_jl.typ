@@ -33,6 +33,8 @@
 
 #include "09_hermitov_zlepek.typ"
 
+#include "10_linearni_model.typ"
+
 #include "11_porazdelitvena_funkcija.typ"
 
 #include "12_povprecna_razdalja.typ"
