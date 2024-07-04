@@ -1,1 +1,0 @@
-= Konvergenčna območja nelinearnih enačb

@@ -1,1 +1,0 @@
-= Nelinearne enačbe v geometriji

@@ -27,9 +27,9 @@
 
 #include "06_spektralno_grucenje.typ"
 
-#include "07_nelinearne_geometrija.typ"
+#include "07_konvergencna_obmocja.typ"
 
-#include "08_konvergencna_obmocja.typ"
+#include "08_nelinearne_geometrija.typ"
 
 #include "09_hermitov_zlepek.typ"
 
