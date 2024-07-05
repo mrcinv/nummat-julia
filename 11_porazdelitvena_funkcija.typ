@@ -11,5 +11,5 @@
   natančnost.
 - Interval $(-oo, -1]$ transformiraj s funkcijo $1/x$ na interval $[-1, 0]$ in uporabi 
   interpolacijo s polinomom na Čebiševih točkah.
-- Na intervalu $[-1, a]$ za primerno izbran $a$ uporabi Legendrove kvadrature.
-- Izberi $a$, da je na intervalu $[a, oo)$ vrednost na 10 decimalk enaka $1$. 
+- Na intervalu $[-1, a]$ za primerno izbran $a$ uporabi #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrove kvadrature].
+- Izberi $a$, da je na intervalu $[a, oo)$ vrednost na 10 decimalk enaka $1$.

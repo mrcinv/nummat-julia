@@ -1,7 +1,7 @@
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
 
-Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta #link("https://en.wikipedia.org/wiki/Marching_cubes")[sprehod po kockah] in #link("https://en.wikipedia.org/wiki/Marching_squares")[sprehod po kvadratih] omogočajo učinkovito predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
+Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta #link("https://en.wikipedia.org/wiki/Marching_cubes")[korakajoče kocke] in #link("https://en.wikipedia.org/wiki/Marching_squares")[korakajoči kvadrati] omogočajo učinkovito predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
 
 == Naloga
 
@@ -10,7 +10,7 @@ Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivul
   $ F(bold(x)) = sum_(i=1)^n a_i phi(||bold(x) - bold(x_i)||). $
 - Napiši sistem za koeficiente v linearni kombinaciji RBF, če so podane
   vrednosti $z_i=F(bold(x_i))$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $z_i$
-  in centre $bold(x_i)$ poišče koeficiente $a_1, a_2 dots a_n$. Katero metodo za reševanja sistema lahko uporabimo?
+  in središča $bold(x_i)$ poišče koeficiente $a_1, a_2 dots a_n$. Katero metodo za reševanja sistema lahko uporabimo?
 - Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F$ v dani točki. 
 
 
