@@ -7,8 +7,41 @@ knuth84:
   type: article
   title: Literate programming
   author: D. E. Knuth
-  journal: The Computer Journal
-  volume: 27
+  parent:
+    type: periodical
+    title: The Computer Journal
+    volume: 27
+    issue: 2
   date: 1984
-  pages: 97-111
-  doi: https://doi.org/10.1093/comjnl/27.2.97
+  page-range: 97-111
+  serial-number:
+    doi: 10.1093/comjnl/27.2.97
+isarles2004:
+  type: article
+  title: On quadrature methods for highly oscillatory integrals and their implementation
+  author: [A. Iserles, S. P. Nørsett]
+  parent:
+    type: periodical
+    title: BIT Numerical Mathematics
+    volume: 44
+    issue: 4
+  date: 2004
+  page-range: 755-772
+  serial-number:
+    doi: 10.1007%2Fs10543-004-5243-3
+dlmf6:
+  type: Web
+  title: "Digital Library of Mathematical Functions: Chapter 6 Exponential, Logarithmic, Sine, and Cosine Integrals"
+  author: N. M. Temme
+  serial-number: version 1.2.1
+  url: 
+    value: https://dlmf.nist.gov/6
+    date: 2024-06-15
+dlmf7:
+  type: Web
+  title: "Digital Library of Mathematical Functions: Chapter 7 Error Functions, Dawson’s and Fresnel Integrals"
+  author: N. M. Temme
+  serial-number: version 1.2.1
+  url: 
+    value: https://dlmf.nist.gov/7
+    date: 2024-06-15

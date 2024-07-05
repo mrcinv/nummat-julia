@@ -37,55 +37,60 @@ Implementacija funkcije naj zadošča naslednjim zahtevam:
 #minitoc(title: [Naloge], target: heading.where(depth: 3))
 
 
-=== Porazdelitvena funkcija normalne slučajne spremenljivke
-<porazdelitvena-funkcija-normalne-slučajne-spremenljivke>
-Napišite učinkovito funkcijo, ki izračuna vrednosti porazdelitvene
-funkcije za standardno normalno porazdeljeno slučajno spremenljivko
-$X tilde.op N lr((0 , 1))$.
-
-$ Phi lr((x)) = P lr((X lt.= x)) = 1 / sqrt(2 pi) integral_(- oo)^x e^(- t^2 / 2) d t $
-
 === Fresnelov integral \(težja)
 <fresnelov-integral-težja>
 Napišite učinkovito funkcijo, ki izračuna vrednosti Fresnelovega
 kosinusa
 
-$ C lr((x)) = sqrt(2 slash pi) integral_0^x cos lr((t^2)) d t dot.basic $
+$ C(x) = integral_0^x cos((pi t^2)/2) d t. $
 
 #strong[Namig]: Uporabite pomožni funkciji
 
-$ f lr((x)) = sqrt(2 slash pi) integral_0^oo e^(- 2 x t) cos lr((t^2)) d t $
+$ f(z) &= 1/(pi sqrt(2)) integral_0^oo e^(- (pi z^2 t)/2) /(sqrt(t)(t^2 + 1)) d t\ 
+  g(z) &= 1/(pi sqrt(2)) integral_0^oo (sqrt(t) e^(- (pi z^2 t)/2)) /(t^2 + 1) d t,
+$
+kot je opisano v @dlmf7.
 
-$ g lr((x)) = sqrt(2 slash pi) integral_0^oo e^(- 2 x t) sin lr((t^2)) d t $
-
-kot je opisano v
-#link("https://people.math.sfu.ca/~cbm/aands/")[priročniku Abramowitz in Stegun].
-
-=== Funkcija kvantilov za $N lr((0 , 1))$
+=== Funkcija kvantilov za $N(0 , 1)$
 <funkcija-kvantilov-za-n01>
-Napišite učinkovito funkcijo, ki izračuna funkcijo kvantilov za normalno
+Napišite učinkovito funkcijo, ki izračuna funkcijo kvantilov za standardno normalno
 porazdeljeno slučajno spremenljivko. Funkcija kvantilov je inverzna
 funkcija $Phi^(-1)(x)$ porazdelitvene funkcije:
 $
   Phi(x) = 1/(sqrt(2pi)) integral_(-infinity)^x e^(-t^2/2) d t.
 $
 
-Poskrbite, da bo relativna napaka za majhne vrednosti (negativne vrednosti z veliko absolutno vrednostjo) $x$ dovolj majhna.
+Poskrbite, da bo relativna napaka za vrednosti blizu $0$ in $1$ dovolj majhna in da je
+časovna zahtevnost omejena z isto konstanto na celem intervalu $(0, 1)$.
 
 === Integralski sinus \(težja)
 <integralski-sinus-težja>
 Napišite učinkovito funkcijo, ki izračuna integralski sinus
 
-$ S i lr((x)) = integral_0^x frac(sin lr((t)), t) d t dot.basic $
+$ "Si"(x) = integral_0^x frac(sin(t), t) d t. $
 
-Uporabite pomožne funkcije, kot je opisano v
-#link("https://people.math.sfu.ca/~cbm/aands/page_232.htm")[priročniku Abramowitz in Stegun].
+Uporabite pomožni funkciji
+$ 
+  f(z) &= integral_0^oo sin(t)/(t + z) = integral_0^oo e^(-z t)/(t^2 + 1) d t\
+  g(z) &= integral_0^oo cos(t)/(t + z) = integral_0^oo (t e^(-z t))/(t^2 + 1) d t\
+  "Si"(z) &= pi/2 - f(z)cos(z) - g(z) sin(z),  
+$
+kot je opisano v @dlmf6.
 
-=== Besselova funkcija \(težja)
+=== Naravni parameter \(težja)
 <besselova-funkcija-težja>
-Napišite učinkovito funkcijo, ki izračuna Besselovo funkcijo $J_0$:
 
-$ J_0 lr((x)) = 1 / pi integral_0^pi cos lr((x sin t)) d t dot.basic $
+Napišite učinkovito funkcijo, ki izračuna #link("https://en.wikipedia.org/wiki/Differentiable_curve#Length_and_natural_parametrization")[naravni parameter]:
+
+$ s(t) = integral_0^t sqrt(dot(x)(tau)^2 + dot(y)(tau)^2) d tau $
+
+za parametrično krivuljo
+
+$
+  (x(t), y(t)) = (t^3 - t, t^2 - 1).
+$
+
+Za velike vrednosti argumenta $t$ aproksimirajte funkcijo $s(1/t)^(-1)$ s polinomom.
 
 == Naloge s števili
 <naloge-s-števili>
@@ -113,8 +118,7 @@ $ y lr((t)) = lr((a plus b)) sin lr((t)) plus b sin lr((frac(a plus b, b) t)) $
 za parametra $a = 1$ in $b = - 11 / 7$.
 
 #strong[Namig]: Uporabite formulo za
-#link("https://sl.wikipedia.org/wiki/Plo%C5%A1%C4%8Dina#Plo%C5%A1%C4%8Dine_krivo%C4%8Drtnih_likov")[ploščino krivočrtnega trikotnika]
-pod krivuljo:
+#link("https://sl.wikipedia.org/wiki/Plo%C5%A1%C4%8Dina#Plo%C5%A1%C4%8Dine_krivo%C4%8Drtnih_likov")[ploščino krivočrtnega trikotnika] pod krivuljo:
 
 $ P = 1 / 2 integral_(t_1)^(t_2) lr((x lr((t)) dot(y) lr((t)) - dot(x) lr((t)) y lr((t)))) d t $
 
@@ -132,25 +136,26 @@ $ integral_(A - B) integral_(A - B) & f(x, y) d x d y = integral_A integral_A f(
 
 === Ploščina Bézierove krivulje
 <ploščina-bézierove-krivulje>
+
 Izračunajte ploščino zanke, ki jo omejuje Bézierova krivulja dana s
 kontrolnim poligonom:
 
 $ (0 , 0) , (1 , 1) , (2 , 3) , (1 , 4) , (0 , 4) , (- 1 , 3) , (0 , 1) , (1 , 0). $
 
 #strong[Namig]: Uporabite lahko formulo za
-#link("https://en.wikipedia.org/wiki/Area#Area_in_calculus")[ploščino krivočrtnega trikotnika]
-pod krivuljo:
+#link("https://en.wikipedia.org/wiki/Area#Area_in_calculus")[ploščino krivočrtnega trikotnika] pod krivuljo:
 
 $ P = 1 / 2 integral_(t_1)^(t_2) lr((x(t) dot(y)(t) - dot(x)(t) y(t))) d t. $
 
 == Lažje naloge \(ocena največ 9)
 <lažje-naloge-ocena-največ-9>
 Naloge so namenjen tistim, ki jih je strah eksperimentiranja ali pa za
-to preprosto nimajo interesa ali časa. Rešiti morate eno od obeh nalog:
+to preprosto nimajo interesa ali časa. Rešiti morate eno od nalog:
 
 === Gradientni spust z iskanjem po premici
 
-=== Ineterpolacija z baricentrično formulo
+
+=== Interpolacija z baricentrično formulo
 <ineterpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
 $lr([a , b])$ izračuna polinomski interpolant, v Čebiševih točkah.
