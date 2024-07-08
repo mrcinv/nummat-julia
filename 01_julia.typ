@@ -27,8 +27,8 @@ poročilo v formatu PDF.
 Sledite #link("https://julialang.org/downloads/")[navodilom], namestite
 programski jezik Julia in v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
 (angl. _Read Eval Print Loop_ ali s kratico REPL) in v terminalu se pojavi ukazni pozivnik
-#text(green)[`julia>`]. Za ukazni pozivnik lahko napišemo posamezne ukaze, ki jih nato Julia
-prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
+#text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato 
+Julia prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
 
 #code_box[
   #repl("1 + 1", "2")
@@ -47,7 +47,7 @@ enovrstične funkcije definiramo z izrazom ```jl ime(x) = ...```.
   #repl("f(pi/2)", "3.4674011002723395")
 ]
 #pagebreak()
-Funkcija z več argumentu definiramo podobno:
+Funkcije z več argumenti definiramo podobno:
 
 #code_box[
   #repl("g(x, y) = x + y^2", "g (generic function with 1 method)")
@@ -279,7 +279,7 @@ Kodo lahko zapišemo tudi v datoteke. Vnašanje ukazov v interaktivni zanki je
 uporabno za preproste ukaze na primer namesto kalkulatorja, za resnejše delo pa je bolje kodo shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku Julia končnico
 `.jl`. 
 
-Napišimo preprost skript. Ukaze, ki smo jih vnesli doslej, shranimo v datoteko z
+Napišimo preprost program. Ukaze, ki smo jih vnesli doslej  , shranimo v datoteko z
 imenom `01uvod.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
 
 #code_box[
