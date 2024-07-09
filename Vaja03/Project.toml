@@ -2,3 +2,6 @@ name = "Vaja03"
 uuid = "88456217-ae7d-493b-9829-f8826c295bb2"
 authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
 version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

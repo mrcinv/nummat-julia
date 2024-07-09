@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlfb, jl, pkg, code_box, repl
+#import "julia.typ": jlfb, jl, pkg, code_box, repl, out
 
 = Tridiagonalni sistemi
 <tridiagonalni-sistemi>
@@ -14,7 +14,7 @@
 
 == Tridiagonalne matrike
 
-Matrika je #emph[tri-diagonalna], če ima neničelne elemente le na glavni diagonali in dveh najbližjih diagonalah. Primer $5 times 5$ tridiagonalne matrike
+Matrika je #emph[tridiagonalna], če ima neničelne elemente le na glavni diagonali in dveh najbližjih diagonalah. Primer $5 times 5$ tridiagonalne matrike
 
 $
   mat(
@@ -30,7 +30,7 @@ Elementi tridiagonalne matrike, za katere se indeksa razlikujeta za več kot 1, 
 enaki 0: 
 $ |i-j| > 1 => a_(i j) = 0. $
 
-Z implementacijo posebnega tipa za tri-diagonalno matriko lahko prihranimo na prostoru, kot tudi časovni zahtevnosti algoritmov, ki delujejo na tri-diagonalnih matrikah.
+Z implementacijo posebnega tipa za tridiagonalno matriko lahko prihranimo na prostoru, kot tudi časovni zahtevnosti algoritmov, ki delujejo na tridiagonalnih matrikah.
 
 Preden se lotimo naloge, ustvarimo nov paket `Vaja03`, kamor bomo postavili kodo:
 
@@ -39,7 +39,7 @@ Preden se lotimo naloge, ustvarimo nov paket `Vaja03`, kamor bomo postavili kodo
   #pkg("develop Vaja03/", none, env: "nummat")
 ]
 
-Podatkovni tip za tri-diagonalne matrike imenujemo `Tridiag` in vsebuje tri polja z elementi na posameznih diagonalah. Definicijo postavimo v `Vaja03/src/Vaja03.jl`:
+Podatkovni tip za tridiagonalne matrike imenujemo `Tridiag` in vsebuje tri polja z elementi na posameznih diagonalah. Definicijo postavimo v `Vaja03/src/Vaja03.jl`:
 
 #code_box[
   #jlfb("Vaja03/src/Vaja03.jl", "# Tridiagonalna")
@@ -68,23 +68,52 @@ ki imajo nekonsistentne podatke.
 
 - #jl("size(T::Tridiag)"), ki vrne dimenzije matrike,
 - #jl("getindex(T::Tridiag, i, j)"), ki vrne element `T[i,j]`,
-- #jl("*(T::Tridiag, x::Vector)"), ki vrne produkt matrike `T` z vektorjem `x`.
+- #jl("*(T::Tridiag, x::Vector)"), ki vrne produkt matrike `T` z vektorjem `x`. Za tridiagonalne matrike je časovna zahtevnost množenja matrike z vektorjem bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^2)$).
 
-Preden nadaljujemo, preverimo ali so funkcije pravilno implementirane. To lahko storimo
-v interaktivni ukazni zanki:
+Preden nadaljujemo, preverimo ali so funkcije pravilno implementirane. Napišemo avtomatske teste, ki jih lahko kadarkoli poženemo. V projektu `Vaja03` ustvarimo datoteko `Vaja03/test/runtests.jl` in vanjo zapišemo kodo, ki preveri pravilnost zgoraj definiranih funkcij.   
 
 #code_box[
-  
+  #jlfb("Vaja03/test/runtests.jl", "# glava")
 ]
 
-== Reševanje tri diagonalnega sistema
+V paket `Vaja03` moramo dodati še paket `Test`. 
 
+#code_box[
+  #pkg("activate Vaja03", none, env: "nummat")
+  #pkg("add Test", none, env: "Vaja03")
+  #pkg("activate .", none, env: "Vaja03")
+]
 
+Teste poženemo v paketnem načinu z ukazom `test Vaja03`:
 
+#code_box[
+  #pkg("test Vaja03",
+  "...
+     Testing Running tests...
+Test Summary: | Pass  Total  Time
+Velikost      |    1      1  0.0s"
+  , env: "nummat")
+]
+
+Dopolni teste in testiraj še ostale funkcije!
+
+== Reševanje tridiagonalnega sistema
+
+Poiskali bomo rešitev sistema linearnih enačb $T x = b$, kjer je matrika sistema
+tridiagonalna. Sistem lahko rešimo z Gaussovo eliminacijo in obratnim vstavljanjem. Ker 
+je v tridiagonalni matriki bistveno manj elementov, se število potrebnih operacij tako za za Gaussovo eliminacijo, kot tudi za obratno vstavljanje bistveno zmanjša. Dodatno predpostavimo, da med eliminacijo ni treba delati delnega pivotiranja.  V nasprotnem primeru se tridiagonalna oblika matrike med Gaussovo eliminacijo podre in se algoritem nekoliko zakomplicira. Na primer za diagonalno dominantne matrike po stolpcih pri Gaussovi eliminaciji pivotiranje ni potrebno.
+
+Časovna zahtevnost Gaussove eliminacije brez pivotiranja za tridiagonalni sistema $T x = b$ je tako linearna ($cal(O)(n)$) namesto kubična ($cal(O)(n^3)$) za splošen sistem. Za obratno vstavljanje pa se časovna zahtevnost z kvadratne ($cal(0)(n^2)$) zmanjša na linearno ($cal(O)(n)$).
+
+Priredite splošna algoritma Gaussove eleminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napišite funkcijo(operator) 
+
+#code_box[ #jl("function \(T::Tridiagonal, b::Vector)")]
+
+ki poišče rešitev sistema $T x = b$. V datoteko `Vaja03/test/runtests.jl` dodajte test, ki na primeru preveri pravilnost funkcije `\`.  
 
 == Slučajni sprehod
 <slučajni-sprehod>
-Poglejmo si primer
+Metode za reševanje tridiagonalnega sistema bomo uporabili na primeru
 #link("https://en.wikipedia.org/wiki/Random_walk")[slučajnega sprehoda]
 v eni dimenziji. Slučajni sprehod je vrsta
 #link("https://en.wikipedia.org/wiki/Stochastic_process")[stohastičnega procesa],
@@ -151,7 +180,6 @@ P(X_k=j|X_1=i).
 $
 ]
 
-
 == Pričakovano število korakov
 
 Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za  absorbirajoče stanje $k$ je diagonalni element prehodne matrike enak $1$, vsi ostali elementi v vrstici pa $0$: 
@@ -202,36 +230,65 @@ linearnih enačb
 
 $ (I - Q) bold(k) = bold(1). $
 
-=== Prehodna in fundamentalna matrika slučajnega sprehoda
-<prehodna-in-fundamentalna-matrika-slučajnega-sprehoda>
-Če nas zanima le kdaj bo sprehod za $k$ oddaljen od izhodišča, lahko
-začnemo v $0$ in stanji $k$ in $- k$ proglasimo za absorpcijska
+
+Če nas zanima le, kdaj bo sprehod za $k$ oddaljen od izhodišča, lahko
+začnemo v $0$ in stanji $k$ in $-k$ proglasimo za absorpcijska
 stanja. Prehodna matrika, ki jo dobimo je tridiagonalna z 0 na
 diagonali. Matrika $I - Q$ je prav tako tridiagonalna z $1$ na
-diagonali in z negativnimi verjetnostmi $- p$ in
-$- q = p - 1$ na obdiagonalnih elementih:
+diagonali in z negativnimi verjetnostmi $-p$ na prvi pod-diagonali
+in $-q = p - 1$ na prvi nad-diagonali:
 
 $ I - Q = mat(delim: "(", 1, - q, 0, dots.h, 0; - p, 1, - q, dots.h, 0; dots.v, dots.down, dots.down, dots.down, dots.v; 0, dots.h, - p, 1, - q; 0, dots.h, 0, - p, 1) $
 
-== Poissonova enačba na krogu
-<poissonova-enačba-na-krogu>
-Drug primer, ko dobimo tridiagonalni sistem lineranih enačb, če iščemo
-rešitev za robni problem na krogu $x^2 + y^2 lt.eq 1$ za
-#link("https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba")[Poissonovo enačbo]
+Matrika $I - Q$ je tridiagonalna in po stolpcih diagonalno dominantna. Zato lahko 
+uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi 
+matriko $I - Q$:
 
-$ triangle.stroked.t u lr((x comma y)) = f lr((r)) $
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# matrika_sprehod")
+]
 
-z robnim pogojem $u lr((x comma y)) = 0$ za $x^2 + y^2 = 1$. Pri
-tem je $f lr((r)) = f lr((sqrt(x^2 + y^2)))$ podana funkcija, ki je
-odvisna le od razdalje do izhodišča.
+Pričakovano število korakov izračunamo kot rešitev sistema $(I-Q) bold(k) = bold(1)$.
+Uporabimo operator `\` za tridiagonalno matriko:
 
-#link("https://en.wikipedia.org/wiki/Laplace_operator")[Laplaceov operator]
-zapišemo v polarnih koordinatah in enačbo diskretiziramo z metodo
-#link("https://en.wikipedia.org/wiki/Finite_difference")[končnih diferenc].
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# koraki")
+]
+
+Komponente vektorja $bold(k)$ predstavljajo pričakovano število korakov, ki jih 
+slučajni sprehod potrebuje, da prvič doseže stanji $0$ ali $2k$, če začnemo v stanju $i$.
+
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# koraki slika")
+]
+
+#figure(
+  image("img/03a_koraki.svg", width:60%),
+  caption: [Pričakovano število korakov, ko slučajni sprehod prvič doseže stanji $-10$ ali $10$, v odvisnosti od začetnega stanja $i in {-9, -8 dots -1, 0, 1 dots 8, 9}$.]
+)
+
+Za konec se prepričajmo še s 
+#link("https://sl.wikipedia.org/wiki/Metoda_Monte_Carlo")[simulacijo Monte Carlo], da so 
+rešitve, ki jih dobimo kot rešitev sistem res prave. Slučajni sprehod simuliramo z generatorjem naključnih števil in izračunamo #link("https://en.wikipedia.org/wiki/Sample_mean_and_covariance")[vzorčno povprečje] za število korakov. 
+
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# simulacija")
+]
+
+Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim povprečjem po velikem številu sprehodov.
+
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# vzorčno povprečje")
+]
+
+#code_box[
+  #jlfb("scripts/03a_tridiag.jl", "# poskus")
+  #out("out/03a_1.out")
+]
 
 == Rešitve
 
-Metoda `size` vrne dimenzije matrike:
+Funkcije definirane v `Vaja03/src/Vaja03.jl`. Metoda `size` vrne dimenzije matrike:
 
 #code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# size")
@@ -249,14 +306,35 @@ Z metodo `setindex!` lahko spreminjamo elemente matrike:
   jlfb("Vaja03/src/Vaja03.jl", "# setindex")
 )
 
-Za tridiagonalne matrike je časovna zahtevnost množenja matrike z vektorjem bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^2)$):
+Množenje tridiagonalne matrike z vektorjem:
 
 #code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# množenje")
 )
 
-Časovna zahtevnost reševanja tri diagonalnega sistema $T x = b$ je bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^3)$):
+Reševanje tridiagonalnega sistema linearnih enačb:
 
 #code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# deljenje")
+)
+
+=== Testi
+
+V nadaljevanju so navedeni primeri testne kode v `Vaja03/test/runtests.jl`, ki preverjajo
+pravilnost metod za podatkovni tip `Tridiag`. 
+
+#code_box(
+  jlfb("Vaja03/test/runtests.jl", "# getindex")
+)
+
+#code_box(
+  jlfb("Vaja03/test/runtests.jl", "# setindex")
+)
+
+#code_box(
+  jlfb("Vaja03/test/runtests.jl", "# množenje")
+)
+
+#code_box(
+  jlfb("Vaja03/test/runtests.jl", "# deljenje")
 )

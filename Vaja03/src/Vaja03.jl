@@ -42,14 +42,14 @@ Vrni element v `i`-ti vrstici in `j`-tem stolpcu tridiagonalne matrike `T`
 function getindex(T::Tridiag, i, j)
   n, _m = size(T)
   if (i < 1) || (i > n) || (j < 1) || (j > n)
-    error("Indeksi so izven obsega matrike")
+    throw(BoundsError(T, (i, j)))
   end
   if i == j - 1
-    return T.zg[i]
+    return T.zd[i]
   elseif i == j
     return T.d[i]
   elseif i == j + 1
-    return T.sp[j]
+    return T.sd[j]
   else
     return zero(T.d[1])
   end
@@ -85,7 +85,7 @@ Nastavi element `T[i, j]` na vrednost `x`.
 function setindex!(T::Tridiag, x, i, j)
   n, _m = size(T)
   if (i < 1) || (i > n) || (j < 1) || (j > n)
-    throw("Indeksi so izven obsega matrike")
+    throw(BoundsError(T, (i, j)))
   end
   if i == j - 1
     T.zd[i] = x
@@ -94,7 +94,7 @@ function setindex!(T::Tridiag, x, i, j)
   elseif i == j + 1
     T.sd[j] = x
   else
-    throw("Elementa ni mogoče spremeniti")
+    error("Elementa [$i, $j] ni mogoče spremeniti")
   end
 end
 # setindex
@@ -109,7 +109,7 @@ vektor desnih strani.
 function \(T::Tridiag, b::Vector)
   n, _m = size(T)
   # ob eleminaciji se spremeni le glavna diagonala
-  d = Tridaig(T.sd, copy(T.d), T.zd)
+  T = Tridiag(T.sd, copy(T.d), T.zd)
   b = copy(b)
   # eliminacija
   for i = 2:n
@@ -118,12 +118,11 @@ function \(T::Tridiag, b::Vector)
     b[i] = b[i] - l * b[i-1]
   end
   # obratno vstavljanje
-  x = zero(b)
-  x[n] = b[n] / T[n, n]
+  b[n] = b[n] / T[n, n]
   for i = (n-1):-1:1
-    x[i] = (b[i] - T[i, i+1] * x[i+1]) / T[n, n]
+    b[i] = (b[i] - T[i, i+1] * b[i+1]) / T[i, i]
   end
-  return x
+  return b
 end
 # deljenje
 

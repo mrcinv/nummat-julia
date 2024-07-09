@@ -142,10 +142,10 @@ ne obremenjujemo s podrobnostmi.
 #dobro(
   [Posebnosti implementacije opišemo v grobem in se ne spuščamo v podrobnosti],
 )[
-Za tri-diagonalne matrike definiramo posebno podatkovno strukturo `Tridiag`, ki
-hrani le neničelne elemente matrike. Julia omogoča, da LU razcep tri-diagonalne
+Za tridiagonalne matrike definiramo posebno podatkovno strukturo `Tridiag`, ki
+hrani le neničelne elemente matrike. Julia omogoča, da LU razcep tridiagonalne
 matrike, implementiramo kot specializirano metodo funkcije `lu` iz paketa
-`LinearAlgebra`. Pri tem upoštevamo posebnosti tri-diagonalne matrike in
+`LinearAlgebra`. Pri tem upoštevamo posebnosti tridiagonalne matrike in
 algoritem za LU razcep prilagodimo tako, da se časovna in prostorska zahtevnost
 zmanjšata na $cal(O)(n)$.
 ]
@@ -155,7 +155,7 @@ Pazimo, da v poročilu ne povzemamo direktno posameznih korakov kode.
 #slabo(
   [Opisovanje, kaj počnejo posamezni koraki kode, ne sodi v poročilo.],
 )[
-Za tri-diagonalne matrike definiramo podatkovni tip `Tridiag`, ki ima 3 atribute
+Za tridiagonalne matrike definiramo podatkovni tip `Tridiag`, ki ima 3 atribute
 `s`, `d` in `z`. Atribut `s` vsebuje elemente pod diagonalo, ...
 
 LU razcep implementiramo kot metodo za funkcijo `LinearAlgebra.lu`. V `for`
