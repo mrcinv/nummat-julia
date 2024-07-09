@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, jl, repl, code_box, pkg, blk, readlines
+#import "julia.typ": jlfb, jlf, repl, code_box, pkg, blk, readlines
 
 = Uvod v programski jezik Julia
 
@@ -519,7 +519,7 @@ programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 V datoteko `Vaja01\doc\01uvod.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
 
 #figure(
-  code_box(jl("Vaja01/doc/01uvod.jl", 4, 11)), 
+  code_box(jlf("Vaja01/doc/01uvod.jl", 4, 11)), 
 )
 
 Program `01uvod.jl` poženemo z ukazom:

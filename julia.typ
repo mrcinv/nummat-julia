@@ -3,8 +3,20 @@
   let lines = content.split(regex("\n\r{0,1}"))
   lines.slice(start - 1, end).join("\n")
 }
+
+#let jl(code) = raw(
+  lang: "jl",
+  code
+)
+
+#let jlblk(code) = raw(
+  lang: "jl",
+  block: true,
+  code
+)
+
 // print a part of a julia file as a code block 
-#let jl(file, start, end) = raw(
+#let jlf(file, start, end) = raw(
   readlines(file, start, end),
   block: true,
   lang: "jl"
@@ -64,10 +76,6 @@
   }
 }
 
-#let jlb(file, start) = raw(
-  blk(file, start),
-  block: true,
-  lang: "jl"
-)
+#let jlfb(file, start) = jlblk(blk(file, start))
 
 #let out(file) = raw(read(file))

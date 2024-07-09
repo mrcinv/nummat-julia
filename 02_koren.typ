@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb, out, repl, blk, code_box, pkg, readlines
+#import "julia.typ": jlfb, out, repl, blk, code_box, pkg, readlines
 
 = Računanje kvadratnega korena
 
@@ -32,8 +32,8 @@ Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
 #code_box(
     [
-        #pkg("generate Vaja02", none, env: "nummat-julia")
-        #pkg("develop Vaja02//", none, env: "nummat-julia")
+        #pkg("generate Vaja02", none, env: "nummat")
+        #pkg("develop Vaja02//", none, env: "nummat")
     ]
 )
 
@@ -78,7 +78,7 @@ Vidimo, da se približki začnejo ponavljati že po 4. koraku. To pomeni, da se 
 
 Napišimo zgornji algoritem še kot funkcijo.
 #figure(
-  jlb(
+  jlfb(
     "Vaja02/src/koren.jl",
     "# koren_heron"
   ),
@@ -88,7 +88,7 @@ Napišimo zgornji algoritem še kot funkcijo.
 
 Preskusimo funkcijo na številu 3.
 
-#jlb("scripts/02_koren.jl", "# koren3")
+#jlfb("scripts/02_koren.jl", "# koren3")
 #out("out/02_koren_3.out")
 
 #opomba(
@@ -156,7 +156,7 @@ $ <eq:02pogoj>
 funkcijo, ki sama določi število korakov iteracije.
 
 #figure(
-    jlb("Vaja02/src/koren.jl", "# koren2"),
+    jlfb("Vaja02/src/koren.jl", "# koren2"),
     caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije.]
 ) <code:02-koren-x-y0>
 
@@ -177,7 +177,7 @@ Vendar opazimo, da za večja števila, potrebuje iteracija več korakov.
 Začetni približek $1/2 + x/2$ dobro deluje za števila blizu 1, če isto formulo za začetni približek preskusimo za večja števila, dobimo večjo relativno napako. Oziroma potrebujemo več korakov zanke, da pridemo do enake natančnosti. 
 
 #code_box(
-    jlb("scripts/02_koren.jl", "# koren6")
+    jlfb("scripts/02_koren.jl", "# koren6")
 )
 
 #figure(
@@ -223,7 +223,7 @@ Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
 #figure(
     code_box(
-        jlb("Vaja02/src/koren.jl", "# zacetni")
+        jlfb("Vaja02/src/koren.jl", "# zacetni")
     ),
     caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
 )
@@ -231,7 +231,7 @@ Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.
 
 #code_box(
-    jlb("scripts/02_koren.jl", "# koren7")
+    jlfb("scripts/02_koren.jl", "# koren7")
 )
 
 #figure(
@@ -245,7 +245,7 @@ Ko smo enkrat izbrali dober začetni približek, tudi Newtonova iteracija hitrej
 lahko definiramo metodo ```jl koren(x) ``` brez dodatnega argumenta.
 
 #figure(
-    jlb("Vaja02/src/koren.jl", "# koren_x"),
+    jlfb("Vaja02/src/koren.jl", "# koren_x"),
     caption: [Funkcija `koren(x)`.]
 ) <code:02-koren-x>
 

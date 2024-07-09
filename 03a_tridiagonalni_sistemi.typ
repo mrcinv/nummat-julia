@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlb
+#import "julia.typ": jlfb, jl, pkg, code_box, repl
 
 = Tridiagonalni sistemi
 <tridiagonalni-sistemi>
@@ -11,6 +11,76 @@
 - Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da se od izhodišča oddaljimo za $k$ korakov.
   - Zapiši fundamentalno matriko za #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo], ki modelira slučajni sprehod za prvih $k$ korakov.
   - Reši sistem s fundamentalno matriko in vektorjem enic.   
+
+== Tridiagonalne matrike
+
+Matrika je #emph[tri-diagonalna], če ima neničelne elemente le na glavni diagonali in dveh najbližjih diagonalah. Primer $5 times 5$ tridiagonalne matrike
+
+$
+  mat(
+    1, 2, 0, 0, 0;
+    3, 4, 5, 0, 0;
+    0, 6, 7, 6, 0;
+    0, 0, 5, 4, 3;
+    0, 0, 0, 2, 1
+  )
+$
+
+Elementi tridiagonalne matrike, za katere se indeksa razlikujeta za več kot 1, so vsi
+enaki 0: 
+$ |i-j| > 1 => a_(i j) = 0. $
+
+Z implementacijo posebnega tipa za tri-diagonalno matriko lahko prihranimo na prostoru, kot tudi časovni zahtevnosti algoritmov, ki delujejo na tri-diagonalnih matrikah.
+
+Preden se lotimo naloge, ustvarimo nov paket `Vaja03`, kamor bomo postavili kodo:
+
+#code_box[
+  #pkg("generate Vaja03", none, env: "nummat")
+  #pkg("develop Vaja03/", none, env: "nummat")
+]
+
+Podatkovni tip za tri-diagonalne matrike imenujemo `Tridiag` in vsebuje tri polja z elementi na posameznih diagonalah. Definicijo postavimo v `Vaja03/src/Vaja03.jl`:
+
+#code_box[
+  #jlfb("Vaja03/src/Vaja03.jl", "# Tridiagonalna")
+]
+
+Zgornja definicija omogoča, da ustvarimo nove objekte tipa `Tridiag`
+
+#code_box[
+  #repl("using Vaja03", none)
+  #repl("Tridiag([3, 6, 5, 2], [1, 4, 7, 4, 1], [2, 5, 6, 3])", none)
+]
+
+#opomba(naslov: [Preverjanje skladnosti polj v objektu])[
+V zgornji definiciji `Tridiag` smo poleg deklaracije polj dodali tudi 
+#link("https://docs.julialang.org/en/v1/manual/constructors/#man-inner-constructor-methods")[notranji konstruktor]
+v obliki funkcije `Tridiag`. Vemo, da mora biti dolžina vektorjev `sd` in `zd` za ena 
+manjša kot dolžina vektorja `d`. Zato je pogoj najbolje preveriti, ko ustvarimo objekt in
+se nam s tem v nadaljevanju ni več treba ukvarjati. Z notranjim konstruktorjem lahko te 
+pogoje uveljavimo ob nastanku objekta in preprečimo, da je sploh mogoče ustvariti objekte, 
+ki imajo nekonsistentne podatke.
+]
+
+Želimo, da se matrike tipa `Tridiag` obnašajo podobno kot generične matrike vgrajenega tipa `Matrix`. Zato funkcijam, ki delajo z matrikami, dodamo specifične metode za podatkovni tip `Tridiag` (več informacij o
+#link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
+#link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih]). Implementiraj metode za naslednje funkcije:
+
+- #jl("size(T::Tridiag)"), ki vrne dimenzije matrike,
+- #jl("getindex(T::Tridiag, i, j)"), ki vrne element `T[i,j]`,
+- #jl("*(T::Tridiag, x::Vector)"), ki vrne produkt matrike `T` z vektorjem `x`.
+
+Preden nadaljujemo, preverimo ali so funkcije pravilno implementirane. To lahko storimo
+v interaktivni ukazni zanki:
+
+#code_box[
+  
+]
+
+== Reševanje tri diagonalnega sistema
+
+
+
 
 == Slučajni sprehod
 <slučajni-sprehod>
@@ -47,7 +117,7 @@ $
 
 Simulirajmo prvih 100 korakov slučajnega sprehoda
 
-#jlb(
+#jlfb(
   "scripts/03a_tridiag.jl",
   "# sprehod"
   )
@@ -130,7 +200,7 @@ $ bold(k) = N bold(1) = (I - Q)^(- 1) bold(1). $
 Če želimo poiskati pričakovano število korakov, moramo rešiti sistem
 linearnih enačb
 
-$ lr((I - Q)) bold(k) = bold(1) dot.basic $
+$ (I - Q) bold(k) = bold(1). $
 
 === Prehodna in fundamentalna matrika slučajnega sprehoda
 <prehodna-in-fundamentalna-matrika-slučajnega-sprehoda>
@@ -142,26 +212,6 @@ diagonali in z negativnimi verjetnostmi $- p$ in
 $- q = p - 1$ na obdiagonalnih elementih:
 
 $ I - Q = mat(delim: "(", 1, - q, 0, dots.h, 0; - p, 1, - q, dots.h, 0; dots.v, dots.down, dots.down, dots.down, dots.v; 0, dots.h, - p, 1, - q; 0, dots.h, 0, - p, 1) $
-
-== Prilagojen podatkovni tip
-<prilagojen-podatkovni-tip>
-Naj bo $A in bb(R)^(n times n)$ tri-diagonalna, diagonalno dominantna
-matrika. Primer tridiagonalne $4 times 4$ matrike
-
-$ A = mat(delim: "(", 3, 1, 0, 0; 2, 4, - 1, 0; 0, 1, 3, - 1; 0, 0, - 1, 8) dot.basic $
-
-Definirajte podatkovni tip `Tridiagonalna`, ki hrani le neničelne
-elemente tridiagonalne matrike. Za podatkovni tip `Tridiagonalna`
-definirajte metode za naslednje funkcije:
-
-- indeksiranje: `Base.getindex`,`Base.setindex!`,`Base.firstindex` in
-  `Base.lastindex`
-- množenje z desne `Base.*` z vektorjem
-- „deljenje“ z leve `Base.\`
-
-Časovna zahtevnost omenjenih funkcij naj bo linearna. Več informacij o
-#link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
-#link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih].
 
 == Poissonova enačba na krogu
 <poissonova-enačba-na-krogu>
@@ -178,3 +228,35 @@ odvisna le od razdalje do izhodišča.
 #link("https://en.wikipedia.org/wiki/Laplace_operator")[Laplaceov operator]
 zapišemo v polarnih koordinatah in enačbo diskretiziramo z metodo
 #link("https://en.wikipedia.org/wiki/Finite_difference")[končnih diferenc].
+
+== Rešitve
+
+Metoda `size` vrne dimenzije matrike:
+
+#code_box(
+  jlfb("Vaja03/src/Vaja03.jl", "# size")
+)
+
+Z metodo `getindex` lahko dostopamo do elementov matrike s sintakso `T[i,j]`:
+
+#code_box(
+  jlfb("Vaja03/src/Vaja03.jl", "# getindex")
+)
+
+Z metodo `setindex!` lahko spreminjamo elemente matrike:
+
+#code_box(
+  jlfb("Vaja03/src/Vaja03.jl", "# setindex")
+)
+
+Za tridiagonalne matrike je časovna zahtevnost množenja matrike z vektorjem bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^2)$):
+
+#code_box(
+  jlfb("Vaja03/src/Vaja03.jl", "# množenje")
+)
+
+Časovna zahtevnost reševanja tri diagonalnega sistema $T x = b$ je bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^3)$):
+
+#code_box(
+  jlfb("Vaja03/src/Vaja03.jl", "# deljenje")
+)
