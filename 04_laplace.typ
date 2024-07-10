@@ -5,9 +5,7 @@
 == Naloga
 <naloga>
 Žično zanko s pravokotnim tlorisom potopimo v milnico, tako da se nanjo napne
-milna opna.
-
-Radi bi poiskali obliko milne opne, razpete na žični zanki. Malo brskanja po
+milna opna. Radi bi poiskali obliko milne opne, razpete na žični zanki. Malo brskanja po
 fizikalnih knjigah in internetu hitro razkrije, da ploskve, ki tako nastanejo,
 sodijo med
 #link("http://en.wikipedia.org/wiki/Minimal_surface")[minimalne ploskve], ki so
@@ -19,9 +17,8 @@ ploskve.
 
 #figure(
   image("img/1024px-Olympic_Stadium_Munich_Dachbegehung.JPG"),
-  caption: [Slika #link(
-      "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG",
-    )[olimpijskega stadiona v Münchnu].],
+  caption: [Streha olimpijskega stadiona v Münchnu (vir #link(
+      "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG")[wikipedia])],
 )
 Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje linearnih sistemov enačb. Prav tako se bomo naučili, kako zgradimo matriko sistema in desne strani enačb za spremenljivke, ki niso podane z vektorjem ampak kot elementi matrike. V okviru te vaje opravi naslednje naloge.
  
