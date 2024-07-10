@@ -1,4 +1,5 @@
 [deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 BookUtils = "e6ff181e-9e14-41e7-8e4c-ab5eece3b993"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 GraphRecipes = "bd48cda9-67a9-57be-86fa-5b3c104eda73"

@@ -19,31 +19,31 @@
 
 #include "04_laplace.typ"
 
-#include "04_implicitna_interpolacija.typ"
+#include "05_implicitna_interpolacija.typ"
 
-#include "04a_fizikalna_graf.typ"
+#include "06_fizikalna_graf.typ"
 
-#include "05_page_rank.typ"
+#include "07_page_rank.typ"
 
-#include "06_spektralno_grucenje.typ"
+#include "08_spektralno_grucenje.typ"
 
-#include "07_konvergencna_obmocja.typ"
+#include "09_konvergencna_obmocja.typ"
 
-#include "08_nelinearne_geometrija.typ"
+#include "10_nelinearne_geometrija.typ"
 
-#include "09_hermitov_zlepek.typ"
+#include "11_linearni_model.typ"
 
-#include "10_linearni_model.typ"
+#include "12_hermitov_zlepek.typ"
 
-#include "11_porazdelitvena_funkcija.typ"
+#include "13_porazdelitvena_funkcija.typ"
 
-#include "12_povprecna_razdalja.typ"
+#include "14_povprecna_razdalja.typ"
 
-#include "13_avtomatsko_odvajanje.typ"
+#include "15_avtomatsko_odvajanje.typ"
 
-#include "14_nde.typ"
+#include "16_nde.typ"
 
-#include "15_nde_aproksimacija.typ"
+#include "17_nde_aproksimacija.typ"
 
 #include "domace.typ"
 
