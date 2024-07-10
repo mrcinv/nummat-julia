@@ -147,7 +147,7 @@ $
 Simulirajmo prvih 100 korakov slučajnega sprehoda
 
 #jlfb(
-  "scripts/03a_tridiag.jl",
+  "scripts/03_tridiag.jl",
   "# sprehod"
   )
 
@@ -245,21 +245,21 @@ uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki 
 matriko $I - Q$:
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# matrika_sprehod")
+  #jlfb("scripts/03_tridiag.jl", "# matrika_sprehod")
 ]
 
 Pričakovano število korakov izračunamo kot rešitev sistema $(I-Q) bold(k) = bold(1)$.
 Uporabimo operator `\` za tridiagonalno matriko:
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# koraki")
+  #jlfb("scripts/03_tridiag.jl", "# koraki")
 ]
 
 Komponente vektorja $bold(k)$ predstavljajo pričakovano število korakov, ki jih 
 slučajni sprehod potrebuje, da prvič doseže stanji $0$ ali $2k$, če začnemo v stanju $i$.
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# koraki slika")
+  #jlfb("scripts/03_tridiag.jl", "# koraki slika")
 ]
 
 #figure(
@@ -272,18 +272,18 @@ Za konec se prepričajmo še s
 rešitve, ki jih dobimo kot rešitev sistem res prave. Slučajni sprehod simuliramo z generatorjem naključnih števil in izračunamo #link("https://en.wikipedia.org/wiki/Sample_mean_and_covariance")[vzorčno povprečje] za število korakov. 
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# simulacija")
+  #jlfb("scripts/03_tridiag.jl", "# simulacija")
 ]
 
 Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim povprečjem po velikem številu sprehodov.
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# vzorčno povprečje")
+  #jlfb("scripts/03_tridiag.jl", "# vzorčno povprečje")
 ]
 
 #code_box[
-  #jlfb("scripts/03a_tridiag.jl", "# poskus")
-  #out("out/03a_1.out")
+  #jlfb("scripts/03_tridiag.jl", "# poskus")
+  #out("out/03_tridiag_1.out")
 ]
 
 == Rešitve

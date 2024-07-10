@@ -15,9 +15,9 @@
 
 #include "02_koren.typ"
 
-#include "03a_tridiagonalni_sistemi.typ"
+#include "03_tridiag.typ"
 
-#include "03_laplace.typ"
+#include "04_laplace.typ"
 
 #include "04_implicitna_interpolacija.typ"
 

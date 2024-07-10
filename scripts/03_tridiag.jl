@@ -101,7 +101,7 @@ let
 end
 
 using BookUtils
-capture("03a_1") do
+capture("03_tridiag_1") do
   # poskus
   Random.seed!(691)
   n = 100_000
