@@ -153,7 +153,7 @@ Predpostavimo, da so vozlišča povezana z idealnimi vzmetmi in je sila sorazmer
 $
   (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j)) + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_i(i, j)) &= 0\
   u_(i-1 j) + u_(i j-1) - 4u_(i j) + u_(i+1 j) + u_(i j+1) &= 0.
-$ 
+$<eq:ravnovesje>
 
 Za vsako vrednost $u_(i j)$ dobimo eno enačbo. Tako dobimo sistem linearnih $n dot m$ enačb za $n dot m$ neznank. Ker so vrednosti na robu določene z robnimi pogoji, moramo elemente $u_(0 j)$, $u_(n plus 1, j)$, $u_(i 0)$ in $u_(i m plus 1)$ prestaviti na desno stran in jih upoštevati kot konstante. 
 
@@ -164,7 +164,9 @@ Sisteme linearnih enačb običajno zapišemo v matrični obliki
 $ A bold(x) = bold(b), $
 
 kjer je $A$ kvadratna matrika, $bold(x)$ in $bold(b)$ pa vektorja. Spremenljivke
-$u_(i, j)$ razvrstimo po stolpcih v vektor $bold(x)$, tako da je 
+$u_(i j)$ moramo nekako razvrstiti v vektor $bold(x)=[x_1, x_2, dots]^T$. 
+Najpogosteje elemente $u_(i j)$ razvrstimo v vektor $bold(x)$ po stolpcih, tako da je 
+
 $
 bold(x) = [u_(11), u_(21) med dots med u_(n 1), u_(12), u_(22) med dots med u_(1n) med dots med u_(m-1 n), u_(m n)]^T.
 $
@@ -192,23 +194,26 @@ bold(b) = -\[&u_(0 1)+u_(1 0), u_(2 0) dots u_(n 0) + u_(n+1 1),\
  &u_(0 2), 0 dots u_(n+1, 2), u_(0 3), 0 dots u_(n m+1), u_(n m+1) + u_(n+1 m)\]^T. 
 $
 
-#opomba(naslov: [Razvrstitev po stolpih in operator $vec$])[
+#let vecop = math.op("vec", limits: true)
+
+#opomba(naslov: [Razvrstitev po stolpih in operator $vecop$])[
 Eden od načinov, kako lahko elemente matrike razvrstimo v vektor, je po stolpcih. Stolpce
 matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$ lahko
 izrazimo z indeksi $i,j$ v matriki s formulo
-$ k = i+(n-1)j. $ Ta način preoblikovanja matrike v vektor bomo označili s posebnim operatorjem $vec$:
+$ k = i+(n-1)j. $ Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vecop$:
 $ 
-vec: RR^(n times m) -> RR^(n dot m).
+vecop: RR^(n times m) -> RR^(n dot m)\
+vecop(A)_(i + (n-1)j) = a_(i j)
 $ 
 ]
 
 == Izpeljava sistema s Kronekerjevim produktom
 
-Množenje vektorja $bold(x) = "vec"(U)$ z matriko $A$ lahko prestavimo kot
+Množenje vektorja $bold(x) = vecop(U)$ z matriko $A$ lahko prestavimo kot
 množenje matrike $U$ z matriko $L$ z leve in desne:   
 
 $
-  A "vec"(Z) = "vec"(L U + Z U),
+  A vecop(U) = vecop(L U + U L),
 $
 
 kjer je $L$ Laplaceova matrika v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji pod-diagonali in zgornji nad-diagonali:
@@ -223,16 +228,23 @@ L = mat(
 ).
 $
 
-Res! Moženje matrike $U$ z matriko $L$ z leve je ekvivalentno množenju stolpcev matrike $U$ z matriko $L$, medtem ko je množenje z matriko $L$ z desne ekvivalentno množenju vrstic matrike $U$ z matriko $L$. Prispevek množenja z leve vsebuje vsoto sil sosednjih vozlišč v smeri $y$, medtem ko množenje z desne vsebuje vsoto sil sosednjih vozlišč v smeri $x$.
-
-Ker velja $"vec"(A X B) = A times.circle B dot "vec"(X)$, lahko matriko $A$ zapišemo s #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom] $times.circle$ matrik $L$ in $I$:
+Res! Moženje matrike $U$ z matriko $L$ z leve je ekvivalentno množenju stolpcev matrike $U$ z matriko $L$, medtem ko je množenje z matriko $L$ z desne ekvivalentno množenju vrstic matrike $U$ z matriko $L$. Prispevek množenja z leve vsebuje vsoto sil sosednjih vozlišč v smeri $y$, medtem ko množenje z desne vsebuje vsoto sil sosednjih vozlišč v smeri $x$. Element produkta $L U + U L$ na mestu $(i, j)$ je enak:
 
 $
-  A dot "vec"(U) &= "vec"(L U + U L) = "vec"(L U I + I U L) \
+  (L U + U L)_(i j) &= sum_(k=1)^m l_(i k) u_(k j) + sum_(k=1)^n u_(i k) l_(k j) \
+  &= u_(i j-1) -2u_(i j) + u_(i j+1) + u_(i - 1 j) -2u_(i j) + u_(i +1 j),
+$
+
+kar je enako desni strani enačbe @eq:ravnovesje.
+
+Ker velja $vecop(A X B) = A times.circle B dot vecop(X)$, lahko matriko $A$ zapišemo s #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom] $times.circle$ matrik $L$ in $I$:
+
+$
+  A dot vecop(U) &= vecop(L U + U L) = vecop(L U I + I U L) \
   A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
 $
 
-#opomba(naslov:[Kroneckerjev produkt in operator $vec$ v Juliji])[
+#opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Juliji])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in računanje Kronekerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja 
 znova zgradimo matriko.
 ]
