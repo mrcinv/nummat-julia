@@ -1,4 +1,6 @@
 #import "admonitions.typ": opomba
+#import "@preview/fletcher:0.5.1": diagram, node, edge
+#import "@preview/cetz:0.2.2" as cetz: canvas
 
 = Minimalne ploskve 
 <minimalne-ploskve-laplaceova-enačba>
@@ -27,44 +29,42 @@ Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje line
 - Robni problem diskretiziraj in zapiši v obliki sistema linearnih enačb.
 - Reši sistem linearnih enačb z LU razcepom. Uporabi knjižnico #link("https://docs.julialang.org/en/v1/stdlib/SparseArrays/")[SparseArrays] za varčno hranjenje matrike sistema.
 - Preveri, kako se število neničelnih elementov poveča pri LU razcepu razpršene matrike.
-- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija) in reši sistem enačb 
-  direktno na elementih matrike višinskih vrednosti ploskve brez eksplicitne uporabe matrike sistema.
-- Nariši primer minimalne ploskve in animiraj konvergenco iterativnih metod.
+- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija) in reši 
+  sistem enačb direktno na elementih matrike višinskih vrednosti ploskve brez eksplicitne 
+  uporabe matrike sistema.
+- Nariši primer minimalne ploskve.
+- Animiraj konvergenco iterativnih metod.
 
 == Matematično ozadje
 <matematično-ozadje>
-Ploskev lahko predstavimo s funkcijo dveh spremenljivk
-$u lr((x comma y))$, ki predstavlja višino ploskve nad točko
-$lr((x comma y))$. Naša naloga bo poiskati funkcijo $u lr((x comma y))$
-na tlorisu žične mreže.
 
-Funkcija $u lr((x comma y))$, ki opisuje milno opno, zadošča matematična enačbi,
-znani pod imenom
-#link(
-  "https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba",
-)[Poissonova enačba]
+Ploskev lahko predstavimo s funkcijo dveh spremenljivk $u (x, y)$, ki predstavlja višino ploskve nad točko $(x, y)$. Naša naloga je poiskati približek za funkcijo $u(x, y)$ na pravokotnem območju.
+
+Funkcija $u(x, y)$, ki opisuje milno opno, zadošča matematična enačbi
 
 $
-  Delta u(x,y)= rho(x, y)
+  Delta u(x,y) = (partial ^2 u)/(partial x^2) + (partial ^2 u)/(partial y^2) = rho(x, y),
 $ <eq:Poisson>
+
+znani pod imenom 
+#link("https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba")[Poissonova enačba].
 
 Funkcija $rho(x, y)$ je sorazmerna tlačni razliki med zunanjo in notranjo
 površino milne opne. Tlačna razlika je lahko posledica višjega tlaka v
-notranjosti milnega mehurčka ali pa teže, v primeru opne, napete na žični zanki.
-V primeru minimalnih ploskev pa tlačno razliko kar zanemarimo in dobimo
-#link(
-  "https://en.wikipedia.org/wiki/Laplace%27s_equation",
-)[Laplaceovo enačbo]:
+notranjosti milnega mehurčka ali pa teže milnice.
+
+Če tlačno razliko zanemarimo, dobimo
+#link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo]:
 
 $
-  Delta u lr((x comma y)) eq 0 dot.basic
-$
+  Delta u(x, y) = 0.
+$<eq:Laplace>
 
-Če predpostavimo, da je oblika na robu območja določena z obliko zanke, rešujemo
-#link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem]
-za Laplaceovo enačbo. Predpostavimo, da je območje pravokotnik
-$[a comma b] times [c comma d]$. Poleg Laplacove enačbe, veljajo za vrednosti
-funkcije $u lr((x comma y))$ tudi #emph[robni pogoji]:
+Vrednosti $u(x, y)$ na robu območja so določene z obliko zanke, medtem ko za vrednosti v notranjosti velja enačba @eq:Laplace. Problem za diferencialno enačbo, pri katerem so podane vrednosti na robu, imenujemo #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem]. 
+
+V nadaljevanju predpostavimo, da je območje pravokotnik $[a, b] times [c, d]$.
+Poleg Laplaceove enačbe @eq:Laplace, veljajo za vrednosti funkcije $u(x, y)$
+tudi #emph[robni pogoji]:
 
 $
   u(x, c) = f_s (x) \
@@ -73,60 +73,89 @@ $
   u(b, y) = f_d (y)\
 $
 
-kjer so $f_s comma f_z comma f_l$ in $f_d$ dane funkcije. Rešitev robnega
+kjer so $f_s, f_z, f_l$ in $f_d$ dane funkcije. Rešitev robnega
 problema je tako odvisna od območja, kot tudi od robnih pogojev.
-
-Za numerično rešitev Laplaceove enačbe za minimalno ploskev dobimo navdih pri
-arhitektu Frei Otto, ki je minimalne ploskve
-#link(
-  "https://youtu.be/-IW7o25NmeA",
-)[raziskoval tudi z elastičnimi tkaninami].
 
 == Diskretizacija in linearni sistem enačb
 <diskretizacija-in-linearni-sistem-enačb>
 Problema se bomo lotili numerično, zato bomo vrednosti
-$u lr((x comma y))$ poiskali le v končno mnogo točkah: problem bomo
-#emph[diskretizirali]. Za diskretizacijo je najpreprosteje uporabiti enakomerno
-razporejeno pravokotno mrežo točk na pravokotniku. Točke na mreži imenujemo
-#emph[vozlišča]. Zaradi enostavnosti se omejimo na mreže z enakim razmikom v
-obeh koordinatnih smereh. Interval $[a, b])$ razdelimo na $n + 1$ delov,
-interval $[c, d]$ pa na $m + 1$ delov in dobimo zaporedje koordinat
+$u(x, y)$ poiskali le v končno mnogo točkah: problem bomo
+#link("https://en.wikipedia.org/wiki/Discretization")[diskretizirali]. 
+Za diskretizacijo je najpreprosteje uporabiti enakomerno razporejeno pravokotno mrežo točk na pravokotniku. Točke na mreži imenujemo #emph[vozlišča]. Zaradi enostavnosti se omejimo na mreže z enakim razmikom v obeh koordinatnih smereh. Interval $[a, b]$
+razdelimo na $n + 1$ delov, interval $[c, d]$ pa na $m + 1$ delov in dobimo zaporedje koordinat
 
 $
   a = & x_0, & x_1, & dots & x_(n+1)=b\
-  c = & y_0, & y_1, & dots & y_(m+1)=d
+  c = & y_0, & y_1, & dots & y_(m+1)=d,
 $
 
-ki definirajo pravokotno mrežo točk $lr((x_i comma y_j))$. Namesto funkcije $u
-colon lr([a comma b]) times lr([c comma d]) arrow.r bb(R)$
+ki definirajo pravokotno mrežo točk $(x_i, y_j)$. Namesto funkcije $u
+: [a, b] times [c, d] arrow.r bb(R)$
 tako iščemo le vrednosti
 
-$ u_(i, j) = u(x_i, y_j), #h(1em) i=1, dots n, #h(1em) j=1, dots m $
+$ u_(i j) = u(x_i, y_j), #h(1em) i=1, dots n, #h(1em) j=1, dots m $
 
 //#figure([#image("sosedi.png")], caption: [
 // sosednja vozlišča
 //])
 
-Iščemo torej enačbe, ki jim zadoščajo elementi matrike $u_(i, j)$. Laplaceovo
-enačbo lahko diskretiziramo z
-#link(
-  "https://en.wikipedia.org/wiki/Finite_difference",
-)[končnimi diferencami], lahko pa izpeljemo enačbe, če si ploskev predstavljamo
-kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih nitk. Vsako
-vozlišče v mreži je povezano s 4 sosednjimi vozlišči. Vozlišče bo v ravnovesju,
-ko bo vsota vseh sil nanj enaka 0. Predpostavimo, da so vozlišča povezana z
-idealnimi vzmetmi in je sila sorazmerna z razliko. Če zapišemo enačbo za
-komponente sile v smeri $z$, dobimo za točko
-$(x_i comma y_j comma u_(i j))$ enačbo
+Elemente matrike $u_(i j)$ določimo tako, da je v limiti, ko gre razmik med vozliči proti 
+$0$, izpolnjena Laplaceova enačba @eq:Laplace. 
+
+Laplaceovo enačbo lahko diskretiziramo s
+#link("https://en.wikipedia.org/wiki/Finite_difference")[končnimi diferencami]. Lahko pa 
+dobimo navdih pri arhitektu Frei Otto, ki je minimalne ploskve
+#link("https://youtu.be/-IW7o25NmeA")[raziskoval z elastičnimi tkaninami]. Ploskev si 
+predstavljamo kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih nitk. Vsako vozlišče v mreži je povezano s 4 sosednjimi vozlišči. 
+
+#figure(
+  caption:[Sosednje vrednosti vozlišča $(i,j)$.])[
+  #diagram(
+    node((1, 0), $u_(i j-1)$),
+    edge("d", "-"),
+    node((0, 1), $u_(i-1 j)$),
+    edge("-"),
+    node((1, 1), $u_(i j)$),
+    edge("-"),
+    node((2, 1), $u_(i+1 j)$),
+    node((1, 2), $u_(i j+1)$),
+    edge("u", "-")
+  )
+]
+
+Vozlišče bo v ravnovesju, ko bo vsota vseh sil nanj enaka 0. 
+
+#figure(
+  caption:[Sile elastik iz sosednjih vozlišč $(i-1, j)$ in $(i+1, j)$ na vozlišče $(i,j)$.])[
+  #canvas({
+    import cetz.draw: *
+    let x = 3
+    let y = -1.5
+    line((0, 0), (x, y))
+    line((0, 0), (x, 0), stroke: 0.2pt)
+    line((x, y), (x, 0), mark: (end: ">"), name:"f1")
+    line((x, y), (x, 2.5*y), mark: (end: ">"), name: "f2")
+    line((x, y), (2*x, 2.5*y))
+    line((x, 2.5*y), (2*x, 2.5*y), stroke: 0.2pt)
+    circle((x, y), radius: 0.05, fill: white)
+    circle((0, 0), radius: 0.05, fill: white)
+    circle((2*x, 2.5*y), radius: 0.05, fill: white)
+    content((x + 0.1, 0.5*y), [$bold(F)_1 prop u_(i-1 j) - u_(i j)$], anchor: "west")
+    content((x - 0.1, 1.5*y), [$bold(F)_2 prop u_(i+1 j) - u_(i j)$], anchor: "east")
+    content((-0.2, 0), [$u_(i-1 j)$], anchor: "east" )
+    content((x + 0.2, y), [$u_(i j)$], anchor: "west" )
+    content((2*x + 0.2, 2.5*y), [$u_(i+1 j)$], anchor: "west" )
+  })
+]
+
+Predpostavimo, da so vozlišča povezana z idealnimi vzmetmi in je sila sorazmerna z vektorjem med položaji vozlišč. Če zapišemo enačbo za komponente sile v smeri $z$, dobimo za točko $(x_i, y_j, u_(i j))$ enačbo
 
 $
-  u_(i-1,j) + u_(i,j-1) - 4u_(i,j) + u_(i+1,j) + u_(i,j+1) = 0.
+  (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j)) + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_i(i, j)) &= 0\
+  u_(i-1 j) + u_(i j-1) - 4u_(i j) + u_(i+1 j) + u_(i j+1) &= 0.
 $ 
 
-Za $u_(i j)$ imamo tako sistem linearnih enačb. Ker pa so vrednosti na robu
-določene z robnimi pogoji, moramo elemente $u_(0 j)$,
-$u_(n plus 1 comma j)$, $u_(i 0)$ in $u_(i m plus 1)$ prestaviti na desno stran
-in jih upoštevati kot konstante.
+Za vsako vrednost $u_(i j)$ dobimo eno enačbo. Tako dobimo sistem linearnih $n dot m$ enačb za $n dot m$ neznank. Ker so vrednosti na robu določene z robnimi pogoji, moramo elemente $u_(0 j)$, $u_(n plus 1, j)$, $u_(i 0)$ in $u_(i m plus 1)$ prestaviti na desno stran in jih upoštevati kot konstante. 
 
 == Matrika sistema linearnih enačb
 <matrika-sistema-linearnih-enačb>
@@ -140,7 +169,7 @@ $
 bold(x) = [u_(11), u_(21) med dots med u_(n 1), u_(12), u_(22) med dots med u_(1n) med dots med u_(m-1 n), u_(m n)]^T.
 $
 
-Za $n eq m eq 3$ dobimo $9 times 9$ matriko
+Za $n = m = 3$ dobimo $9 times 9$ matriko
 
 $
 A^(9, 9) = mat(-4, 1, 0, 1, 0, 0, 0, 0, 0; 1, -4, 1, 0, 1, 0, 0,
@@ -159,8 +188,8 @@ $
 in desne strani
 
 $
-bold(b) = -[u_(0 1)+u_(1 0), u_(2 0) dots u_(n 0) + u_(n+1 1), u_(0 2),
-0 dots u_(n+1, 2), u_(0 3), 0 dots u_(n m+1), u_(n m+1) + u_(n+1 m)]^T. 
+bold(b) = -\[&u_(0 1)+u_(1 0), u_(2 0) dots u_(n 0) + u_(n+1 1),\
+ &u_(0 2), 0 dots u_(n+1, 2), u_(0 3), 0 dots u_(n m+1), u_(n m+1) + u_(n+1 m)\]^T. 
 $
 
 #opomba(naslov: [Razvrstitev po stolpih in operator $vec$])[
@@ -173,7 +202,7 @@ vec: RR^(n times m) -> RR^(n dot m).
 $ 
 ]
 
-== Izpeljava s Kronekerjevim produktom
+== Izpeljava sistema s Kronekerjevim produktom
 
 Množenje vektorja $bold(x) = "vec"(U)$ z matriko $A$ lahko prestavimo kot
 množenje matrike $U$ z matriko $L$ z leve in desne:   
@@ -182,7 +211,7 @@ $
   A "vec"(Z) = "vec"(L U + Z U),
 $
 
-kjer je $L$ Laplaceova matrika v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji in zgornji obdiagonali:
+kjer je $L$ Laplaceova matrika v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji pod-diagonali in zgornji nad-diagonali:
 
 $
 L = mat(
@@ -194,6 +223,8 @@ L = mat(
 ).
 $
 
+Res! Moženje matrike $U$ z matriko $L$ z leve je ekvivalentno množenju stolpcev matrike $U$ z matriko $L$, medtem ko je množenje z matriko $L$ z desne ekvivalentno množenju vrstic matrike $U$ z matriko $L$. Prispevek množenja z leve vsebuje vsoto sil sosednjih vozlišč v smeri $y$, medtem ko množenje z desne vsebuje vsoto sil sosednjih vozlišč v smeri $x$.
+
 Ker velja $"vec"(A X B) = A times.circle B dot "vec"(X)$, lahko matriko $A$ zapišemo s #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom] $times.circle$ matrik $L$ in $I$:
 
 $
@@ -203,8 +234,9 @@ $
 
 #opomba(naslov:[Kroneckerjev produkt in operator $vec$ v Juliji])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in računanje Kronekerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja 
-zgradimo matriko.
+znova zgradimo matriko.
 ]
+
 == Primer
 <primer>
 ```julia robni_problem = RobniProblemPravokotnik( LaplaceovOperator{2}, ((0,
@@ -264,7 +296,7 @@ linearen sistem enačb
 u_{i,j-1}+u_{i-1,j}-4u_{ij}+u_{i+1,j}+u_{i,j+1}=0
 ```
 
-za elemente matrike $U eq lr([u_(i j)])$, ki predstavlja višinske vrednosti na
+za elemente matrike $U = lr([u_(i j)])$, ki predstavlja višinske vrednosti na
 minimalni ploskvi v vozliščih kvadratne mreže. Največ težav smo imeli z zapisom
 matrike sistema in desnih strani. Poleg tega je matrika sistema $L$ razpršena
 \(ima veliko ničel), ko izvedemo LU razcep ali Gaussovo eliminacijo, veliko teh
@@ -322,7 +354,7 @@ $
 in dobimo
 #link("https://en.wikipedia.org/wiki/Successive_over-relaxation")[metodo SOR].
 Parameter $omega$ je lahko poljubno število
-$paren.l 0 comma 2 bracket.r$ Pri $omega eq 1$ dobimo gauss-seidlovo iteracijo.
+$paren.l 0, 2 bracket.r$ Pri $omega = 1$ dobimo Gauss-Seidlovo iteracijo.
 
 === Primer
 <primer>
