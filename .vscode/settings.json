@@ -1,6 +1,6 @@
 {
   "typst-lsp.exportPdf": "never",
-  "editor.rulers": [100],
+  "editor.rulers": [80, 100],
   "debug.showBreakpointsInOverviewRuler": true,
   "cSpell.enableFiletypes": [
     "typst"
