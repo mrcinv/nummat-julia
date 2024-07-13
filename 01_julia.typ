@@ -333,7 +333,7 @@ end
 \"\"\"",
     "...",
   )
-  #repl("path = homedir() * \"/.julia/config\")", none)
+  #repl("path = homedir() * \"/.julia/config\"", none)
   #repl("mkdir(path)", none)
   #repl("write(path * \"/startup.jl\", startup) # zapišemo startup.jl", none)
 ]
