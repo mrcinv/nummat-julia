@@ -1,7 +1,7 @@
 #let conf(title: none, authors: (), doc) = {
   // define how a equation label should look
   let equation-label(heading, equation) = [(#heading.#equation)]
-  
+
   // define the numbering for an equation
   // first locate, where we are in the document
   set math.equation(
@@ -14,7 +14,7 @@
       },
     ),
   )
-  
+
   // overwrite, how a reference is displayed
   show ref: it => {
     // skip if the label has no corresponding element to point at
@@ -35,7 +35,9 @@
           // get the index of the equation
           let equation-index = counter(math.equation).at(equation-location).at(0)
           // create the label with the supplement and the custom look
-          it.element.supplement + [ ] + equation-label(heading-index, equation-index)
+          link(equation-location, 
+            equation-label(heading-index, equation-index)
+          )
         },
       )
     } else {
@@ -43,7 +45,7 @@
       it
     }
   }
-  
+
   show heading: it => [
     #v(0.7em)
     #it
@@ -59,7 +61,7 @@
   show link: set text(blue.darken(20%))
   show figure.where(kind: raw): it => block(width: 100%)[
     #align(left)[#it.body]
-    #align(center)[#it.caption] 
+    #align(center)[#it.caption]
   ]
   set document(title: title)
   set heading(numbering: "1.1")
