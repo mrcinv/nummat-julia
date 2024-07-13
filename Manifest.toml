@@ -1,8 +1,8 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "b0f3e4ef8b23ccee1da6abb60157adf941b64107"
+project_hash = "3492728a2883961161b4c2210d8ae2925df22003"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "daf26bbdec60d9ca1c0003b70f389d821ddb4224"
@@ -264,7 +264,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
@@ -2030,6 +2030,12 @@ version = "0.1.0"
 deps = ["Test"]
 path = "Vaja03"
 uuid = "88456217-ae7d-493b-9829-f8826c295bb2"
+version = "0.1.0"
+
+[[deps.Vaja04]]
+deps = ["LinearAlgebra", "SparseArrays"]
+path = "Vaja04"
+uuid = "0bb9b20f-d96a-4c19-b428-55035dac3a02"
 version = "0.1.0"
 
 [[deps.Vaja16]]
