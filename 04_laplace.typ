@@ -437,7 +437,7 @@ $
 u_(i j)^((k+1)) = 1/4 (u_(i j-1)^((k))+u_(i-1 j)^((k))+u_(i+1 j)^((k))+u_(i j+1)^((k))),
 $<eq:jacobi>
 
-ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[jacobijevi iteraciji]. Približek 
+ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi iteraciji]. Približek 
 za rešitev tako dobimo, če zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
 
 #opomba(naslov: [Pogoji konvergence])[
@@ -472,60 +472,59 @@ $
 Parameter $omega$ je lahko poljubno število
 $(0, 2)$. Pri $omega = 1$ dobimo Gauss-Seidlovo iteracijo.
 
-Prednost iteracijskih metod je, da jih je zelo enostavno implementirati.
+Prednost iteracijskih metod je, da jih je zelo enostavno implementirati. Za Laplaceovo enačbo je 
+en korak Gauss-Seidlove iteracije podan s preprosto zanko.
 
-=== Primer
-<primer>
-```julia
-using Plots
-U0 = zeros(20, 20)
-x = LinRange(0, pi, 20)
-U0[1,:] = sin.(x)
-U0[end,:] = sin.(x)
-surface(x, x, U0, title="Začetni približek za iteracijo")
-savefig("zacetni_priblizek.png")
-```
+#figure(
+  code_box(
+    jlfb("Vaja04/src/Vaja04.jl", "# gs")
+  ),
+  caption: [Poišči naslednji približek Gauss-Seidlove iteracije za
+  diskretizacijo Laplaceove enačbe.]
+)<pr:gs>
 
-//#figure([#image("zacetni_priblizek.png")], caption: [
-//  začetni priblizek za iteracijo
-//])
+Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
+naslednji približek za Jacobijevo in SOR iteracijo za sistem za Laplaceovo enačbo. Nato napišite še
+funkcijo 
 
-```julia
-L = LaplaceovOperator(2)
-U = copy(U0)
-animation = Animation()
-for i=1:200
-    U = korak_sor(L, U)
-    surface(x, x, U, title="Konvergenca Gauss-Seidlove iteracije")
-    frame(animation)
-end
-mp4(animation, "konvergenca.mp4", fps = 10)
-```
+#code_box(jl("x, k = iteracija(korak, x0),")) 
 
-`@raw html <video width="600" height="400" controls> <source src="../konvergenca.mp4" type="video/mp4"> <source src="konvergenca.mp4" type="video/mp4"> </video>`
+ki, računa zaporedne približke, dokler se rezultat ne spreminja več znotraj določene tolerance.
+Argument `korak` je funkcija, ki iz danega približka izračuna naslednjega.
 
-#link("konvergenca.mp4")[Konvergenca Gauss-Seidlove iteracije]
+Rešitve so v programih: @pr:jacobi, @pr:sor in @pr:iteracija. 
 
 === Konvergenca
 <konvergenca>
-Grafično predstavi konvergenco v odvisnoti od izbire $omega$.
 
-```julia
-using Plots
-n = 50
-U = zeros(n,n)
-U[:,1] = sin.(LinRange(0, pi, n))
-U[:, end] = U[:, 1]
-L = LaplaceovOperator(2)
-omega = LinRange(0.1, 1.95, 40)
-it = [iteracija(x->korak_sor(L, x, om), U; tol=1e-3)[2] for om in omega]
-plot(omega, it, title = "Konvergenca SOR v odvisnosti od omega")
-savefig("sor_konvergenca.svg")
-```
+Poglejmo si, kako zaporedje približkov Gauss-Seidlove iteracije konvergira k rešitvi.
 
-//#figure([#image("sor_konvergenca.svg")], caption: [
-//  Konvergenca SOR v odvisnosti od omega
-//])
+#code_box[
+  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi 0")
+  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi 10")
+  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi oo")
+]
+
+#figure(
+  kind: image,
+  table(columns: 2, stroke: none,
+    image("img/04-konv-0.svg"), image("img/04-konv-10.svg"),
+    image("img/04-konv-50.svg"), image("img/04-konv-oo.svg")
+  ), caption: [Približki Gauss-Seidlove iteracije za $k=0, 10, 50$ in končni približek.]
+)
+
+
+Za metodo SOR je hitrost konvergence odvisna od izbire parametra $omega$. Odvisnot od parametra
+$omega$ je različna za različne matrike in začetne približke. Oglejmo si odvisnost za
+primer sistema, ki ga dobimo z diskretizacijo Laplaceove enačbe.
+
+#code_box(
+  jlfb("scripts/04_laplace.jl", "# konvergenca sor")
+)
+
+#figure(image("img/04-konv-sor.svg", width:60%), caption:[ Število korakov SOR iteracije je odvisno 
+od parametra $omega$.])
+
 
 == Rešitve
 
@@ -574,3 +573,26 @@ Funkcije, ki smo jih definirali v `Vaja04/src/Vaja04.jl`.
   ),
   caption: [Poišči približno rešitev robnega problema za Laplaceovo enačbo.]
 )<pr:resi>
+
+#figure(
+  code_box(
+    jlfb("Vaja04/src/Vaja04.jl", "# jacobi")
+  ),
+  caption: [Poišči naslednji približek Jacobijeve iteracije za
+  diskretizacijo Laplaceove enačbe.]
+)<pr:jacobi>
+
+#figure(
+  code_box(
+    jlfb("Vaja04/src/Vaja04.jl", "# sor")
+  ),
+  caption: [Poišči naslednji približek SOR iteracije za
+  diskretizacijo Laplaceove enačbe.]
+)<pr:sor>
+
+#figure(
+  code_box(
+    jlfb("Vaja04/src/Vaja04.jl", "# iteracija")
+  ),
+  caption: [Poišči približek za limito rekurzivnega zaporedja.]
+)<pr:iteracija>
