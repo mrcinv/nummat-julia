@@ -1,7 +1,7 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jlfb, out, repl, blk, code_box, pkg, readlines
+#import "julia.typ": jlfb, out, repl, blk, code_box, pkg, jl, readlines
 
-= Računanje kvadratnega korena
+= Računanje kvadratnega korena<sec:02-koren>
 
 Računalniški procesorji navadno implementirajo le osnovne številske operacije:
 seštevanje, množenje in deljenje. Za računanje drugih matematičnih funkcij 
@@ -17,8 +17,6 @@ mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo 
 
 Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren števila `x`. Poskrbi, da bo rezultat pravilen na 10 decimalnih mest in da bo časovna zahtevnost neodvisna od argumenta `x`. 
 
-=== Podrobna navodila
-
 - Zapiši enačbo, ki ji zadošča kvadratni koren. 
 - Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[Newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.
 - Kako je konvergenca odvisna od vrednosti `x`?
@@ -26,9 +24,8 @@ Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren
 - Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Juliji).
 - Implementiraj funkcijo `koren(x)`, tako da je časovna zahtevnost neodvisna od argumenta `x`. Grafično preveri, da funkcija dosega zahtevano natančnost za poljubne vrednosti argumenta `x`. 
 
-== Rešitev naloge
 
-Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
+Preden se lotimo reševanja, ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
 #code_box(
     [
@@ -39,7 +36,7 @@ Najprej ustvarimo projekt za trenutno vajo in ga dodamo v delovno okolje.
 
 Tako bomo imeli v delovnem okolju dostop do vseh funkcij, ki jih bomo definirali v paketu `Vaja02`.
 
-=== Izbira algoritma
+== Izbira algoritma
 
 Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. če želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
 
@@ -99,7 +96,7 @@ Preskusimo funkcijo na številu 3.
   ]
 )
 
-=== Določitev števila korakov
+== Določitev števila korakov
 
 Funkcija `koren_heron(x, x0, n)` ni uporabna za splošno rabo, saj mora uporabnik poznati tako začetni približek, kot tudi število korakov, ki so potrebni, da dosežemo želeno natančnost. Da bi bila funkcija zares uporabna, bi morala sama izbrati začetni približek, kot tudi število korakov. Najprej bomo poskrbeli, da je število korakov ravno dovolj veliko, da dosežemo želeno natančnost. 
 
@@ -160,7 +157,7 @@ funkcijo, ki sama določi število korakov iteracije.
     caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije.]
 ) <code:02-koren-x-y0>
 
-=== Izbira začetnega približka
+== Izbira začetnega približka
 
 Kako bi učinkovito izbrali dober začetni približek? Dokazati je mogoče, da rekurzivno zaporedje @eq:02heron konvergira ne glede na izbran začetni približek. Problem je, da je število korakov iteracije večje, dlje kot je začetni približek oddaljen od rešitve. Če želimo, da bo časovna zahtevnost funkcije neodvisna od argumenta, moramo poskrbeti, da za poljubni argument uporabimo dovolj dober začetni približek. Poskusimo lahko za začetni približek uporabiti kar samo število $x$. Malce boljši približek dobimo s Taylorjevem razvojem korenske funkcije okrog števila 1
 
@@ -239,7 +236,7 @@ Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.
     caption: [Korenska funkcija in začetni približek.]
 )
 
-=== Zaključek
+== Zaključek
 
 Ko smo enkrat izbrali dober začetni približek, tudi Newtonova iteracija hitreje konvergira, ne glede na velikost argumenta. Tako 
 lahko definiramo metodo ```jl koren(x) ``` brez dodatnega argumenta.
@@ -270,3 +267,16 @@ zvit, skoraj magičen način za dober začetni približek. Metoda uporabi posebn
 približka, nato pa še en korak #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonove metode].
 Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanju obratne vrednosti kvadratnega korena].
 ]
+
+
+// #figure(
+//   table(columns: 1, align: left,
+//   [ #jl("exponent") - vrni eksponenet števila s plavajočo vejico],
+//   [ #jl("significand") - vrni mantiso števila s plavajočo vejico],
+//     [
+//      #jl("surface") - nariši ploskev v prostoru],
+
+//      [#jl("spy") - grafično predstavi neničelne elemente matrike]
+//   ),
+//   caption: [Funkcije v Juliji, ki smo jih uporabili v @sec:02-koren.]
+// )
