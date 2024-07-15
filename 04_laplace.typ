@@ -528,27 +528,27 @@ od parametra $omega$.])
 
 == Rešitve
 
-Uporabili smo naslednje funkcije in knjižnice v `Juliji`:
+// Uporabili smo naslednje funkcije in knjižnice v `Juliji`:
 
-#rect(
-  table(columns: 2, stroke: none,
-    [
-      #jl("spdiagm") - ustvari razpršeno matriko z danimi diagonalami
+// #rect(
+//   table(columns: 2, stroke: none,
+//     [
+//       #jl("spdiagm") - ustvari razpršeno matriko z danimi diagonalami
       
-      #jl("kron") - izračunaj Kronekerjev produkt
+//       #jl("kron") - izračunaj Kronekerjev produkt
       
-      #jl("vec") - spremeni matriko v vektor
+//       #jl("vec") - spremeni matriko v vektor
     
-      #jl("reshape") - preoblikuj vektor v matriko
-    ], 
-    [
-     #jl("surface") - nariši ploskev v prostoru
+//       #jl("reshape") - preoblikuj vektor v matriko
+//     ], 
+//     [
+//      #jl("surface") - nariši ploskev v prostoru
 
-     #jl("spy") - grafično predstavi neničelne elemente matrike
+//      #jl("spy") - grafično predstavi neničelne elemente matrike
     
-    #jl("SparseArrays") - knjižnica za razpršene matrike]
-  )
-)
+//     #jl("SparseArrays") - knjižnica za razpršene matrike]
+//   )
+// )
 
 Funkcije, ki smo jih definirali v `Vaja04/src/Vaja04.jl`.
 
@@ -596,3 +596,5 @@ Funkcije, ki smo jih definirali v `Vaja04/src/Vaja04.jl`.
   ),
   caption: [Poišči približek za limito rekurzivnega zaporedja.]
 )<pr:iteracija>
+
+// TODO: dodaj teste
