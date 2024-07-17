@@ -53,8 +53,8 @@
 // A single line of REPL in package mode
 #let pkg(command, out, env: "@v1.10") = stack(
     dir: ttb,
-    spacing: 0.6%,
-    repl_line(command, false, prompt: prompt_pkg(env), lang: none),
+    spacing: 0.6%,  
+    repl_line(command, false, prompt: prompt_pkg(env), lang: "jl"),
     if out != none{
       raw(out)
     }

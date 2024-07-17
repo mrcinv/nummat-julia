@@ -2,7 +2,7 @@
 
 Avtor: Martin Vuk <martin.vuk@fri.uni-lj.si>
 
-Preprost paket, ki definira koordinatne funkcije [Geronove lemniskate](https://sl.wikipedia.org/wiki/Geronova_lemniskata). Primer uporabe je opisan v programu [01uvod.jl](./doc/01uvod.jl), ki ga poženemo z ukazom
+Preprost paket, ki definira koordinatne funkcije [Geronove lemniskate](https://sl.wikipedia.org/wiki/Geronova_lemniskata). Primer uporabe je opisan v programu [01uvod.jl](doc/01uvod.jl), ki ga poženemo z ukazom
 
 ```jl
 include("Vaja01/doc/01uvod.jl")
