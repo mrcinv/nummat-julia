@@ -10,7 +10,10 @@ mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo 
 
 #opomba(
   naslov: [Implementacija elementarnih funkcij v julii],
-[ Lokacijo metod, ki računajo določeno funkcijo lahko dobite z ukazoma ```jl methods``` in ```@match```. Tako bo ukaz ```jl methods(sqrt)``` izpisal implementacije kvadratnega korena za vse podatkovne tipe, ki jih julia podpira. Ukaz ```jl @which(sqrt(2.0))``` pa razkrije metodo, ki računa koren za vrednost `2.0`, to je za števila s plavajočo vejico.]
+[ Lokacijo metod, ki računajo določeno funkcijo lahko dobite z ukazoma #jl("methods") in #jl("@which").
+Tako bo ukaz #jl("methods(sqrt)") izpisal implementacije kvadratnega korena za vse podatkovne tipe,
+ki jih julia podpira. Ukaz #jl("@which(sqrt(2.0))") pa razkrije metodo, ki računa koren za
+vrednost `2.0`, to je za števila s plavajočo vejico.]
 )
 
 == Naloga
