@@ -1,11 +1,23 @@
 {
   "typst-lsp.exportPdf": "never",
-  "editor.rulers": [80, 100],
+  "editor.rulers": [
+    80,
+    100
+  ],
   "debug.showBreakpointsInOverviewRuler": true,
   "cSpell.enableFiletypes": [
     "typst"
   ],
-  "cSpell.language": "sl,en",
+  "cSpell.language": "sl,en,sl-SI",
   "editor.formatOnSave": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "cSpell.words": [
+    "Invariantna",
+    "invariantne",
+    "invariantno",
+    "konvergira",
+    "neničelen",
+    "Sergey",
+    "tridiagonalnih"
+  ]
 }
