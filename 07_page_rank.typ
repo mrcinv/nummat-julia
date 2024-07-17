@@ -93,6 +93,18 @@ $
   i &= ((k -1) mod m) + 1
 $
 
+#code_box(
+  jlfb("scripts/07_page_rank.jl", "# konj")
+)
+
+#code_box(
+  jlfb("scripts/07_page_rank.jl", "# lastne")
+)
+
+#code_box(
+  jlfb("scripts/07_page_rank.jl", "# premik")
+)
+
 == Rešitve
 
 #figure(
