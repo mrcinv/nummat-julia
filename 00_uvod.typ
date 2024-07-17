@@ -19,13 +19,7 @@ podrobnejša navodila, kako se naloge lotiti, na koncu pa je rešitev z razlago 
 Rešitev vključuje matematične izpeljave, programsko kodo in rezultate, ki jih dobimo, če programsko
 kodo uporabimo. 
 
-V zbirki je več vaj, kot jih je mogoče predstaviti v 
-15 tednih, kolikor traja en semester. Poleg tega je smiselno vsaj 
-dvoje vaj posvetiti izdelavi domačih nalog. Nekatere vaje (na primer 
-vaja o minimalnih ploskvah) so toliko obsežne, da potrebujemo 2 
-tedna, da jih v celoti obravnavamo. V praksi se je izkazalo, da je mogoče v enem semestru v celoti obravnavati 10 do 12 vaj.
-
-Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da niso vključene rešitve za domače naloge je
+Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da rešitve niso vključene, je
 namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere
 nima dostopa do rešitev.
 
@@ -43,7 +37,8 @@ Franetiču, ki so tako ali drugače prispevali k nastanku
 te knjige. Moja draga žena Mojca Vilfan je opravila delo urednika, za kar sem ji izjemno 
 hvaležen. Na koncu bi se rad zahvalil študentom, ki so obiskovali numerične predmete. Čeprav sem 
 jih jaz učil, so bili oni tisti, ki so me naučili marsikaj novega. 
-
+#v(1cm)
+#align(right)[avtor Martin Vuk]
 #outline(
   title:[Kazalo],
   indent: auto,
