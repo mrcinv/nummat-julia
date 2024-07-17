@@ -728,7 +728,7 @@ Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Juliji. 
   #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
 ]
  
-Poročilo se shrani v datoteko `Vaja01/pdf/demo.pdf`.
+Poročilo se shrani v datoteko `Vaja01/pdf/01uvod.pdf`.
 
 #figure(
   rect(
