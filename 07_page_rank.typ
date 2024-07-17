@@ -1,3 +1,5 @@
+#import "julia.typ": code_box, jl, jlfb
+
 = Invariantna porazdelitev Markovske verige
 
 == Naloga
@@ -22,7 +24,7 @@ $
 Naj bo $X_k$ Markovska veriga z $n$ stanji in naj bo 
 $bold(p)^((k)) = [p_1^((k)), p_2^((k)), dots p_n^((k))]$ porazdelitev po stanjih na $k$-tem koraku 
 $X_k$ ($p_i^((k)) = P(X_k = i)$). Porazdelitev na naslednjem koraku $X_(k+1)$ dobimo tako, da
-seštejemo verjetnosti po vseh možnih stanjih na prejšjnem koraku pomnožene s pogojnimi verjetnostmi, 
+seštejemo verjetnosti po vseh možnih stanjih na prejšnjem koraku pomnožene s pogojnimi verjetnostmi, 
 da iz enega stanja preidemo v drugega
 
 $
@@ -58,17 +60,17 @@ $<eq:potencna>
 
 ki konvergira k lastnemu vektorju za največjo lastno vrednost. Za normo, s katero delimo produkt 
 $A bold(x)^((k))$, lahko izberemo katerakoli vektorsko normo. Ponavadi je to neskončna norma
-$norm(dot)_(oo)$, saj jo lahko nahitreje določimo.
+$norm(dot)_(oo)$, saj jo lahko najhitreje določimo.
 
 == Razvrščanje spletnih strani
 
-Spletni iskalniki želijo uporabniku prikazati čim bolj relevantne rezulrate. Zato morajo ugotoviti,
+Spletni iskalniki želijo uporabniku prikazati čim bolj relevantne rezultate. Zato morajo ugotoviti,
 katere spletne strani so bolj pomembne od drugih. Brskanje po spletu lahko modeliram z Markovsko
 verigo, kjer na vsakem koraku obiščemo eno spletno stran. Na vsaki spletne strani, ki jo obiščemo,
 naključno izberemo povezavo, ki nas vodi do naslednje strani. Če spletna stran nima povezav, lahko 
 gremo nazaj na prejšnjo stran ali pa naključno izberemo drugo stran. Limitna porazdelitev pove, 
-kolikšen delež vseh obiskov priprada posamezni spletni strani, če se naključno sprehajamo po spletu. 
-Večji delež obisov ima spletna stran, bolj je pomembna.
+kolikšen delež vseh obiskov pripada posamezni spletni strani, če se naključno sprehajamo po spletu. 
+Večji delež obiskov ima spletna stran, bolj je pomembna.
 
 Limitno porazdelitev Markovske verige s prehodno matriko $P$ poiščemo s potenčno metodo, kot 
 lastni vektor matrike $P^T$ za lastno vrednost $1$.
@@ -76,5 +78,51 @@ lastni vektor matrike $P^T$ za lastno vrednost $1$.
 Približno tako deluje algoritem za razvrščanje spletnih strani po pomembnosti 
 #link("https://en.wikipedia.org/wiki/PageRank")[Page Rank], ki sta ga prva opisala in uporabila 
 ustanovitelja podjetja Google Larry Page in Sergey Brin.
-   
 
+== Skakanje konja po šahovnici
+
+Naključno skakanje konja po šahovnici lahko opišemo z Markovsko verigo. Stanja označimo s pari 
+indeksov  
+Zopet se srečamo s problemom iz prejšnjega poglavja @minimalne-ploskve, kako elemente matrike
+postaviti v vektor. Elemente matrike zložimo v vektor po stolpcih. Preslikava med indeksi $i, j$ v
+matriki in indeksom $k$ v vektorju je podana s formulami
+
+$
+  k &= i + (j-1)m\
+  j &= floor((k -1)\/ m)\
+  i &= ((k -1) mod m) + 1
+$
+
+== Rešitve
+
+#figure(
+  code_box(
+    jlfb("Vaja07/src/Vaja07.jl", "# potencna")
+  ),
+  caption: [Potenčna metoda poišče lastni vektor za po absolutni vrednosti
+  največjo lastno vrednost dane matrike.]
+)<pr:07potencna>
+
+#figure(
+  code_box(
+    jlfb("Vaja07/src/Vaja07.jl", "# indeksi")
+  ),
+  caption: [Preslikave med indeksi v matriki in indeksi v vektorju, ki je sestavljen iz
+  stolpcev matrike.]
+)<pr:07indeksi>
+
+#figure(
+  code_box(
+    jlfb("Vaja07/src/Vaja07.jl", "# konj")
+  ),
+  caption: [Podatkovni tip, ki predstavlja  Markovsko verigo za konja, ki skače po
+  šahovnici.]
+)<pr:07konj>
+
+#figure(
+  code_box(
+    jlfb("Vaja07/src/Vaja07.jl", "# prehodna_matrika")
+  ),
+  caption: [Funkcija, ki ustvari prehodno matriko za Markovsko verigo za konja, ki skače po
+  šahovnici.]
+)<pr:07prehodna>

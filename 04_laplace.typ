@@ -4,7 +4,7 @@
 #import "@preview/cetz:0.2.2" as cetz: canvas
 
 = Minimalne ploskve
-<minimalne-ploskve-laplaceova-enačba>
+<minimalne-ploskve>
 == Naloga
 <naloga>
 Žično zanko s pravokotnim tlorisom potopimo v milnico, tako da se nanjo napne
