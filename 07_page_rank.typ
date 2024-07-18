@@ -62,6 +62,9 @@ ki konvergira k lastnemu vektorju za največjo lastno vrednost. Za normo, s kate
 $A bold(x)^((k))$, lahko izberemo katerakoli vektorsko normo. Ponavadi je to neskončna norma
 $norm(dot)_(oo)$, saj jo lahko najhitreje določimo.
 
+Napišimo program #jl("x, it = potencna(A, x0)"), ki poišče lastni vektor za po absolutni vrednosti
+največjo lastno vrednost matrike $A$ (@pr:07potencna). 
+
 == Razvrščanje spletnih strani
 
 Spletni iskalniki želijo uporabniku prikazati čim bolj relevantne rezultate. Zato morajo ugotoviti,
@@ -90,21 +93,68 @@ matriki in indeksom $k$ v vektorju je podana s formulami
 $
   k &= i + (j-1)m\
   j &= floor((k -1)\/ m)\
-  i &= ((k -1) mod m) + 1
+  i &= ((k -1) mod m) + 1.
 $
+
+Za lažje delo napišimo funkciji 
+
+- #jl("k = ij_v_k(i, j, m)") in 
+- #jl("i, j = k_v_ij(k, m)"), 
+
+ki izračunata preslikavo med indeksi $i, j$ v matriki in indeksu $k$ v vektorju (@pr:07indeksi). 
+
+Nato definirajmo 
+- podatkovno strukturo #jl("Konj(m, n)"), ki predstavlja Markovsko verigo za konja na 
+  $m times n$ šahovnici (@pr:07konj) in 
+- funkcijo #jl("prehodna_matrika(k::Konj)"), ki vrne
+  prehodno matriko za Markovsko verigo za konja (@pr:07prehodna). 
+Invariantno porazdelitev poskusimo poiskati s potenčno metodo:
 
 #code_box(
   jlfb("scripts/07_page_rank.jl", "# konj")
 )
 
-#code_box(
-  jlfb("scripts/07_page_rank.jl", "# lastne")
-)
+Potenčna metoda ne konvergira, saj ima matrika $P^T$ dve dominantni lastni vrednosti $1$ in $-1$. 
+Skoraj vsi začetni približki vsebujejo tako komponento v smeri lastnega vektorja za $1$ kot tudi 
+komponento v smeri lastnega vektorja za $-1$. Zaporedje približkov v limiti začne preskakovati med
+dvema vrednostima 
+
+$
+  &(bold(v_1) + bold(v)_(-1))/norm(bold(v)_1 + bold(v)_(-1)) " in "\
+  &(bold(v_1) - bold(v)_(-1))/norm(bold(v)_1 + bold(v)_(-1)),
+$
+
+kjer je $v_1$ lastni vektor za $1$ in $v_(-1)$ lastni vektor za $-1$.
+
+#code_box[
+  #jlfb("scripts/07_page_rank.jl", "# lastne")
+  #raw(read("out/07_lastne.out"))
+]
+
+Težavo rešimo s preprostim premikom. Če matriki prištejemo večkratnik identitete, se lastni vektorji
+ne spremenijo, le lastne vrednosti se premaknejo. Če so 
+$(lambda_1, bold(v)_1), (lambda_2, bold(v)_2), dots$ lastni pari matrike $A$, potem so
+
+$ (lambda_1 + delta, bold(v)_1), (lambda_2 + delta, bold(v)_2), dots $
+
+lastni pari matrike 
+
+$ A + delta I. $
+
+S premikom $P^T + I$ dosežemo, da se lastne vrednosti premaknejo za $1$ v pozitivni smeri in se 
+lastna vrednost $-1$ premakne v $0$, lastna vrednost $1$ pa v $2$. Lastna vrednost $2$ postane edina
+dominantna lastna vrednost. Za matriko $P^T + I$ potenčna metoda konvergira k lastnemu vektorju 
+matrike $P^T + I$ za lastno vrednost $2$, ki je hkrati lastni vektor matrike $P^T$ za lastno
+vrednost $1$.
 
 #code_box(
   jlfb("scripts/07_page_rank.jl", "# premik")
 )
 
+#figure(
+  image("img/07-konj.svg", width:60%),
+  caption: [Invariantna porazdelitev za konja na standardni $8 times 8$ šahovnici. Svetlejša polja so pogosteje obiskana.]
+)
 == Rešitve
 
 #figure(
