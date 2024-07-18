@@ -84,8 +84,18 @@ ustanovitelja podjetja Google Larry Page in Sergey Brin.
 
 == Skakanje konja po šahovnici
 
-Naključno skakanje konja po šahovnici lahko opišemo z Markovsko verigo. Stanja označimo s pari 
-indeksov  
+Naključno skakanje konja po šahovnici lahko opišemo z Markovsko verigo. Stanja Markovske 
+verige so polja na šahovnici, prehodne verjetnosti pa določimo tako, da konj v naslednji potezi 
+naključno skoči na eno od polj, ki so mu dostopna. Predpostavimo, da so vsa dostopna polja enako 
+verjetna. 
+
+#figure(
+  image("img/07poteze_konja.png", width: 40%),
+  caption: [Možne poteze, ki jih lahko naredi konj.]
+)
+Stanja označimo s pari 
+indeksov, ki označujejo posamezno polje. Invariantna porazdelitev je podana z matriko verjetnosti, 
+tako elementi matrike ustrezajo poljem na šahovnici. 
 Zopet se srečamo s problemom iz prejšnjega poglavja @minimalne-ploskve, kako elemente matrike
 postaviti v vektor. Elemente matrike zložimo v vektor po stolpcih. Preslikava med indeksi $i, j$ v
 matriki in indeksom $k$ v vektorju je podana s formulami
