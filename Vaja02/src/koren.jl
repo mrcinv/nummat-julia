@@ -1,7 +1,5 @@
-using Logging
-
-
 # koren_heron
+using Logging
 """
   y = koren_heron(x, x0, n)
 
@@ -27,13 +25,13 @@ eksponenta za števila s plavajočo vejico.
 """
 function zacetni(x)
   d, ost = divrem(abs(exponent(x)), 2)
-  m = significand(x)
-  s2 = (ost == 0) ? 1 : 1.4142135623730951
-
+  m = significand(x) # mantisa
+  koren2ost = (ost == 0) ? 1 : 1.4142135623730951 # koren(2^ost)
+  koren2e = (1 << d) * koren2ost # koren(2^e)
   if x > 1
-    return (1 << d) * (0.5 + m / 2) * s2
+    return (0.5 + m / 2) * koren2e
   else
-    return (0.5 + m / 2) / (1 << d) / s2
+    return (0.5 + m / 2) / koren2e
   end
 end
 # zacetni
@@ -42,17 +40,18 @@ end
 """
   y = koren(x, y0)
 
-Izračunaj vrednost kvadratnega korena danega števila `x˙ s Heronovim
-obrazcem z začetnim približkom `y0`. 
+Izračunaj vrednost kvadratnega korena števila `x˙ s Heronovim obrazcem
+z začetnim približkom `y0`. 
 """
 function koren(x, y0)
   if x == 0.0
-    # Vrednost 0 obravnavamo posebej, saj relativna primerjava z 0
+    # Vrednost 0 obravnavamo posebej, saj je relativna primerjava z 0
     # problematična
     return 0.0
   end
-  delta = 5e-11
-  for i = 1:10
+  delta = 5e-11 # zahtevana relativna natančnost rezultata
+  maxit = 10 # 10 korakov je dovolj, če je začetni približek dober
+  for i = 1:maxit
     y = (y0 + x / y0) / 2
     if abs(x - y^2) <= 2 * delta * abs(x)
       @info "Število korakov $i"
@@ -60,7 +59,7 @@ function koren(x, y0)
     end
     y0 = y
   end
-  throw("Iteracija ne konvergira")
+  throw("Iteracija ne konvergira!")
 end
 # koren2
 
