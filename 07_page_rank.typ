@@ -1,4 +1,5 @@
 #import "julia.typ": code_box, jl, jlfb
+#import "@preview/fletcher:0.5.1": diagram, node, edge
 
 = Invariantna porazdelitev Markovske verige
 
@@ -81,6 +82,66 @@ lastni vektor matrike $P^T$ za lastno vrednost $1$.
 Približno tako deluje algoritem za razvrščanje spletnih strani po pomembnosti 
 #link("https://en.wikipedia.org/wiki/PageRank")[Page Rank], ki sta ga prva opisala in uporabila 
 ustanovitelja podjetja Google Larry Page in Sergey Brin.
+
+#figure(
+  diagram(
+    node-stroke: 1pt,
+    node((1, 0), $1$, name: "1"),
+    node((calc.cos(calc.pi/3), calc.sin(calc.pi/3)), $2$, name: "2"),
+    node((calc.cos(2*calc.pi/3), calc.sin(2*calc.pi/3)), $3$, name: "3"),
+    node((calc.cos(3*calc.pi/3), calc.sin(3*calc.pi/3)), $4$, name: "4"),
+    node((calc.cos(4*calc.pi/3), calc.sin(4*calc.pi/3)), $5$, name: "5"),
+    node((calc.cos(5*calc.pi/3), calc.sin(5*calc.pi/3)), $6$, name: "6"),
+    edge(label("1"), label("2"), "-|>"),
+    edge(label("1"), label("4"), "-|>"),
+    edge(label("1"), label("6"), "-|>"),
+    edge(label("2"), label("3"), "-|>"),
+    edge(label("2"), label("4"), "-|>"),
+    edge(label("3"), label("5"), "-|>"),
+    edge(label("3"), label("4"), "-|>"),
+    edge(label("5"), label("6"), "-|>"),
+    edge(label("5"), label("6"), "-|>"),
+    edge(label("4"), label("3"), "-|>"),
+    edge(label("4"), label("1"), "-|>"),
+    edge(label("6"), label("2"), "-|>"),
+  ),
+  caption: [Mini splet s 6 stranmi]
+)
+
+Prehodna matrika verige je 
+
+$
+P = mat(
+  0, 1/3, 0, 1/3, 0, 1/3;
+  0, 0, 1/2, 1/2, 0, 0;
+  0, 0, 0, 1/2, 1/2, 0;
+  1/2, 0, 1/2, 0, 0, 0;
+  0, 0, 0, 0, 0, 1;
+  0, 1, 0, 0, 0, 0;
+)
+$
+Poiščimo invariantno porazdelitev s potenčno metodo:
+
+#code_box(
+  jlfb("scripts/07_page_rank.jl", "# splet 1")
+)
+
+Preverimo, ali je dobljeni vektor res lastni vektor:
+
+#code_box[
+  #jlfb("scripts/07_page_rank.jl", "# splet 2")
+  #raw(read("out/07_splet.out"))
+]
+
+Invariantno porazdelitev predstavimo s stolpčnim diagramom:
+
+#code_box(
+  jlfb("scripts/07_page_rank.jl", "# splet 3")
+)
+#figure(
+  image("img/07-rang.svg", width: 60%),
+  caption: [Delež obiskov posamezne strani v limitni porazdelitvi]
+)
 
 == Skakanje konja po šahovnici
 

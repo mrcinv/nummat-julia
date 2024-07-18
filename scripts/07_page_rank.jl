@@ -1,5 +1,27 @@
 using Vaja07
 using BookUtils
+
+# splet 1
+P = [
+  0 1/3 0 1/3 0 1/3;
+  0 0 1/2 1/2 0 0;
+  0 0 0 1/2 1/2 0;
+  1/2 0 1/2 0 0 0;
+  0 0 0 0 0 1;
+  0 1 0 0 0 0
+]
+x, it = potencna(P', rand(6))
+# splet 1
+# splet 2
+delta = P' * x - x
+# splet 2
+term("07_splet", delta)
+# splet 3
+x = x / sum(x)
+using Plots
+bar(x, label=false)
+# splet 3
+savefig("img/07-rang.svg")
 # konj
 P = prehodna_matrika(Konj(8, 8))
 
