@@ -59,6 +59,7 @@ julia> x, y, Z = konvergenca((-2,2,-2,2), metoda; n=5, m=5); Z
 """
 function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
   Z = zeros(m, n)
+  koraki = zeros(m, n)
   x, y = diskretiziraj(obmocje, n, m)
   nicle = []
   for i = 1:n, j = 1:m
@@ -74,9 +75,10 @@ function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
       push!(nicle, z)
       k = length(nicle)
     end
-    Z[j, i] = k + min(it / 10, 1) * 0.6 # vrednost elementa je enka indeksu ničle
+    Z[j, i] = k # vrednost elementa je enka indeksu ničle
+    koraki[j, i] = it # številu korakov metode
   end
-  return x, y, Z, nicle
+  return x, y, Z, nicle, koraki
 end
 # konvergenca
 

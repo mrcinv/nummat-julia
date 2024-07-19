@@ -114,6 +114,12 @@ uporabimo funkcijo #jl("jacobian") iz paketa
 
 == Konvergenčno območje
 
+Za razliko od linearnih enačb imajo nelinearne enačbe lahko zelo različno število rešitev. Newtonova metoda je občutljiva glede izbire začetnega približka. Če je začetni približek Blizu rešitve, Newtonova metoda konvergira k tisti ničli, za zastran od rešitevki so Newtonova metoda je občutljiva 
+
+#code_box(
+  vaja9s("# obmocje")
+)
+
 #figure(
   image("img/09-fraktal.svg", width: 60%),
   caption:[Newtonova metoda konvergira k različnim rešitvam odvisno od začetnega 

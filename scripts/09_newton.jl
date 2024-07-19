@@ -21,9 +21,12 @@ using Plots
 maxit = 20
 obmocje = Box2d(Interval(-2, 2), Interval(-1, 1))
 metoda(x0) = newton(f, jf, x0; atol=1e-4, maxit=maxit)
-x, y, Z, nicle = konvergenca(obmocje, metoda, 800, 400; atol=1e-3)
-heatmap(x, y, Z, legend=false)
+x, y, Z, nicle, koraki = konvergenca(obmocje, metoda, 800, 400; atol=1e-3)
+heatmap(x, y, Z + 0.8*min.(koraki/10, 1), legend=false)
 scatter!(Tuple.(nicle), label="rešitve")
 # obmocje
 
 savefig("img/09-fraktal.svg")
+
+contour(x, y, Z, legend=false)
+savefig("img/09-cipka.png")
