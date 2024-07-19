@@ -2,7 +2,7 @@
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "0919c4f4d49a057bd26063666350b157a233a715"
+project_hash = "945d07dfebb7ee775e1f19cba9ad35a56bdd4354"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "daf26bbdec60d9ca1c0003b70f389d821ddb4224"
@@ -2042,6 +2042,12 @@ version = "0.1.0"
 deps = ["LinearAlgebra", "SparseArrays", "Test"]
 path = "Vaja07"
 uuid = "cc385419-b684-4d97-9133-685b80a0350d"
+version = "0.1.0"
+
+[[deps.Vaja09]]
+deps = ["LinearAlgebra"]
+path = "Vaja09"
+uuid = "eb6ddaa7-33b5-438f-b890-793938e58077"
 version = "0.1.0"
 
 [[deps.VectorizationBase]]
