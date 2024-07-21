@@ -1,37 +1,86 @@
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
 
-Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta #link("https://en.wikipedia.org/wiki/Marching_cubes")[korakajoče kocke] in #link("https://en.wikipedia.org/wiki/Marching_squares")[korakajoči kvadrati] omogočajo učinkovito predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
+Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. 
+Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta 
+#link("https://en.wikipedia.org/wiki/Marching_cubes")[korakajoče kocke] in 
+#link("https://en.wikipedia.org/wiki/Marching_squares")[korakajoči kvadrati] omogočajo učinkovito
+predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali,
+kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
 
 == Naloga
+#let bx = math.bold[x]
 
-- Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij (RBF), ki 
-  vsebuje središča RBF $bold(x)_i$ in koeficiente $a_i$ v linearni kombinaciji
-  $ F(bold(x)) = sum_(i=1)^n a_i phi(||bold(x) - bold(x_i)||). $
+- Definiraj podatkovni tip za linearno kombinacijo 
+  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialnih baznih funkcij (RBF)]. 
+  Podatkovni tip naj vsebuje središča RBF $bold(x)_i$, funkcijo ene oblike $phi$ in 
+  koeficiente $w_i$ v linearni kombinaciji
+  $ 
+    F(bx) = sum_(i=1)^n w_i phi(||bx - bx_i||). 
+  $<eq:05-rbf>
+
 - Napiši sistem za koeficiente v linearni kombinaciji RBF, če so podane
-  vrednosti $z_i=F(bold(x_i))$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $z_i$
-  in središča $bold(x_i)$ poišče koeficiente $a_1, a_2 dots a_n$. Katero metodo za reševanja sistema lahko uporabimo?
+  vrednosti $f_i=F(bx_i)$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $f_i$, 
+  funkcijo $phi$ in središča $bx_i$ poišče koeficiente $w_1, w_2 dots w_n$. Katero metodo za
+  reševanja sistema lahko uporabimo?
 - Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F$ v dani točki. 
-
+- Uporabi napisane metode in interpoliraj oblak točk v ravnini z implicitno podano krivuljo. 
 
 == Interpolacija z radialnimi baznimi funkcijami
 
-#link("https://en.wikipedia.org/wiki/Radial_basis_function")[Radialne bazne funkcije \(RBF)] so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne točke
+Radialne bazne funkcije \(RBF) so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne
+točke
 
-$ f(bold(x)) = phi lr((parallel bold(x) - bold(x)_0 parallel)) $
+$ f(bx) = phi norm(bx - bx_0) $
 
-Uporabljajo se za interpolacijo ali aproksimacijo s funkcijo oblike
+Uporabljajo se za interpolacijo ali aproksimacijo podatkov s funkcijo oblike
 
-$ sum_i w_i phi lr((parallel bold(x) - bold(x)_i parallel)) , $
+$ F(bx) = sum_i w_i phi(norm( bx - bx_i)), $
 
 npr. za rekonstrukcijo 2D in 3D oblik v računalniški grafiki. Funkcija
 $phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
 imenujemo funkcija oblike.
 
-Podan je 2D ali 3D oblak točk
-$brace.l bold(x)_1 , dots.h bold(x)_n brace.r$ in realne vrednosti
-$brace.l f_1 , dots.h , f_n brace.r$. Napiši funkcijo, ki
-interpolira omenjene podatke s funkcijo oblike
+Podan je oblak točk v ravnini ${ bx_1 , dots.h bx_n } subset RR^2$. #footnote[Postopek, ki ga bomo opisali,
+deluje ravno tako dobro tudi za točke v prostoru. Vendar se bomo zavoljo enostavnosti omejili na 
+točke v ravnini]. Iščemo krivuljo, ki dobro opiše dane točke. Če zahtevamo, da vse točke ležijo 
+krivulji, problemu rečemo #emph[interpolacija], če pa dovolimo, da je krivulja zgolj blizu danih 
+točk in ne nujno vsebuje vseh točk, problem imenujemo #emph[aproksimacija]. Krivuljo bomo poiskali
+v implicitni obliki kot nivojsko krivuljo funkcije 2 spremenljivk. Za izbrano vrednost $c$ iščemo 
+funkcijo $f(x, y)$, za katero velja
+
+$
+f(x_i, y_i) = c
+$
+
+za vse točke v danem oblaku točk. Problem bomo rešili malce bolj splošno. Denimo, da imamo za vsako 
+dano točko v oblaku, podano tudi vrednost funkcije ${ f_1 , dots.h , f_n }$. Iščemo zvezno funkcijo 
+$f(x, y)$, tako da so izpolnjene enačbe:
+
+$
+f(x_1, y_1) = f_1\
+dots.v\
+f(x_n, y_n) = f_n.
+$<eq:05enacbe>
+
+Zveznih funkcij, ki zadoščajo enačbam @eq:05enacbe, je neskončno. Zato se moramo omejiti na 
+podmnožico funkcij, ki je dovolj raznolika da je sistem rešljiv, hkrati pa dovolj majhna, da je 
+rešitev ena sama. V tej vaji, se bomo omejili na $n$ parametrično družino funkcij oblike
+#let bw = math.bold[w]
+$
+F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm( bx - bx_i)).
+$
+
+Problem se prevede na iskanje vrednosti koeficientov $bw=[w_1, dots w_n]^T$, tako da je izpolnjen 
+sistem enačb
+
+$
+F(bx_1, w_1, w_2, dots, w_n) = f_1\
+dots.v\
+F(bx_n, w_1, w_2, dots, w_n) = f_n
+$
+Napiši funkcijo, ki
+interpolira omenjene podatke z linearno kombinacijo RBF
 
 $ F lr((bold(x))) eq sum_i w_i phi lr((parallel bold(x) - bold(x)_i parallel)) dot.basic $
 
