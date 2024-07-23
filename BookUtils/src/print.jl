@@ -65,6 +65,13 @@ end
 
 """
 Print the variable in the named output file.
+
+# Example
+
+```jl
+  x = 1
+  p("ena", x) # prints to "out/ena.out" file.
+```
 """
 function p(name, x)
   io = out(name)

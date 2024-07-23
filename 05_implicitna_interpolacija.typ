@@ -1,22 +1,47 @@
+#import "julia.typ": jlfb, code_box, jl
+
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
 
-Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so dober način za opis krivulj in ploskev. 
+Krivulje v ravnini in ploskve v prostoru lahko opišemo na različne načine
+
+#figure(
+  table(
+    columns: 3,
+    stroke: none,
+    align: left,
+    [], [krivulje v $R^2$], [ploskve v $RR^3$],
+    [eksplicitno], $y = f(x)$, $z = f(x, y)$,
+    [parametrično], $(x , y) = (x(t) , y(t))$, $(x , y, z) = (x(u, v) , y(u, v), z(u, v))$,
+    [implicitno], $F(x , y) = 0$, $F(x, y, z) = 0$
+  ),
+  caption: [Različni načini predstavitve krivulj v $RR^2$ in ploskev v $RR^3$.]
+)
+
+
+Implicitne enačbe oblike $F(x_1, x_2, dots) = 0$ so zelo dober način za opis krivulj in ploskev. 
 Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta 
 #link("https://en.wikipedia.org/wiki/Marching_cubes")[korakajoče kocke] in 
 #link("https://en.wikipedia.org/wiki/Marching_squares")[korakajoči kvadrati] omogočajo učinkovito
-predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. V tej vaji bomo spoznali,
-kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk v ravnini ali prostoru.
+predstavitev implicitno podanih ploskev in krivulj s poligonsko mrežo. Predstavitev 
+s #link("https://en.wikipedia.org/wiki/Signed_distance_function")[predznačeno funkcijo razdalje] pa
+je osnova za mnoge grafične programe, ki delajo s ploskvami v 3d prostoru.
+
+V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak
+točk v ravnini ali prostoru. Funkcijo $F$ v implicitni enačbi $F(x, y) = 0$ bomo 
+poiskali kot linearno kombinacijo 
+#link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialnih baznih funkcij (RBF)] 
+(@savchenko95, @turk99). 
 
 == Naloga
 #let bx = math.bold[x]
+#let norm2(arg) = $norm(arg)^2$
 
-- Definiraj podatkovni tip za linearno kombinacijo 
-  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialnih baznih funkcij (RBF)]. 
+- Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij (RBF). 
   Podatkovni tip naj vsebuje središča RBF $bold(x)_i$, funkcijo ene oblike $phi$ in 
   koeficiente $w_i$ v linearni kombinaciji
   $ 
-    F(bx) = sum_(i=1)^n w_i phi(||bx - bx_i||). 
+    F(bx) = sum_(i=1)^n w_i phi(norm2(bx - bx_i)). 
   $<eq:05-rbf>
 
 - Napiši sistem za koeficiente v linearni kombinaciji RBF, če so podane
@@ -24,30 +49,23 @@ kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak točk 
   funkcijo $phi$ in središča $bx_i$ poišče koeficiente $w_1, w_2 dots w_n$. Katero metodo za
   reševanja sistema lahko uporabimo?
 - Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F$ v dani točki. 
-- Uporabi napisane metode in interpoliraj oblak točk v ravnini z implicitno podano krivuljo. 
+- Uporabi napisane metode in interpoliraj oblak točk v ravnini z implicitno podano krivuljo. Oblak 
+  točk ustvari na krivulji podani s parametrično enačbo:
+
+  $
+    x(phi) = 8cos(phi) - cos(4phi)\
+    y(phi) = 8sin(phi) - sin(4phi).
+  $<eq:05-cikloida> 
 
 == Interpolacija z radialnimi baznimi funkcijami
 
-Radialne bazne funkcije \(RBF) so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne
-točke
-
-$ f(bx) = phi norm(bx - bx_0) $
-
-Uporabljajo se za interpolacijo ali aproksimacijo podatkov s funkcijo oblike
-
-$ F(bx) = sum_i w_i phi(norm( bx - bx_i)), $
-
-npr. za rekonstrukcijo 2D in 3D oblik v računalniški grafiki. Funkcija
-$phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
-imenujemo funkcija oblike.
-
-Podan je oblak točk v ravnini ${ bx_1 , dots.h bx_n } subset RR^2$. #footnote[Postopek, ki ga bomo opisali,
+V ravnini#footnote[Postopek, ki ga bomo opisali,
 deluje ravno tako dobro tudi za točke v prostoru. Vendar se bomo zavoljo enostavnosti omejili na 
-točke v ravnini]. Iščemo krivuljo, ki dobro opiše dane točke. Če zahtevamo, da vse točke ležijo 
-krivulji, problemu rečemo #emph[interpolacija], če pa dovolimo, da je krivulja zgolj blizu danih 
-točk in ne nujno vsebuje vseh točk, problem imenujemo #emph[aproksimacija]. Krivuljo bomo poiskali
-v implicitni obliki kot nivojsko krivuljo funkcije 2 spremenljivk. Za izbrano vrednost $c$ iščemo 
-funkcijo $f(x, y)$, za katero velja
+točke v ravnini] je podan oblak točk ${ bx_1 , dots.h bx_n } subset RR^2$. Iščemo krivuljo, ki dobro
+opiše dane točke. Če zahtevamo, da vse točke ležijo krivulji, problemu rečemo #emph[interpolacija],
+če pa dovolimo, da je krivulja zgolj blizu danih točk in ne nujno vsebuje vseh točk, problem
+imenujemo #emph[aproksimacija]. Krivuljo bomo poiskali v implicitni obliki kot nivojsko krivuljo
+funkcije 2 spremenljivk. Za izbrano vrednost $c$ iščemo funkcijo $f(x, y)$, za katero velja
 
 $
 f(x_i, y_i) = c
@@ -68,138 +86,145 @@ podmnožico funkcij, ki je dovolj raznolika da je sistem rešljiv, hkrati pa dov
 rešitev ena sama. V tej vaji, se bomo omejili na $n$ parametrično družino funkcij oblike
 #let bw = math.bold[w]
 $
-F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm( bx - bx_i)).
+F(bx, bw) = F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm2( bx - bx_i)).
 $
+Funkcije $phi_(k)(bx) = phi(norm2(bx - bx_k))$ sestavljajo bazo za množico funkcij oblike @eq:05-rbf.  
 
-Problem se prevede na iskanje vrednosti koeficientov $bw=[w_1, dots w_n]^T$, tako da je izpolnjen 
-sistem enačb
+Radialne bazne funkcije \(RBF) so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne
+točke
+
+$ f(bx) = phi (norm2(bx - bx_0)) $
+
+Uporabljajo se za interpolacijo ali aproksimacijo podatkov s funkcijo oblike
+
+$ F(bx) = sum_i w_i phi(norm2( bx - bx_i)), $
+
+npr. za rekonstrukcijo 2D in 3D oblik v računalniški grafiki. Funkcija
+$phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
+imenujemo funkcija oblike.
+
+
+Problem @eq:05enacbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, dots w_n]^T$, tako da je
+izpolnjen sistem enačb
 
 $
 F(bx_1, w_1, w_2, dots, w_n) = f_1\
 dots.v\
-F(bx_n, w_1, w_2, dots, w_n) = f_n
+F(bx_n, w_1, w_2, dots, w_n) =  f_n.
+$<eq:05int>
+
+Enačbe @eq:05int so linearne za koeficiente $w_1, dots w_n$:
+
 $
-Napiši funkcijo, ki
-interpolira omenjene podatke z linearno kombinacijo RBF
+w_1 phi_1(bx_1) + w_2 phi_2(bx_1) dots w_n phi_n(bx_1) = f_1\
+dots.v\
+w_1 phi_1(bx_n) + w_2 phi_2(bx_n) dots w_n phi_n(bx_n) = f_n.
+$<eq:05lin-sistem>
 
-$ F lr((bold(x))) eq sum_i w_i phi lr((parallel bold(x) - bold(x)_i parallel)) dot.basic $
+Ker je 
 
-To pomeni, da poiščeš vrednosti uteži $w_i$ tako, da bodo izpolnjene
-enačbe $ F lr((bold(x_i))) eq f_i dot.basic $
+$
+phi_i(bx_j) = phi(norm2(bx_j - bx_i)) = phi(norm2(bx_i -bx_j)) = phi_j(bx_i),
+$
 
-== Naloga
-<naloga>
-Napiši dve funkciji:
+je matrika sistema @eq:05lin-sistem simetrična. V literaturi @savchenko95 se pojavijo naslednje
+izbire za funkcijo oblike $phi$:
+  - #link("https://en.wikipedia.org/wiki/Polyharmonic_spline")[poliharmonični zlepek] (_pločevina_):
+   $phi(r) = r^2 log (r)$ za 2d in $phi(r) =(r)^3$ za 3d @turk99
+  - Gaussova funkcija: $phi(r) = e^(-r^2/sigma^2)$
+  - racionalni približek za Gaussovo funkcijo:
+    $ phi(r) = 1/(1 + (r/sigma)^(2p)). $
 
-- `w = koeficienti_rbf(phi, x0, f)`, ki poišče vrednosti uteži, če so
-  podane funkcija oblike `phi`, oblak točk podan z matriko `x0` in
-  tabela vrednosti `f`.
-- `z = vrednost_rbf(x, w, x0)`, ki izračuna vrednost
-  $ F lr((bold(x))) sum_i w_i phi lr((parallel bold(x) - bold(x)_i parallel)) $
-  za argument `x`, pri čemer je `w` vektor uteži $w_i$, `x0` pa oblak
-  točk, podan kot matrika.
+Če izberemo primerno funkcijo oblike, lahko 
+dosežemo, da je matrika sistema @eq:05lin-sistem pozitivno definitna.  V tem primeru lahko za 
+reševanje sistema uporabimo razcep Choleskega (poglavje 2.6 v @orel). Za funkcijo oblike bomo 
+izbrali Gaussovo funkcijo
 
-Funkciji uporabi za interpolacijo točk v ravnini z implicitno podano
-krivuljo, kot v naslednjem primeru:
+$
+phi(r) = e^(-t^2/sigma^2),
+$<eq:05gauss>
 
-```julia
-using Plots
-fi = range(0, 2π, length=6)
-tocke = [2(1-cos(t)).*(cos(t), sin(t)) for t in fi]
-scatter(tocke)
-f(x,y) = (x^2 + y^2)^2 + 4x*(x^2 + y^2) - 4y^2
-x = y = range(-4, 4, length = 100)
-contour!(x, y, f, levels = [0])
-```
+za katero je matrika sistema @eq:05lin-sistem pozitivno definitna, če so točke 
+$bx_1, bx_2, dots bx_n$ različne @buhmann15.
 
-Točke ležijo na nivojnici funkcije
-$f lr((x , y)) eq lr((x^2 plus y^2))^2 plus 4 x lr((x^2 plus y^2)) - 4 y^2$
-za nivo $f lr((x , y)) eq 0$.
+== Program
 
-== Opis krivulj z implicitno interpolacijo
-<opis-krivulj-z-implicitno-interpolacijo>
-Iz množice točk želimo rekonstruirati krivuljo, ki gre skozi te točke.
-Krivulje v ravnini lahko opišemo na različne načine
+#let vaja05(koda) = jlfb(
+  "Vaja05/src/Vaja05.jl",
+  koda
+)
 
-+ #strong[eksplicitno]: $y eq f lr((x))$
-+ #strong[parametrično]:
-  $lr((x , y)) eq lr((x lr((t)) , y lr((t))))$
-+ #strong[implicitno] z enačbo $F lr((x , y)) eq 0$
+Najprej definiramo podatkovni tip, ki opiše linearno kombinacijo RBF @eq:05-rbf.
 
-Tokrat se bomo posvetili implicitni predstavitvi krivulje.
+#code_box(
+  vaja05("# rbf")
+)
 
-== Problem
-<problem>
-Imamo točke v ravnini s koordinatami
-$lr((x_1 , y_1)) , lr((x_2 , y_2)) , dots.h , lr((x_n , y_n))$.
-Iščemo krivuljo, ki gre skozi vse točke. Po možnosti naj bo krivulja
-gladka, poleg tega ni nujno, da do zaporedne točke v seznamu, tudi
-zaporedne točke na krivulji. Krivuljo iščemo v #strong[implicitni]
-obliki, torej v obliki enačbe
+Za podatkovni tip napišimo funkcijo #jl("vrednost(x,rbf::RBF)"), ki izračuna vrednost linearne
+kombinacije @eq:05-rbf v dani točki `x` (rešitev @pr:05vrednost). Za primer ustvarimo mešanico 
+dveh Gaussovih RBF v točkah $(1, 0)$ in $(2, 1)$:
 
-$ F lr((x , y)) eq 0 dot.basic $
+#let s_vaja05(koda) = jlfb(
+  "scripts/05_implicit.jl",
+  koda
+)
 
-Iskano krivuljo bomo zapisali kot ničto nivojnico neke funkcije
-$F lr((x , y))$. Iščemo torej funkcijo $F lr((x , y))$, za
-katero velja
+#code_box[
+  #s_vaja05("# primer 2 točk")
+  #raw(read("out/05_z.out"))
+]
 
-$ F lr((x_i , y_i)) eq 0 quad i lt.eq n dot.basic $
+Narišimo še graf funkcije dveh spremenljivk podane z linearno kombinacijo RBF.
 
-Ta pogoj žal ne zadošča. Dodamo moramo še nekaj točk, ki so znotraj
-območja omejenega s krivuljo. Označimo jih z
-$lr((x_(n plus 1) , y_(n plus 1))) , dots.h , lr((x_m , y_m))$,
-v katerih predpišemo vrednost $1$
+#code_box(
+  s_vaja05("# slika 2 točki")
+)
 
-$ F lr((x_i , y_i)) eq 1 quad i gt.eq n plus 1 dot.basic $
+#figure(
+  image("img/05-2tocki.svg", width: 60%),
+  caption: [Linearna kombinacija dveh RBF v točkah $(1, 0)$ in $(2, 1)$ s funkcijo oblike $phi(r) = e^(-r^2/0.7^2)$.]
+)
 
-== Naloga
-<naloga-1>
-Napiši program, ki za dane točke poišče interpolacijsko funkcijo oblike
+Rešimo sedaj problem interpolacije. Zapišimo funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija). Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
+točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo, da ne dobimo trivialne rešitve.
 
-$ F lr((bold(x))) eq sum_i d_i phi.alt lr((bold(x) - bold(x)_i)) plus P lr((bold(x))) , $
+#code_box(
+  s_vaja05("# oblak")
+)
+Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se razlikujejo od vrednosti v notranjosti.
+    
+#code_box(
+  s_vaja05("# interpolacija")
+)
 
-kjer so
-
-- $bold(x) eq lr((x , y))$
-- $P lr((bold(x)))$ polinom stopnje 1 \(linearna funkcija v $x$ in $y$)
-- $d_i$ primerno izbrane uteži.
-- $phi.alt$ radialna bazna funkcija, ki je odvisna zgolj od razdalje do
-  #emph[i]-te točke $r eq parallel bold(x) - bold(x)_i parallel$.
-  - \"thin plate\": $phi.alt lr((r)) eq lr(|r|)^2 log lr((lr(|r|)))$ za
-    2D in $phi.alt lr((r)) eq lr(|r|)^3$ za 3D
-  - Gaussova: $phi.alt lr((r)) eq exp lr((- r^2 slash sigma^2))$
-  - racionalni približek za Gaussovo
-
-$ phi.alt lr((r)) eq frac(1, 1 plus r^(2 p)) $
-
-=== Časovna in prostorska zahtevnost
-<časovna-in-prostorska-zahtevnost>
-- zgraditev matrike: $cal(O) lr((n^2))$
-- rešitev sistema: $cal(O) lr((lr((n^2))))$, če uporabimo iteracijske
-  metode
-- računanje vrednosti funkcije: $cal(O) lr((n))$
-
+#figure(
+  image("img/05-krivulja.svg", width: 60%),
+  caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolirajo dane točke]
+)
 == RBF s kompaktnim nosilcem
 <rbf-s-kompaktnim-nosilcem>
-Matrika sistema, če uporabimo klasične RBF iz prejšnjega razdelka je
+Če uporabimo klasične RBF iz prejšnjega razdelka je matrika sistema
 polna. Čeprav je večina členov izven diagonale zelo majhnih npr. pri
-gaussovi RBF. Zato so \[Morse et. all\]\@ref\(Povezave) prišli na idejo,
-da uporabijo RBF s kompaktnim nosilcem. V tem primeru je matrika precej
-bolj redka in se tako prostorska kot tudi časovna zahtevnost algoritmov
-bistveno zmanjšata.
+Gaussovi RBF @eq:05gauss. Če uporabimo RBF s kompaktnim nosilcem, je matrika redka in se tako prostorska kot tudi časovna zahtevnost algoritmov
+bistveno zmanjšata @morse01.
 
-== Povezave
-<povezave>
-- Savchenko V. V., Pasko, A. A., Okunev, O. G. and Kunii T. L.
-  #emph[Function representation of solids reconstructed from scattered
-  surface points and contours], Computer Graphics Forum 14\(4)
-  \(1995),#link("http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.48.80&rep=rep1&type=pdf")[pdf]
-- G. Turk and J. O\'Brien, #emph[Variational Implicit Surfaces],
-  Technical Report GIT-GVU-99-15, Georgia Institute of Tech-nology,
-  1998.#link("https://pdfs.semanticscholar.org/a44c/d6b3c709e69f8194fcc2513394ddc410d9be.pdf")[pdf]
-- Morse, B. S., Yoo, T. S., Rheingans, P., et al. Interpolating implicit
-  surfaces from scattered surface data using compactly supported radial
-  basis functions, SMI 2001 International Conference on Shape Modeling
-  and Applications, Genova Italy, \(2001)
-  #link("https://www.cs.jhu.edu/~misha/Fall13b/Papers/Morse01.pdf")[pdf]
-- Predstavitev s #link("https://en.wikipedia.org/wiki/Signed_distance_function")[predznačeno funkcijo razdalje]
+== Rešitve
+
+#figure(
+  code_box(
+    vaja05("# rbf vrednost")
+  ),
+  caption: [Izračunaj vrednost linearne kombinacije RBF v dani točki]
+)<pr:05vrednost>
+
+#figure(
+  code_box(
+    vaja05("# interpolacija")
+  ),
+  caption: [Interpoliraj vrednosti funkcij z linearno kombinacijo RBF]
+)<pr:05interpolacija>
+
+#let test05(koda) = ljfb(
+  "Vaja05/test/runtests.jl",
+  koda
+)
