@@ -35,13 +35,12 @@ poiskali kot linearno kombinacijo
 
 == Naloga
 #let bx = math.bold[x]
-#let norm2(arg) = $norm(arg)^2$
 
 - Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij (RBF). 
   Podatkovni tip naj vsebuje središča RBF $bold(x)_i$, funkcijo ene oblike $phi$ in 
   koeficiente $w_i$ v linearni kombinaciji
   $ 
-    F(bx) = sum_(i=1)^n w_i phi(norm2(bx - bx_i)). 
+    F(bx) = sum_(i=1)^n w_i phi(norm(bx - bx_i)). 
   $<eq:05-rbf>
 
 - Napiši sistem za koeficiente v linearni kombinaciji RBF, če so podane
@@ -86,18 +85,18 @@ podmnožico funkcij, ki je dovolj raznolika da je sistem rešljiv, hkrati pa dov
 rešitev ena sama. V tej vaji, se bomo omejili na $n$ parametrično družino funkcij oblike
 #let bw = math.bold[w]
 $
-F(bx, bw) = F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm2( bx - bx_i)).
+F(bx, bw) = F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm( bx - bx_i)).
 $
-Funkcije $phi_(k)(bx) = phi(norm2(bx - bx_k))$ sestavljajo bazo za množico funkcij oblike @eq:05-rbf.  
+Funkcije $phi_(k)(bx) = phi(norm(bx - bx_k))$ sestavljajo bazo za množico funkcij oblike @eq:05-rbf.  
 
 Radialne bazne funkcije \(RBF) so funkcije, katerih vrednosti so odvisne od razdalje do izhodiščne
 točke
 
-$ f(bx) = phi (norm2(bx - bx_0)) $
+$ f(bx) = phi (norm(bx - bx_0)) $
 
 Uporabljajo se za interpolacijo ali aproksimacijo podatkov s funkcijo oblike
 
-$ F(bx) = sum_i w_i phi(norm2( bx - bx_i)), $
+$ F(bx) = sum_i w_i phi(norm( bx - bx_i)), $
 
 npr. za rekonstrukcijo 2D in 3D oblik v računalniški grafiki. Funkcija
 $phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
@@ -118,16 +117,27 @@ Enačbe @eq:05int so linearne za koeficiente $w_1, dots w_n$:
 $
 w_1 phi_1(bx_1) + w_2 phi_2(bx_1) dots w_n phi_n(bx_1) = f_1\
 dots.v\
-w_1 phi_1(bx_n) + w_2 phi_2(bx_n) dots w_n phi_n(bx_n) = f_n.
+w_1 phi_1(bx_n) + w_2 phi_2(bx_n) dots w_n phi_n(bx_n) = f_n,
 $<eq:05lin-sistem>
+
+Z matriko sistema
+
+$
+mat(
+  phi(norm(bx_1 - bx_1)), phi(norm(bx_1-bx_2)), dots, phi(norm(bx_1-bx_n));
+  phi(norm(bx_2 - bx_1)), phi(norm(bx_2-bx_2)), dots, phi(norm(bx_2-bx_n));
+  dots.v, dots.v, dots.down, dots.v;
+  phi(norm(bx_n - bx_1)), phi(norm(bx_n - bx_2)), dots, phi(norm(bx_n - bx_n))
+).
+$<eq:05-matrika>
 
 Ker je 
 
 $
-phi_i(bx_j) = phi(norm2(bx_j - bx_i)) = phi(norm2(bx_i -bx_j)) = phi_j(bx_i),
+phi_i(bx_j) = phi(norm(bx_j - bx_i)) = phi(norm(bx_i -bx_j)) = phi_j(bx_i),
 $
 
-je matrika sistema @eq:05lin-sistem simetrična. V literaturi @savchenko95 se pojavijo naslednje
+je matrika sistema @eq:05-matrika simetrična. V literaturi @savchenko95 se pojavijo naslednje
 izbire za funkcijo oblike $phi$:
   - #link("https://en.wikipedia.org/wiki/Polyharmonic_spline")[poliharmonični zlepek] (_pločevina_):
    $phi(r) = r^2 log (r)$ za 2d in $phi(r) =(r)^3$ za 3d @turk99
@@ -136,7 +146,7 @@ izbire za funkcijo oblike $phi$:
     $ phi(r) = 1/(1 + (r/sigma)^(2p)). $
 
 Če izberemo primerno funkcijo oblike, lahko 
-dosežemo, da je matrika sistema @eq:05lin-sistem pozitivno definitna.  V tem primeru lahko za 
+dosežemo, da je matrika sistema @eq:05-matrika pozitivno definitna.  V tem primeru lahko za 
 reševanje sistema uporabimo razcep Choleskega (poglavje 2.6 v @orel). Za funkcijo oblike bomo 
 izbrali Gaussovo funkcijo
 
@@ -192,7 +202,7 @@ točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo
   s_vaja05("# oblak")
 )
 Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se razlikujejo od vrednosti v notranjosti.
-    
+
 #code_box(
   s_vaja05("# interpolacija")
 )
