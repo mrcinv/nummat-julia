@@ -1,73 +1,90 @@
-using Plots, GraphRecipes
+
 using SparseArrays
 
-function lojtra(n)
-  A = spzeros(2 * n, 2 * n)
-  for i = vcat(1:n-1, n+1:2n-1)
-    A[i, i+1] = 1
-    A[i+1, i] = 1
-  end
+using Vaja06
 
-  for i = 1:n
-    A[i, i+n] = 1
-    A[i+n, i] = 1
-  end
+# lestev
+using Vaja06
+G = krozna_lestev(8)
 
-  A[1, n] = 1
-  A[n, 1] = 1
-  A[2n, n+1] = 1
-  A[n+1, 2n] = 1
-  return A
-end
+using GraphRecipes, Plots
+graphplot(G, curves=false)
+# lestev
 
-t = range(0, 2pi, 6)[1:end-1]
-x = vcat(2*sin.(t), sin.(t))
-y = vcat(2*cos.(t), cos.(t))
+savefig("img/06-lestev.svg")
 
-graphplot(lojtra(5), x=x, y=y, curves=false)
+# lestev fix
+t = range(0, 2pi, 9)[1:end-1]
+x = cos.(t)
+y = sin.(t)
+scatter(x[1:8], y[1:8], label="fiksna vozlišča")
+# lestev fix
 
-using Graphs
+# lestev fiz
+tocke = hcat(hcat(x, y)', zeros(2, 8))
+fix = 1:8
 
-g = ladder_graph(6)
-
-adjacency_matrix(g)
-
-graphplot(adjacency_matrix(g), curves=false)
+vlozi!(G, fix, tocke)
+graphplot!(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+# lestev fiz
+savefig("img/06-lestev-fiz.svg")
 
 using Random
-Random.seed!(123)
-x = range(0, 1, 7)[2:end-1]
-rob = hcat([0 1 1 0; 0 0 1 1], 
-  hcat(x, ones(5))', 
-  hcat(x, zeros(5))',
-  hcat(ones(5), x)', 
-  hcat(zeros(5), x)', 
-  )
-notranje_tocke = rand(2, 50)
+Random.seed!(321)
 tocke = rand(2, 50)
 
 using DelaunayTriangulation
 
 tri = triangulate(tocke)
 
-triplot(tri)
+G = SimpleGraph(size(tocke)[2])
+for (i, j) in each_solid_edge(tri)
+  add_edge!(G, i, j)
+end
+graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+
 
 lock_convex_hull!(tri)
-rob = get_boundary_nodes(tri)
+rob = unique(get_boundary_nodes(tri))
 robne_tocke = [get_point(tri, i) for i in rob]
-scatter(robne_tocke)
-get_point(tri, 1)
-using Vaja06
+scatter!(robne_tocke)
 
-notranji_indeksi = setdiff(Set(each_vertex(tri)), Set(rob))
-
-setdiff([1, 2, 3], [2, 3])
+vlozi!(G, rob, tocke)
+graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+scatter!(robne_tocke)
 
 using Graphs
+# mreža
+m, n = 6, 6
+G = grid((m, n), periodic=false)
 
-g = SimpleGraph(10)
-Set(vertices(g))
+# vogali imajo stopnjo 2
+vogali = filter(v -> degree(G, v) <= 2, vertices(G))
+tocke = zeros(2, n * m)
+tocke[:, vogali] = [0 0 1 1; 0 1 0 1]
 
-d = Dict(1=>2, 3=> 4)
-haskey(d, 2)
+vlozi!(G, vogali, tocke)
+graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+# mreža
+savefig("img/06-mreza.svg")
 
+# krožna
+m, n = 6, 6
+G = grid((m, n), periodic=false)
+rob = filter(v -> degree(G, v) <= 3, vertices(G))
+urejen_rob = [rob[1]]
+
+# uredi točke na robu v cikel
+for i = 1:length(rob)-1
+  sosedi = neighbors(G, urejen_rob[end])
+  sosedi = intersect(sosedi, rob)
+  sosedi = setdiff(sosedi, urejen_rob)
+  push!(urejen_rob, sosedi[1])
+end
+t = range(0, 2pi, length(rob) + 1)[1:end-1]
+tocke = zeros(2, n * m)
+tocke[:, urejen_rob] = hcat(cos.(t), sin.(t))'
+vlozi!(G, urejen_rob, tocke)
+graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+# krožna
+savefig("img/06-mreza-krog.svg")

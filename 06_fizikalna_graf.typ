@@ -8,7 +8,7 @@
 - Pokaži, da je matrika sistema diagonalno dominantna in negativno definitna.
 - Napiši funkcijo, ki za dani graf in koordinate fiksiranih vozlišč, poišče koordinate vseh vozlišč, tako da reši sistem enačb z metodo konjugiranih gradientov.
 - V ravnini nariši #link("https://en.wikipedia.org/wiki/Ladder_graph#Circular_ladder_graph")[graf krožno lestev], tako da polovico vozlišč razporediš enakomerno po enotski krožnici.
-- V ravnini generiraj naključni oblak točk v notranjosti in na robu kvadrata $[0, 1]^2$. Nariši graf, ki ga dobiš z #link("https://sl.wikipedia.org/wiki/Delaunayeva_triangulacija")[Delaunayevo triangulacijo]. Fiksiraj točke na robu.
+-  V ravnini nariši pravokotno mrežo. Fiksiraj vogale. Nato točke na robu enakomerno razporedi po krožnici.
 
 == Ravnovesje sil
 
@@ -30,9 +30,12 @@ $
   sum_(i in N(j)) FF_(i j) = 0,
 $<eq:06-ravnovesje>
 
-kjer je $N(j) = {j; quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $FF_(i j)$ sila s katero vozlišče $j$ deluje na vozlišče $i$.
+kjer je $N(j) = {j; quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $FF_(i j)$
+sila s katero vozlišče $j$ deluje na vozlišče $i$.
 
-Harmonična vzmet je idealna vzmet dolžine $0$, za katero sila ni sorazmerna spremembi dolžine, pač pa dolžini vzmeti. Sila harmonične vzmeti, ki je vpeta med točki $(x_1, y_1, z_1)$ in $(x_2, y_2, z_2)$ in deluje drugo krajišče,  je enaka
+Harmonična vzmet je idealna vzmet dolžine $0$, za katero sila ni sorazmerna spremembi dolžine, pač
+pa dolžini vzmeti. Sila harmonične vzmeti, ki je vpeta med točki $(x_1, y_1, z_1)$ in
+$(x_2, y_2, z_2)$ in deluje drugo krajišče,  je enaka
 
 $
 FF_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
@@ -91,6 +94,12 @@ $<eq:06-matrika>
 Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl],
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
+Napišimo naslednji funkciji: 
+- #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za 
+  dani graf `G` in seznam vozlišč, ki se lahko spreminjajo, `sprem` (rešitev @pr:06-matrika) in 
+- #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za 
+  sistem @eq:06sistem-x (rešitev @pr:06-desne-strani). 
+
 == Metoda konjugiranih gradientov
 
 Matrika @eq:06-matrika je simetrična in diagonalno dominantna. Res! Velja $st(i) = |N(i)|$ in je zato
@@ -103,14 +112,90 @@ Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonal
 matrika $A$ negativno definitna. Zato lahko za reševanje sistema $-A x = -b$ uporabimo 
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
 
-Za večino grafov, za katere uporabimo zgornji postopek bo matrika sistema $A$ redka.   
+Za večino grafov, za katere uporabimo zgornji postopek bo matrika sistema $A$ redka. Metoda
+konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike. 
+Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
+ki bi dodale neničelne elemente.  
 
+Uporabimo sedaj metodo konjugiranih gradientov za iskanje vložitve grafa s fizikalno metodo. 
+Napišimo naslednji funkciji:
+- #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A x = b$ z metodo konjugiranih gradientov 
+  (rešitev @pr:06-cg) in
+- #jl("vlozi!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
+  metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
+  točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke` 
+  (rešitev @pr:06-vlozitev).
+
+== Krožna lestev
+
+Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dveh ciklov enake 
+dolžine $n$, ki sta med seboj povezana z $n$ povezavami. Za grafično predstavitev grafov bomo 
+uporabili paket #link("https://docs.juliaplots.org/stable/GraphRecipes/introduction/")[GraphRecipes.jl].
+
+#let svaja06(koda) = jlfb("scripts/06_graf.jl", koda)
+
+#code_box(
+  svaja06("# lestev")
+)
+
+#figure(
+  image("img/06-lestev.svg", width: 60%),
+  caption: [Graf krožna lestev s 16 vozlišči]
+)
+
+Poiščimo drugačno vložitev s fizikalno metodo, tako da vozlišča enega cikla enakomerno razporedimo
+na krožnico.
+
+#code_box(
+  svaja06("# lestev fix")
+)
+
+#code_box(
+  svaja06("# lestev fiz")
+)
+
+#figure(
+  image("img/06-lestev-fiz.svg", width: 60%),
+  caption: [Graf krožna lestev s 16 vozlišči vložen s fizikalno metodo. Zunanja
+  vozlišča so fiksna, notranja pa postavljena tako, da so sile vzmeti na povezavah v ravnovesju.]
+)
+
+== Mreža
+
+Preizkusimo algoritem na pravokotni mreži.
+
+#code_box(
+  svaja06("# mreža")
+)
+
+#figure(
+  image("img/06-mreza.svg", width: 60%),
+  caption: [Pravokotna mreža vložena s fizikalno metodo. Fiksirani so le vogali.]
+)
+
+Sedaj fiksiramo cel rob in ga enakomerno razporedimo na krožnico.
+
+#code_box(
+  svaja06("# krožna")
+)
+
+#figure(
+  image("img/06-mreza-krog.svg", width: 60%),
+  caption: [Pravokotna mreža vložena s fizikalno metodo. Rob mreže je enakomerno razporejen na krožnici.]
+)
 
 == Rešitve
 
 #let vaja06(koda) = jlfb(
   "Vaja06/src/Vaja06.jl", koda
 )
+#figure(
+  code_box(
+    vaja06("# lestev")
+  ),
+  caption: [Ustvari graf krožna lestev]
+)<pr:06-lestev>
+
 
 #figure(
   code_box(
