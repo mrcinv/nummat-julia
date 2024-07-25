@@ -357,18 +357,30 @@ caption: [Reševanje tridiagonalnega sistema linearnih enačb]
 
 === Testi<sec:03-testi>
 
-#code_box(
+#figure(
+code_box(
   jlfb("Vaja03/test/runtests.jl", "# getindex")
+),
+caption: [Testi za funkcijo `getindex`]
 )
 
-#code_box(
+#figure(
+code_box(
   jlfb("Vaja03/test/runtests.jl", "# setindex")
+),
+caption: [Testi za funkcijo `setindex!`]
 )
 
-#code_box(
+#figure(
+code_box(
   jlfb("Vaja03/test/runtests.jl", "# množenje")
+),
+caption: [Testi za množenje]
 )
 
-#code_box(
+#figure(
+code_box(
   jlfb("Vaja03/test/runtests.jl", "# deljenje")
+),
+caption: [Testi za operator `\` (reševanje tridiagonalnega sistema)]
 )

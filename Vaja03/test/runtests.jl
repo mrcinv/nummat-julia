@@ -54,6 +54,8 @@ end
 
 # deljenje
 @testset "Reševanje sistema" begin
+  # deljenje ima težave z vnosi tipa `Integer`, zato dodamo decimalne pike,
+  # da vrednosti uporabi kot `Float64`.
   T = Tridiag([1.0, 1], [2.0, 2, 2], [1.0, 1])
   x = [1.0, 2, 3]
   b = T * x

@@ -36,9 +36,10 @@ size(T::Tridiag) = (length(T.d), length(T.d))
 # size
 # getindex
 """
-   elt = T[i, j]
+   elt = getindex(T, i, j)
 
-Vrni element v `i`-ti vrstici in `j`-tem stolpcu tridiagonalne matrike `T`
+Vrni element v `i`-ti vrstici in `j`-tem stolpcu tridiagonalne matrike `T`.
+Ta funkcija se pokliče, ko dostopamo do elementov matrike z izrazom `T[i, j]`.
 """
 function getindex(T::Tridiag, i, j)
   n, _m = size(T)
@@ -79,9 +80,10 @@ end
 
 # setindex
 """
-  T[i, j] = x
+  setindex!(T, x, i, j)
 
-Nastavi element `T[i, j]` na vrednost `x`.
+Nastavi element `T[i, j]` na vrednost `x`. Ta funkcija se pokliče, ko uporabimo
+zapis `T[i, j] = x`.
 """
 function setindex!(T::Tridiag, x, i, j)
   n, _m = size(T)
@@ -95,7 +97,7 @@ function setindex!(T::Tridiag, x, i, j)
   elseif i == j + 1
     T.sd[j] = x
   else
-    error("Elementa [$i, $j] ni mogoče spremeniti")
+    error("Elementa [$i, $j] ni mogoče spremeniti.")
   end
 end
 # setindex
@@ -108,8 +110,8 @@ Izračunaj rešitev sistema `Tx = b`, kjer je `T` tridiagonalna matrika in `b`
 vektor desnih strani.
 """
 function \(T::Tridiag, b::Vector)
-  n, _m = size(T)
-  # ob eleminaciji se spremeni le glavna diagonala
+  n, _ = size(T)
+  # ob eliminaciji se spremeni le glavna diagonala
   T = Tridiag(T.sd, copy(T.d), T.zd)
   b = copy(b)
   # eliminacija
