@@ -208,7 +208,11 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se 
 )
 
 #figure(
-  image("img/05-krivulja.svg", width: 60%),
+  kind: image,
+  table(columns: 2,stroke: none, 
+    image("img/05-krivulja.svg", width: 100%),
+    image("img/05-contours.svg", width: 100%)
+  ),
   caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolirajo dane točke]
 )
 == RBF s kompaktnim nosilcem

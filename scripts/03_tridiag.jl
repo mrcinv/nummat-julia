@@ -3,13 +3,21 @@ using Random
 begin
   Random.seed!(2)
   # sprehod
+  """ Simuliraj `n` korakov slučajnega sprehoda s prehodno verjetnostima `p`
+      in `1-p`."""
+  function sprehod(p, n)
+    x = zeros(n)
+    for i = 1:n-1
+      x[i+1] = rand() < p ? x[i] + 1 : x[i] - 1
+    end
+    return x
+  end
+
   using Plots
-  sprehod = vcat([0.0], cumsum(2 * round.(rand(100)) .- 1))
-  plot(sprehod, label=false)
-  scatter!(
-    sprehod,
-    title="Prvih 100 korakov slučajnega sprehoda \$p=q=\\frac{1}{2}\$",
-    label="\$X_k\$")
+  x = sprehod(0.5, 100)
+  plot(x, label=false)
+  scatter!(x, title="Prvih 100 korakov slučajnega sprehoda \$p=q=\\frac{1}{2}\$",
+    label="\$X_m\$")
   # sprehod
 end
 savefig("img/03a_sprehod.svg")
@@ -17,9 +25,9 @@ savefig("img/03a_sprehod.svg")
 # matrika_sprehod
 using Vaja03
 """
-  N = matrika_sprehod(n, p)
+  N = matrika_sprehod(k, p)
 
-Sestavi fundamentalno matriko za slučajni sprehod, ki se konča, ko se
+Sestavi fundamentalno matriko za slučajni sprehod, ki se konča, ko se prvič
 za `k` korakov oddalji od izhodišča.
 """
 matrika_sprehod(k, p) = Tridiag(-p * ones(2k - 2), ones(2k - 1), -(1 - p) * ones(2k - 2))
@@ -27,19 +35,20 @@ matrika_sprehod(k, p) = Tridiag(-p * ones(2k - 2), ones(2k - 1), -(1 - p) * ones
 
 # koraki
 """
-    ek = koraki(k, p)
+    Em = koraki(k, p)
 
-Izračunaj pričakovano število korakov, ki jih potrebuje slučajni sprehod, da doseže
-stanje `0` ali `2k`. Komponente vektorja `ek` vsebujejo pričakovano število
-korakov, da sprehod pride v stanje `0` ali `2k`, če začne v stanju `i`.
+Izračunaj pričakovano število korakov `Em`, ki jih potrebuje slučajni sprehod, 
+da doseže stanje `0` ali `2k`. Komponente vektorja `Em` vsebujejo pričakovano
+število korakov, da sprehod pride v stanje `0` ali `2k`, če začne v stanju med 
+`1` in `2k - 1`.
 """
 koraki(k, p) = matrika_sprehod(k, p) \ ones(2k - 1)
 # koraki
 
 using Plots
 # koraki slika
-ek = koraki(10, 0.5)
-scatter(-9:9, ek, label="št. korakov", xticks=-9:9)
+Em = koraki(10, 0.5)
+scatter(-9:9, Em, label="št. korakov", xticks=-9:9)
 # koraki slika
 
 savefig("img/03a_koraki.svg")
@@ -66,7 +75,7 @@ naslednje_stanje(p, x0) = x0 + (rand() < p ? -1 : 1)
 """
   st_korakov = simuliraj_sprehod(k, p)
 
-Simuliraj slučajni sprehod s prehodno verjetnostjo `p` in `1-p`.
+Simuliraj slučajni sprehod s prehodnima verjetnostima `p` in `1-p`.
 Vrni število korakov, ki jih slučajni sprehod potrebuje, da se prvič
 oddalji za `k` korakov od izhodišča. 
 """
@@ -107,6 +116,6 @@ capture("03_tridiag_1") do
   n = 100_000
   k, p = 10, 0.5
   kp = sum([simuliraj_korake(k, p) for _ in 1:n]) / n
-  println("Vzorčno povprečje za vzorec velikosti $n je $kp")
+  println("Vzorčno povprečje za vzorec velikosti $n je $kp.")
   # poskus
 end

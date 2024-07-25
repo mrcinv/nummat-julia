@@ -3,15 +3,16 @@ module Vaja03
 """
   Tridiag(sd, d, zd)
 
-Sestavi tri diagonalno matriko iz prve pod diagonale `sd`, glavne diagonale `d`
-in prve nad diagonale `zd`. Rezultat je tipa `Tridiag`, ki omogoča učinkovito
-reševanje tri diagonalnega sistema linearnih enačb. Dolžina vektorjev `sd` in
-`zd` mora biti za ena manj kot dolžina vektorja `d`. 
+Sestavi tridiagonalno matriko iz prve poddiagonale `sd`, glavne diagonale `d`
+in prve naddiagonale `zd`. Rezultat je tipa `Tridiag`, ki hrani le neničelne
+elemente matrike in omogoča učinkovito reševanje tridiagonalnega sistema
+linearnih enačb. Dolžina vektorjev `sd` in `zd` mora biti za ena manj od dolžine
+vektorja `d`. 
 """
 struct Tridiag
-  sd::Vector # spodnja pod diagonala
+  sd::Vector # spodnja poddiagonala
   d::Vector # glavna diagonala
-  zd::Vector # zgornja nad diagonala
+  zd::Vector # zgornja naddiagonala
   function Tridiag(sd, d, zd)
     if (length(sd) != length(d) - 1) || (length(zd) != length(d) - 1)
       error("Napačne dimenzije diagonal.")

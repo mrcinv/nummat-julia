@@ -196,7 +196,7 @@ lahko uporabimo tudi za iskanje rešitve pre-določenega sistema po metodi najma
  0.5999999999999999
  0.5111111111111114")
 ]
-=== Podatkovni tipi
+=== Podatkovni tipi<sec:02-tipi>
 
 #link("https://docs.julialang.org/en/v1/manual/types/")[Podatkovne tipe] definiramo z ukazom `struct`. Ustvarimo tip, ki predstavlja točko z dvema koordinatama:
 
@@ -218,7 +218,8 @@ Ko definiramo nov tip, se avtomatično ustvari tudi funkcija z istim imenom, s k
 Julia omogoča različne definicije iste funkcije za različne podatkovne tipe. Za določitev tipa argumenta funkcije uporabimo operator `::`. Za primer definirajmo funkcijo, ki izračuna razdaljo med dvema točkama:
 
 #code_box[
-  #repl("razdalja(T1::Tocka, T2::Tocka) = sqrt((T1.x - T1.x)^2 + (T1.y - T1.y)^2)", "razdalja (generic function with 1 method)")
+  #repl("razdalja(T1::Tocka, T2::Tocka) = sqrt((T2.x - T1.x)^2 + (T2.y - T1.y)^2)", "razdalja (generic function with 1 method)")
+  #repl("razdalja(Tocka(1, 2), Tocka(2, 1))", "1.4142135623730951")
 ]
 
 === Moduli
