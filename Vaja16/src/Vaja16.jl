@@ -2,6 +2,7 @@ module Vaja16
 
 export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK2Kontrola
 
+# ZacetniProblem
 """
   zp = ZacetniProblem(f!, u0 tspan, p)
 
@@ -25,7 +26,9 @@ struct ZacetniProblem
   tint # interval na katerem iščemo rešitev
   p    # parametri sistema
 end
+# ZacetniProblem
 
+# ResitevNDE
 """
 Podatkovna struktura, ki hrani približek za rešitev začetnega problema za NDE.
 Uporablja se predvesm kot tip, ki ga vrnejo metode za reševanje začetnega problema.
@@ -35,7 +38,9 @@ struct ResitevNDE
   u  # približki za vrednosti rešitve
   t  # vrednosti časa(argumenta)
 end
+# ResitevNDE
 
+# Euler
 struct Euler end
 
 function resi(p::ZacetniProblem, ::Euler, n=100)
@@ -51,7 +56,9 @@ function resi(p::ZacetniProblem, ::Euler, n=100)
   end
   return ResitevNDE(p, u, t)
 end
+# Euler
 
+# RK2
 struct RK2 end
 
 function resi(zp::ZacetniProblem, ::RK2, n=100)
@@ -64,14 +71,15 @@ function resi(zp::ZacetniProblem, ::RK2, n=100)
   for i = 1:n
     k1 = h * f(t[i], u[i], par)
     k2 = h * f(t[i+1], u[i] + k1, par)
-    push!(u, u[i] + (k1 + k2)/2)
+    push!(u, u[i] + (k1 + k2) / 2)
   end
   return ResitevNDE(zp, u, t)
 end
+# RK2
+# RK2Kontrola
+struct RK2Kontrola end
 
-struct RK2Kontrola
-
-function resi(zp::ZacetniProblem, ::RK2Kontrola, ε = 1e-8)
+function resi(zp::ZacetniProblem, ::RK2Kontrola, ε=1e-8)
   t0, t1 = zp.tint
   f = zp.f
   zp = zp.p
@@ -82,22 +90,24 @@ function resi(zp::ZacetniProblem, ::RK2Kontrola, ε = 1e-8)
   while (last(t) < t1)
     k1 = h * f(t[i], u[i], par)
     k2 = h * f(t[i+1], u[i] + k1, par)
-    ln = (-k1 + k2)/2
+    ln = (-k1 + k2) / 2
     lnorma = norm(ln, Inf)
-    if lnorma < ε*h
+    if lnorma < ε * h
       t0 = t0 + h
-      u0 += (k1 + k2)/2
-      h = minimum([t1 - t0, sigma * h * sqrt(ε * h/lnorma)])
+      u0 += (k1 + k2) / 2
+      h = minimum([t1 - t0, sigma * h * sqrt(ε * h / lnorma)])
       push!(t, t0)
       push!(u, u0)
     else
-      h = h/2
+      h = h / 2
     end
   end
   return ResitevNDE(zp, u, t)
 end
+# RK2Kontrola
 
-# baza polinomov
+
+# hermite
 h00(t) = (1 + 2 * t) * (1 - t)^2
 h01(t) = t^2 * (3 - 2 * t)
 h10(t) = t * (1 - t)^2
@@ -115,8 +125,9 @@ function hermiteint(x, xi, y, dy)
   return y[1] * h00(t) + y[2] * h01(t) +
          dx * (dy[1] * h10(t) + dy[2] * h11(t))
 end
+# hermite
 
-
+# interpolacija
 """
     y = vrednost(r, t)
 
@@ -132,5 +143,6 @@ function vrednost(r::ResitevNDE, t)
   p = r.zp.p
   hermiteint(t, r.t[i:i+1], r.u[i:i+1], [f(t[i], u[i], p), f(t[i+1], u[i+1], p)])
 end
+# interpolacija
 
 end # module Vaja16

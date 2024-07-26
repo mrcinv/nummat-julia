@@ -1,3 +1,5 @@
+#import "julia.typ": code_box, jl, jlfb
+
 = Reševanje začetnega problema za NDE
 
 Navadna diferencialna enačba 
@@ -38,3 +40,12 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
 Približne metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom]. Hermitov zlepek je na intervalu $(x_i, x_(i+1))$ enak kubičnemu polinomu, ki se z rešitvijo ujema v vrednostih in odvodih v krajiščih intervala $x_i$ in $x_(i+1)$.
 
 == Poševni met z zračnim uporom
+
+== Rešitve
+
+#let vaja16(koda) = code_box(jlfb("Vaja16/src/Vaja16.jl", koda))
+
+#figure(
+  vaja16(""),
+  caption: []
+)

@@ -8,13 +8,13 @@
 == Naloga
 <naloga>
 Žično zanko s pravokotnim tlorisom potopimo v milnico, tako da se nanjo napne
-milna opna. Radi bi poiskali obliko milne opne, razpete na žični zanki. Malo brskanja po
+milna opna. Naša naloga bo poiskati obliko milne opne. Malo brskanja po
 fizikalnih knjigah in internetu hitro razkrije, da ploskve, ki tako nastanejo,
 sodijo med
 #link("http://en.wikipedia.org/wiki/Minimal_surface")[minimalne ploskve], ki so
-burile domišljijo mnogim matematikom in nematematikom. Minimalne ploskve so
+burile domišljijo mnogih matematikov in nematematikov. Minimalne ploskve so
 navdihovale tudi umetnike npr. znanega arhitekta
-#link("https://en.wikipedia.org/wiki/Frei_Otto")[Otto Frei], ki je sodeloval pri
+#link("https://en.wikipedia.org/wiki/Frei_Otto")[Frei Otto], ki je sodeloval pri
 zasnovi Muenchenskega olimpijskega stadiona, kjer ima streha obliko minimalne
 ploskve.
 

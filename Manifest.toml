@@ -2,7 +2,7 @@
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "21cca3e20687d7bf257159ffa5d614c9f9246aa1"
+project_hash = "943de6a6e47d2f518815686223b52b94b0f155db"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "daf26bbdec60d9ca1c0003b70f389d821ddb4224"
@@ -2416,6 +2416,53 @@ version = "0.1.0"
 deps = ["LinearAlgebra", "Test"]
 path = "Vaja09"
 uuid = "eb6ddaa7-33b5-438f-b890-793938e58077"
+version = "0.1.0"
+
+[[deps.Vaja10]]
+deps = ["Test"]
+path = "Vaja10"
+uuid = "883a8bf8-153d-408c-b023-f308039005e6"
+version = "0.1.0"
+
+[[deps.Vaja11]]
+deps = ["Test"]
+path = "Vaja11"
+uuid = "635347eb-74d4-428b-a8de-fa9ffb54323a"
+version = "0.1.0"
+
+[[deps.Vaja12]]
+deps = ["Test"]
+path = "Vaja12"
+uuid = "1d37f782-c432-4dd0-bd41-4a725c8ee9eb"
+version = "0.1.0"
+
+[[deps.Vaja13]]
+deps = ["Test"]
+path = "Vaja13"
+uuid = "0edc42b6-f2c8-4325-aa2f-fbb122dcba5b"
+version = "0.1.0"
+
+[[deps.Vaja14]]
+deps = ["Test"]
+path = "Vaja14"
+uuid = "a45d7dcc-c83c-41f8-8449-55263dac4b9d"
+version = "0.1.0"
+
+[[deps.Vaja15]]
+deps = ["Test"]
+path = "Vaja15"
+uuid = "79e29d65-3952-45e3-af11-ce4b49c223cb"
+version = "0.1.0"
+
+[[deps.Vaja16]]
+path = "Vaja16"
+uuid = "8863f509-3951-4cd7-af83-60947875b11b"
+version = "0.1.0"
+
+[[deps.Vaja17]]
+deps = ["Test"]
+path = "Vaja17"
+uuid = "4974832e-5969-4e96-95d6-523e2862a62e"
 version = "0.1.0"
 
 [[deps.VectorizationBase]]

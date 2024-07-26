@@ -1,0 +1,7 @@
+name = "Vaja12"
+uuid = "1d37f782-c432-4dd0-bd41-4a725c8ee9eb"
+authors = ["Martin Vuk <martin.vuk@fri.uni-lj.si>"]
+version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
