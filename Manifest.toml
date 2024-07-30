@@ -656,6 +656,12 @@ git-tree-sha1 = "acebe244d53ee1b461970f8910c235b259e772ef"
 uuid = "9aa1b823-49e4-5ca5-8b0f-3971ec8bab6a"
 version = "0.3.2"
 
+[[deps.FastGaussQuadrature]]
+deps = ["LinearAlgebra", "SpecialFunctions", "StaticArrays"]
+git-tree-sha1 = "fd923962364b645f3719855c88f7074413a6ad92"
+uuid = "442a2c76-b920-505d-bb47-c5924d526838"
+version = "1.0.2"
+
 [[deps.FastLapackInterface]]
 deps = ["LinearAlgebra"]
 git-tree-sha1 = "cbf5edddb61a43669710cbc2241bc08b36d9e660"
@@ -2413,6 +2419,7 @@ uuid = "cc385419-b684-4d97-9133-685b80a0350d"
 version = "0.1.0"
 
 [[deps.Vaja08]]
+deps = ["Test"]
 path = "Vaja08"
 uuid = "cbc38a84-05f0-4cc0-8f07-6bb2d3d5322b"
 version = "0.1.0"
@@ -2442,7 +2449,7 @@ uuid = "1d37f782-c432-4dd0-bd41-4a725c8ee9eb"
 version = "0.1.0"
 
 [[deps.Vaja13]]
-deps = ["Test"]
+deps = ["FastGaussQuadrature", "Test"]
 path = "Vaja13"
 uuid = "0edc42b6-f2c8-4325-aa2f-fbb122dcba5b"
 version = "0.1.0"

@@ -45,6 +45,14 @@ dlmf7:
   url: 
     value: https://dlmf.nist.gov/7
     date: 2024-06-15
+dlmf3:
+  type: Web
+  title: "Digital Library of Mathematical Functions: Chapter 3 Numerical Methods"
+  author: N. M. Temme
+  serial-number: version 1.2.1
+  url: 
+    value: https://dlmf.nist.gov/3
+    date: 2024-06-15
 savchenko95:
   type: article
   author: [Savchenko V. V., Pasko, A. A., Okunev, O. G., Kunii T. L.]
@@ -94,3 +102,15 @@ buhmann15:
     editor: Engquist, B
   date: 2015
   page-range: 1216-1219
+trefethen19:
+  type: book
+  title: Approximation Theory and Approximation Practice, Extended Edition
+  author: ["Trefethen, L."]
+  issuer: Society for Industrial and Applied Mathematics
+  serial-number:
+    isbn: 978-1-61197-593-2
+    doi: 10.1137/1.9781611975949
+  date: 2019
+  url:
+    value: http://www.chebfun.org/ATAP/atap-first6chapters.pdf
+    date: 2024-07-27
