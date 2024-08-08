@@ -1,5 +1,7 @@
 module Vaja10
 
-greet() = print("Hello World!")
+
+function spust(fdf)
+end
 
 end # module Vaja10
