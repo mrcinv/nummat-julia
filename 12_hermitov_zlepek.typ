@@ -1,4 +1,4 @@
-= Interpolacija z zlepki
+= Interpolacija z zlepki<sec:12-zlepki>
 
 == Naloga
 
@@ -39,3 +39,5 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
 - Funkcijo $sin(x^2)$ na intervalu $[0, 5]$ interpolirajte tudi z Newtonovim polinomom, 
   in linearnim zlepkom. 
 - Hermitov kubični zlepek uporabite za #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Interpolating_a_data_set")[interpolacijo zaporedja točk v ravnini]   s parametričnim zlepkom (vsako koordinatno funkcijo intepoliramo posebej, odvode pa določimo z #link("https://en.wikipedia.org/wiki/Finite_difference")[deljenimi diferencami]).
+
+== Hermitov kubični zlepek<sec:12-hermitov-zlepek>

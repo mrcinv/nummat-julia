@@ -11,7 +11,7 @@ end
 using LinearAlgebra
 
 """
-Izračunaj enotski vektor v smeri tangente na rešitev diferencialne enačbe 
+Izračunaj enotski vektor v smeri tangente na rešitev diferencialne enačbe
   `u'(t)=f(t, u(t))``."""
 function tangenta(f, t, u)
   v = [1, f(t, u)]
@@ -25,7 +25,7 @@ function daljica(f, t, u, l)
 end
 
 """ Vzorči polje smeri za NDE `u' = fun(t, u)`"""
-function vzorci_polje(fun, (t0, tk), (u0, uk), n=20)
+function vzorci_polje(fun, (t0, tk), (u0, uk), n=21)
   t = range(t0, tk, n)
   u = range(u0, uk, n)
 
@@ -41,8 +41,7 @@ end
 
 # polje slika
 using Plots
-function risi_polje(fun, tint, uint, n=21)
-  polje = vzorci_polje(fun, tint, uint, n)
+function risi_polje(polje)
   N = length(polje)
   x = polje[1][1]
   y = polje[1][2]
@@ -58,8 +57,9 @@ function risi_polje(fun, tint, uint, n=21)
   )
 end
 
-fun(t, u) = -2t * u
-plt = risi_polje(fun, (-2, 2), (0, 4))
+fun(t, u) = -2 * t * u
+polje = vzorci_polje(fun, (-2, 2), (0, 4))
+plt = risi_polje(polje)
 # polje slika
 
 # zacetni pogoj
@@ -103,3 +103,16 @@ plt
 # euler 1
 
 savefig("img/16-euler.svg")
+
+# euler 2
+fun(t, u, p) = -p * t * u
+problem = ZacetniProblem(fun, 1.0, (-0.5, 1.0), 2.0)
+upravi(t) = exp(-t^2) / exp(-0.5^2)
+
+res100 = resi(problem, Euler(100))
+plot(res100.t, res100.u - upravi.(res100.t), label="\$n=100\$")
+res200 = resi(problem, Euler(200))
+plot!(res200.t, res200.u - upravi.(res200.t), label="\$n=200\$")
+# euler 2
+
+savefig("img/16-euler-napaka.svg")

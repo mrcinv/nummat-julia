@@ -6,9 +6,14 @@ export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK2Kontrola
 """
     u, t = euler(fun, u0, (t0, tk), n)
 
-Izračunaj približek za rešitev začetnega problema za diferencialno enačbo 
-`u'=fun(t, u)` z začetnim pogojem `u(t0) = u0` na intervau `[t0, tk]` z 
-Eulerjevo metodo z `n` enakomernimi koraki.
+Izračunaj približek za rešitev začetnega problema za diferencialno enačbo z
+Eulerjevo metodo z enakimi koraki.
+# Argumenti
+
+- `fun` desne strani DE `u'=fun(t, u)`
+- `u0` začetni pogoj `u(t0) = u0`
+- `(t0, tk)` interval, na katerem iščemo rešitev
+- `n` število korakov Eulerjeve metode
 """
 function euler(fun, u0, tint, n)
   t0, tk = tint
@@ -27,12 +32,12 @@ end
 """
   zp = ZacetniProblem(f!, u0 tspan, p)
 
-Podatkovna struktura, ki definira začetni problem za navadne diferencialne enačbo (NDE)
+Podatkovna struktura s podatki za začetni problem za navadne diferencialne enačbo (NDE)
 ```math
-\\frac{du}{dt} = f(u, p, t).
+u'(t) = f(u, p, t).
 ```
 z začetnim pogojem ``u(t0) = u_0`` na intervalu ``tint=[t0, t_k]`` in
-vrednostmi parametrov `p`. 
+vrednostmi parametrov `p`.
 
 ## Polja
 
@@ -62,28 +67,49 @@ end
 # ResitevNDE
 
 # Euler
-struct Euler end
+"""
+    Euler(n)
 
-function resi(p::ZacetniProblem, ::Euler, n=100)
-  t0, t1 = p.tint
-  f = p.f
-  p = p.p
-  t = range(t0, t1, n + 1)
-  h = t[2] - t[1]
-  u = [p.u0]
-  for i = 1:n
-    u0 += h * f(t[i], u[i], p)
-    push!(u, u0)
-  end
+Parametri za Eulerjevo metodo za reševanje začetnega problema NDE s fiksnim korakom.
+Edini parameter je `n`, ki je enak številu korakov Eulerjeve metode.
+"""
+struct Euler
+  n # število korakov
+end
+
+"""
+  r = resi(p::ZacetniProblem, metoda::Euler)
+
+Reši začetni problem za NDE `p` z Eulerjevo metodo s parametri `metoda`.
+
+## Primer
+
+Rešimo ZP za enačbo \$u'(t)=-2t u\$ z začetnim pogojem m
+
+```julia-repl
+julia> fun(t, u, p) = -p * t * u;
+julia> problem = ZacetniProblem(fun, 1., (-0.5, 1), 2);
+julia> res = resi(problem, Euler(3)) # reši problem s 3 koraki Eulerjeve metode
+ResitevNDE(ZacetniProblem(fun, 1.0, (-0.5, 1), 2), [1.0, 1.5, 1.5, 0.75], -0.5:0.5:1.0)
+
+```
+"""
+function resi(p::ZacetniProblem, metoda::Euler)
+  # vstavimo parametre
+  fun(t, u) = p.f(t, u, p.p)
+  u, t = euler(fun, p.u0, p.tint, metoda.n)
   return ResitevNDE(p, u, t)
 end
 # Euler
 
 # RK2
-struct RK2 end
+struct RK2
+ n # število korakov
+end
 
-function resi(zp::ZacetniProblem, ::RK2, n=100)
+function resi(zp::ZacetniProblem, metoda::RK2)
   t0, t1 = zp.tint
+  n = metoda.n
   f = zp.f
   par = zp.p
   t = range(t0, t1, n + 1)
@@ -97,11 +123,15 @@ function resi(zp::ZacetniProblem, ::RK2, n=100)
   return ResitevNDE(zp, u, t)
 end
 # RK2
+#
 # RK2Kontrola
-struct RK2Kontrola end
+struct RK2Kontrola
+  eps
+end
 
-function resi(zp::ZacetniProblem, ::RK2Kontrola, ε=1e-8)
+function resi(zp::ZacetniProblem, metoda::RK2Kontrola)
   t0, t1 = zp.tint
+  eps = metoda.eps
   f = zp.f
   zp = zp.p
   sigma = 0.9 # varnostni faktor
@@ -113,7 +143,7 @@ function resi(zp::ZacetniProblem, ::RK2Kontrola, ε=1e-8)
     k2 = h * f(t[i+1], u[i] + k1, par)
     ln = (-k1 + k2) / 2
     lnorma = norm(ln, Inf)
-    if lnorma < ε * h
+    if lnorma < eps * h
       t0 = t0 + h
       u0 += (k1 + k2) / 2
       h = minimum([t1 - t0, sigma * h * sqrt(ε * h / lnorma)])
@@ -137,8 +167,8 @@ h11(t) = t^2 * (t - 1)
 """
     y = hermiteint(x, xi, y, dy)
 
-Izračunaj vrednost kubičnega polinoma `p(x)`, ki interpolira podatke `xi`, `y` in `dy`: 
-`p(xi[j]) = y[j]` in `p'[xi[j]] = dy[j]` za `j = 1, 2`. 
+Izračunaj vrednost kubičnega polinoma `p(x)`, ki interpolira podatke `xi`, `y` in `dy`:
+`p(xi[j]) = y[j]` in `p'[xi[j]] = dy[j]` za `j = 1, 2`.
 """
 function hermiteint(x, xi, y, dy)
   dx = xi[2] - xi[1]

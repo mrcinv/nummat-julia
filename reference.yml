@@ -114,3 +114,19 @@ trefethen19:
   url:
     value: http://www.chebfun.org/ATAP/atap-first6chapters.pdf
     date: 2024-07-27
+rackauckas2017:
+  type: article
+  title: DifferentialEquations.jl--a performant and feature-rich ecosystem for solving differential equations in Julia
+  author:
+    - Rackauckas, C.
+    - Nie, Q.
+  parent:
+    type: periodical
+    title: Journal of Open Research Software,
+    volume: 5
+    number: 1
+    publisher: Ubiquity Press
+  date: 2017
+  url:
+    value: https://openresearchsoftware.metajnl.com/articles/10.5334/jors.151
+    date: 2024-08-12
