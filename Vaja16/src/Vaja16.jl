@@ -2,6 +2,27 @@ module Vaja16
 
 export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK2Kontrola
 
+# euler plain
+"""
+    u, t = euler(fun, u0, (t0, tk), n)
+
+Izračunaj približek za rešitev začetnega problema za diferencialno enačbo 
+`u'=fun(t, u)` z začetnim pogojem `u(t0) = u0` na intervau `[t0, tk]` z 
+Eulerjevo metodo z `n` enakomernimi koraki.
+"""
+function euler(fun, u0, tint, n)
+  t0, tk = tint
+  t = range(t0, tk, n + 1)
+  h = t[2] - t[1]
+  u = [u0]
+  for i = 1:n
+    u0 = u0 + h * fun(t[i], u0)
+    push!(u, u0)
+  end
+  return u, t
+end
+# euler plain
+
 # ZacetniProblem
 """
   zp = ZacetniProblem(f!, u0 tspan, p)
