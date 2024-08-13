@@ -221,3 +221,26 @@ $
   caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
   z Eulerjevo metodo z enakimi koraki]
 )<pr:16-euler-resi>
+
+#figure(
+  vaja16("# RK2"),
+  caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
+  z metodo Runge Kutta reda 2]
+)<pr:16-rk2>
+
+#figure(
+  vaja16("# RK2Kontrola"),
+  caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
+  z metodo Runge Kutta reda 2 s kontrolo koraka]
+)<pr:16-rk2kontrola>
+
+#figure(
+  vaja16("# hermite"),
+  caption: [Izračun vrednosti Hermitovega kubičnega polinoma]
+)<pr:16-hermite>
+
+#figure(
+  vaja16("# interpolacija"),
+  caption: [Vmesne vrednosti rešitve NDE, izračunamo s Hermitovim kubičnim
+  zlepkom]
+)<pr:16-vrednost>

@@ -84,7 +84,7 @@ Reši začetni problem za NDE `p` z Eulerjevo metodo s parametri `metoda`.
 
 ## Primer
 
-Rešimo ZP za enačbo \$u'(t)=-2t u\$ z začetnim pogojem m
+Rešimo ZP za enačbo `u'(t) = -2t u` z začetnim pogojem `u(-0.5) = 1.0`:
 
 ```julia-repl
 julia> fun(t, u, p) = -p * t * u;
@@ -107,6 +107,11 @@ struct RK2
  n # število korakov
 end
 
+"""
+  res = resi(p::ZacetniProblem, metoda::RK2)
+
+Reši začetni problem za NDE `p` z metodo Runge Kutta reda 2 s parametri `metoda`.
+"""
 function resi(zp::ZacetniProblem, metoda::RK2)
   t0, t1 = zp.tint
   n = metoda.n
@@ -123,12 +128,18 @@ function resi(zp::ZacetniProblem, metoda::RK2)
   return ResitevNDE(zp, u, t)
 end
 # RK2
-#
+
 # RK2Kontrola
 struct RK2Kontrola
   eps
 end
 
+using LinearAlgebra
+"""
+  r = resi(p::ZacetniProblem, metoda::RK2Kontrola)
+
+Reši začetni problem za NDE `p` z metodo Runge Kutta reda 2 s kontrolo koraka s parametri `metoda`.
+"""
 function resi(zp::ZacetniProblem, metoda::RK2Kontrola)
   t0, t1 = zp.tint
   eps = metoda.eps
@@ -168,7 +179,7 @@ h11(t) = t^2 * (t - 1)
     y = hermiteint(x, xi, y, dy)
 
 Izračunaj vrednost kubičnega polinoma `p(x)`, ki interpolira podatke `xi`, `y` in `dy`:
-`p(xi[j]) = y[j]` in `p'[xi[j]] = dy[j]` za `j = 1, 2`.
+`p(xi[j]) = y[j]` in `p'(xi[j]) = dy[j]` za `j = 1, 2`.
 """
 function hermiteint(x, xi, y, dy)
   dx = xi[2] - xi[1]
@@ -192,8 +203,13 @@ function vrednost(r::ResitevNDE, t)
   end
   f = r.zp.f
   p = r.zp.p
-  hermiteint(t, r.t[i:i+1], r.u[i:i+1], [f(t[i], u[i], p), f(t[i+1], u[i+1], p)])
+  u = r.u
+  tabt = r.t
+  hermiteint(t, tabt[i:i+1], u[i:i+1], [f(tabt[i], u[i], p), f(tabt[i+1], u[i+1], p)])
 end
+
+# Omogočimo, da rešitev NDE kličemo kot funkcijo
+(res::ResitevNDE)(t) = vrednost(res, t)
 # interpolacija
 
 end # module Vaja16
