@@ -3,6 +3,7 @@ module Vaja08
 using LinearAlgebra, SparseArrays
 export inviter, inviterqr, graf_eps, laplace
 
+# inviter
 """
     v, lambda = inviter(resi, n)
 
@@ -35,13 +36,15 @@ function inviter(resi, n, maxit=100, tol=1e-10)
     end
     ls = ln
   end
-  throw("Potenčna metoda ne konvergira v $maxit korakih.")
+  throw("Inverzna potenčna metoda ne konvergira v $maxit korakih.")
 end
+# inviter
 
+# inviterqr
 """
     x, lambda = inviterqr(resi, n, k)
 
-Poišči najmanjših m lastnih vektorjev in lastnih vrednosti z inverzno iteracijo s QR 
+Poišči najmanjših m lastnih vektorjev in lastnih vrednosti z inverzno iteracijo s QR
 razcepom.
 """
 function inviterqr(resi, n, k, maxit=100, tol=1e-10)
@@ -62,7 +65,9 @@ function inviterqr(resi, n, k, maxit=100, tol=1e-10)
   end
   throw("Inverzna potenčna metoda ne konvergira v $maxit korakih.")
 end
+# inviterqr
 
+# graf_eps
 """
     A = graf_eps(oblak, epsilon)
 
@@ -83,7 +88,9 @@ function graf_eps(oblak, epsilon)
   end
   return A
 end
+# graf_eps
 
+# laplace
 """
   L = laplace(A)
 
@@ -92,5 +99,5 @@ izven diagonale pa vrednosti -1 ali 0, odvisno ali sta indeksa povezana v grafu.
 matriko sosednosti `A`.
 """
 laplace(A) = spdiagm(sum(A, dims=2)[:, 1]) - A
-
+# laplace
 end # module Vaja08

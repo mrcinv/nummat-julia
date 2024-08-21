@@ -2419,7 +2419,7 @@ uuid = "cc385419-b684-4d97-9133-685b80a0350d"
 version = "0.1.0"
 
 [[deps.Vaja08]]
-deps = ["Test"]
+deps = ["LinearAlgebra", "SparseArrays", "Test"]
 path = "Vaja08"
 uuid = "cbc38a84-05f0-4cc0-8f07-6bb2d3d5322b"
 version = "0.1.0"

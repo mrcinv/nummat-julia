@@ -130,7 +130,7 @@ Kakšne posebnosti ima matrika sistema @eq:06-matrika?  Matrika je simetrična i
 Res! Velja $st(i) = |N(i)|$ in zato
 
 $
-  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(i =.not j) |a_(i j)|.
+  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(i eq.not j) |a_(i j)|.
 $
 
 Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonali negativni, je
