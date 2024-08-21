@@ -1,4 +1,6 @@
 #import "julia.typ": code_box, jl, jlfb
+#import "@preview/cetz:0.2.2" as cetz: canvas
+#import "@preview/fletcher:0.5.1" as fletcher: diagram, node, edge
 
 = Fizikalna metoda za vložitev grafov
 
@@ -12,124 +14,154 @@
 
 == Ravnovesje sil
 
+#let Fvec = $arrow(F)$
+
 Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G)^2$.
 Brez škode predpostavimo, da so vozlišča grafa $G$ kar zaporedna naravna števila
-$V(G) = {1, 2, dots n}$. Vložitev grafa $G$ v $RR^d$ je preslikava 
+$V(G) = {1, 2, dots n}$. Vložitev grafa $G$ v $RR^d$ je preslikava
 $V(G) -> RR^d$, ki je podana z zaporedjem koordinat. Vložitev v $RR^3$ je podana z zaporedjem točk v $RR^3$
 
 $
 (x_1, y_1, z_1), (x_2, y_2, z_2), dots, (x_n, y_n, z_n).
 $
 
-Za dani graf $G$ želimo poiskati vložitev v $RR^3$ (ali $RR^2$). 
-V vsakem vozlišču mreže $j$ morajo biti sile v ravnovesju.
+Za dani graf $G$ želimo poiskati vložitev v $RR^3$ (ali $RR^2$). Pri fizikalni metodi
+grafu $G$ priredimo fizikalni sistem, in uporabimo fizikalne zakone, da določimo položaj vozlišč.
+V tej vaji bomo grafu priredili sistem harmoničnih vzmeti, pri katerem na vsako vozlišče delujejo
+sosednja vozlišča s silo, ki je sorazmerna razdalji med vozlišči.
 
-#let FF = $arrow(F)$
-
-$
-  sum_(i in N(j)) FF_(i j) = 0,
-$<eq:06-ravnovesje>
-
-kjer je $N(j) = {j; quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $FF_(i j)$
-sila s katero vozlišče $j$ deluje na vozlišče $i$.
+#figure(
+    diagram(
+      node-stroke: 0.5pt,
+      node-shape: "circle",
+      {
+        node((0, 0), $1$)
+        let pts = ((-1.5, -1), (-1, 1), (2, 1), (1,-0.6))
+        for (i, pt) in pts.enumerate() {
+          node(pt, $#(i+2)$)
+          edge((0,0), pt, decorations:"coil")
+          edge(pts.at(i - 1), pt, decorations:"coil")
+        }
+      }
+    ),
+  caption: [Sistem vzmeti za dani graf]
+)
 
 Harmonična vzmet je idealna vzmet dolžine $0$, za katero sila ni sorazmerna spremembi dolžine, pač
 pa dolžini vzmeti. Sila harmonične vzmeti, ki je vpeta med točki $(x_1, y_1, z_1)$ in
-$(x_2, y_2, z_2)$ in deluje drugo krajišče,  je enaka
+$(x_2, y_2, z_2)$ in deluje na prvo krajišče, je enaka
 
 $
-FF_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
+Fvec_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
 $
 
-kjer je $k$ koeficient vzmeti. Enačbe @eq:06-ravnovesje lahko izpeljemo sistem enačb za koordinate $x_i, y_i$ in $z_i$.
+kjer je $k$ koeficient vzmeti.
 
-Iz vektorske enačbe
+Koordinate vozlišč določimo tako, da poiščemo koordinate pri katerih je sistem
+v ravnovesju. To pomeni, da so v vsakem vozlišču $j$ v ravnovesju sile, s katerimi
+sosednja vozlišča delujejo na dano vozlišče.
 
 $
-  sum_(j in N(1)) k vec(x_j - x_1, y_j - y_1, z_j - z_1) = 0
+  sum_(i in N(j)) Fvec_(i j) = 0,
+$<eq:06-ravnovesje>
+
+kjer je $N(j) = {j; quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
+sila s katero vozlišče $j$ deluje na vozlišče $i$. Iz enačbe @eq:06-ravnovesje lahko izpeljemo
+sistem enačb za koordinate $x_i, y_i$ in $z_i$. Iz vektorske enačbe za vozlišče $i$:
+
+$
+  sum_(j in N(1)) Fvec_(j i) = sum_(j in N(i)) k vec(x_j - x_i, y_j - y_i, z_j - z_i) = 0,
 $
 
-dobimo enačbe za posamezne koordinate
+dobimo 3 enačbe za posamezne koordinate
 
 #let st = math.op("st")
 
 $
-   -st(1)x_1 + x_(j_1) + x_(j_2) + dots + x_(j_(st(1))) &= 0\
-   -st(1)y_1 + y_(j_1) + y_(j_2) + dots + y_(j_(st(1))) &= 0\
-   -st(1)z_1 + z_(j_1) + z_(j_2) + dots + z_(j_(st(1))) &= 0\
-   dots.v \
-   x_(j_1) + x_(j_2) + dots + x_(j_(st(n))) - st(n)x_n&= 0\
-   y_(j_1) + y_(j_2) + dots + y_(j_(st(n))) - st(n)y_n &= 0\
-   z_(j_1) + z_(j_2) + dots + z_(j_(st(n))) - st(n)z_n &= 0.
+   -st(i)x_i + x_(j_1) + x_(j_2) + dots + x_(j_(st(i))) &= 0\
+   -st(i)y_i + y_(j_1) + y_(j_2) + dots + y_(j_(st(i))) &= 0\
+   -st(i)z_i + z_(j_1) + z_(j_2) + dots + z_(j_(st(i))) &= 0.
+$
+
+Ker so koordinate $x$, $y$ in $z$ med seboj neodvisne, dobimo za vsako koordinato en sistem enačb.
+Za koordinato $x$ dobimo naslednji sistem:
+$
+  -st(1)x_1 + sum_(j in N(1)) x_(j) &= 0\
+  -st(2)x_2 + sum_(j in N(2)) x_(j) &= 0\
+  dots.v  \
+  -st(n)x_n + sum_(j in N(n)) x_(j) &= 0.
 $<eq:06-trojni-sistem>
 
 
-Koordinate $x$, $y$ in $z$ so neodvisni druga od druge in tako dobimo po en sistem enačb za vsako koordinato. Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima ničelno rešitev. Če želimo netrivialno rešitev, moramo nekaterim vozliščem v grafu predpisati koordinate. Brez škode lahko predpostavimo, da so vozlišča, ki jih fiksiramo na koncu. Označimo z $F={m+1, dots, n} subset V(G)$ množico vozlišč, ki jih fiksiramo. Koordinate za vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo stran enačbe. Za lažji zapis označimo z 
+Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem le ničelno rešitev. Če želimo
+netrivialno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
+škode lahko predpostavimo, da so vozlišča, ki jih pritrdimo na koncu. Označimo z
+$F = {m+1, dots, n} subset V(G)$ množico vozlišč, ki imajo določene koordinate. Koordinate za
+vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo stran enačbe.
+Sistem enačb @eq:06-trojni-sistem postane nehomogen sistem:
 
 $
-  1_A(k) = cases(1 med k in A, 0 med k in.not A)
-$
-
-indikatorsko funkcijo za množico $A$. Sistem enačb @eq:06-trojni-sistem postane nehomogen sistem:
-
-$
-  -st(1)x_1 + 1_(N(1))(2)x_2 + dots + 1_(N(1))(m)x_m = -sum_(j=m+1)^n 1_(N(1))(j)x_j\
-  1_(N(2))(1)x_1 - st(2)x_2 + dots + 1_(N(2))(m)x_m = -sum_(j=m+1)^n 1_(N(2))(j)x_j\
-  dots.v\
-  1_(N(m))(1)x_1 + 1_(N(m))(2)x_2 + dots - st(m)x_m  = -sum_(j=m+1)^n 1_(N(m))(j)x_j
+ -st(1) x_1 + a_(1 2) x_2 + dots + a_(1 m) x_m = - a_(1 j)x_(m+1) - dots - a_(1 n)x_(n)\
+ a_(2 1)x_1 - st(2)x_2 + dots + a_(2 m) x_m = - a_(2 j)x_(m+1) - dots - a_(2 n)x_(n)\
+ dots.v\
+ a_(m 1)x_1 - a_(m 2)x_2 + dots  - st(m)x_m = - a_(m j)x_(m+1) - dots - a_(m n)x_(n)\
 $<eq:06sistem-x>
 
-in podobno za koordinati $y$ in $z$. Matrika sistema @eq:06sistem-x je odvisna le od grafa in
-izbire točk, ki so proste. 
+kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer
+
+$
+  a_(i j) = cases(1 quad (i, j) in E(G), 0 quad (i, j) in.not E(G)).
+$
+
+Sistema za $y$ in $z$ imata iste koeficiente, kot sistem @eq:06-trojni-sistem, razlikujeta se le v
+desnih straneh, ki so odvisne od koordinat pritrjenih točk. Matrika sistema @eq:06sistem-x je
+odvisna le od grafa in izbire točk, ki so proste.
 
 $
 A = mat(
-  -st(1), 1_(N(1))(2), dots, 1_(N(1))(m);
-  1_(N(2))(1), - st(2), dots, 1_(N(2))(m);
+  -st(1), a_(1 2), dots, a_(1 m);
+  a_(2 1), - st(2), dots, a_(2 m);
   dots.v, dots.v, dots.down, dots.v;
-  1_(N(m))(1), 1_(N(m))(2), dots, - st(m)
-)
+  a_(m 1), a_(m 2), dots, - st(m)
+).
 $<eq:06-matrika>
+
+Kakšne posebnosti ima matrika sistema @eq:06-matrika?  Matrika je simetrična in diagonalno dominantna.
+Res! Velja $st(i) = |N(i)|$ in zato
+
+$
+  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(i =.not j) |a_(i j)|.
+$
+
+Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonali negativni, je
+matrika $A$ negativno definitna. Za večino grafov, za katere uporabimo zgornji postopek bo matrika
+sistema $A$ redka. Zato lahko za reševanje sistema $-A x = -b$ uporabimo
+#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
+Metoda konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike.
+Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
+ki bi dodale neničelne elemente.
+
+== Rešitev v Juliji
 
 Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl],
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
-Napišimo naslednji funkciji: 
-- #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za 
-  dani graf `G` in seznam vozlišč, ki se lahko spreminjajo, `sprem` (rešitev @pr:06-matrika) in 
-- #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za 
-  sistem @eq:06sistem-x (rešitev @pr:06-desne-strani). 
-
-== Metoda konjugiranih gradientov
-
-Matrika @eq:06-matrika je simetrična in diagonalno dominantna. Res! Velja $st(i) = |N(i)|$ in je zato
-
-$
-  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum |a_(i j)|. 
-$ 
-
-Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonali negativni, je
-matrika $A$ negativno definitna. Zato lahko za reševanje sistema $-A x = -b$ uporabimo 
-#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
-
-Za večino grafov, za katere uporabimo zgornji postopek bo matrika sistema $A$ redka. Metoda
-konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike. 
-Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
-ki bi dodale neničelne elemente.  
-
-Uporabimo sedaj metodo konjugiranih gradientov za iskanje vložitve grafa s fizikalno metodo. 
-Napišimo naslednji funkciji:
-- #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A x = b$ z metodo konjugiranih gradientov 
+Napišimo naslednje funkcije:
+- #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za
+  dani graf `G` in seznam vozlišč, ki se lahko spreminjajo, `sprem` (rešitev @pr:06-matrika),
+- #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za
+  sistem @eq:06sistem-x (rešitev @pr:06-desne-strani),
+- #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A x = b$ z metodo konjugiranih gradientov
   (rešitev @pr:06-cg) in
 - #jl("vlozi!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
   metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
-  točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke` 
+  točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke`
   (rešitev @pr:06-vlozitev).
 
 == Krožna lestev
 
-Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dveh ciklov enake 
-dolžine $n$, ki sta med seboj povezana z $n$ povezavami. Za grafično predstavitev grafov bomo 
+Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dveh ciklov enake
+dolžine $n$, ki sta med seboj povezana z $n$ povezavami. Za grafično predstavitev grafov bomo
 uporabili paket #link("https://docs.juliaplots.org/stable/GraphRecipes/introduction/")[GraphRecipes.jl].
 
 #let svaja06(koda) = jlfb("scripts/06_graf.jl", koda)
@@ -208,7 +240,7 @@ Sedaj fiksiramo cel rob in ga enakomerno razporedimo na krožnico.
   code_box(
     vaja06("# desne strani")
   ),
-  caption: [Izračunaj desne strani sistema za ravnovesje sil v grafu na 
+  caption: [Izračunaj desne strani sistema za ravnovesje sil v grafu na
   podlagi koordinat vozlišč, ki so fiksirana]
 )<pr:06-desne-strani>
 
