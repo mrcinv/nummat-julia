@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": jl, jlfb, code_box
+#import "julia.typ": jl, jlfb, code_box, repl
 = Spektralno razvrščanje v gruče
 <spektralno-razvrščanje-v-gruče>
 
@@ -135,9 +135,8 @@ Komponente lastnih vektorjev za 5. in 6. lastno vrednost uporabimo za nove koord
   ]
 )
 
-Seveda se pri samem algoritmu ni treba omejiti le na dva lastna vaektorja, ampak se izbere
-se izbere lastne vektorje za $k$ najmanjših neničelnih lastnih vrednosti. Katere komponente bolje
-ločijo gruče je za nadaljne algoritme pravzaprav vseeno.
+Seveda se pri samem algoritmu gručenja ni treba omejiti le na dva lastna vaektorja, ampak se izbere
+lastne vektorje za $k$ najmanjših neničelnih lastnih vrednosti.
 
 == Inverzna potenčna metoda
 <inverzna-potenčna-metoda>
@@ -147,21 +146,24 @@ izračun in za izračun lastnih vektrojev uporabimo
 Pri inverzni potenčni metodi zgradimo zaporedje približkov z rekurzivno
 formulo
 
-$ bold(x)^(lr((k + 1))) = frac(A^(- 1) bold(x)^(lr((n))), parallel A^(- 1) bold(x)^(lr((n))) parallel) $
+$ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((n)))/norm(A^(- 1) bold(x)^((n))). $
 
-in zaporedje približkov konvergira k lastnemu vektorju za najmanjšo
-lastno vrednost matrike $A$.
+Zaporedje približkov $bold(x^((k)))$ konvergira k lastnemu vektorju za najmanjšo
+lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka.
 
 #opomba(naslov:
 [Namesto inverza uporabite LU razcep ali drugo metodo za reševanje linearnega sistema])[
- Računanje inverza je časovno zelo zahtevna operacija, zato se ji, razen v nizkih dimenzijah,
- če je le mogoče izognemo. V večini primerov ne potrebujemo inverzne matrike $A^(-1)$, ampak le
- produkt inverzne matrike z vektorjem ali drugo matriko $A^(-1)bold(b)$. Produkt
- $bold(x) = A^(-1)bold(b)$ je rešitev linearnega sistema $A bold(x) = bold(b)$ in metode za
- reševanje sistema so bolj učinkovite kot računanje inverza $A^(-1)$.
+V inverzni iteraciji moramo večkrat zaporedoma izračunati vrednost
+$ A^(-1) bold(x^((k))). $
 
- Inverz $A^(-1)$ matrike $A$ lahko nadomestimo z razcepom matrike $A$.
- Če na primer uporabimo LU razcep $A=L U$, lahko $A^(-1) bold(b)$ izračunamo tako, da rešimo
+Za izračun te vrednosti pa v resnici ne potrebujemo inverzne matrike $A^(-1)$.
+Računanje inverzne matrike je namreč časovno zelo zahtevna operacija, zato se ji, razen v nizkih
+dimenzijah, če je le mogoče izognemo. Produkt $bold(x) = A^(-1)bold(b)$ je rešitev linearnega
+sistema $A bold(x) = bold(b)$ in metode za reševanje sistema so bolj učinkovite kot
+računanje inverza $A^(-1)$.
+
+Inverz $A^(-1)$ matrike $A$ lahko nadomestimo z razcepom matrike $A$.
+Če na primer uporabimo LU razcep $A=L U$, lahko $A^(-1) bold(b)$ izračunamo tako, da rešimo
  sistem $A bold(x) = bold(b)$ oziroma $L U bold(x) = bold(b)$ v dveh korakih
 
  $
@@ -171,7 +173,13 @@ lastno vrednost matrike $A$.
 
  ki sta časovno toliko zahtevna, kot je množenje z matriko $A^(-1)$.
  Programski jezik `julia` ima za ta namen prav posebno metodo
- #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/index.html#LinearAlgebra.factorize")[factorize], ki za različne vrste matrik, izračuna najbolj primeren razcep.
+ #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/index.html#LinearAlgebra.factorize")[factorize],
+ ki za različne vrste matrik, izračuna najbolj primeren razcep. Rezultat metode `factorize` je
+ vrednost za katero lahko uporabimo operator `\`, da učinkovito izračunamo rešitev sistema:
+ #code_box[
+ #repl("F = factorize(A)", none)
+ #repl("x = F\\b # ekvivalentno A\\b le, da je bolj učinkovito", none)
+ ]
 ]
 
 Laplaceova matrika je simetrična, zato so lastni vektorji ortogonalni.
