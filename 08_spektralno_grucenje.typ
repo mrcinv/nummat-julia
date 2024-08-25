@@ -146,7 +146,7 @@ izračun in za izračun lastnih vektrojev uporabimo
 Pri inverzni potenčni metodi zgradimo zaporedje približkov z rekurzivno
 formulo
 
-$ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((n)))/norm(A^(- 1) bold(x)^((n))). $
+$ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((n)))/norm(A^(- 1) bold(x)^((n))). $<eq:9-inviter>
 
 Zaporedje približkov $bold(x^((k)))$ konvergira k lastnemu vektorju za najmanjšo
 lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka.
@@ -176,26 +176,51 @@ Inverz $A^(-1)$ matrike $A$ lahko nadomestimo z razcepom matrike $A$.
  #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/index.html#LinearAlgebra.factorize")[factorize],
  ki za različne vrste matrik, izračuna najbolj primeren razcep. Rezultat metode `factorize` je
  vrednost za katero lahko uporabimo operator `\`, da učinkovito izračunamo rešitev sistema:
+
  #code_box[
  #repl("F = factorize(A)", none)
- #repl("x = F\\b # ekvivalentno A\\b le, da je bolj učinkovito", none)
+ #repl("x = F\\b # ekvivalentno A\\b ampak bolj učinkovito", none)
  ]
 ]
 
+Napišimo funkcijo #jl("inviter(resi, x0)"), ki poišče lastni par za najmanjšo lastno vrednost matrike
+(rešitev je @pr:9-inviter). Matrika ni podana eksplicitno, ampak je podana le funkcija `resi`, ki
+reši sistem $A x = b$ za dani vektor $b$.
+
+== Inverzna iteracija s QR razcepom
+
 Laplaceova matrika je simetrična, zato so lastni vektorji ortogonalni.
-Lastne vektorje lahko tako poiščemo tako, da iteracijo izvajamo na več
+Lastne vektorje lahko poiščemo tako, da iteracijo izvajamo na več
 vektorjih hkrati in nato na dobljeni bazi izvedemo ortogonalizacijo s QR
-razcepom, da zaporedje lastnih vektorjev za lastne vrednosti, ki so
-najbližje najmanjši lastni vrednosti.
+razcepom. Tako dobljeno zaporedje lastnih vektorjev konvergira  k lastnim vektorjem za po absolutni
+vrednosti najmanjše lastne vrednosti. Priredimo sedaj funkcijo #jl("inviter"), da za začetni
+približek sprejme $k times n$ matriko in izvede inverzno iteracijo s QR razcepom. Napišimo funkcijo
+#jl("inviterqr(resi, )")
+
 
 Laplaceova matrika grafa je simetrična in negativno semi definitna.
 Poleg tega je zelo veliko elementov enakih 0. Zato za rešitev sistema
-uporabimo iterativno metodo
-#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[konjugiranih gradientov].
+uporabimo iterativno
+#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
 Za uporabo metode konjugiranih gradientov zadošča, da učinkovito
 izračunamo množenje matrike z vektorjem. Težava je, ker ima Laplaceova
 matrika grafa tudi lastno vrednost $0$, zato metoda konjugiranih gradientov ne
-konvergira. Težavo lahko rešimo s premikom. Namesto, da računamo lastne
+konvergira ,če ju uporabimo direktno za laplaceovo matriko. Težavo lahko rešimo s preprostim
+premikom.
+
+== Premik
+
+Inverzna iteracija @eq:9-inviter konvergira k lastnemu vektorju za najmanjšo lastno vrednost. Če
+želimo poiskati lastne vektorje za kakšno drugo lastno vrednost, lahko uporabimo preprost premik.
+Če ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, dots lambda_n$, potem ima matrika
+
+$A - delta I$
+
+lastne vrednosti $lambda_1 - delta, lambda_2 - delta, dots lambda_n - delta$. Če izberemo
+$delta$ dovolj blizu $lambda_k$ lahko poskrbimo, da je $lambda_k -delta$ najmanjša lastna vrednost
+matrike $A - delta I$. Tako lahko z inverzno
+
+Namesto, da računamo lastne
 vrednosti in vektorje matrike $L$, iščemo lastne vrednosti in vektorje
 malce premaknjene matrike $L + epsilon I$, ki ima enake lastne
 vektorje, kot $L$.
@@ -234,27 +259,7 @@ l, v = inverzna_iteracija(Lp, 5, (Lp, x) -> conjgrad(Lp, x)[1])
 
 == Algoritem k-povprečij
 <algoritem-k-povprečij>
-```julia
-nove_tocke =  [tocka for tocka in zip(razcep.vectors[:,4], razcep.vectors[:,5])]
-gruce = kmeans(nove_tocke, 3)
 
-p1 = scatter(tocke[findall(gruce .== 1)], color=:blue, title="Originalne točke")
-scatter!(p1, tocke[findall(gruce .== 2)], color=:red)
-scatter!(p1, tocke[findall(gruce .== 3)], color=:green)
-
-p2 = scatter(nove_tocke[findall(gruce .== 1)], color=:blue, title="Preslikane točke")
-scatter!(p2, nove_tocke[findall(gruce .== 2)], color=:red)
-scatter!(p2, nove_tocke[findall(gruce .== 3)], color=:green)
-
-plot(p1,p2)
-savefig("06_gruce.png")
-```
-
-#figure([],
-  caption: [
-    Gruče
-  ]
-)
 
 == Literatura
 <literatura>
@@ -269,7 +274,7 @@ savefig("06_gruce.png")
 #figure(
   vaja8("# inviter"),
   caption: [Inverzna iteracija]
-  )
+  )<pr:9-inviter>
 
 #figure(
   vaja8("# inviterqr"),
