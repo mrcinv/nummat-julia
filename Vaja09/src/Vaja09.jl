@@ -15,7 +15,7 @@ function newton(f, jf, x0; maxit=100, atol=1e-8)
 end
 # newton
 
-# konvergenca
+# box2d
 struct Interval
   min
   max
@@ -34,6 +34,8 @@ diskretiziraj(i::Interval, n) = range(i.min, i.max, n)
 diskretiziraj(b::Box2d, m, n) = (
   diskretiziraj(b.int_x, m), diskretiziraj(b.int_y, n))
 
+# box2d
+# konvergenca
 """
     x, y, Z = konvergenca((a, b, c, d), metoda, n=50, m=50; maxit=50, tol=1e-3)
 
