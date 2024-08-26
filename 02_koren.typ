@@ -255,7 +255,12 @@ lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 ) <code:02-koren-x>
 
 #opomba(naslov: [Julia omogoča več definicij iste funkcije])[
-    Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na to, katere argumente podamo funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo #jl("koren(2.0, 1.0)"), se izvede različica @code:02-koren-x-y0, ko pa pokličemo #jl("koren(2.0)"), se izvede @code:02-koren-x.
+    Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polmorfizma
+    v objektno orientiranih jezikih, kjer se metoda izbere ne le na podlagi razreda
+    objekta, ki to metodo kliče, se v Juliji metodo izbere na podlagi tipov vseh vhodnih argumentov.
+    Ta lastnost omogoča pisanje generične kodo, ki deluje za zelo različne vhodne argumente.
+    
+    Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na to, katere argumente podamo funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo #jl("koren(2.0, 1.0)"), se izvede različica @code:02-koren-x-y0, ko pa pokličemo #jl("koren(2.0)"), se izvede @code:02-koren-x.
     
     Metode, ki so definirane za neko funkcijo #jl("fun"), lahko vidimo z ukazom #jl("methods(fun)"). Metodo, ki se uporabi za določen klic funkcije, lahko poiščemo z makrojem #jl("@which"), npr. #jl("@which koren(2.0, 1.0)").
 ]
