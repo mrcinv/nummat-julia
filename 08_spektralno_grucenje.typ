@@ -59,6 +59,8 @@ $L$ je simetrična, nenegativno definitna in ima vedno eno lastno vrednost $0$ z
 vektor iz samih enic. Laplaceova matrika je pomembna v
 #link("https://sl.wikipedia.org/wiki/Spektralna_teorija_grafov")[spektralni teoriji grafov], ki
 preučuje lastnosti grafov s pomočjo analize lastnih vrednosti in vektorjev matrik.
+Knjižnica #link("http://danspielman.github.io/Laplacians.jl/latest/index.html")[Laplacians.jl] je
+namenjena spektralni teoriji grafov.
 
 == Algoritem
 <algoritem>
@@ -195,18 +197,18 @@ vektorjih hkrati in nato na dobljeni bazi izvedemo ortogonalizacijo s QR
 razcepom. Tako dobljeno zaporedje lastnih vektorjev konvergira  k lastnim vektorjem za po absolutni
 vrednosti najmanjše lastne vrednosti. Priredimo sedaj funkcijo #jl("inviter"), da za začetni
 približek sprejme $k times n$ matriko in izvede inverzno iteracijo s QR razcepom. Napišimo funkcijo
-#jl("inviterqr(resi, )")
+#jl("inviterqr(resi, X0)"), ki poišče lastne vektorje za prvih nekaj najmanjših lastnih vrednosti
+(rešitev je @pr:9-inviterqr).
+Število lastnih vektorjev, ki jih metoda poišče, naj bo določeno z dimenzijami začetnega
+približka `X0`.
 
-
-Laplaceova matrika grafa je simetrična in negativno semi definitna.
-Poleg tega je zelo veliko elementov enakih 0. Zato za rešitev sistema
-uporabimo iterativno
+Laplaceova matrika grafa je pogosto redka. Zato se splača uporabiti eno izmed iterativnih metod.
+Poleg tega je Laplaceova matrika simetrična in pozitivno semi definitna.
+Zato za rešitev sistema uporabimo
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
-Za uporabo metode konjugiranih gradientov zadošča, da učinkovito
-izračunamo množenje matrike z vektorjem. Težava je, ker ima Laplaceova
-matrika grafa tudi lastno vrednost $0$, zato metoda konjugiranih gradientov ne
-konvergira ,če ju uporabimo direktno za laplaceovo matriko. Težavo lahko rešimo s preprostim
-premikom.
+Težava je, ker ima Laplaceova matrika grafa tudi lastno vrednost $0$, zato metoda konjugiranih
+gradientov ne konvergira, če jo uporabimo za Laplaceovo matriko. To lahko rešimo s preprostim
+premikom Laplaceove matrike za $epsilon I$.
 
 == Premik
 
@@ -218,54 +220,23 @@ $A - delta I$
 
 lastne vrednosti $lambda_1 - delta, lambda_2 - delta, dots lambda_n - delta$. Če izberemo
 $delta$ dovolj blizu $lambda_k$ lahko poskrbimo, da je $lambda_k -delta$ najmanjša lastna vrednost
-matrike $A - delta I$. Tako lahko z inverzno
+matrike $A - delta I$. Tako lahko z inverzno iteracijo poiščemo lastni vektor za poljubno lastno
+vrednost.
 
-Namesto, da računamo lastne
-vrednosti in vektorje matrike $L$, iščemo lastne vrednosti in vektorje
-malce premaknjene matrike $L + epsilon I$, ki ima enake lastne
-vektorje, kot $L$.
+Podoben trik lahko uporabimo in premaknemo Laplaceovo matriko, da je strogo pozitivno definitna in
+da lahko za reševanje sistema uporabimo metodo konjugiranih gradientov. Namesto, da računamo lastne
+vrednosti in vektorje matrike $L$, iščemo lastne vrednosti in vektorje malce premaknjene matrike
+$L + epsilon I$, ki ima enake lastne vektorje, kot $L$.
 
-#opomba()[
-Programski jezik julia omogoča polimorfizem v obliki
-#link("https://docs.julialang.org/en/v1/manual/methods/index.html")[večlične
-dodelitve]. Tako
-lahko za isto funkcijo definiramo različne metode. Za razliko od polmorfizma
-v objektno orientiranih jezikih, se metoda izbere ne le na podlagi tipa
-objekta, ki to metodo kliče, ampak na podlagi tipov vseh vhodnih argumentov.
-To lastnost lahko s pridom uporabimo, da lahko pišemo generično kodo, ki
-deluje za veliko različnih vhodnih argumentov. Primer je funkcija
-#jl("conjgrad"), ki jo lahko uporabimo tako za polne matrike, matrike tipa
-`SparseArray` ali pa tipa `LaplaceovaMatrika` za katerega smo posebej
-definirali operator množenja #jl("*").
-]
+#demo8("# inviter")
 
-$ L bold(x^(lr((k + 1)))) = bold(x^(lr((k)))) $
+#code_box(
+raw(read("out/08_inviterqr.out").split("\n").slice(-5).join("\n"))
+)
 
-Primerjajmo inverzno potenčno metodo z vgrajeno metodo za iskanje
-lastnih vrednosti s polno matriko
-
-```julia
-import Base:*, size
-struct PremikMatrike
-   premik
-   matrika
-end
-*(p::PremikMatrike, x) = p.matrika*x + p.premik.*x
-size(p::PremikMatrike) = size(p.matrika)
-
-Lp = PremikMatrike(0.01, L)
-l, v = inverzna_iteracija(Lp, 5, (Lp, x) -> conjgrad(Lp, x)[1])
-```
-
-== Algoritem k-povprečij
-<algoritem-k-povprečij>
-
-
-== Literatura
-<literatura>
-- A tutorial on spectral clustering @von_luxburg_tutorial_2007
-- Knjižnica
-  #link("http://danspielman.github.io/Laplacians.jl/latest/index.html")[Laplacians.jl]
+Vidimo, da metoda konjugiranih gradientov zelo hitro konvergira za naš primer. Z inverzno iteracijo
+s QR razcepom, smo učinkovito poiskali lastne vektorje Laplaceove matrike za najmanjše lastne
+vrednosti. Ti lastni vektorji pa lahko izboljšajo proces gručenja.
 
 == Rešitve
 
@@ -279,7 +250,7 @@ l, v = inverzna_iteracija(Lp, 5, (Lp, x) -> conjgrad(Lp, x)[1])
 #figure(
   vaja8("# inviterqr"),
   caption: [Inverzna iteracija s QR razcepom]
-  )
+  )<pr:9-inviterqr>
 
 #figure(
   vaja8("# graf_eps"),
@@ -290,3 +261,14 @@ l, v = inverzna_iteracija(Lp, 5, (Lp, x) -> conjgrad(Lp, x)[1])
   vaja8("# laplace"),
   caption: [Laplaceova matrika grafa]
   )
+
+== Testi
+
+#let test8(koda, caption) = figure(
+  caption: caption, code_box(jlfb("Vaja08/test/runtests.jl", koda)))
+
+#test8("# inviter")[Test za inverzno iteracijo]
+
+#test8("# inviterqr")[Test za inverzno iteracijo s QR razcepom]
+
+#test8("# graf eps")[Test za matriko sosednosti z $epsilon$ okolicami]

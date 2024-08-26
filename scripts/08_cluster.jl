@@ -37,3 +37,13 @@ scatter!(xnov[101:200], ynov[101:200], label="\$\\mu=(-3, -1)\$")
 scatter!(xnov[201:300], ynov[201:300], label="\$\\mu=(0, 1)\$")
 # vlozitev
 savefig("img/08_vlozitev.svg")
+
+using BookUtils
+capture("08_inviterqr") do
+  # inviter
+  A = L + 0.1 * I # premik, da dobimo pozitivno definitno matriko
+  n = size(L, 1)
+  # poiščemo prvih 10 lastnih vektorjev
+  X, lambda = inviterqr(B -> Vaja08.cgmat(A, B), ones(n, 10), 1000)
+  # inviter
+end

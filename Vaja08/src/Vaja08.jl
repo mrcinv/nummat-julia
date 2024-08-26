@@ -57,7 +57,7 @@ function inviterqr(resi, x0, maxit=100, tol=1e-10)
     x = Matrix(Q)
     ln = diag(R) # lastne vrednosti A^(-1) so na diagonali R
     if norm(ln - ls, Inf) < tol
-      println("Inverzna potenčna metoda se je končala po $i korakih.")
+      println("Inverzna potenčna metoda s QR se je končala po $i korakih.")
       return x, 1 ./ ln
     end
     ls = ln
@@ -99,4 +99,21 @@ pa vrednosti -1 ali 0, odvisno ali sta indeksa povezana v grafu.
 """
 laplace(A) = spdiagm(vec(sum(A, dims=2))) - A
 # laplace
+
+# resi cg
+import Vaja06: cg
+"""
+  X = cgmat(A, B)
+
+Poišči rešitev matričnega sistema `A X = B` z metodo konjugiranih gradientov.
+"""
+function cgmat(A, B)
+  _, m = size(B)
+  X = copy(B)
+  for i = 1:m
+    X[:, i] = cg(A, B[:, i])
+  end
+  return X
+end
+# resi cg
 end # module Vaja08
