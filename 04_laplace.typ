@@ -1,7 +1,7 @@
 #import "admonitions.typ": opomba
 #import "julia.typ": code_box, jl, jlfb, pkg
 #import "@preview/fletcher:0.5.1": diagram, node, edge
-#import "@preview/cetz:0.2.2" as cetz: canvas
+#import "@preview/cetz:0.2.2" as cetz: canvas, plot
 
 = Minimalne ploskve
 <minimalne-ploskve>
@@ -12,11 +12,12 @@ milna opna. Naša naloga bo poiskati obliko milne opne. Malo brskanja po
 fizikalnih knjigah in internetu hitro razkrije, da ploskve, ki tako nastanejo,
 sodijo med
 #link("http://en.wikipedia.org/wiki/Minimal_surface")[minimalne ploskve], ki so
-burile domišljijo mnogih matematikov in nematematikov. Minimalne ploskve so
-navdihovale tudi umetnike npr. znanega arhitekta
-#link("https://en.wikipedia.org/wiki/Frei_Otto")[Frei Otto], ki je sodeloval pri
-zasnovi Muenchenskega olimpijskega stadiona, kjer ima streha obliko minimalne
-ploskve.
+burile domišljijo mnogih matematikov in nematematikov. Minimalne ploskve so navdihovale tudi
+umetnike in arhitekte. Eden najbolj znanih primerov uporabe
+minimalnih ploskev v arhitekturi je streha münchenskega olimpijskega stadiona, ki jo je zasnoval
+#link("https://en.wikipedia.org/wiki/Frei_Otto")[Frei Otto] s sodelavci. Frei Otto je
+eksperimentiral z milnimi mehurčki in elastičnimi tkaninami, s katerimi je ustvarjal nove oblike.
+
 
 #figure(
   image("img/1024px-Olympic_Stadium_Munich_Dachbegehung.JPG"),
@@ -25,73 +26,76 @@ ploskve.
 )
 Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje linearnih sistemov enačb.
 Prav tako se bomo naučili, kako zgradimo matriko sistema in desne strani enačb za spremenljivke,
-ki niso podane z vektorjem ampak kot elementi matrike. V okviru te vaje opravi naslednje naloge.
+ki niso podane z vektorjem, temveč kot elementi matrike. V okviru te vaje zato opravi naslednje
+naloge:
 
 - Izpelji matematični model za minimalne ploskve s pravokotnim tlorisom.
-- Zapiši problem iskanja minimalne ploskve kot #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem] za #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo] na pravokotniku.
+- Zapiši problem iskanja minimalne ploskve kot
+  #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem] za
+  #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo] na pravokotniku.
 - Robni problem diskretiziraj in zapiši v obliki sistema linearnih enačb.
-- Reši sistem linearnih enačb z LU razcepom. Uporabi knjižnico 
+- Reši sistem linearnih enačb z LU razcepom. Uporabi knjižnico
   #link("https://docs.julialang.org/en/v1/stdlib/SparseArrays/")[SparseArrays] za varčno hranjenje
   matrike sistema.
 - Preveri, kako se število neničelnih elementov poveča pri LU razcepu razpršene matrike.
-- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija) in reši
-  sistem enačb direktno na elementih matrike višinskih vrednosti ploskve brez eksplicitne
-  uporabe matrike sistema.
+- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija)  na elementih matrike višinskih vrednosti ploskvein reši
+  sistem enačb brez eksplicitne uporabe matrike sistema.
 - Nariši primer minimalne ploskve.
 - Animiraj konvergenco iterativnih metod.
 
 == Matematično ozadje
 <matematično-ozadje>
 
-Ploskev lahko predstavimo s funkcijo dveh spremenljivk $u (x, y)$, ki predstavlja višino ploskve nad
-točko $(x, y)$. Naša naloga je poiskati približek za funkcijo $u(x, y)$ na pravokotnem območju.
+Ploskev v trirazsežnem prostoru lahko predstavimo eksplicitno s funkcijo dveh spremenljivk
+$z = u (x, y)$, ki predstavlja višino ploskve nad točko $(x, y)$. Naša naloga je poiskati približek
+za funkcijo $u(x, y)$ na danem pravokotnem območju, ki opisuje obliko milne opne napete na žični
+zanki s pravokotnim tlorisom.
 
-Funkcija $u(x, y)$, ki opisuje milno opno, zadošča matematična enačbi
+Funkcija $u(x, y)$, ki opisuje milno opno, zadošča matematična enačbi:
 
 $
   Delta u(x,y) = (partial ^2 u)/(partial x^2) + (partial ^2 u)/(partial y^2) = rho(x, y),
 $ <eq:Poisson>
 
 znani pod imenom
-#link("https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba")[Poissonova enačba]. Diferencialni 
-operator 
+#link("https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba")[Poissonova enačba]. Diferencialni
+operator
 $
 Delta u(x, y) = (partial ^2 u)/(partial x^2) + (partial ^2 u)/(partial y^2)
 $<eq:operator>
 imenujemo #link("https://sl.wikipedia.org/wiki/Laplaceov_operator")[Laplaceov operator].
 
-Funkcija $rho(x, y)$ je sorazmerna tlačni razliki med zunanjo in notranjo
-površino milne opne. Tlačna razlika je lahko posledica višjega tlaka v
-notranjosti milnega mehurčka ali pa teže milnice. Če tlačno razliko zanemarimo,
-dobimo
+Funkcija $rho(x, y)$ je sorazmerna tlačni razliki med zgornjo in spodnjo
+površino milne opne in je posledica teže milnice. Če tlačno razliko zanemarimo, dobimo
 #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo]:
 
 $
   Delta u(x, y) = 0.
 $<eq:Laplace>
 
-Vrednosti $u(x, y)$ na robu območja so določene z obliko zanke, medtem ko za vrednosti v notranjosti
-velja enačba @eq:Laplace. Enačbo, ki vsebuje parcialne odvode, imenujemo 
+Enačbo, ki vsebuje parcialne odvode, imenujemo
 #link("https://sl.wikipedia.org/wiki/Parcialna_diferencialna_ena%C4%8Dba")[parcialna diferencialna
-enačba] ali s kratico PDE. Rešitev PDE je funkcija več spremenljivk, ki zadošča enačbi. Problem za
-diferencialno enačbo, pri katerem so podane vrednosti na robu, imenujemo 
+enačba] ali s kratico PDE. Rešitev PDE je funkcija več spremenljivk, ki zadošča dani enačbi.
+Vrednosti $u(x, y)$ na robu območja so določene z obliko zanke, medtem ko za vrednosti v notranjosti
+velja enačba @eq:Laplace.  Problem za
+diferencialno enačbo, pri katerem so podane vrednosti na robu, imenujemo
 #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem]. Ker je oblika milnice
-določena na robu, lahko iskanje oblike milnice prevedemo na robni problem za Laplaceovo PDE na 
-območju omejenem s tlorisom žične zanke.
+določena na robu, lahko iskanje oblike milnice prevedemo na robni problem za Laplaceovo PDE na
+območju, omejenem s tlorisom žične zanke.
 
 V nadaljevanju predpostavimo, da je območje pravokotnik $[a, b] times [c, d]$.
-Poleg Laplaceove enačbe @eq:Laplace, veljajo za vrednosti funkcije $u(x, y)$
+Poleg Laplaceove enačbe @eq:Laplace veljajo za vrednosti funkcije $u(x, y)$
 tudi #emph[robni pogoji]:
 
 $
-  u(x, c) = f_s (x) \
-  u(x, d) = f_z (x) \
-  u(a, y) = f_l (y) \
-  u(b, y) = f_d (y)\
+  u(x, c) &= f_s (x), \
+  u(x, d) &= f_z (x), \
+  u(a, y) &= f_l (y)text(" in") \
+  u(b, y) &= f_d (y),
 $<eq:robni-pogoji>
 
 kjer so $f_s, f_z, f_l$ in $f_d$ dane funkcije. Rešitev robnega
-problema je tako odvisna od območja, kot tudi od robnih pogojev.
+problema je tako odvisna od izbire območja, kot tudi od robnih pogojev.
 
 == Diskretizacija in linearni sistem enačb
 <diskretizacija-in-linearni-sistem-enačb>
@@ -101,66 +105,101 @@ $u(x, y)$ poiskali le v končno mnogo točkah: problem bomo
 Za diskretizacijo je najpreprosteje uporabiti enakomerno razporejeno pravokotno mrežo točk na
 pravokotniku. Točke na mreži imenujemo #emph[vozlišča]. Zaradi enostavnosti se omejimo na mreže z
 enakim razmikom v obeh koordinatnih smereh. Interval $[a, b]$
-razdelimo na $n + 1$ delov, interval $[c, d]$ pa na $m + 1$ delov in dobimo zaporedje koordinat
-
+razdelimo na $n + 1$ delov, interval $[c, d]$ pa na $m + 1$ delov. Dobimo zaporedje koordinat, ki definirajo pravokotno mrežo točk $(x_j, y_i)$:
 $
-  a = & x_0, & x_1, & dots & x_(n+1)=b\
-  c = & y_0, & y_1, & dots & y_(m+1)=d,
+  a = & x_0, & x_1 & med dots med & x_(n+1)&=b #text[ in ]\
+  c = & y_0, & y_1 & med dots med & y_(m+1)&=d.
 $
 
-ki definirajo pravokotno mrežo točk $(x_i, y_j)$. Namesto funkcije $u
-: [a, b] times [c, d] arrow.r bb(R)$
+Namesto funkcije $u: [a, b] times [c, d] arrow.r bb(R)$
 tako iščemo le vrednosti
 
-$ u_(j i) = u(x_i, y_j), #h(1em) i=1, dots n, #h(1em) j=1, dots m $
+$ u_(i j) = u(x_j, y_i), quad i=1 med dots med n, quad j=1 med dots med m. $
 
 //#figure([#image("sosedi.png")], caption: [
 // sosednja vozlišča
 //])
 
-Elemente matrike $u_(j i)$ določimo tako, da je v limiti, ko gre razmik med vozliči proti
+Elemente matrike $u_(j i)$ določimo tako, da je v limiti, ko gre razmik med vozlišči proti
 $0$, izpolnjena Laplaceova enačba @eq:Laplace.
 
 Laplaceovo enačbo lahko diskretiziramo s
 #link("https://en.wikipedia.org/wiki/Finite_difference")[končnimi diferencami]. Lahko pa
-dobimo navdih pri arhitektu Frei Otto, ki je minimalne ploskve
+dobimo navdih pri arhitektu Ottu, ki je minimalne ploskve
 #link("https://youtu.be/-IW7o25NmeA")[raziskoval z elastičnimi tkaninami]. Ploskev si
-predstavljamo kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih nitk. Vsako vozlišče v mreži je povezano s 4 sosednjimi vozlišči.
+predstavljamo kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih nitk. Vsako vozlišče v mreži je povezano s štirimi sosednjimi vozlišči.
 
 #figure(
-  caption:[Sosednje vrednosti vozlišča $(i,j)$.])[
-  #diagram(
-    node((1, 0), $u_(i - 1 j)$),
-    edge("d", "-"),
-    node((0, 1), $u_(i j - 1)$),
-    edge("-"),
-    node((1, 1), $u_(i j)$),
-    edge("-"),
-    node((2, 1), $u_(i j+1)$),
-    node((1, 2), $u_(i+1 j)$),
-    edge("u", "-")
-  )
+  caption:[Sosednje vrednosti vozlišča])[
+  #canvas({
+    import cetz.draw: *
+    set-style(
+      line: (stroke: 0.5pt),
+      content: (padding: 3pt)
+    )
+    line((0, 0), (0, 5), stroke: 0.2pt, mark:(end: "stealth"))
+    content((), $y$, anchor: "south")
+    line((0, 0), (5, 0), stroke: 0.2pt, mark:(end: "stealth"))
+    content((), $x$, anchor: "west")
+    content((2.5, 2.5), $u_(i j)$)
+    // y ticks
+    content((0, 2.5), $y_i$, anchor: "east")
+    line((0, 2.5), (0.1, 2.5), stroke: 0.2pt)
+    content((0, 4), $y_(i+1)$, anchor: "east")
+    line((0, 4), (0.1, 4), stroke: 0.2pt)
+    content((0, 1), $y_(i-1)$, anchor: "east")
+    line((0, 1), (0.1, 1), stroke: 0.2pt)
+    // x ticks
+    content((2.5, 0), $x_j$, anchor: "north")
+    line((2.5, 0), (2.5, 0.1), stroke: 0.2pt)
+    content((4, 0), $x_(j+1)$, anchor: "north")
+    line((4, 0), (4, 0.1), stroke: 0.2pt)
+    content((1, 0), $x_(j-1)$, anchor: "north")
+    line((1, 0), (1, 0.1), stroke: 0.2pt)
+    // connections
+    content((1, 2.5), $u_(i j-1)$)
+    content((4, 2.5), $u_(i j+1)$)
+    content((2.5, 1), $u_(i-1 j)$)
+    content((2.5, 4), $u_(i+1 j)$)
+    line((1.5, 2.5), (2, 2.5))
+    line((3, 2.5), (3.5, 2.5))
+    line((2.5, 1.5), (2.5, 2))
+    line((2.5, 3), (2.5, 3.5))
+
+  })
 ]
 
 Vozlišče bo v ravnovesju, ko bo vsota vseh sil nanj enaka 0.
 
 #figure(
-  caption:[Sile elastik iz sosednjih vozlišč $(i, j-1)$ in $(i, j+1)$ na vozlišče $(i,j)$.])[
+  caption:[Vektorske komponente sil, ki delujejo na vozlišče
+  $(x_(j+1),y_(i))$ iz sosednjih vozlišč $(x_(j-1), y_(i))$ in
+  $(x_(j+1), y_(i))$.])[
   #canvas({
     import cetz.draw: *
+    set-style(
+      content: (padding: 2pt)
+    )
+    let (x0, y0) = (-1.5, -4.5)
+    line((x0, y0), (x0, y0 + 6), stroke: 0.2pt, mark:(end: "stealth"))
+    content((), $z$, anchor: "south")
+    line((x0, y0), (x0 + 9, y0), stroke: 0.2pt, mark:(end: "stealth"))
+    content((), $x$, anchor: "west")
     let x = 3
     let y = -1.5
-    line((0, 0), (x, y))
+    line((x, y), (0, 0), mark: (end: ">"))
     line((0, 0), (x, 0), stroke: 0.2pt)
     line((x, y), (x, 0), mark: (end: ">"), name:"f1")
     line((x, y), (x, 2.5*y), mark: (end: ">"), name: "f2")
-    line((x, y), (2*x, 2.5*y))
+    line((x, y), (2*x, 2.5*y), mark: (end: ">"))
     line((x, 2.5*y), (2*x, 2.5*y), stroke: 0.2pt)
     circle((x, y), radius: 0.05, fill: white)
     circle((0, 0), radius: 0.05, fill: white)
     circle((2*x, 2.5*y), radius: 0.05, fill: white)
-    content((x + 0.1, 0.5*y), [$bold(F)_1 prop u_(i j-1) - u_(i j)$], anchor: "west")
-    content((x - 0.1, 1.5*y), [$bold(F)_2 prop u_(i j+1) - u_(i j)$], anchor: "east")
+    content((x + 0.1, 0.5*y), [$bold(F)_(1 z) prop u_(i j-1) - u_(i j)$], anchor: "west")
+    content((x - 0.1, 1.5*y), [$bold(F)_(2 z) prop u_(i j+1) - u_(i j)$], anchor: "east")
+    content((x * 0.5 , 0.3*y), [$bold(F)_1$], anchor: "west")
+        content((x * 1.5 , 1.9*y), [$bold(F)_2$], anchor: "east")
     content((-0.2, 0), [$u_(i j-1)$], anchor: "east" )
     content((x + 0.2, y), [$u_(i j)$], anchor: "west" )
     content((2*x + 0.2, 2.5*y), [$u_(i j+1)$], anchor: "west" )
@@ -172,7 +211,7 @@ položaji vozlišč. Če zapišemo enačbo za komponente sile v smeri $z$, dobim
 $(x_i, y_j, u_(i j))$ enačbo
 
 $
-  (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j)) 
+  (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j))
     + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_i(i, j)) &= 0\
   u_(i-1 j) + u_(i j-1) - 4u_(i j) + u_(i+1 j) + u_(i j+1) &= 0.
 $<eq:ravnovesje>
@@ -267,7 +306,7 @@ $
 
 kar je enako desni strani enačbe @eq:ravnovesje.
 
-Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s 
+Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s
 #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom $times.circle$],
 saj velja $vecop(A X B) = A times.circle B dot vecop(X)$. Tako lahko matriko $A$ zapišemo kot:
 
@@ -304,7 +343,7 @@ na pravokotniku:
   #jlfb("Vaja04/src/Vaja04.jl", "# RPP")
 ]
 
-Definiramo še abstrakten tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator 
+Definiramo še abstrakten tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator
 in ga bomo lahko doali v polje za operator v `RobniProblemPravokotnik`:
 
 #code_box[
@@ -312,11 +351,11 @@ in ga bomo lahko doali v polje za operator v `RobniProblemPravokotnik`:
 ]
 
 #opomba(naslov: [Abstraktni podatkovni tipi])[
-Programski jezik Julija ne pozna razredov. Uporaba 
+Programski jezik Julija ne pozna razredov. Uporaba
 #link("https://docs.julialang.org/en/v1/manual/types/#man-abstract-types")[abstraktnih podatkovnih tipov],
 kot je `Laplace`, omogoča #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizem].
 Na ta način lahko v kodo organiziramo tako, da odraža abstraktne matematične pojme, kot je v našem
-primeru robni problem za PDE. 
+primeru robni problem za PDE.
 ]
 
 Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z robnimi pogoji
@@ -330,32 +369,32 @@ lahko predstavimo z objektom
   #jlfb("scripts/04_laplace.jl", "# rp sin")
 ]
 
-Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale 
-rešitev za dani robni problem. Kot smo videli v poglavju @diskretizacija-in-linearni-sistem-enačb, 
-lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega sistema enačb 
-@eq:ravnovesje. Najprej napišemo funkcijo, ki generira matriko sistema: 
+Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale
+rešitev za dani robni problem. Kot smo videli v poglavju @diskretizacija-in-linearni-sistem-enačb,
+lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega sistema enačb
+@eq:ravnovesje. Najprej napišemo funkcijo, ki generira matriko sistema:
 
 #code_box[
   #jl("function matrika(_::Laplace, n, m)")
 ]
 
 za dane dimenzije notrajnje mreže `n` in `m` (za rešitev glej @pr:matrika). Nato na robu mreže
-izračunamo robne pogoje in sestavimo vektor desnih strani sistema @eq:ravnovesje. Ker je 
-preslikovanje dvojnega indeksa v enojni in nazaj precej sitno, bomo večino operacij 
+izračunamo robne pogoje in sestavimo vektor desnih strani sistema @eq:ravnovesje. Ker je
+preslikovanje dvojnega indeksa v enojni in nazaj precej sitno, bomo večino operacij
 naredili na matriki vrednosti $U = [u_(i j)]$ dimenzij $(m+2) times (n+2)$, ki vsebuje tudi
 vrednosti na robu. Napisali bom funkcijo
 #code_box[
   #jl("U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, n, m),")
 ]
-ki vrne matriko `U0` dimenzije $(m + 2) times (n+2)$ za katero so vrednosti notranjih elementov 
-enake $0$ in vrednosti na robu podane z robnimi pogoji podanimi v robnem problemu `rp`. Poleg 
+ki vrne matriko `U0` dimenzije $(m + 2) times (n+2)$ za katero so vrednosti notranjih elementov
+enake $0$ in vrednosti na robu podane z robnimi pogoji podanimi v robnem problemu `rp`. Poleg
 matrike `U` naj funkcija vrne vektorja `x` in `y`, ki vsebujeta delilne točke na intervalih $[a, b]$
-in $[c, d]$. 
+in $[c, d]$.
 
-Iz matrike `U` lahko sedaj dokaj preprosto sestavimo desne strani enačb, tako da indekse 
-$i=2 dots (m-1)$ in $j=2 dots (n-1)$ zaporedoma zamaknemo v levo, desno, gor in dol in 
-seštejemo ustrezne podmatrike. Rezultat nato spremenimo v vektor s funkcijo #jl("vec") 
-(za rešitev glej @pr:desne-strani).    
+Iz matrike `U` lahko sedaj dokaj preprosto sestavimo desne strani enačb, tako da indekse
+$i=2 dots (m-1)$ in $j=2 dots (n-1)$ zaporedoma zamaknemo v levo, desno, gor in dol in
+seštejemo ustrezne podmatrike. Rezultat nato spremenimo v vektor s funkcijo #jl("vec")
+(za rešitev glej @pr:desne-strani).
 
 Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo
 
@@ -364,18 +403,18 @@ Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo
 )
 
 ki za dani robni problem `rp` in razmik med vozlišči `h` sestavi matriko sistema, izračuna desne
-strani na podlagi robnih pogojev in reši sistem. Rezultat nato vrne v obliki matrike vrednosti `U` 
+strani na podlagi robnih pogojev in reši sistem. Rezultat nato vrne v obliki matrike vrednosti `U`
 in vektorjev vozlišč `x` in `y` (za rešitev glej @pr:resi).
 
-Napisane programe uporabimo za rešitev robnega problema za pravokotnik $[0, pi]times[0, pi]$ z 
-robnimi pogoji 
+Napisane programe uporabimo za rešitev robnega problema za pravokotnik $[0, pi]times[0, pi]$ z
+robnimi pogoji
 $
   u(0, y) &= 0\
   u(pi, y) &= 0\
   u(x, 0) &= sin(x)\
   u(x, pi) &= sin(x).
 $
-Dfiniramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s funkcijo 
+Dfiniramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s funkcijo
 #jl("surface").
 
 #code_box(
@@ -395,7 +434,7 @@ pravimo
 )[razpršene ali redke matrike]. Razpršenost matirke lahko izkoristimo za
 prihranek prostora in časa, kot smo že videli pri
 tridiagonalnih matrikah v poglavju @tridiagonalni-sistemi. Vendar se pri
-LU razcepu, ki ga uporablja operator #jl("\\") za rešitev sistema, delež neničelnih elementov 
+LU razcepu, ki ga uporablja operator #jl("\\") za rešitev sistema, delež neničelnih elementov
 matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator.
 
 #code_box(
@@ -405,14 +444,14 @@ matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator
 #figure(
   kind: image,
   table(
-    columns:2, stroke: none, 
+    columns:2, stroke: none,
     image("img/04-spyA.svg"),image("img/04-spyLU.svg")),
-  caption: [Neničelni elementi matrike za Laplaceov operator (levo) in 
-  njenega LU razcepa (desno). Število ničelnih elementov se pri LU razcepu 
+  caption: [Neničelni elementi matrike za Laplaceov operator (levo) in
+  njenega LU razcepa (desno). Število ničelnih elementov se pri LU razcepu
   poveča. Kljub temu sta L in U v razcepu še vedno precej redki matriki.]
 )
 
-== Iteracijske metode 
+== Iteracijske metode
 <iteracijske-metode>
 V prejšnjih poglavjih smo poiskali približno obliko minimalne ploskve, tako da smo linearni sistem
 @eq:ravnovesje rešili z LU razcepom.
@@ -426,7 +465,7 @@ za reševanje sistemov enačb, pri katerih se matrika ne spreminja ostane in tak
 prihranimo veliko na prostorski in časovni zahtevnosti.
 
 Ideja iteracijskih metod je preprosta. Enačbe preuredimo tako, da ostane na eni strani le en element
-s koeficientom 1. Tako dobimo iteracijsko formulo za zaporedje približkov $u_(i j)^((k))$. 
+s koeficientom 1. Tako dobimo iteracijsko formulo za zaporedje približkov $u_(i j)^((k))$.
 Če zaporedje konvergira, je limita ena od rešitev rekurzivne enačbo. V primeru linearnih sistemov je
 rešitev enolična.
 
@@ -437,17 +476,17 @@ $
 u_(i j)^((k+1)) = 1/4 (u_(i j-1)^((k))+u_(i-1 j)^((k))+u_(i+1 j)^((k))+u_(i j+1)^((k))),
 $<eq:jacobi>
 
-ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi iteraciji]. Približek 
+ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi iteraciji]. Približek
 za rešitev tako dobimo, če zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
 
 #opomba(naslov: [Pogoji konvergence])[
-Rekli boste, to je preveč enostavno, če enačbe le pruredimo in se potem rešitel kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak hakelc. Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jakobijeva, Gauss-Seidlova in SOR iteracija 
-*ne konvergirajo vedno*, zagotovo pa konvergirajo, če je matrika po vrsticah 
+Rekli boste, to je preveč enostavno, če enačbe le pruredimo in se potem rešitel kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak hakelc. Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jakobijeva, Gauss-Seidlova in SOR iteracija
+*ne konvergirajo vedno*, zagotovo pa konvergirajo, če je matrika po vrsticah
 #link("https://sl.wikipedia.org/wiki/Diagonalno_dominantna_matrika")[diagonalno dominantna].
-] 
+]
 
 
-Konvergenco jacobijeve iteracije lahko izboljšamo, če namesto vrednosti $u_(i-1 j)^((k))$ in 
+Konvergenco jacobijeve iteracije lahko izboljšamo, če namesto vrednosti $u_(i-1 j)^((k))$ in
 $u_(i j-1)^((k))$, uporabimo nove vrednosti $u_(i-1 j)^((k+1))$ in $u_(i j-1)^((k+1))$, ki so bile
 že izračunane, če računamo elemente $u_(i j)^((k+1))$ po leksikografskem vrstnem redu.
 Če nove vrednosti upobimo v iteracijski formuli, dobimo
@@ -460,8 +499,8 @@ $
 $<eq:gs>
 
 Konvergenco še izboljšamo, če približek $u_(i j)^((k + 1))$, ki ga dobimo
-z Gauss-Seidlovo metodo, malce "pokvarimo" s približkom na prejšnjem koraku 
-$u_(i j)^((k))$. Tako dobimo 
+z Gauss-Seidlovo metodo, malce "pokvarimo" s približkom na prejšnjem koraku
+$u_(i j)^((k))$. Tako dobimo
 #link("https://en.wikipedia.org/wiki/Successive_over-relaxation")[metodo SOR]
 
 $
@@ -472,7 +511,7 @@ $
 Parameter $omega$ je lahko poljubno število
 $(0, 2)$. Pri $omega = 1$ dobimo Gauss-Seidlovo iteracijo.
 
-Prednost iteracijskih metod je, da jih je zelo enostavno implementirati. Za Laplaceovo enačbo je 
+Prednost iteracijskih metod je, da jih je zelo enostavno implementirati. Za Laplaceovo enačbo je
 en korak Gauss-Seidlove iteracije podan s preprosto zanko.
 
 #figure(
@@ -485,14 +524,14 @@ en korak Gauss-Seidlove iteracije podan s preprosto zanko.
 
 Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
 naslednji približek za Jacobijevo in SOR iteracijo za sistem za Laplaceovo enačbo. Nato napišite še
-funkcijo 
+funkcijo
 
-#code_box(jl("x, k = iteracija(korak, x0),")) 
+#code_box(jl("x, k = iteracija(korak, x0),"))
 
 ki, računa zaporedne približke, dokler se rezultat ne spreminja več znotraj določene tolerance.
 Argument `korak` je funkcija, ki iz danega približka izračuna naslednjega.
 
-Rešitve so v programih: @pr:jacobi, @pr:sor in @pr:iteracija. 
+Rešitve so v programih: @pr:jacobi, @pr:sor in @pr:iteracija.
 
 === Konvergenca
 <konvergenca>
@@ -522,7 +561,7 @@ primer sistema, ki ga dobimo z diskretizacijo Laplaceove enačbe.
   jlfb("scripts/04_laplace.jl", "# konvergenca sor")
 )
 
-#figure(image("img/04-konv-sor.svg", width:60%), caption:[ Število korakov SOR iteracije je odvisno 
+#figure(image("img/04-konv-sor.svg", width:60%), caption:[ Število korakov SOR iteracije je odvisno
 od parametra $omega$.])
 
 
@@ -534,18 +573,18 @@ od parametra $omega$.])
 //   table(columns: 2, stroke: none,
 //     [
 //       #jl("spdiagm") - ustvari razpršeno matriko z danimi diagonalami
-      
+
 //       #jl("kron") - izračunaj Kronekerjev produkt
-      
+
 //       #jl("vec") - spremeni matriko v vektor
-    
+
 //       #jl("reshape") - preoblikuj vektor v matriko
-//     ], 
+//     ],
 //     [
 //      #jl("surface") - nariši ploskev v prostoru
 
 //      #jl("spy") - grafično predstavi neničelne elemente matrike
-    
+
 //     #jl("SparseArrays") - knjižnica za razpršene matrike]
 //   )
 // )
