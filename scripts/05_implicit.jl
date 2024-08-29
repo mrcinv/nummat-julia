@@ -18,7 +18,7 @@ p("05_z", z)
 using Plots
 x = range(0, 3, 50)
 y = range(-1, 3, 50)
-wireframe(x, y, (x, y) -> rbf([x, y]))
+wireframe(x, y, (x, y) -> rbf([x, y]), xlabel="\$x\$", ylabel="\$y\$")
 # slika 2 točki
 savefig("img/05-2tocki.svg")
 
@@ -34,7 +34,7 @@ scatter!(Tuple.(tocke_noter), label="točke v notranjosti")
 vse_tocke = vcat(tocke, tocke_noter)
 c1, c2 = -1, 5
 vrednosti = vcat(
-  c1*ones(length(tocke)), c2*ones(length(tocke)))
+  c1 * ones(length(tocke)), c2 * ones(length(tocke)))
 rbf = interpoliraj(vse_tocke, vrednosti, gauss(3))
 x = range(-10, 10, 100)
 y = range(-10, 10, 100)
@@ -60,11 +60,4 @@ savefig("img/05-contours-5.svg")
 rbf.(vse_tocke)
 x = range(-10, 10, 30)
 x = y
-contourf(x, y, (x, y) -> rbf([x, y]))
-
-using CairoMakie
-CairoMakie.contour3d(x, y, (x, y) -> rbf([x, y]), levels=[c, 1])
-savefig("img/05-contour3d.svg")
-contourf(x, y, (x, y) -> rbf([x, y]))
-
-plot(tp2, 0, 2)
+contourf(x, y, (x, y) -> rbf([x, y])) 
