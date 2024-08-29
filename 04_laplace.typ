@@ -208,34 +208,35 @@ Vozlišče bo v ravnovesju, ko bo vsota vseh sil nanj enaka 0.
 
 Predpostavimo, da so vozlišča povezana z idealnimi vzmetmi in je sila sorazmerna z vektorjem med
 položaji vozlišč. Če zapišemo enačbo za komponente sile v smeri $z$, dobimo za točko
-$(x_i, y_j, u_(i j))$ enačbo
+$(x_j, y_i, u_(i j))$ enačbo:
 
 $
   (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j))
-    + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_i(i, j)) &= 0\
+    + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_(i j)) &= 0\
   u_(i-1 j) + u_(i j-1) - 4u_(i j) + u_(i+1 j) + u_(i j+1) &= 0.
 $<eq:ravnovesje>
 
-Za vsako vrednost $u_(i j)$ dobimo eno enačbo. Tako dobimo sistem linearnih $n dot m$ enačb za
+Za vsako vrednost $u_(i j)$ dobimo eno enačbo. Tako dobimo sistem $n dot m$ linearnih enačb za
 $n dot m$ neznank. Ker so vrednosti na robu določene z robnimi pogoji, moramo elemente
-$u_(0 j)$, $u_(n plus 1, j)$, $u_(i 0)$ in $u_(i m plus 1)$ prestaviti na desno stran in jih
+$u_(0 j)$, $u_(m + 1 j)$, $u_(i 0)$ in $u_(i n + 1)$ prestaviti na desno stran in jih
 upoštevati kot konstante.
 
 == Matrika sistema linearnih enačb
 <matrika-sistema-linearnih-enačb>
-Sisteme linearnih enačb običajno zapišemo v matrični obliki
+Sisteme linearnih enačb navadno zapišemo v matrični obliki:
 
 $ A bold(x) = bold(b), $
 
-kjer je $A$ kvadratna matrika, $bold(x)$ in $bold(b)$ pa vektorja. Spremenljivke
-$u_(i j)$ moramo nekako razvrstiti v vektor $bold(x)=[x_1, x_2, dots]^T$.
-Najpogosteje elemente $u_(i j)$ razvrstimo v vektor $bold(x)$ po stolpcih, tako da je
+kjer je $A$ kvadratna matrika, $bold(x)$ in $bold(b)$ pa vektorja. V našem primeru je to nekoliko
+bolj zapleteno, saj so spremenljivke $u_(i j)$ elementi matrike. Zato
+jih moramo najprej razvrstiti v vektor $bold(x)=[x_1, x_2, dots]^T$.
+Najpogosteje elemente $u_(i j)$ razvrstimo v vektor $bold(x)$ po stolpcih, tako da je:
 
 $
-bold(x) = [u_(11), u_(21) med dots med u_(n 1), u_(12), u_(22) med dots med u_(1n) med dots med u_(m-1 n), u_(m n)]^T.
+bold(x) = [u_(11), u_(21) med dots med u_(m 1), u_(12), u_(22) med dots med u_(1 m) med dots med u_(m-1 n), u_(m n)]^T.
 $
 
-Za $n = m = 3$ dobimo $9 times 9$ matriko
+Iz enačb @eq:ravnovesje lahko potem razberemo matriko A. Za $n = m = 3$ dobimo $9 times 9$ matriko
 
 $
 A^(9, 9) = mat(-4, 1, 0, 1, 0, 0, 0, 0, 0; 1, -4, 1, 0, 1, 0, 0,
@@ -251,37 +252,44 @@ L^(3, 3) = mat(-4,1,0; 1,-4,1; 0,1,-4),quad
 I^(3, 3) = mat(1,0,0; 0,1,0; 0,0,1).
 $
 
-in desne strani
+Vektor desnih strani prav tako razberemo iz enačbe @eq:ravnovesje. Za $n=m=3$ dobimo vektor:
 
 $
-bold(b) = -\[&u_(0 1)+u_(1 0), u_(2 0) dots u_(n 0) + u_(n+1 1),\
- &u_(0 2), 0 dots u_(n+1, 2), u_(0 3), 0 dots u_(n m+1), u_(n m+1) + u_(n+1 m)\]^T.
+bold(b) &= -[
+u_(0 1) + u_(1 0),med u_(2 0), med u_(3 0) + u_(4 1),
+u_(0 2), med 0, med u_(4 2),
+u_(0 3) + u_(1 4),med u_(2 4),med u_(3 4) + u_(4 3)]^T.
 $
+
+V splošnem je formulo za vektor desnih strani lažje sprogramirati, zato bomo zapis izpustili.
 
 #let vecop = math.op("vec", limits: true)
 
-#opomba(naslov: [Razvrstitev po stolpih in operator $vecop$])[
+#opomba(naslov: [Razvrstitev po stolpcih in operator $vecop$])[
 Eden od načinov, kako lahko elemente matrike razvrstimo v vektor, je tako, da stolpce
 matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$ lahko
 izrazimo z indeksi $i,j$ v matriki s formulo
-$ k = i+(m-1)j. $ Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vecop$:
+
+$ k = i+(j-1)m. $
+
+Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vecop$:
+
 $
 vecop: RR^(m times n) -> RR^(m dot n)\
-vecop(A)_(i + (m-1)j) = a_(i j).
+vecop(A)_(i + (j-1)m) = a_(i j).
 $
 ]
 
-== Izpeljava sistema s Kronekerjevim produktom
+== Izpeljava sistema s Kroneckerjevim produktom
 
-Množenje vektorja $bold(x) = vecop(U)$ z matriko $A$ lahko prestavimo kot
-množenje matrike $U$ z matriko $L$ z leve in desne:
+Množenje matrike $A$ z vektorjem $bold(x) = vecop(U)$ lahko zapišemo kot:
 
 $
   A vecop(U) = vecop(L U + U L),
 $
 
-kjer je $L$ Laplaceova matrika v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji
-pod-diagonali in zgornji nad-diagonali:
+kjer je $L$ matrika Laplaceovega operatorja v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji
+in zgornji obdiagonali:
 
 $
 L = mat(
@@ -295,29 +303,35 @@ $
 
 Res! Moženje matrike $U$ z matriko $L$ z leve je ekvivalentno množenju stolpcev matrike $U$ z
 matriko $L$, medtem ko je množenje z matriko $L$ z desne ekvivalentno množenju vrstic matrike $U$
-z matriko $L$. Prispevek množenja z leve vsebuje vsoto sil sosednjih vozlišč v smeri $y$, medtem ko
-množenje z desne vsebuje vsoto sil sosednjih vozlišč v smeri $x$. Element produkta $L U + U L$ na
+z matriko $L$. Prispevek množenja z leve predstavlja vsoto sil sosednjih vozlišč v smeri $y$, medtem ko
+množenje z desne predstavlja vsoto sil sosednjih vozlišč v smeri $x$. Element produkta $L U + U L$ na
 mestu $(i, j)$ je enak:
 
 $
   (L U + U L)_(i j) &= sum_(k=1)^m l_(i k) u_(k j) + sum_(k=1)^n u_(i k) l_(k j) \
-  &= u_(i j-1) -2u_(i j) + u_(i j+1) + u_(i - 1 j) -2u_(i j) + u_(i +1 j),
+  &= u_(i - 1 j) -2u_(i j) + u_(i +1 j) + u_(i j-1) -2u_(i j) + u_(i j+1),
 $
 
 kar je enako desni strani enačbe @eq:ravnovesje.
 
 Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s
-#link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kronekerjevim produktom $times.circle$],
-saj velja $vecop(A X B) = A times.circle B dot vecop(X)$. Tako lahko matriko $A$ zapišemo kot:
+#link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kroneckerjevim produktom $times.circle$],
+saj velja $vecop(A X B) = A times.circle B dot vecop(X)$. Tako velja:
 
 $
-  A dot vecop(U) &= vecop(L U + U L) = vecop(L U I + I U L) \
+  A vecop(U) &= vecop(L U + U L) = vecop(L U I + I U L) = vecop(L U I) + vecop(I U L)\
+  & = (L times.circle I) vecop(U) + (I times.circle L) vecop(U)
+$
+
+in
+
+$
   A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
 $
 
 #opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Juliji])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in
-računanje Kronekerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja
+računanje Kroneckerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja
 znova zgradimo matriko.
 ]
 == Numerična rešitev z LU razcepom
@@ -343,8 +357,8 @@ na pravokotniku:
   #jlfb("Vaja04/src/Vaja04.jl", "# RPP")
 ]
 
-Definiramo še abstrakten tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator
-in ga bomo lahko doali v polje za operator v `RobniProblemPravokotnik`:
+Definiramo še abstraktni tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator
+in ga bomo lahko dodali v polje za operator v `RobniProblemPravokotnik`:
 
 #code_box[
   #jlfb("Vaja04/src/Vaja04.jl", "# Laplace")
@@ -354,23 +368,24 @@ in ga bomo lahko doali v polje za operator v `RobniProblemPravokotnik`:
 Programski jezik Julija ne pozna razredov. Uporaba
 #link("https://docs.julialang.org/en/v1/manual/types/#man-abstract-types")[abstraktnih podatkovnih tipov],
 kot je `Laplace`, omogoča #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizem].
-Na ta način lahko v kodo organiziramo tako, da odraža abstraktne matematične pojme, kot je v našem
+Na ta način lahko kodo organiziramo tako, da odraža abstraktne matematične pojme, kot je v našem
 primeru robni problem za PDE.
 ]
 
-Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z robnimi pogoji
+Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z robnimi pogoji:
+
 $
-u(x, 0) = u(x, pi) &= sin(x)\
+u(x, 0) = u(x, pi) &= sin(x) #text[ in ]\
 u(0, y) = u(pi, y) &= sin(y)
 $
-lahko predstavimo z objektom
+lahko predstavimo z objektom:
 
 #code_box[
   #jlfb("scripts/04_laplace.jl", "# rp sin")
 ]
 
 Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale
-rešitev za dani robni problem. Kot smo videli v poglavju @diskretizacija-in-linearni-sistem-enačb,
+rešitev za dan robni problem. Kot smo videli v @diskretizacija-in-linearni-sistem-enačb[poglavju],
 lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega sistema enačb
 @eq:ravnovesje. Najprej napišemo funkcijo, ki generira matriko sistema:
 
@@ -378,25 +393,25 @@ lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega
   #jl("function matrika(_::Laplace, n, m)")
 ]
 
-za dane dimenzije notrajnje mreže `n` in `m` (za rešitev glej @pr:matrika). Nato na robu mreže
+za dane dimenzije notranje mreže $n times m$ (za rešitev glej @pr:matrika). Nato na robu mreže
 izračunamo robne pogoje in sestavimo vektor desnih strani sistema @eq:ravnovesje. Ker je
 preslikovanje dvojnega indeksa v enojni in nazaj precej sitno, bomo večino operacij
 naredili na matriki vrednosti $U = [u_(i j)]$ dimenzij $(m+2) times (n+2)$, ki vsebuje tudi
-vrednosti na robu. Napisali bom funkcijo
+vrednosti na robu. Napisali bomo funkcijo
 #code_box[
-  #jl("U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, n, m),")
+  #jl("U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, h),")
 ]
-ki vrne matriko `U0` dimenzije $(m + 2) times (n+2)$ za katero so vrednosti notranjih elementov
-enake $0$ in vrednosti na robu podane z robnimi pogoji podanimi v robnem problemu `rp`. Poleg
-matrike `U` naj funkcija vrne vektorja `x` in `y`, ki vsebujeta delilne točke na intervalih $[a, b]$
-in $[c, d]$.
+ki poišče pravokotno mrežo z razmikom med vozlišči približno `h` in
+izračuna vrednosti na robu. Rezultati funkcije `diskretiziraj` so matrika `U0`, vektor`x` in
+vektor `y`. Rezultat `U0` je matrika, ki ima notranje elemente
+enake $0$, robni elementi pa so določeni z robnimi pogoji. Vektorja `x` in `y` pa vsebujeta delilne
+točke na intervalih $[a, b]$ in $[c, d]$.
 
-Iz matrike `U` lahko sedaj dokaj preprosto sestavimo desne strani enačb, tako da indekse
-$i=2 dots (m-1)$ in $j=2 dots (n-1)$ zaporedoma zamaknemo v levo, desno, gor in dol in
-seštejemo ustrezne podmatrike. Rezultat nato spremenimo v vektor s funkcijo #jl("vec")
-(za rešitev glej @pr:desne-strani).
+Iz matrike `U0` lahko sedaj dokaj preprosto sestavimo desne strani enačb. Notranje indekse
+zaporedoma zamaknemo v levo, desno, gor in dol in seštejemo ustrezne podmatrike.
+Rezultat nato spremenimo v vektor s funkcijo #jl("vec") (za rešitev glej @pr:desne-strani).
 
-Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo
+Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo:
 
 #code_box(
   jl("U, x, y = resi(rp::RobniProblemPravokotnik, h),")
@@ -404,7 +419,7 @@ Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo
 
 ki za dani robni problem `rp` in razmik med vozlišči `h` sestavi matriko sistema, izračuna desne
 strani na podlagi robnih pogojev in reši sistem. Rezultat nato vrne v obliki matrike vrednosti `U`
-in vektorjev vozlišč `x` in `y` (za rešitev glej @pr:resi).
+in vektorjev delilnih točk `x` in `y` (za rešitev glej @pr:resi).
 
 Napisane programe uporabimo za rešitev robnega problema za pravokotnik $[0, pi]times[0, pi]$ z
 robnimi pogoji
@@ -414,7 +429,7 @@ $
   u(x, 0) &= sin(x)\
   u(x, pi) &= sin(x).
 $
-Dfiniramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s funkcijo
+Definiramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s funkcijo
 #jl("surface").
 
 #code_box(
@@ -422,7 +437,7 @@ Dfiniramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s f
 )
 
 #figure(image("img/04_sedlo.svg", width: 60%),
- caption: [Rešitev robnega problema za Laplaceovo enačbo.]
+ caption: [Rešitev robnega problema za Laplaceovo enačbo]
  )
 
 == Napolnitev matrike ob eliminaciji
@@ -431,15 +446,16 @@ Matrika Laplaceovega operatorja ima veliko ničelnih elementov. Takim matrikam
 pravimo
 #link(
   "https://sl.wikipedia.org/wiki/Redka_matrika",
-)[razpršene ali redke matrike]. Razpršenost matirke lahko izkoristimo za
+)[razpršene ali redke matrike]. Razpršenost matrike lahko izkoristimo za
 prihranek prostora in časa, kot smo že videli pri
-tridiagonalnih matrikah v poglavju @tridiagonalni-sistemi. Vendar se pri
+tridiagonalnih matrikah (@tridiagonalni-sistemi). Vendar se pri
 LU razcepu, ki ga uporablja operator #jl("\\") za rešitev sistema, delež neničelnih elementov
 matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator.
-
-#code_box(
-  jlfb("scripts/04_laplace.jl", "# napolnitev")
+#let demo4(koda) = code_box(
+  jlfb("scripts/04_laplace.jl", koda)
 )
+
+#demo4("# napolnitev")
 
 #figure(
   kind: image,
@@ -451,9 +467,22 @@ matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator
   poveča. Kljub temu sta L in U v razcepu še vedno precej redki matriki.]
 )
 
+#opomba(naslov: [Podatkovni tipi za matrične razcepe v Juliji])[
+V knjižnici #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra")[LinearAlgebra]
+so implementacije standardnih matričnih razcepov,
+kot so LU razcep, razcep Choleskega, QR razcep in drugi. Rezultat, ki ga Julia vrne, ko
+naredimo matrični razcep je poseben podatkovni tip.
+Tako metoda #jl("lu") vrne rezultat tipa #jl("LU").
+Podatkovni tip #jl("LU") je poseben tip, ki hrani rezultate LU razcepa na učinkovit način.
+Poleg tega so za tip #jl("LU") definirane
+posebne metode za generične funkcije kot na primer #jl("\\"), ki uporabi matrični razcep za učinkovito reševanje linearnega sistema.
+Poglejmo si, kako LU razcep uporabimo za rešitev sistema enačb:
+#demo4("# lu")
+Funkcija #jl("factorize") vrne najbolj primeren razcep za dano matriko. Na primer za simetrično pozitivno definitno matriko, funkcija #jl("facotrize") vrne razcep Choleskega.
+]
 == Iteracijske metode
 <iteracijske-metode>
-V prejšnjih poglavjih smo poiskali približno obliko minimalne ploskve, tako da smo linearni sistem
+V prejšnjih podpoglavjih smo poiskali približno obliko minimalne ploskve, tako da smo linearni sistem
 @eq:ravnovesje rešili z LU razcepom.
 Največ težav smo imeli z zapisom matrike sistema in desnih strani. Poleg tega je matrika sistema
  redka, ko izvedemo LU razcep pa se matrika deloma napolni. Pri razpršenih
@@ -461,54 +490,53 @@ matrikah tako pogosto uporabimo
 #link(
   "https://en.wikipedia.org/wiki/Iterative_method#Linear_systems",
 )[iterativne metode]
-za reševanje sistemov enačb, pri katerih se matrika ne spreminja ostane in tako lahko
+za reševanje sistemov enačb, pri katerih se matrika ne spreminja in zato
 prihranimo veliko na prostorski in časovni zahtevnosti.
 
 Ideja iteracijskih metod je preprosta. Enačbe preuredimo tako, da ostane na eni strani le en element
 s koeficientom 1. Tako dobimo iteracijsko formulo za zaporedje približkov $u_(i j)^((k))$.
-Če zaporedje konvergira, je limita ena od rešitev rekurzivne enačbo. V primeru linearnih sistemov je
+Če zaporedje konvergira, je limita ena od rešitev rekurzivne enačbe. V primeru linearnih sistemov je
 rešitev enolična.
 
-V primeru enačb @eq:ravnovesje za minimalne ploskve, izpostavimo element $u_(i j)$ in dobimo
-rekurzivne enačbe
+V našem primeru enačb za minimalne ploskve @eq:ravnovesje, izpostavimo element $u_(i j)$ in dobimo
+rekurzivne enačbe:
 
 $
 u_(i j)^((k+1)) = 1/4 (u_(i j-1)^((k))+u_(i-1 j)^((k))+u_(i+1 j)^((k))+u_(i j+1)^((k))),
 $<eq:jacobi>
 
 ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi iteraciji]. Približek
-za rešitev tako dobimo, če zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
+za rešitev dobimo tako, da zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
 
 #opomba(naslov: [Pogoji konvergence])[
-Rekli boste, to je preveč enostavno, če enačbe le pruredimo in se potem rešitel kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak hakelc. Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jakobijeva, Gauss-Seidlova in SOR iteracija
-*ne konvergirajo vedno*, zagotovo pa konvergirajo, če je matrika po vrsticah
-#link("https://sl.wikipedia.org/wiki/Diagonalno_dominantna_matrika")[diagonalno dominantna].
+Rekli boste, da je preveč enostavno enačbe le prurediti in se potem rešitev kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak "hakelc". Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jacobijeva, Gauss-Seidlova in SOR iteracija
+*ne konvergirajo vedno*, zagotovo pa konvergirajo, če je matrika #link("https://sl.wikipedia.org/wiki/Diagonalno_dominantna_matrika")[diagonalno dominantna po vrsticah].
 ]
 
 
-Konvergenco jacobijeve iteracije lahko izboljšamo, če namesto vrednosti $u_(i-1 j)^((k))$ in
-$u_(i j-1)^((k))$, uporabimo nove vrednosti $u_(i-1 j)^((k+1))$ in $u_(i j-1)^((k+1))$, ki so bile
-že izračunane, če računamo elemente $u_(i j)^((k+1))$ po leksikografskem vrstnem redu.
+Konvergenco Jacobijeve iteracije lahko izboljšamo, če namesto vrednosti $u_(i-1 j)^((k))$ in
+$u_(i j-1)^((k))$ uporabimo nove vrednosti $u_(i-1 j)^((k+1))$ in $u_(i j-1)^((k+1))$, ki so bile
+že izračunane (elemente $u_(i j)^((k+1))$ računamo po leksikografskem vrstnem redu).
 Če nove vrednosti upobimo v iteracijski formuli, dobimo
 #link(
   "https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method",
-)[Gauss-Seidlovo iteracijo]
+)[Gauss-Seidlovo iteracijo]:
 
 $
-  u_(i,j)^((k+1)) = 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k)))
+  u_(i,j)^((k+1)){G S} = 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k))).
 $<eq:gs>
 
 Konvergenco še izboljšamo, če približek $u_(i j)^((k + 1))$, ki ga dobimo
 z Gauss-Seidlovo metodo, malce "pokvarimo" s približkom na prejšnjem koraku
 $u_(i j)^((k))$. Tako dobimo
-#link("https://en.wikipedia.org/wiki/Successive_over-relaxation")[metodo SOR]
+#link("https://en.wikipedia.org/wiki/Successive_over-relaxation")[metodo SOR]:
 
 $
-  u_(i,j)^(("GS")) &= 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k)))\
-  u_(i, j)^((k+1)) &= omega u_(i, j)^(("GS")) + (1 - omega) u_(i, j)^((k))
+  u_(i,j)^((k+1)){G S} &= 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k)))\
+  u_(i, j)^((k+1)){S O R} &= omega u_(i, j)^((k+1)){G S} + (1 - omega) u_(i, j)^((k))
 $
 
-Parameter $omega$ je lahko poljubno število
+Parameter $omega$ je lahko poljubno število na intervalu
 $(0, 2)$. Pri $omega = 1$ dobimo Gauss-Seidlovo iteracijo.
 
 Prednost iteracijskih metod je, da jih je zelo enostavno implementirati. Za Laplaceovo enačbo je
@@ -528,10 +556,10 @@ funkcijo
 
 #code_box(jl("x, k = iteracija(korak, x0),"))
 
-ki, računa zaporedne približke, dokler se rezultat ne spreminja več znotraj določene tolerance.
-Argument `korak` je funkcija, ki iz danega približka izračuna naslednjega.
+ki izračuna zaporedje približkov za poljubno iteracijsko metodo, dokler se rezultat ne spreminja več znotraj določene tolerance.
+Argument #jl("korak") je funkcija, ki iz danega približka izračuna naslednjega, argument #jl("x0") pa začetni približek iteracije.
 
-Rešitve so v programih: @pr:jacobi, @pr:sor in @pr:iteracija.
+Rešitve so na koncu poglavja v programih @pr:jacobi, @pr:sor in @pr:iteracija.
 
 === Konvergenca
 <konvergenca>
@@ -561,8 +589,8 @@ primer sistema, ki ga dobimo z diskretizacijo Laplaceove enačbe.
   jlfb("scripts/04_laplace.jl", "# konvergenca sor")
 )
 
-#figure(image("img/04-konv-sor.svg", width:60%), caption:[ Število korakov SOR iteracije je odvisno
-od parametra $omega$.])
+#figure(image("img/04-konv-sor.svg", width:60%), caption:[ Odvisnost potrebnega število korakov SOR iteracije
+od parametra $omega$])
 
 
 == Rešitve
@@ -574,7 +602,7 @@ od parametra $omega$.])
 //     [
 //       #jl("spdiagm") - ustvari razpršeno matriko z danimi diagonalami
 
-//       #jl("kron") - izračunaj Kronekerjev produkt
+//       #jl("kron") - izračunaj Kroneckerjev produkt
 
 //       #jl("vec") - spremeni matriko v vektor
 
@@ -588,8 +616,6 @@ od parametra $omega$.])
 //     #jl("SparseArrays") - knjižnica za razpršene matrike]
 //   )
 // )
-
-Funkcije, ki smo jih definirali v `Vaja04/src/Vaja04.jl`.
 
 #figure(
   code_box(

@@ -6,13 +6,15 @@ module Vaja04
 
 Ustvari objekt tipa `RobniProblemPravokotnik`, ki hrani podatke za robni problem
 za diferencialni operator `op` na pravokotniku `[a, b] x [c, d]` z robnimi
-pogoji podanimi s funkcijami `fs`, `fz`, `fl`, `fd`, ki določajo vrednosti na
-robovih pravokotnika `y = c`, `y = d`, `x = a` in `x = b`.
+pogoji, podanimi s funkcijami `fs`, `fz`, `fl`, `fd`. Funkcija `fs` določa robni
+pogoj na spodnjem robu `y = c`, funkcija `fz` robni pogoj na zgornjem robu `y = d`,
+funkcija `fl` na levem robu `x = a` in funkcija `fd` robni pogoj na desnem robu
+`x = b`.
 """
 struct RobniProblemPravokotnik
-  op # abstrakten podatkovni tip, ki opiše diferencialni operator
+  op # abstraktni podatkovni tip, ki opiše diferencialni operator
   meje # meje pravokotnika [a, b] x [c, d] v obliki [(a, b), (c, d)]
-  rp # funkcije na robu [fs, fz, fl, fd] f(a, y) = fl(y), f(x, c) = fs(x), ...
+  rp # funkcije na robu [fs, fz, fl, fd], f(a, y) = fl(y), f(x, c) = fs(x) ...
 end
 # RPP
 
@@ -20,8 +22,8 @@ end
 """
     L = Laplace()
 
-Ustvari abstrakten objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
-operator. 
+Ustvari abstraktn objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
+operator.
 """
 struct Laplace end
 # Laplace
@@ -35,10 +37,11 @@ enota(n) = spdiagm(0 => ones(n))
 """
     A = matrika(Laplace(), n, m)
 
-Ustvari matriko za diskretizacijo Laplaceovega operatorja v 2 dimenzijah
-na pravokotni mreži dimenzije` `n` krat `m`. 
+Ustvari matriko za diskretizacijo Laplaceovega operatorja v dveh dimenzijah
+na pravokotni mreži dimenzije `n` krat `m`. Parameter `m` je število delilnih
+točk v y smeri, `n` pa v x smeri.
 """
-function matrika(_::Laplace, n, m)
+function matrika(_::Laplace, m, n)
   return kron(laplace(n), enota(m)) + kron(enota(n), laplace(m))
 end
 # matrika
@@ -51,17 +54,16 @@ Diskretiziraj robni problem na pravokotniku `rp` s korakom `h`.
 """
 function diskretiziraj(rp::RobniProblemPravokotnik, h)
   (a, b), (c, d) = rp.meje
-  m = Integer(floor((b - a) / h))
-  n = Integer(floor((d - c) / h))
-  U0 = zeros(n + 2, m + 2)
+  m = Integer(floor((d - c) / h))
+  n = Integer(floor((b - a) / h))
+  U0 = zeros(m + 2, n + 2)
   fs, fz, fl, fd = rp.rp
-  (a, b), (c, d) = rp.meje
-  x = range(a, b, m + 2)
-  y = range(c, d, n + 2)
-  U0[1, :] = fl.(y)
-  U0[end, :] = fd.(y)
-  U0[:, 1] = fs.(x)
-  U0[:, end] = fz.(x)
+  x = range(a, b, n + 2)
+  y = range(c, d, m + 2)
+  U0[:, 1] = fl.(y)
+  U0[:, end] = fd.(y)
+  U0[1, :] = fs.(x)
+  U0[end, :] = fz.(x)
   return U0, x, y
 end
 
@@ -82,10 +84,10 @@ function resi(rp::RobniProblemPravokotnik, h)
   U, x, y = diskretiziraj(rp, h)
   n = length(x) - 2
   m = length(y) - 2
-  A = matrika(L, n, m)
+  A = matrika(rp.op, m, n)
   d = desne_strani(U)
-  res = A \ d  # reši sistem             
-  U[2:end-1, 2:end-1] = reshape(res, n, m) # preoblikuj rešitev v matriko
+  res = A \ d  # reši sistem
+  U[2:end-1, 2:end-1] = reshape(res, m, n) # preoblikuj rešitev v matriko
   return U, x, y
 end
 # resi
@@ -94,8 +96,8 @@ end
 """
     U = korak_jacobi(U0)
 
-Izvedi en korak Jacobijeve iteracije za Laplaceovo enačbo. Matrika `U0` vsebuje 
-približke za vrednosti funkcije na mreži, funkcija vrne naslednji približek. 
+Izvedi en korak Jacobijeve iteracije za Laplaceovo enačbo. Matrika `U0` vsebuje
+približke za vrednosti funkcije na mreži, funkcija vrne naslednji približek.
 """
 function korak_jacobi(U0)
   U = copy(U0)
@@ -116,7 +118,7 @@ end
     U = korak_gs(U0)
 
 Izvedi en korak Gauss-Seidlove iteracije za Laplaceovo enačbo. Matrika `U0`
-vsebuje približke za vrednosti funkcije na mreži. 
+vsebuje približke za vrednosti funkcije na mreži.
 """
 function korak_gs(U0)
   U = copy(U0)
@@ -136,8 +138,8 @@ end
 """
     U = korak_sor(U0, ω)
 
-Izvedi en korak SOR iteracije za Laplaceovo enačbo. Matrika `U0` vsebuje 
-približke za vrednosti funkcije na mreži, funkcija vrne naslednji približek. 
+Izvedi en korak SOR iteracije za Laplaceovo enačbo. Matrika `U0` vsebuje
+približke za vrednosti funkcije na mreži, funkcija vrne naslednji približek.
 """
 function korak_sor(U0, ω)
   U = copy(U0)
@@ -145,7 +147,6 @@ function korak_sor(U0, ω)
   # spremenimo le notranje vrednosti
   for i = 2:m-1
     for j = 2:n-1
-      # Gauss Seidel
       U[i, j] = (U[i+1, j] + U[i, j+1] + U[i-1, j] + U[i, j-1]) / 4
       U[i, j] = (1 - ω) * U0[i, j] + ω * U[i, j] # SOR popravek
     end
@@ -159,7 +160,7 @@ end
 """
   x, it = iteracija(korak, x0; maxit=maxit, atol=atol)
 
-Poišči približek za limito rekurzivnega zaporedja podanega rekurzivno s 
+Poišči približek za limito rekurzivnega zaporedja podanega rekurzivno s
 funkcijo `korak` in začentim členom `x0`.
 """
 function iteracija(korak, x0; maxit=1000, atol=1e-8)
