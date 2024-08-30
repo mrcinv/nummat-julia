@@ -246,7 +246,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
     vaja06("# desne strani")
   ),
   caption: [Izračunaj desne strani sistema za ravnovesje sil v grafu na
-  podlagi koordinat vozlišč, ki so fiksirana]
+  podlagi koordinat pritrjenih vozlišč]
 )<pr:06-desne-strani>
 
 #figure(

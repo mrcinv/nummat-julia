@@ -31,9 +31,10 @@ using SparseArrays
 """
     A = matrika(G::AbstractGraph, sprem)
 
-Poišči matriko sistema za linearni sistem za fizikalno metodo za vložitev grafa `G`.
-Argument `sprem` je vektor vozlišč grafa, ki nimajo določenih koordinat. Indeksi v matriki `A`
-ustrezajo vozliščem v istem vrstnem redu, kot nastopajo v argumentu `sprem`. 
+Poišči matriko linearnega sistema za vložitev grafa `G` s fizikalno metodo.
+Argument `sprem` je vektor vozlišč grafa, ki nimajo določenih koordinat.
+Indeksi v matriki `A` ustrezajo vozliščem v istem vrstnem redu,
+kot nastopajo v argumentu `sprem`.
 """
 function matrika(G::AbstractGraph, sprem)
   # preslikava med vozlišči in indeksi v matriki
@@ -59,10 +60,12 @@ end
 """
     b = desne_strani(G::AbstractGraph, sprem, koordinate)
 
-Poišči desne strani za linearni sistem za fizikalno metodo za vložitev grafa `G` za eno koordinato.
-Argument `sprem` je vektor vozlišč grafa, ki nimajo določenih koordinat. Argument `koordinate` 
-vsebuje eno koordinato za vsa vozlišča grafa. Metoda uporabi le koordinato vozlišč, ki so fiksirana.
-Indeksi v vektorju `b` ustrezajo vozliščem v istem vrstnem redu, kot nastopajo v argumentu `sprem`. 
+Poišči desne strani linearnega sistema za eno koordinato vložitve grafa `G`
+s fizikalno metodo. Argument `sprem` je vektor vozlišč grafa, ki nimajo
+določenih koordinat. Argument `koordinate` vsebuje eno koordinato za vsa
+vozlišča grafa. Metoda uporabi le koordinato vozlišč, ki so pritrjena.
+Indeksi v vektorju `b` ustrezajo vozliščem v istem vrstnem redu,
+kot nastopajo v argumentu `sprem`.
 """
 function desne_strani(G::AbstractGraph, sprem, koordinate)
   set = Set(sprem)
@@ -84,10 +87,12 @@ end
 """
     vlozi!(G::AbstractGraph, fix, tocke)
 
-Poišči vložitev grafa `G` v prostor s fizikalno metodo. Argument `fix` vsebuje vektor vozlišč
-grafa, ki imajo določene koordinate. Argument `tocke` je začetna vložitev grafa. Koordinate
-vozlišč, ki niso fiksirane, bodo nadomeščene z novimi koordinatami. 
-Metoda ne vrne ničesar, ampak zapiše izračunane koordinate v matriko `tocke`. 
+Poišči vložitev grafa `G` v prostor s fizikalno metodo. Argument `fix` vsebuje
+vektor vozlišč grafa, ki imajo določene koordinate. Argument `tocke` je
+začetna vložitev grafa. Koordinate vozlišč, ki niso pritrjena, bodo nadomeščene
+z novimi koordinatami.
+
+Metoda ne vrne ničesar, ampak zapiše izračunane koordinate v matriko `tocke`.
 """
 function vlozi!(G::AbstractGraph, fix, tocke)
   sprem = setdiff(vertices(G), fix)
@@ -107,11 +112,11 @@ using Logging
 """
     x = cg(A, b; atol=1e-10)
 
-metoda konjugiranih gradientov za reševanje sistema enačb `Ax = b`
-s pozitivno definitno matriko `A`. Argument `A` ni nujno matrika, lahko je 
-tudi drugega tipa, če ima implementirano množenje z vektorjem `b`. 
+Metoda konjugiranih gradientov za reševanje sistema enačb `Ax = b`
+s pozitivno definitno matriko `A`. Argument `A` ni nujno matrika, lahko je
+tudi drugega tipa, če ima implementirano množenje z vektorjem `b`.
 
-Metoda ne preverja ali je argument `A` pozitivno definiten.
+Metoda ne preverja, ali je argument `A` pozitivno definiten.
 """
 function cg(A, b; atol=1e-8)
   # za začetni približek vzamemo kar desne strani
