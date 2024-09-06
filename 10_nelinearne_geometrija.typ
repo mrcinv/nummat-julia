@@ -20,7 +20,7 @@
   - Minimum funkcije $d(t, s)$ oziroma $d^2(t, s)$ poiščite z #link("https://en.wikipedia.org/wiki/Gradient_descent")[gradientnim spustom].
   - Minimum funkcije $d^2(t, s)$ poiščite z Newtonovo metodo kot rešitev vektorske enačbe $ nabla d^2(t, s) = 0. $
   - Grafično predstavite zaporedja približkov za gradientno metodo in Newtonovo metodo.
-  - Primerjajte konvergenčna območja za gradientno in Newtonovo metodo (glej @konvergencna-obmocja).
+  - Primerjajte konvergenčna območja za gradientno in Newtonovo metodo (glej @9-poglavje).
 
 == Presečišča geometrijskih objektov
 Poiščimo samopresečišča
@@ -41,6 +41,49 @@ krivuljo.
 
 #figure(
   image("img/10-lissajous.svg", width: 60%), caption: [Lissajousova krivulja za $a=b=1$, $n=2$ in $m=3$]
+)
+
+Iščemo parametra $t$ in $s$, ki sta različna $t eq.not s$ in za katera velja
+$
+x(t) = x(s)\
+y(t) = y(s).
+$<eq:10-samopres>
+
+Dobili smo torej sistem dveh nelinearnih enačb z dvema neznankama. Rešitve sistema @eq:10-samopres
+poiščemo z Newtonovo metodo, ki smo jo spoznali v prejšnjem poglavju \(@9-poglavje\). Newtonova
+metoda zahteva, da sistem enačb prevedemo v vektorsko enačbo $F(bold(x))=bold(0)$. Funkcija,
+katere ničlo iščemo je
+$
+F(vec(delim: "[", t, s)) = vec(delim: "[", x(t) - x(s), y(t) - y(s)),
+$
+
+njena Jacobijeva matrika pa
+
+$
+J F(vec(delim: "[", t, s)) = mat(
+  dot(x)(t), -dot(x)(s); dot(y)(t), -dot(y)(s)
+).
+$
+
+#demo10("# samopres")
+
+#figure(
+  image("img/10-samopres.svg", width: 60%),
+  caption: [Krivulja doseže samopresečišče pri dveh različnih vrednostih parametra.])
+
+Napišimo sedaj funkcijo, #jl("samopres(k, dk, ts0)"), ki poišče samopresečišče z Newtonovo metodo
+(rešitev @pr:10-samopres).
+
+Nato uporabimo @pr:09-konvergenca, da določimo območja konvergence in poiščemo vsa samopresečišča.
+
+#demo10("# obmocje samopres")
+
+#figure(image("img/10-obmocje-samopres.svg", width: 60%),
+  caption: [Območje konvergence za samopresečišča Lissajousove krivulje])
+
+#demo10("# vsa samopres")
+
+#figure(image("img/10-vsa-samopres.svg", width: 60%)
 )
 == Minimalna razdalja med dvema krivuljama
 
@@ -87,6 +130,8 @@ $
 
 === Gradientni spust
 
+Minimum
+
 === Newtonova metoda
 
 Fermat je med drugim dokazal izrek, ki pove, da je v lokalnem ekstremu vrednost odvoda vedno enaka 0.
@@ -109,6 +154,12 @@ nabla D(t, s) = vec((partial D(t, s))/(partial t), (partial D(t, s))/(partial s)
 $
 
 Rešitev enačbe @eq:10-stac lahko poiščemo z Newtonovo metodo, ki smo jo spoznali v prejšnjem poglavju
-(@konvergencna-obmocja).
+(@9-poglavje).
 
 == Rešitve
+
+#let vaja10(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja10/src/Vaja10.jl", koda)))
+
+
+#vaja10("# samopres")[Poišči samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
+#vaja10("# grad")[Gradientni spust]

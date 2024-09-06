@@ -2,7 +2,7 @@
 #import "julia.typ": jl, code_box, jlfb
 
 = Konvergenčna območja nelinearnih enačb
-<konvergencna-obmocja>
+<9-poglavje>
 
 == Naloga
 
