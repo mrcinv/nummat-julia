@@ -73,9 +73,13 @@ function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
       continue
     end
     k = findfirst([norm(z - z0, Inf) < 2atol for z0 in nicle])
-    if isnothing(k) && vsebuje(z, obmocje)
-      push!(nicle, z)
-      k = length(nicle)
+    if isnothing(k)
+      if vsebuje(z, obmocje)
+        push!(nicle, z)
+        k = length(nicle)
+      else
+        continue
+      end
     end
     Z[j, i] = k # vrednost elementa je enka indeksu ničle
     koraki[j, i] = it # številu korakov metode
