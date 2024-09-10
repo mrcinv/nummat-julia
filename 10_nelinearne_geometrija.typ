@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": code_box, jlfb, jl
+#import "julia.typ": code_box, jlfb, jl, repl, blk
 
 = Nelinearne enačbe v geometriji
 
@@ -96,6 +96,10 @@ $
   K_2: bk_2(t) = (x_2(s), y_2(s)); quad s in RR.
 $
 
+#demo10("# krivulji")
+
+#figure(image("img/10-krivulji.svg", width: 60%), caption: [Krivulji v ravnini])
+
 Razdaljo med krivuljama lahko definiramo na različne načine. Poglejmo si dva načina, kako definiramo
 razdaljo med krivuljama:
 
@@ -128,9 +132,57 @@ $
 D(t, s) = d^2(t, s)=(x_1(t)-x_2(s))^2 + (y_1(t)-y_2(s))^2.
 $
 
+#demo10("# razdalja")
+
+#figure(image("img/10-graf-razdalja.svg", width: 60%),
+caption: [Razdalja med točkama na krivuljah $k_1$ in $k_2$ v odvisnosti od parametrov na krivulji]
+)
+
+
 === Gradientni spust
 
-Minimum
+Metoda gradientnega spusta je sila enostavna. Predstavljamo si, da je gosta megla in da smo na
+pobočju gore. Želimo čim prej priti v dno doline. Na vsakem koraku izberemo smer, v kateri je
+pobočje najbolj strmo in se premaknemo v tej smeri. Na ta način bomo prej ali slej bomo prišli v
+dolino. Ni nujno, da bomo na ta način prišli v dolino, saj lahko prej pristanemo v kakšni
+kotanji ali vrtači na pobočju gore. V vsakem primeru bomo prej ali
+slej prišli nekam na dno, kjer bo šlo le še navzgor.
+
+V jeziku funkcij iščemo minimum funkcije več spremenljivk $f(bold(x))$. Na vsakem koraku izberemo
+smer, v kateri funkcija najhitreje pada, in se premaknemo za določen korak v tej smeri.
+To je ravno v nasprotni smeri gradienta funkcije. Če koraki niso preveliki, bomo prej ali slej
+pristali v lokalnemu minimu funkcije $f(bold(x))$.
+Računamo naslednje zaporedje približkov:
+
+$
+bold(x)^((n+1)) = bold(x)^((n)) - h_n nabla f(bold(x)^((n))),
+$
+kjer je $nabla f(bold(x)^((n)))$ vrednost gradienta v točki $bold(x)^((n))$,  vrednost $h_n$ pa je
+parameter, ki poskrbi, da zaporedje približkov ne skače preveč po domeni in se lahko na vsakem
+koraku spremeni. Napišimo funkcijo #jl("spust(gradf, x0, h)"), ki poišče lokalni minimum funkcije
+z metodo gradientnega spusta (rešitev @pr:10-spust).
+
+Gradient funkcije $D(t, s)$ bi lahko izračunali na roke, vendar je to zamudno in se pri tem lahko
+hitro zmotimo. Uporabili bomo knjižnico za
+#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje]
+#link("https://juliadiff.org/ForwardDiff.jl/stable/")[`ForwardDiff.jl`], ki učinkovito izračuna
+vrednosti parcialnih odvodov funkcije v posameznih točkah.
+Knjižnica #jl("ForwardDiff") zna odvajati le funkcije vektorske spremenljivke, zato funkcijo
+dveh spremenljivk #jl("d2(t, s)") spremenimo v funkcijo vektorske spremenljivke
+#jl("ts -> d2(ts...)"). Operator #jl("...") elemente vektorja razporedi kot argumente funkcije.
+
+#demo10("# odvodi")
+//#code_box(raw(read("out/10_grad.out")))
+
+#demo10("# spust")
+
+#figure(caption: [Zaporedje približkov gradientnega spusta],
+  image("img/10_priblizki_grad.svg", width: 60%))
+
+Iz slike je razvidno, da gradientni spust konvergira k lokalnemu minimumu, da pa je konvergenca
+počasna, ko se približamo minimu. Konvergenco lahko pohitrimo s primerno izbiro parametra $h_n$, na
+primer tako da gradientni spust kombiniramo z metodo
+#link("https://sl.wikipedia.org/wiki/Minimizacija_v_dani_smeri")[minimiziranja v dani smeri].
 
 === Newtonova metoda
 
@@ -141,20 +193,51 @@ Ta izrek morda ni tako razvpit kot njegov zadnji izrek, je pa zato toliko bolj u
 Potreben pogoj za nastop lokalnega ekstrema je namreč vektorska enačba
 
 $
-nabla D(t, s) = 0.
+nabla D(t, s) = vec((partial D(t, s))/(partial t), (partial D(t, s))/(partial s)) = 0.
 $<eq:10-stac>
 
-Gradient $nabla D$ lahko izrazimo s smernimi odvodi na krivulji:
-
-$
-nabla D(t, s) = vec((partial D(t, s))/(partial t), (partial D(t, s))/(partial s)) = vec(
-  2(x_1(t) - x_2(s))dot(x)_1(t) + 2(y_1(t) - y_2(s))dot(y)_1(t),
-  -2(x_1(t) - x_2(s))dot(x)_2(s) - 2(y_1(t) - y_2(s))dot(y)_2(s)
-)
-$
-
 Rešitev enačbe @eq:10-stac lahko poiščemo z Newtonovo metodo, ki smo jo spoznali v prejšnjem poglavju
-(@9-poglavje).
+\(@9-poglavje\).
+
+#demo10("# newton")
+
+#figure(caption: [Zaporedje približkov gradientnega spusta in Newtonove metode z istim začetnim
+približkom],
+  image("img/10_priblizki.svg", width: 60%))
+
+
+Za razliko od gradientnega spusta, Newtonova metoda ne konvergira nujno k lokalnemu minimu, ampak
+h eni od stacionarnih točk funkcije $D(t, s)$, med katerimi so tudi sedla in maksimumi. Zato je
+Newtnova metoda precej bolj občutljiva za izbiro začetnega približka kot gradientni spust. Poglejmo
+si točki na krivuljah, ki ustrezajo parametrom najdenim z gradientnim spustom:
+
+#demo10("# minimum")
+
+in Newtonovo metodo:
+
+#demo10("# sedlo")
+
+
+
+#figure(kind: image, caption: [Levo: Točki na krivuljah, h katerima konvergira gradientna metoda
+sta lokalni minimum, ki pa ni globalni. Desno: Newtonova metoda konvergira k sedlu.
+Točka na $k_1$ je lokalni minimum, točka na $k_2$ pa lokalni maksimum.],
+table(stroke: none, columns: 2, image("img/10_minimum.svg"), image("img/10_sedlo.svg"))
+)
+
+Za konec si oglejmo še konvergenčna območja za gradientni spust:
+
+#demo10("# obmocje grad")
+
+in Newtonovo metodo:
+
+#demo10("# obmocje newton")
+
+#figure(kind: image,
+table(stroke: none, columns: 2,
+image("img/10_obmocje_grad.svg"),
+image("img/10_obmocje_newton.svg")),
+caption: [Območja konvergence za gradientni spust (levo) in Newtonovo metodo (desno)])
 
 == Rešitve
 
@@ -162,4 +245,5 @@ Rešitev enačbe @eq:10-stac lahko poiščemo z Newtonovo metodo, ki smo jo spoz
 
 
 #vaja10("# samopres")[Poišči samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
-#vaja10("# grad")[Gradientni spust]
+#vaja10("# razdalja2")[Funkcija razdalje med dvema krivuljama]<pr:10-razdalja2>
+#vaja10("# grad")[Gradientni spust]<pr:10-spust>

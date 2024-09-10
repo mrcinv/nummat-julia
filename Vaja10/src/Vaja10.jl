@@ -1,7 +1,7 @@
 module Vaja10
 
 using Vaja09
-export samopres
+export samopres, razdajla2
 # samopres
 """
     ts, it = samopres(k, dk, ts0)
@@ -29,8 +29,43 @@ function samopres(k, dk, ts0)
 end
 # samopres
 
+# razdalja2
+using LinearAlgebra
+
+"""
+  d2 = razdalja2(k1, k2)
+
+Vrni funkcijo kvadrata razdalje `d2(t, s)` med točkama na krivuljah 
+`k1` in `k2`. Rezultat `d2` je funkcija dveh spremenljivk `t` in `s`, kjer je 
+`t` parameter na krivulji `k1` in `s` parameter na krivulji `k2`.
+# Primer
+```jl
+k1(t) = [t, t^2 - 2]
+k2(s) = [cos(s), sin(s)]
+d2 = razdalja(k1, k2) # vrne funkcijo d2
+d2(1, pi) # izračuna kvadrat razdalje med k1(1) in k2(pi)
+```
+"""
+function razdajla2(K1, K2)
+  function d2(t, s)
+    delta = K1(t) - K2(s)
+    return dot(delta, delta)
+  end
+  return d2
+end
+# razdalja2
+
+
 # grad
-function spust(fdf)
+function spust(gradf, x0, h; maxit=500, atol=1e-8)
+  for i = 1:maxit
+    x = x0 - h * gradf(x0)
+    if norm(x0 - x) < atol
+      return x, i
+    end
+    x0 = x
+  end
+  throw("Gradientni spust ni konvergiral po $maxit korakih!")
 end
 # grad
 

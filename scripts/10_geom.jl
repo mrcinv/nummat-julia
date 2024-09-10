@@ -8,7 +8,7 @@ plot(Tuple.(l.(t)), label=nothing)
 savefig("img/10-lissajous.svg")
 
 # samopres
-using Vaja09
+using Vaja09: newton
 using Printf
 f(ts) = l(ts[1]) - l(ts[2])
 dl(t) = [2cos(2t), -3sin(3t)]
@@ -21,7 +21,7 @@ scatter!(Tuple.(l.(ts)),
 savefig("img/10-samopres.svg")
 
 # obmocje samopres
-using Vaja10
+using Vaja10: samopres
 mod2pi(x) = rem(x, 2pi)
 """ Poišči samopresečišče Lissjousove krivulje. Upoštevaj periodičnost."""
 function splissajous(ts0)
@@ -33,6 +33,7 @@ function splissajous(ts0)
   return sort(ts), it
 end
 
+using Vaja09: konvergenca, Box2d, Interval
 x, y, Z, nicle, koraki = konvergenca(Box2d(Interval(0, 2pi), Interval(0, 2pi)),
   splissajous, 200, 200)
 heatmap(x, y, Z, xlabel="\$t\$", ylabel="\$s\$")
@@ -51,53 +52,122 @@ display(p)
 
 savefig("img/10-vsa-samopres.svg")
 
+# krivulji
+using Plots
 k1(t) = [2 * cos(t) + 1 / 3, sin(t) + 0.25]
 k2(s) = [cos(s) / 3 - sin(s) / 2, cos(s) / 3 + sin(s) / 2]
-t = range(0, 4 * pi, 60);
+t = range(0, 2pi, 60);
 plot(Tuple.(k1.(t)), label="K1")
 plot!(Tuple.(k2.(t)), label="K2")
+# krivulji
 
-savefig("img/10-vsa-samopres.svg")
+savefig("img/10-krivulji.svg")
 
-savefig("img/10_krivulji.svg")
-#' Iščemo minimum kvadrata razdalje.
 
-using LinearAlgebra
+# razdalja
 
-function razdajla2(K1, K2)
-  function d2(t, s)
-    delta = K1(t) - K2(s)
-    return dot(delta, delta)
+using Vaja10: razdajla2
+d2 = razdajla2(k1, k2)
+
+t = range(-pi, pi, 100)
+s = t
+contourf(t, s, d2, xlabel="\$t\$", ylabel="\$s\$")
+# razdalja
+
+savefig("img/10-graf-razdalja.svg")
+
+using BookUtils: capture
+# odvodi
+using ForwardDiff
+gradd2(ts) = ForwardDiff.gradient(ts -> d2(ts...), ts)
+v = gradd2([pi / 2, pi]) # vrednost grad(d2) v t=2, s=1
+# odvodi
+p("10_grad", v)
+
+# spust
+"Izračunaj zaporedje približkov gradientne metode."
+function priblizki(grad, x0, h, n)
+  p = [x0]
+  for i = 1:n
+    x = x0 - h * grad(x0)
+    push!(p, x)
+    x0 = x
   end
-  return d2
+  return p
 end
 
-t = range(-pi, 2pi, 100)
-s = t
+pribl = priblizki(gradd2, [2.0, -1.5], 0.2, 40)
+scatter!(Tuple.(pribl), label="približki gradientne metode")
+# spust
 
-d2 = razdajla2(K1, K2)
+savefig("img/10_priblizki_grad.svg")
 
-contour(t, s, d2(K1, K2))
+# newton
+jacd2(x0) = ForwardDiff.jacobian(gradd2, x0)
+korak_newton(f, Jf, x0) = x0 - Jf(x0) \ f(x0)
+x0 = [2.0, -1.5]
+pribl_newton = [x0]
+for i = 1:10
+  x0 = korak_newton(gradd2, jacd2, x0)
+  push!(pribl_newton, x0)
+end
+scatter!(Tuple.(pribl_newton), label="približki Newtonove metode")
+# newton
 
-savefig("img/graf_razdalja.svg")
+savefig("img/10_priblizki.svg")
 
-using ForwardDiff
-ForwardDiff.gradient(d2, [1, 2])
+# sedlo
+t = range(0, 2pi, 100)
+plot(Tuple.(k1.(t)), label="\$k_1(t)\$")
+plot!(Tuple.(k2.(t)), label="\$k_2(s)\$")
+ts = pribl_newton[end]
+scatter!(Tuple(k1(ts[1])), label="\$k_1(t_0)\$")
+scatter!(Tuple(k2(ts[2])), label="\$k_2(s_0)\$")
+# sedlo
 
-f(t, s) = [K1(t) - K2(s), 1]
-JF(ts) = ForwardDiff.hessian(d2, ts)
-fdf(ts) = (f(ts), JF(ts))
+savefig("img/10_sedlo.svg")
 
-using Vaje07
-ts, it = newton(fdf, [0, 0])
-K1(ts[1])
-scatter!(tuple(K1(ts[1])...))
-scatter!(tuple(K2(ts[2])...))
+# minimum
+using Vaja10: spust
+t = range(0, 2pi, 100)
+plot(Tuple.(k1.(t)), label="\$k_1(t)\$")
+plot!(Tuple.(k2.(t)), label="\$k_2(s)\$")
+ts, it = spust(gradd2, [2, -1.5], 0.2)
+scatter!(Tuple(k1(ts[1])), label="\$k_1(t_0)\$")
+scatter!(Tuple(k2(ts[2])), label="\$k_2(s_0)\$")
+# minimum
 
-#' Graf funkcije razdalje
+savefig("img/10_minimum.svg")
 
 
-scatter!(tuple(ts...))
+# obmocje grad
+using Vaja09: konvergenca
+using Vaja10: spust
+function spustd2(x0)
+  ts, it = spust(gradd2, x0, 0.2; maxit=1000)
+  ts = map(t->mod(t + pi, 2pi) - pi, ts)
+  return ts, it
+end
+x, y, Z, nicle, koraki = konvergenca(
+  Box2d(Interval(-pi, pi), Interval(-pi, pi)), spustd2, 100, 100;
+  atol=1e-2)
+heatmap(x, y, Z)
+scatter!(Tuple.(nicle), label="lokalni minimi")
+contour!(x, y, d2)
+# obmocje grad
+savefig("img/10_obmocje_grad.svg")
 
-ts, it = newton(fdf, [2, 1])
-scatter!(tuple(ts...))
+# obmocje newton
+function newtond2(x0)
+  ts, it = newton(gradd2, jacd2, x0; atol=1e-5)
+  ts = map(t->mod(t + pi, 2pi) - pi, ts)
+  return ts, it
+end
+x, y, Z, nicle, koraki = konvergenca(
+  Box2d(Interval(-pi, pi), Interval(-pi, pi)), newtond2, 500, 500;
+  atol=1e-2)
+heatmap(x, y, Z)
+scatter!(Tuple.(nicle), label="stacionarne točke")
+contour!(x, y, d2)
+# obmocje newton
+savefig("img/10_obmocje_newton.svg")

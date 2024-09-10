@@ -37,26 +37,20 @@ diskretiziraj(b::Box2d, m, n) = (
 # box2d
 # konvergenca
 """
-    x, y, Z = konvergenca((a, b, c, d), metoda, n=50, m=50; maxit=50, tol=1e-3)
+    x, y, Z, nicle, koraki = konvergenca(obmocje, metoda, n=50, m=50; maxit=50, tol=1e-3)
 
 Izračunaj h katerim vrednostim konvergira metoda `metoda`, če uporabimo različne
-začetne približke na pravokotniku `[a, b]x[c, d]`.
+začetne približke na pravokotniku `[a, b]x[c, d]` podanim z argumentom `obmocje`.
 
 # Primer
 Konvergenčno območje za Newtonovo metodo za kompleksno enačbo ``z^3=1``
 
-```jldoctest
-julia> F((x, y)) = [x^3-3x*y^2; 3x^2*y-y^3];
-julia> JF((x, y)) = [3x^2-3y^2 -6x*y; 6x*y 3x^2-3y^2]
-julia> metoda(x0) = newton(F, JF, x0; maxit=10; tol=1e-3);
-
-julia> x, y, Z = konvergenca((-2,2,-2,2), metoda; n=5, m=5); Z
-5×5 Array{Float64,2}:
- 1.0  1.0  2.0  3.0  3.0
- 1.0  1.0  2.0  3.0  3.0
- 1.0  1.0  0.0  3.0  3.0
- 2.0  2.0  2.0  2.0  2.0
- 2.0  2.0  2.0  2.0  2.0
+```jl
+F((x, y)) = [x^3-3x*y^2; 3x^2*y-y^3];
+JF((x, y)) = [3x^2-3y^2 -6x*y; 6x*y 3x^2-3y^2]
+metoda(x0) = newton(F, JF, x0; maxit=10; tol=1e-3);
+obmocje = Box2d(Interval(-2, 2), (-1, 1))
+x, y, Z, nicle, koraki = konvergenca(obmocje, metoda; n=5, m=5)
 ```
 """
 function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)

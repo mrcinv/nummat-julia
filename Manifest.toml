@@ -2431,7 +2431,7 @@ uuid = "eb6ddaa7-33b5-438f-b890-793938e58077"
 version = "0.1.0"
 
 [[deps.Vaja10]]
-deps = ["Test", "Vaja09"]
+deps = ["LinearAlgebra", "Test", "Vaja09"]
 path = "Vaja10"
 uuid = "883a8bf8-153d-408c-b023-f308039005e6"
 version = "0.1.0"
