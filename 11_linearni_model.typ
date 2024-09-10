@@ -1,19 +1,22 @@
 #import "admonitions.typ": opomba
+#import "julia.typ": jl, code_box, jlfb, repl, blk
 
 = Aproksimacija z linearnim modelom
 <aproksimacija-z-linearnim-modelom>
 
+#let co2 = $upright(C O)_2$
+
 == Naloga
 
-- Podatke o koncentraciji $"CO"_2$ v ozračju aproksimiraj s kombinacijo kvadratnega polinoma
+- Podatke o koncentraciji #co2 v ozračju aproksimiraj s kombinacijo kvadratnega polinoma
   in sinusnega nihanja s periodo 1 leto.
 - Parametre modela poišči z normalnim sistemom in QR razcepom.
-- Model uporabi za napoved obnašanja koncentracije $"CO"_2$ za naslednjih 20 let.
+- Model uporabi za napoved obnašanja koncentracije #co2 za naslednjih 20 let.
 
 == Linearni model
 <linearni-model>
 V znanosti pogosto želimo opisati odvisnost dveh količin npr. kako se
-spreminja koncentracija $upright(C O)_2$ v odvisnosti od časa.
+spreminja koncentracija #co2 v odvisnosti od časa.
 Matematičnemu opisu povezave med dvema ali več količinami pravimo
 #strong[matematični model]. Primer modela je Hookov zakon za vzmet, ki
 pravi, da je sila vzmeti $F$ sorazmerna z raztezkom $x$:
@@ -46,7 +49,12 @@ Za vsako meritev $y_i = y (x_i)$ bi bila vrednost odvisne količine $y_i$
 natanko enaka vrednosti, ki jo predvidi model $M (p , x_i)$. To
 predpostavko lahko zapišemo s sistemom enačb
 
-$ y_i = M (p , x_i) = p_1 phi_1 (x_i) + dots.h p_k phi_k (x_i) $<eq:11-sistem>
+$
+y_1 &= M (p , x_1) = p_1 phi_1 (x_1) + dots.h p_k phi_k (x_1)\
+y_2 &= M (p , x_2) = p_1 phi_1 (x_2) + dots.h p_k phi_k (x_2)\
+dots.v\
+y_n &= M (p , x_n) = p_1 phi_1 (x_n) + dots.h p_k phi_k (x_n).
+$<eq:11-sistem>
 
 Neznanke v zgornjem sistemu so parametri $p_j$ in za #strong[linearni
 model] so enačbe linearne. To je tudi ena glavnih prednosti linearnega
@@ -75,7 +83,7 @@ $
 
 in stolpec desnih strani je enak meritvam
 
-$ upright(bold(y)) = [y_1 , y_2 , dots.h , y_n]^(sans(T)) . $
+$ bold(y) = [y_1 , y_2 , dots.h , y_n]^(sans(T)). $
 
 Pogoj najmanjših kvadratov razlik @eq:11-minkvad za optimalne
 vrednosti parametrov $upright(bold(p))_(o p t)$ lahko sedaj zapišemo s
@@ -89,43 +97,32 @@ $ bold(p)_(o p t) = argmin_(bold(p)) norm(A bold(p) - bold(y))_2^2 . $
 <opis-sprememb-koncentracije-co2>
 Na observatoriju
 #link("http://www.esrl.noaa.gov/gmd/obop/mlo/")[Mauna Loa] na Hawaiih že
-leta spremljajo koncentracijo $upright(C O)_2$ v ozračju. Podatke lahko
+leta spremljajo koncentracijo #co2 v ozračju. Podatke lahko
 dobimo na njihovi spletni strani v različnih oblikah. Oglejmo si
 tedenska povprečja od začetka maritev leta 1974
 
-```@example
-using FTPClient
-url = "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_weekly_mlo.txt"
-io = download(url)
-data = readlines(io)
-```
+#let demo11(koda) = code_box(jlfb("scripts/11_co2.jl", koda))
+
+#demo11("# co2 data")
 
 Nato odstranimo komentarje in izluščimo podatke
 
-```@example
-using Plots
-filter!(l->l[1]!='#', data)
-data = strip.(data)
-data = [split(line, r"\s+") for line in data]
-data = [[parse(Float64, x) for x in line] for line in data]
-filter!(l->l[5]>0, data)
-t = [l[4] for l in data]
-co2 = [l[5] for l in data]
-scatter(t, co2, title="Atmosferski CO2 na Mauna Loa",
-        xlabel="leto", ylabel="parts per milion (ppm)", label="co2",
-        markersize=1)
-```
+#demo11("# plot")
 
-Časovni potek koncentracije $upright(C O)_2$ matematično opišemo kot
+#figure(caption: [Koncentracija atmosferskega #co2 na Mauna Loa v zadnjih desetletjih],
+  image("img/11_co2.svg", width: 60%))
+
+
+Časovni potek koncentracije #co2 matematično opišemo kot
 funkcijo koncentracije v odvisnosti od časa
 
-$ y = upright(C O)_2 (t) . $
+$ y = #co2 (t) . $
 
-Model, ki dobro opisuje spremembe $upright(C O)_2$ lahko sestavimo iz
+Model, ki dobro opisuje spremembe #co2 lahko sestavimo iz
 kvadratne funcije, ki opisuje naraščanje letnih povprečij in
 periodičnega dela, ki opiše nihanja med letom:
 
-$ upright(C O)_2 (t) = p_1 + p_2 t + p_3 t^2 + p_4 sin (2 pi t) + p_5 cos (2 pi t) . $
+$ co2(bold(p), t) = p_1 + p_2 t + p_3 t^2 + p_4 sin (2 pi t) + p_5 cos (2 pi t) . $
 
 Čas $t$ naj bo podan v letih. Predoločeni sistem @eq:11-sistem, ki
 ga dobimo za naš model ima $n times 5$ matriko sistema
@@ -138,20 +135,24 @@ dots.v, dots.v, dots.v, dots.v, dots.v;
 
 desne strani pa so vrednosti koncentracij.
 
-== Normalni sistem
-<normalni-sistem>
-Po metodi najmanjših kvadratov iščemo vrednosti parametrov $p$ modela,
+
+Po metodi najmanjših kvadratov iščemo vrednosti parametrov $bold(p)$ modela $co2(bold(p), t)$,
 pri katerih bo vsota kvadratov razlik med napovedjo modela in
 izmerjenimi vrednostmi najmanjša. Zapišimo vsoto kvadratov kot evklidsko
-normo razlike med vektorjem napovedi modela $A p$ in vektorjem
-izmerjenih vrednosti $y$. Iščemo torej vektor parametrov $p$, pri
+normo razlike med vektorjem napovedi modela $A bold(p)$ in vektorjem
+izmerjenih vrednosti $bold(y)$. Iščemo torej vektor parametrov $bold(p)$, pri
 katerem bo
 
 $ norm(A bold(p) - bold(y))_2^2 $
 
-najmanjša. Iščemo torej pravokotno projekcijo vektorja $y$ na stolpčni
-prostor matrike $A$, katere stolpci so podani kot vrednosti baznih
-funkcij, ki nastopajo v modelu.
+najmanjša.
+
+== Normalni sistem<normalni-sistem>
+
+Vektor parametrov modela $bold(p)$ izberemo tako, da je napoved modela $A bold(p)$
+enaka pravokotni projekciji $bold(y)$ na stolpčni
+prostor matrike $A$. Tako lahko izpeljemo #emph[normalni sistem] za dani predoločen sistem
+$A bold(p) = bold(y)$:
 
 $
 A bold(p)-bold(y) &perp C(A)\
@@ -160,44 +161,35 @@ A^(T) (A bold(p) - bold(y)) &= 0\
 A^T A bold(p)&=A^T bold(y)
 $<eq:11-normalni-sistem>
 
-Tako dobimo normalni sistem $A^T A p = A^T y$, ki je kvadraten in je
+Normalni sistem $A^T A bold(p) = A^T bold(y)$ je kvadraten in je
 vedno rešljiv, če so le bazne funkcije modela izračunane v izmerjenih vrednostih neodvisne
 spremenljivke linearno neodvisne.
 
-```@example
-using LinearAlgebra
-A = hcat(ones(size(t)), t, t.^2, cos.(2pi*t), sin.(2pi*t))
-N = A'*A # hide
-b = A'*co2 # hide
-p = N\b # hide
-norm(A*p-co2)
-```
+#demo11("# normalni")
 
 Problem normalnega sistema @eq:11-normalni-sistem je, da je zelo občutljiv:
 
-```@example
-cond(N), cond(A)
-```
+#demo11("# cond")
+#code_box(raw(read("out/11_cond.out")))
 
 Pravzaprav je že sama matrika $A$ zelo občutljiva. Razlog je v izbiri
 baznih funkcij. Če narišemo normirane stolpce $A$ kot funkcije, vidimo,
 da so zelo podobni.
 
-```@example
-plot([A[:,1]/norm(A[:,1]), A[:,2]/norm(A[:,2]), A[:,3]/norm(A[:,3])], ylims=[0,0.025], title="Normirani stolpci matrike A")
-```
+#demo11("# baza")
 
+#figure(image("img/11_baza.svg", width: 60%),
+  caption: [Normirani prvi trije bazni vektorji (stolpci matrike $A$) ])
 Občutljivost je deloma posledica dejstva, da čas merimo v letih od začetka našega štetja. Vrednosti
 $1975$ in $2020$ sta relativno blizu in tako ima vektor vrednosti $t_i$ skoraj enako smer kot vektor
 enic. Občutljivost matrike $A$ lahko precej zmanjšamo, če časovno skalo premaknemo, da je $0$ bliže
 dejanskim podatkom. Namesto $t$ uporabimo spremenljivko $t - tau$, kjer je $tau$ premik časovne
 skale. Najboljša izbira za $tau$ je na sredini podatkov:
 
-```@example
-τ = sum(t)/length(t) # hide
-A = hcat(ones(size(t)), t.-τ, (t.-τ).^2, cos.(2pi*t), sin.(2pi*t)) # hide
-cond(A)
-```
+
+#demo11("# premik")
+
+#code_box(raw(read("out/11_cond_premik.out")))
 
 Matrika $A$ je sedaj precej dlje od singularne matrike in posledično je
 tudi normalni sistem manj občutljiv.
@@ -221,31 +213,31 @@ prejšnje podatke.
 
 Normalni sistem se redko uporablja v praksi. Standarden postopek za
 iskanje rešitve predoločenega sistema z metodo najmanjših kvadratov je s
-QR razcepom. Če je $Q R = A$ QR razcep matrike $A$, so stolpci matrike
+QR razcepom. Pri QR razcepu $Q R = A$ matrike $A$, so stolpci matrike
 $Q$ ortonormirana baza stolpčnega prostora matrike $A$, matrika $R$
 vsebuje koeficiente v razvoju stolpcev matrike $A$ po ortonormirani bazi
 določeni s $Q$. Projekcija na stolpčni prostor ortogonalne matrike še
 lažje izračunamo, saj lahko koeficiente izračunamo s skalarnim produktom
-s stolpci $Q$. Matrično skalarni produkt s stolpci matrike pomeni
-množenje z transponirano matriko.
+s stolpci $Q$. Če predoločeni sistem $A bold(p) = bold(y)$ pomnožimo z
+desne s $Q^T$ in upoštevamo, da je $Q^T Q = I$, dobimo zopet kvadratni sistem za vektor parametrov
+$bold(p)$:
 
-$ A = Q R\
-R p = Q^T y $
+$
+A bold(p) &= bold(y)\
+Q R bold(p) &= bold(y) \
+Q^T Q R bold(p)& = Q^T bold(y)\
+R bold(p) &= Q^T bold(y).
+$
 
-```@example
-F = qr(A) # hide
-Q = Matrix(F.Q) # hide
-p = F.R\(Q'*co2) # hide
-norm(A*p-co2)
-```
+Matrika $R$ je zgornje trikotna, tako da lahko sistem rešimo z obratnim vstavljanjem. V Juliji lahko
+uporabimo funkcijo #jl("qr"), ki vrne posebni podatkovni tip posebej namenjen
+QR razcepu matrike:
 
-Na isti način deluje tudi vgrajen operator `\`, če je matrika dimenzij
+#demo11("# qr")
+#code_box(raw(read("out/11_razlika.out")))
+
+Razcep QR uporabi tudi vgrajen operator `\`, če je matrika s katero delimo dimenzij
 $n times k$ in $k < n$.
-
-```@example
-p = A\co2
-norm(A*p-co2)
-```
 
 == Kaj pa CO2?
 <kaj-pa-co2>
@@ -255,29 +247,27 @@ naraščanje kvadratično in ne le linearno. To pomeni, da ne le, da se
 vsako leto poveča koncentracija, pač pa se vsako leto poveča za večjo
 vrednost.
 
-```@example
-p
-```
+#repl("p_qr", read("out/11_p_qr.out"))
 
 Koeficient $p_1$ pove povprečno koncentracijo na sredini merilnega
-obdobja. Medtem ko odvod $p_2 + 2 p_3 (t - tau)$ pove za koliko se v
-povprečju spremeni koncentracija v enem letu.
+obdobja, $p_2$ in $p_3$ sta koeficienta pri linearnem in kvadratnem členu, medtem ko
+je amplituda letnih nihanj enaka velikosti vektorja $[p_4, p_5]$. Če odmislimo nihanja zaradi letnih
+časov, dobimo trend naraščanja:
 
-```@example
-plot(t, p[2].+2*p[3]*(t.-τ), title="Letne spremembe CO2")
-```
+#demo11("# trend")
+
+#figure(image("img/11_trend.svg", width: 60%), caption: [Rezultati modela brez letnih nihanj])
 
 Lahko poskusimo tudi napovedati prihodnost:
 
-```@example
-model(t) =  p[1]+ p[2]*(t-τ) + p[3]*(t-τ)^2 + p[4]*cos(2*pi*t) + p[5]*sin(2*pi*t)
-model.([2020, 2030, 2050])
-```
+#demo11("# napoved")
+#code_box(raw(read("out/11_napoved.out")))
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Linearni model je opis, pri katerem *parametri* nastopajo *linearno*.
-- Parametre modela poiščemo z *metodo najmanjših kvadratov*.
+- Linearni model je funkcija, pri kateri #emph[parametri] nastopajo #emph[linearno].
+- Parametre modela poiščemo z #emph[metodo najmanjših kvadratov].
 - Za iskanje parametrov po metodi najmanjših kvadratov je numerično najbolj primeren
-  *QR-razcep*, če smo v stiski s prostorom, pa lahko uporabimo *normalni sistem*.
-- koncentracija CO2 prav zares narašča.
+  #emph[QR razcep], če smo v stiski s prostorom, pa lahko uporabimo #emph[normalni sistem].
+- Štetje z začetkom ob Kristusovem rojstvu numerično ni vedno najboljše.
+- Koncentracija #co2 prav zares narašča.
 ]

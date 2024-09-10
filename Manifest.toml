@@ -2,7 +2,7 @@
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "b3037d9fac6244b31985856cd4ebdd9f30790aff"
+project_hash = "826cb592a12671223753b1da43cfd569e5831045"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "daf26bbdec60d9ca1c0003b70f389d821ddb4224"
@@ -638,6 +638,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "c6033cc3892d0ef5bb9cd29b7f2f0331ea5184ea"
 uuid = "f5851436-0d7a-5f13-b9de-f02708fd171a"
 version = "3.3.10+0"
+
+[[deps.FTPClient]]
+deps = ["LibCURL", "URIParser"]
+git-tree-sha1 = "fcdcac297167852b23bae6d7bb3bf82a726ff70c"
+uuid = "01fcc997-4f28-56b8-8a06-30002c134abb"
+version = "1.2.1"
 
 [[deps.FastAlmostBandedMatrices]]
 deps = ["ArrayInterface", "ArrayLayouts", "BandedMatrices", "ConcreteStructs", "LazyArrays", "LinearAlgebra", "MatrixFactorizations", "PrecompileTools", "Reexport"]
@@ -2331,6 +2337,12 @@ deps = ["InteractiveUtils", "MacroTools", "Preferences"]
 git-tree-sha1 = "ea3e54c2bdde39062abf5a9758a23735558705e1"
 uuid = "781d530d-4396-4725-bb49-402e4bee1e77"
 version = "1.4.0"
+
+[[deps.URIParser]]
+deps = ["Unicode"]
+git-tree-sha1 = "53a9f49546b8d2dd2e688d216421d050c9a31d0d"
+uuid = "30578b45-9adc-5946-b283-645ec420af67"
+version = "0.4.1"
 
 [[deps.URIs]]
 git-tree-sha1 = "67db6cc7b3821e19ebe75791a9dd19c9b1188f2b"
