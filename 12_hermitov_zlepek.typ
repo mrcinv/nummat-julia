@@ -49,3 +49,20 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
   odvode pa izračunajte z #link("https://en.wikipedia.org/wiki/Finite_difference")[deljenimi diferencami].
 
 == Hermitov kubični zlepek<sec:12-hermitov-zlepek>
+
+== Rešitve
+
+#let vaja12(koda, caption) = figure(code_box(jlfb("Vaja12/src/Vaja12.jl", koda)), caption: caption)
+
+#vaja12("# hermiteint")[Interpoliraj podatke iz @hermitovi-podatki[tabele] s
+  Hermitovim kubičnim polinomom]
+#vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]
+#vaja12("# vrednost")[Izračunaj vrednost Hermitovega kubičnega zlepka]
+
+== Testi
+
+#let test12(koda, caption) = figure(code_box(jlfb("Vaja12/test/runtests.jl", koda)),
+  caption: caption)
+
+#test12("# hermiteint")[Test za izračun Hermitovega kubičnega polinoma]
+#test12("# zlepek")[Test za izračun vrednosti zlepka]

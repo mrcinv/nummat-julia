@@ -1,5 +1,5 @@
 module Vaja12
-
+# hermiteint
 # bazne funkcije na [0, 1]
 h00(t) = 1 + t^2 * (-3 + 2 * t)
 h01(t) = t^2 * (3 - 2 * t)
@@ -18,7 +18,9 @@ function hermiteint(x, xint, y, dy)
   t = (x - xint[1]) / dx
   return y[1] * h00(t) + y[2] * h01(t) + dx * (dy[1] * h10(t) + dy[2] * h11(t))
 end
+# hermiteint
 
+# HermitovZlepek
 """
 Podatkovna struktura, ki hrani podatke za Hermitov kubični zlepek 
 v interpolacijskih točkah `x` z danimi vrednostmi `y` in vrednostmi
@@ -29,7 +31,8 @@ struct HermitovZlepek
   y
   dy
 end
-
+# HermitovZlepek
+# vrednost
 """
     y = vrednost(x, Z)
 
@@ -40,9 +43,6 @@ function vrednost(x, Z::HermitovZlepek)
   if (x == first(Z.x))
     return first(Z.y)
   end
-  if (x == last(Z.x))
-    return last(Z.y)
-  end
   if (i > lastindex(Z.x)) || (i == firstindex(Z.x))
     throw(BoundsError(Z, x))
   end
@@ -50,7 +50,7 @@ function vrednost(x, Z::HermitovZlepek)
 end
 
 (Z::HermitovZlepek)(x) = vrednost(x, Z)
-
+# vrednost
 export hermiteint, HermitovZlepek, vrednost
 
 
