@@ -117,10 +117,11 @@ scatter!(Tuple.(pribl_newton), label="približki Newtonove metode")
 savefig("img/10_priblizki.svg")
 
 # sedlo
+using Vaja09: newton
 t = range(0, 2pi, 100)
 plot(Tuple.(k1.(t)), label="\$k_1(t)\$")
 plot!(Tuple.(k2.(t)), label="\$k_2(s)\$")
-ts = pribl_newton[end]
+ts, it = newton(gradd2, jacd2, [2, -1.5])
 scatter!(Tuple(k1(ts[1])), label="\$k_1(t_0)\$")
 scatter!(Tuple(k2(ts[2])), label="\$k_2(s_0)\$")
 # sedlo
@@ -145,7 +146,7 @@ using Vaja09: konvergenca
 using Vaja10: spust
 function spustd2(x0)
   ts, it = spust(gradd2, x0, 0.2; maxit=1000)
-  ts = map(t->mod(t + pi, 2pi) - pi, ts)
+  ts = map(t -> mod(t + pi, 2pi) - pi, ts)
   return ts, it
 end
 x, y, Z, nicle, koraki = konvergenca(
@@ -160,7 +161,7 @@ savefig("img/10_obmocje_grad.svg")
 # obmocje newton
 function newtond2(x0)
   ts, it = newton(gradd2, jacd2, x0; atol=1e-5)
-  ts = map(t->mod(t + pi, 2pi) - pi, ts)
+  ts = map(t -> mod(t + pi, 2pi) - pi, ts)
   return ts, it
 end
 x, y, Z, nicle, koraki = konvergenca(

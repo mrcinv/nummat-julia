@@ -6,9 +6,9 @@ export samopres, razdajla2
 """
     ts, it = samopres(k, dk, ts0)
 
-Poišči samopresečišče krivulje `k` s smernim odvodom `dk` z Newtonovo metodo z začetnim
-približkom `ts0`. Začetni približek `ts0` in rezultat `ts` sta dvodimenzionalna vektorja z dvema
-različnima parametroma.
+Poišči samopresečišče krivulje `k` s smernim odvodom `dk` z Newtonovo metodo z 
+začetnim približkom `ts0`. Začetni približek `ts0` in rezultat `ts` sta 
+dvodimenzionalna vektorja z dvema različnima parametroma.
 # Primer
 
 ```jl
@@ -57,6 +57,13 @@ end
 
 
 # grad
+"""
+    x0, it = spust(gradf, x0, h)
+
+Poišči lokalni minimum za funkcijo podano z gradientom `gradf` z metodo 
+najhitrejšega spusta. Argument `x0` je začetni približek `h` pa vrednost s 
+katero pomnožimo gradient.
+"""
 function spust(gradf, x0, h; maxit=500, atol=1e-8)
   for i = 1:maxit
     x = x0 - h * gradf(x0)
