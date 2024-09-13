@@ -66,9 +66,14 @@ image("img/12-interpolacija.svg"), image("img/12-napaka.svg")), caption:[])
 
 == Ocena za napako
 
-Oceno za napako interpolacije lahko za Hermitov polinomom izračunamo analitično. Ker imamo poleg
-vrednosti na voljo odvode interpolacijski točki štejemo dvojno. Tako dobimo naslednjo
-formulo za napako
+Oceno za napako interpolacije lahko za Hermitov polinomom izračunamo analitično.
+Napako polinomske interpolacije v splošnem zapišemo kot:
+$
+f(x) - p_n(x) = (f^((n+1))(xi))/((n+1)!)product_(k=1)^(n) (x-x_i),
+$
+kjer je $xi$ neznana vrednost znotraj interpolacijskega območja.
+Ker imamo poleg vrednosti na voljo odvode interpolacijski točki štejemo dvojno. Tako dobimo naslednjo
+formulo za napako:
 $
   f(x) - p_3(x) = (f^((4))(xi))/(4!) (x-x_1)^2(x-x_2)^2.
 $
@@ -112,11 +117,6 @@ $
 
 == Newtonov interpolacijski polinom
 
-Napako ocenimo z
-$
-f(x) - p_n(x) = (f^((n+1))(xi))/((n+1)!)product_(k=1)^(n) (x-x_i)
-$
-
 Naj bodo $x_1, x_2, med dots med x_n$ vrednosti neodvisne spremenljivke in $y_1, y_2, med dots med y_n$
 vrednosti neznane funkcije. Interpolacijski polinom, ki interpolira podatke $x_i, y_i$ je polinom $p(x)$,
 ki zadošča enačbam
@@ -144,8 +144,11 @@ je računanje vrednosti polinoma v standardni bazi lahko numerično nestabilno, 
 relativno skupaj. Koeficiente $a_i$ lahko poiščemo bodisi tako, da rešimo spodnje trikotni sistem,
 ki ga dobimo iz enačb @eq:12-int-enacbe, ali pa z
 #link("https://en.wikipedia.org/wiki/Divided_differences")[deljenimi diferencami].
-Definiraj podatkovno strukturo za Newtonov interpolacijski polinom in funkcijo
-#jl("interpoliraj(x, y, ::Newton)")"
+Definirajte:
+- podatkovno strukturo za Newtonov interpolacijski polinom #jl("NewtonovPolinom") (@pr:12-newton),
+- funkcijo #jl("vrednost(p, x)"), ki izračuna vrednost Newtonovega polinoma v dani točki (@pr:12-vrednost-newton),
+- funkcijo #jl("interpoliraj(NewtonovPolinom, x, y)"), ki poišče koeficiente polinoma za dane
+  interpolacijske podatke (@pr:12-interpoliraj).
 
 #opomba(naslov:[Vrednosti kot funkcije])[
 Na primeru Newtonovega polinoma lahko ilustriramo, kako v Juliji ustvarimo vrednosti, ki se obnašajo
@@ -207,12 +210,12 @@ Problemu se lahko izognemo, če namesto ekvidistančnih točk uporabimo
 
 #vaja12("# hermiteint")[Interpoliraj podatke iz @hermitovi-podatki[tabele] s
   Hermitovim kubičnim polinomom]
-#vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]
-#vaja12("# vrednost")[Izračunaj vrednost Hermitovega kubičnega zlepka]
+#vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]<pr:12-hermite>
+#vaja12("# vrednost")[Izračunaj vrednost Hermitovega kubičnega zlepka]<pr:12-vrednost-hermite>
 
-#vaja12("# NewtonovPolinom")[Podatkovni tip za polinom v Newtonovi obliki]
-#vaja12("# np vrednost")[Izračunaj vrednost Newtonovega polinoma]
-#vaja12("# interpoliraj")[Izračun koeficientov Newtonovega polinoma z deljenimi diferencami]
+#vaja12("# NewtonovPolinom")[Podatkovni tip za polinom v Newtonovi obliki]<pr:12-newton>
+#vaja12("# np vrednost")[Izračunaj vrednost Newtonovega polinoma]<pr:12-vrednost-newton>
+#vaja12("# interpoliraj")[Izračun koeficientov Newtonovega polinoma z deljenimi diferencami]<pr:12-interpoliraj>
 
 == Testi
 
