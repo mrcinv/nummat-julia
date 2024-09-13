@@ -35,8 +35,8 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
 - Napišite funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermitovega kubičnega zlepka za dano
   vrednost argumenta $x$. Omogočite,  da se vrednosti tipa #jl("HermitovZlepek")"
   #link("https://docs.julialang.org/en/v1/manual/methods/#Function-like-objects")[kliče kot funkcije].
-- S Hermitovim zlepkom interpolirajte funkcijo $f(x) = sin(x)$ na intervalu $[0, 3]$ v točkah
-  $0, 1, 2, 3$. Napako ocenite s formulo za napako polinomske interpolacije
+- S Hermitovim zlepkom interpolirajte funkcijo $f(x) = cos(2x) + sin(3x)$ na intervalu $[0, 6]$ v
+  $10$ točkah. Napako ocenite s formulo za napako polinomske interpolacije
   $
     f(x) - p_3(x) = (f^((4))(xi))/(4!)(x - x_1)(x - x_2)(x - x_3)(x - x_4)
   $
@@ -51,7 +51,18 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
 
 == Hermitov kubični zlepek<sec:12-hermitov-zlepek>
 
+Pogosto je bolje uporabiti različne definicije funkcije na različnih intervalih, kot eno
+funkcijo z veliko parametri. Funkcijam, ki so sestavljene iz več različnih definicij pravimo zlepki.
+
 #let demo12(koda) = code_box(jlfb("scripts/12_zlepki.jl", koda))
+
+#demo12("# zlepek")
+
+#demo12("# zl int")
+#demo12("# zl napaka")
+
+#figure(kind: image, table(stroke: none, columns: 2,
+image("img/12-interpolacija.svg"), image("img/12-napaka.svg")), caption:[])
 
 == Ocena za napako
 
@@ -59,7 +70,7 @@ Oceno za napako interpolacije lahko za Hermitov polinomom izračunamo analitičn
 vrednosti na voljo odvode interpolacijski točki štejemo dvojno. Tako dobimo naslednjo
 formulo za napako
 $
-  f(x) - p_3(x) = f^((4))(xi)/(4!) (x-x_1)^2(x-x_2)^2.
+  f(x) - p_3(x) = (f^((4))(xi))/(4!) (x-x_1)^2(x-x_2)^2.
 $
 Poiskali bi radi oceno za največjo možno vrednost napake.
 Vrednosti $f^((4))(xi)$ ne poznamo in jo lahko zgolj ocenimo. Poleg tega moramo poiskati po
@@ -82,6 +93,11 @@ Maksimalno napako lahko ocenimo z
 $
 |f(x) -p_3(x)|<= (f^((4))(xi))/(4!)(x_2 - x_1)^4/4 =1/(96)f^((4))(xi)(x_2 - x_1)^4.
 $
+
+#demo12("# 4. odvod")
+
+#figure(image("img/12-odvod.svg", width: 60%), caption: [])
+
 Ocena za napako omogoča, da v naprej izberemo interpolacijske točke, za katere bo napaka manjša od
 predpisane. Če želimo, da je napaka manjša od $epsilon$, potem mora biti širina intervala dovolj
 majhna
@@ -89,6 +105,10 @@ majhna
 $
 |x_2 -x_1| <= root(4, (96)/(f^((4))(xi))epsilon).
 $
+
+#demo12("# predpisana napaka")
+
+#figure(image("img/12-napaka-eps.svg", width: 60%), caption: [])
 
 == Newtonov interpolacijski polinom
 
@@ -148,6 +168,39 @@ p(1.23)
 ```
 ]
 
+== Rungejev pojav
+
+Pri nizkih stopnjah polinomov se napaka interpolacije zmanjšuje, če povečamo število
+interpolacijskih točk. A le do neke mere! Če stopnjo polinoma preveč povečamo, začne napaka
+spet naraščati.
+
+#demo12("# runge")
+
+#demo12("# run napaka")
+
+#figure(kind: image, table(stroke: none, columns: 2,
+  image("img/12-runge.svg"), image("img/12-runge-napaka.svg")),
+  caption: [Interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
+  močno niha na robu območja.
+  . Levo: Interpolacija funkcije $f(x)=cos(2x) + sin(3x)$ s polinomom
+  stopnje $65$. Desno: Razlika med funkcijo in interpolacijskim polinomom.]
+  )
+
+Opazimo, da se napaka na robu znatno poveča. Povečanje je posledica velikih
+oscilacij, ki se pojavijo na robu, če interpoliramo s polinomom visoke stopnje na
+ekvidistančnih točkah. To je znan pojav pod imenom Rungejev pojav in se pojavi, če interpoliramo
+s polinomom visoke stopnje v ekvidistančnih točkah.
+Problemu se lahko izognemo, če namesto ekvidistančnih točk uporabimo
+#link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševe točke].
+
+#opomba(naslov: [Kaj smo se naučili?])[
+- Deljene diference in Newtonov polinom lahko uporabimo tudi, če so poleg vrednosti podani tudi
+  odvodi.
+- Zaradi Rungejevega pojava interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
+  ni najboljša izbira. Interpolacija na Čebiševih točkah pa deluje tudi za visoke stopnje polinoma.
+- Zlepki so enostavni za uporabo, učinkoviti (malo operacij za izračun) in imajo v določenih
+  primerih boljše lastnosti kot polinomi visokih stopenj
+]
 == Rešitve
 
 #let vaja12(koda, caption) = figure(code_box(jlfb("Vaja12/src/Vaja12.jl", koda)), caption: caption)
@@ -157,6 +210,10 @@ p(1.23)
 #vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]
 #vaja12("# vrednost")[Izračunaj vrednost Hermitovega kubičnega zlepka]
 
+#vaja12("# NewtonovPolinom")[Podatkovni tip za polinom v Newtonovi obliki]
+#vaja12("# np vrednost")[Izračunaj vrednost Newtonovega polinoma]
+#vaja12("# interpoliraj")[Izračun koeficientov Newtonovega polinoma z deljenimi diferencami]
+
 == Testi
 
 #let test12(koda, caption) = figure(code_box(jlfb("Vaja12/test/runtests.jl", koda)),
@@ -164,3 +221,5 @@ p(1.23)
 
 #test12("# hermiteint")[Test za izračun Hermitovega kubičnega polinoma]
 #test12("# zlepek")[Test za izračun vrednosti zlepka]
+#test12("# newton")[Test za izračun vrednosti Newtonovega polinoma]
+#test12("# interpoliraj")[Test za izračun koeficientov Newtonovega interpolacijskega polinoma]

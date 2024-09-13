@@ -21,6 +21,9 @@ struct NewtonovPolinom
   a # koeficienti
   x # vozlišča
 end
+# NewtonovPolinom
+
+# np vrednost
 """
     vrednost(p::NewtonovPolinom, x)
 
@@ -45,8 +48,7 @@ function vrednost(p::NewtonovPolinom, x)
 end
 
 (p::NewtonovPolinom)(x) = vrednost(p, x)
-# NewtonovPolinom
-
+# np vrednost
 # interpoliraj
 using LinearAlgebra
 """
