@@ -29,3 +29,20 @@ end
   @test_throws BoundsError z(5.1)
 end
 # zlepek
+# newton
+@testset "Vrednost Newtonovega polinoma" begin
+  p = NewtonovPolinom([1, 1, 2], [0, 1])
+  f(x) = 1 + x*(1 + 2*(x - 1))
+  @test isapprox(p(1), f(1))
+  @test isapprox(p(2.5), f(2.5))
+  @test isapprox(p(pi), f(pi))
+end
+# newton
+# interpoliraj
+@testset "Interpolacija z Newtonovim polinomom" begin
+  f(x) = 1 + (x-2)*(2.5 + (x-1)*3.5)
+  p = interpoliraj(NewtonovPolinom, [2, 1, 0], f.([2, 1, 0]))
+  @test isapprox(p.a, [1, 2.5, 3.5])
+  @test isapprox(p.x, [2, 1])
+end
+# interpoliraj
