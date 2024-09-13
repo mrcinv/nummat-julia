@@ -44,18 +44,19 @@ function simpson_napaka(fun, a, b)
   x = range(a, b, 5)
   f = fun.(x)
   h = x[2] - x[1]
-  I1 = 2*h/3*(f[1] + 4f[3] + f[5])
-  I2 = h/3*(f[1] + 4f[2] + 2f[3] + 4f[4]+f[5])
-  return I2, I2 - I1
+  I1 = 2 * h / 3 * (f[1] + 4f[3] + f[5])
+  I2 = h / 3 * (f[1] + 4f[2] + 2f[3] + 4f[4] + f[5])
+  napaka = (I2 - I1) / 15
+  return I2 + napaka, napaka
 end
 
 function legendre_napaka(fun, a, b, n)
-    x0, w0 = gl(a, b, n)
-    x1, w1 = gl(a, b, n+1)
-    I1 = w0' * fun.(x0)
-    I2 = w1' * fun.(x1)
-    err = I2 - I1
-    return I1, err
+  x0, w0 = gl(a, b, n)
+  x1, w1 = gl(a, b, n + 1)
+  I1 = w0' * fun.(x0)
+  I2 = w1' * fun.(x1)
+  err = I2 - I1
+  return I1, err
 end
 
 legendre3(fun, a, b) = legendre_napaka(fun, a, b, 3)
@@ -65,11 +66,11 @@ function adaptive(fun, pravilo, a, b, atol=1e-8)
   if abs(err) <= atol
     return I, 1
   end
-  c = (a + b)/2
-  tol = atol/2
-  I1, k1 = adaptive(fun, pravilo, a, c, tol)
-  I2, k2 = adaptive(fun, pravilo, c, b, tol)
-  return I1 + I2, k1 + k2
+  c = (a + b) / 2
+  tol = atol / 2
+  I1, e1 = adaptive(fun, pravilo, a, c, tol)
+  I2, e2 = adaptive(fun, pravilo, c, b, tol)
+  return I1 + I2, e1 + e2
 end
 
 """
