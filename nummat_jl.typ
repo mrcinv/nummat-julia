@@ -43,10 +43,8 @@
 
 #include "16_nde.typ"
 
-#include "17_nde_aproksimacija.typ"
+//#include "17_nde_aproksimacija.typ"
 
 #include "domace.typ"
 
 #bibliography("reference.yml")
-
-
