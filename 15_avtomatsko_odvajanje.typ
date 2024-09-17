@@ -21,6 +21,18 @@ V tej vaji si bomo ogledali en način, kako lahko implementiramo
 - Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabite
   posplošena dualna števila za izračun gradienta funkcije več spremenljivk.
 
+== Ideja avtomatskega odvoda
+
+Računalniški program ni nič drugega kot zaporedje osnovnih operacij, ki jih zaporedoma
+opravimo na vhodnih podatkih. Matematično lahko vsak korak programa zapišemo kot preslikavo $k_(i)$,
+ki stare vrednosti spremenljivk pred izvedbo koraka preslika v nove vrednosti po izvedbi koraka.
+Program si lahko predstavljamo kot kompozitum posameznih korakov
+$
+P = k_(n) circle.tiny k_(n-1) med dots med k_2 circle.tiny k_1.
+$
+Pri avtomatskem odvajanju želimo program za računanje vrednosti neke
+funkcije spremeniti v program, ki poleg vrednosti funkcije računa tudi vrednost odvoda pri istih
+argumentih. Matematično
 == Dualna števila
 
 #link("https://en.wikipedia.org/wiki/Dual_number")[Dualna števila] so števila
