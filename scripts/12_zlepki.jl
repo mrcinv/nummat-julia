@@ -1,4 +1,12 @@
 using Vaja12
+using BookUtils
+capture("12-baza") do
+  # baza
+  A = [1 0 0 0; 1 1 1 1; 0 1 0 0; 0 1 2 3]
+  inv(A)
+  # baza
+end
+
 # zlepek
 f(x) = cos(2x) + sin(3x)
 df(x) = -2sin(2x) + 3cos(3x)
