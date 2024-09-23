@@ -2,93 +2,133 @@ module Vaja13
 
 using FastGaussQuadrature
 
-function preslikaj((a, b), (c, d), x)
+struct Kvadratura
+  x # vozlišča
+  u # uteži
+  a # začetek intervala
+  b # konec intervala
+end
+
+function preslikaj(x, (a, b), (c, d))
   return (d - c) * (x - a) / (b - a) + c
 end
 
-"""
-Poišči Gauss-Legendrove kvadrature z `n` točkami za interval [a, b]
-"""
-function gl(a, b, n)
-  x, w = gausslegendre(n)
-  x = (b - a) / 2 * x .+ (a + b) / 2
-  w = (b - a) / 2 * w
-  return x, w
+const enaskoren2pi = 1 / sqrt(2pi)
+
+
+function integral(k::Kvadratura, f, a, b)
+  I = 0.0
+  for i in eachindex(k.x)
+    t = preslikaj(k.x[i], (k.a, k.b), (a, b))
+    I += f(t) * k.u[i]
+  end
+  return (b - a) / (k.b - k.a) * I
+end
+
+function Phi(x, k)
+  f(t) = exp(-t^2 / 2)
+  return 0.5 + enaskoren2pi * integral(k, f, 0, x)
+end
+
+function erfc(x, k)
+  t = 1 / x
+  f(u) = exp(-1 / u^2) / u^2
+  integral(k, f, 0, t)
+end
+
+
+struct KvadData
+  a
+  b
+  fa
+  fb
+end
+
+simpson(a, b, fa, fb, fm) = (b - a) / 6 * (fa + 4fm + fb)
+
+"""Evaluates the Simpson's Rule, also returning m and f(m) to reuse"""
+function simpson_mem(f, a, fa, b, fb)
+  m = (a + b) / 2
+  fm = f(m)
+  return (m, fm, (b - a) / 6 * (fa + 4 * fm + fb))
 end
 
 """
-    x, w = trapez(a, b, n)
-
-Izračunaj vozlišča `x` in uteži `w` za sestavljeno trapenzno pravilo na
-intervalu `[a, b]` z `n` podintervali.
+Efficient recursive implementation of adaptive Simpson's rule.
+Function values at the start, middle, end of the intervals are retained.
 """
-function trapez(a, b, n)
-  x = range(a, b, n + 1)
-  h = x[2] - x[1]
-  w = ones(n + 1) * h
-  w[1] /= 2
-  w[end] /= 2
-  return x, w
+function _quad_asr(f, a, fa, b, fb, eps, whole, m, fm)
+  lm, flm, left = simpson_mem(f, a, fa, m, fm)
+  rm, frm, right = simpson_mem(f, m, fm, b, fb)
+  delta = left + right - whole
+  if abs(delta) <= 15 * eps
+    return left + right + delta / 15, 1
+  end
+  Ileft, k_left = _quad_asr(f, a, fa, m, fm, eps / 2, left, lm, flm)
+  Iright, k_right = _quad_asr(f, m, fm, b, fb, eps / 2, right, rm, frm)
+
+  return Ileft + Iright, k_left + k_right
 end
 
-function simpson(a, b, n)
-  x = range(a, b, 2n + 1)
-  h = x[2] - x[1]
-  w = h / 3 * ones(2n + 1)
-  w[2:2:end-1] *= 4
-  w[3:2:end-1] *= 2
-  return x, w
+"""Integrate f from a to b using Adaptive Simpson's Rule with max error of eps."""
+function integral_asimpson(f, a, b, eps)
+  fa, fb = f(a), f(b)
+  m, fm, whole = simpson_mem(f, a, fa, b, fb)
+  return _quad_asr(f, a, fa, b, fb, eps, whole, m, fm)
 end
 
-function simpson_napaka(fun, a, b)
-  x = range(a, b, 5)
-  f = fun.(x)
-  h = x[2] - x[1]
-  I1 = 2 * h / 3 * (f[1] + 4f[3] + f[5])
-  I2 = h / 3 * (f[1] + 4f[2] + 2f[3] + 4f[4] + f[5])
-  napaka = (I2 - I1) / 15
-  return I2 + napaka, napaka
+struct Trapezna
 end
 
-function legendre_napaka(fun, a, b, n)
-  x0, w0 = gl(a, b, n)
-  x1, w1 = gl(a, b, n + 1)
-  I1 = w0' * fun.(x0)
-  I2 = w1' * fun.(x1)
-  err = I2 - I1
-  return I1, err
+integral(k::Trapezna, f, a, b) = (f(a) + f(b)) / (b - a)
+
+struct Simpson
 end
 
-legendre3(fun, a, b) = legendre_napaka(fun, a, b, 3)
+integral(k::Simpson, f, a, b) = (b - a) / 6 * (f(a) + 4 * f((a + b) / 2) + f(b))
 
-function adaptive(fun, pravilo, a, b, atol=1e-8)
-  I, err = pravilo(fun, a, b)
-  if abs(err) <= atol
-    return I, 1
+struct KvadraturniPar
+  k0 # kvadratura
+  k1 # red kvadrature
+end
+
+function integral_napaka(k::KvadraturniPar, f, a, b)
+  I0 = integral(k.k0, f, a, b)
+  I1 = integral(k.k1, f, a, b)
+  return I1, I1 - I0
+end
+
+struct AdaptivnaKvadratura
+  kvad # kvadratura z oceno napake
+  rtol # relativna toleranca
+end
+
+function integral_napaka(kvadratura::AdaptivnaKvadratura, f, a, b)
+  I, napaka = integral_napaka(kvadratura.kvad, f, a, b)
+  if abs(napaka) <= rtol * abs(I)
+    return I, napaka
   end
   c = (a + b) / 2
-  tol = atol / 2
-  I1, e1 = adaptive(fun, pravilo, a, c, tol)
-  I2, e2 = adaptive(fun, pravilo, c, b, tol)
-  return I1 + I2, e1 + e2
+  I1, napaka1 = adaptivna(kvadratura, f, a, c)
+  I2, napaka2 = adaptivna(kvadratura, f, c, b)
+  return I1 + I2, napaka1 + napaka2
 end
 
-"""
-    I = integral(fun, metoda, parametri)
+function integral(kvad::AdaptivnaKvadratura, f, a, b)
+  I, napaka = integral_napaka(kvad, f, a, b)
 
-Izračunaj integral funkcije `fun` z metodo `metoda` s `parametri`.
-Argument `metoda` je funkcija, ki vrne vektorja vozlišč in uteži.
-"""
-function integral(fun, metoda, parametri)
-  x, w = metoda(parametri...)
-  return w' * fun.(x)
+
+
+function integral(k::AdaptivnaKvadratura, f, a, b)
+  I, napaka, koraki = adaptivna(k.kvad, f, a, b, rtol)
+  return I
 end
 
 cebiseve_tocke(n) = [cos((2k + 1)pi / (2n)) for k in 0:n-1]
 
 function cebiseve_tocke(n, (a, b))
   x = cebiseve_tocke(n)
-  preslikava = x -> preslikaj((-1, 1), (a, b), x)
+  preslikava = x -> preslikaj(x, (-1, 1), (a, b))
   return preslikava.(x)
 end
 
@@ -105,7 +145,7 @@ length(T::CebisevaVrsta) = length(T.koef)
 
 function vrednost(x, T::CebisevaVrsta)
   n = length(T)
-  x = preslikaj(T.interval, (-1, 1), x)
+  x = preslikaj(x, T.interval, (-1, 1))
   y = T.koef[1]
   if n == 1
     return y
@@ -126,10 +166,10 @@ end
 
 (T::CebisevaVrsta)(x) = vrednost(x, T)
 
-function aproksimiraj(fun, (a, b), n)
+function aproksimiraj(::Type{<:CebisevaVrsta}, fun, (a, b), n)
   koef = zeros(n + 1)
   t = cebiseve_tocke(n + 1)
-  f = [fun(preslikaj((-1, 1), (a, b), ti)) for ti in t]
+  f = [fun(preslikaj(ti, (-1, 1), (a, b))) for ti in t]
   T0 = ones(n + 1)
   koef[1] = sum(f) / (n + 1)
   if n == 1
@@ -145,10 +185,8 @@ function aproksimiraj(fun, (a, b), n)
   return CebisevaVrsta(koef, (a, b))
 end
 
-function aproksimiraj(fun, (a, b); atol=1e-8)
-
-end
-
-export trapez, simpson, gl, integral, CebisevaVrsta, vrednost, aproksimiraj
+export integral_asimpson
+export Kvadratura, AdaptivnaKvadratura, trapez, simpson, gl, integral
+export CebisevaVrsta, vrednost, aproksimiraj, erfc
 
 end # module Vaja13
