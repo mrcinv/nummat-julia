@@ -34,7 +34,7 @@ dlmf6:
   title: "Digital Library of Mathematical Functions: Chapter 6 Exponential, Logarithmic, Sine, and Cosine Integrals"
   author: N. M. Temme
   serial-number: version 1.2.1
-  url: 
+  url:
     value: https://dlmf.nist.gov/6
     date: 2024-06-15
 dlmf7:
@@ -42,7 +42,7 @@ dlmf7:
   title: "Digital Library of Mathematical Functions: Chapter 7 Error Functions, Dawson’s and Fresnel Integrals"
   author: N. M. Temme
   serial-number: version 1.2.1
-  url: 
+  url:
     value: https://dlmf.nist.gov/7
     date: 2024-06-15
 dlmf3:
@@ -50,7 +50,7 @@ dlmf3:
   title: "Digital Library of Mathematical Functions: Chapter 3 Numerical Methods"
   author: N. M. Temme
   serial-number: version 1.2.1
-  url: 
+  url:
     value: https://dlmf.nist.gov/3
     date: 2024-06-15
 savchenko95:
@@ -59,7 +59,7 @@ savchenko95:
   title: "Function representation of solids reconstructed from scattered surface points and contours"
   parent:
     type: periodical
-    title: Computer Graphics Forum 
+    title: Computer Graphics Forum
     volume: 14
     issue: 4
   page-range: 181-188
@@ -78,12 +78,19 @@ turk99:
 morse01:
   type: conference
   title: Interpolating implicit surfaces from scattered surface data using compactly supported radial basis functions
-  author: ["Morse, B. S.", "Yoo, T. S.", "Rheingans, P.", "Chen, D. T.", "Subramanian, K. R."]
+  author:
+    [
+      "Morse, B. S.",
+      "Yoo, T. S.",
+      "Rheingans, P.",
+      "Chen, D. T.",
+      "Subramanian, K. R.",
+    ]
   parent:
     title: International Conference on Shape Modeling and Applications
     location: Genova Italy
   page-range: 89-98
-  serial-number: 
+  serial-number:
     doi: 10.1109/SMA.2001.923379
   url:
     value: https://ieeexplore.ieee.org/document/923379
@@ -151,4 +158,34 @@ von_luxburg_tutorial_2007:
     title: Statistics and Computing
     issue: 4
     volume: 17
+shepherd1981:
+  title: Chebyshev approximation of (1+2𝑥)𝑒𝑥𝑝(𝑥²)𝑒𝑟𝑓𝑐𝑥 in 0≤𝑥<∞
+  type: article
+  author: ["Shepherd, M. M.", "Laframboise, J. G."]
+  page-range: 249-253
+  date: 1981
+  serial-number:
+    doi: 10.1090/S0025-5718-1981-0595058-X
+    issn: 0025-5718, 1088-6842
+  url:
+    value: https://www.ams.org/mcom/1981-36-153/S0025-5718-1981-0595058-X/
+    date: 2024-08-05
+  parent:
+    type: periodical
+    title: Mathematics of Computation
+    issue: 153
+    volume: 36
+kochenderfer_algorithms_2019:
+  type: book
+  title: Algorithms for Optimization
+  author:
+  - Kochenderfer, Mykel J
+  - Wheeler, Tim A
+  date: 2019
+  publisher: The {MIT} Press
+  location: Cambridge, Massachusetts
+  page-total: 520
+  url: https://algorithmsbook.com/optimization/
+  serial-number:
+    isbn: 978-0-262-35140-9
 

@@ -239,6 +239,9 @@ image("img/10_obmocje_grad.svg"),
 image("img/10_obmocje_newton.svg")),
 caption: [Območja konvergence za gradientni spust (levo) in Newtonovo metodo (desno)])
 
+Več o optimizacijskih metodah si lahko preberete v knjigi
+@kochenderfer_algorithms_2019.
+
 == Rešitve
 
 #let vaja10(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja10/src/Vaja10.jl", koda)))

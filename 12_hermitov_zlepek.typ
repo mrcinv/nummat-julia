@@ -43,8 +43,9 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
   in oceno primerjajte z dejansko napako. Upoštevajte, da je pri Hermitovi interpolaciji $x_1=x_2$
   in $x_3=x_4$. Narišite graf napake.
 - Z oceno za napako @eq:12-ocena določite število interpolacijskih točk, da
-  bo napaka Hermitovega zlepka manjša od $10^(-7)$. Funkcijo $f(x)$ interpolirajte
-  tudi z Newtonovim polinomom in primerjajte napako z napako Hermitovega zlepka.
+  bo napaka Hermitovega zlepka manjša od $10^(-7)$.
+- Funkcijo $f(x)$ interpolirajte tudi z Newtonovim polinomom in primerjajte napako z napako
+  Hermitovega zlepka.
 
 == Hermitov kubični zlepek<sec:12-hermitov-zlepek>
 
