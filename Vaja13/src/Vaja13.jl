@@ -2,125 +2,105 @@ module Vaja13
 
 using FastGaussQuadrature
 
-struct Kvadratura
-  x # vozlišča
-  u # uteži
-  a # začetek intervala
-  b # konec intervala
+struct Interval{T}
+  min::T
+  max::T
 end
 
-function preslikaj(x, (a, b), (c, d))
-  return (d - c) * (x - a) / (b - a) + c
+"""Izračunaj predznačeno dolžino intervala."""
+dolzina(int::Interval) = int.max - int.min
+
+struct DoloceniIntegral{T1,T2}
+  fun
+  interval::Interval{T1}
+end
+
+abstract type AbstraktnaKvadratura{T} end
+
+struct Kvadratura{T} <: AbstraktnaKvadratura{T}
+  x::Vector{T} # vozlišča
+  u::Vector{T} # uteži
+  interval::Interval{T}
+end
+
+"""Preslikaj vrednost `x` z intervala `int1` na interval `int2` z linearno 
+funkcijo."""
+function preslikaj(x::T, int1::Interval{T}, int2::Interval{T}) where {T}
+  return dolzina(int2) / dolzina(int1) * (x - int1.min) + int2.min
 end
 
 const enaskoren2pi = 1 / sqrt(2pi)
 
 
-function integral(k::Kvadratura, f, a, b)
-  I = 0.0
-  for i in eachindex(k.x)
-    t = preslikaj(k.x[i], (k.a, k.b), (a, b))
-    I += f(t) * k.u[i]
+function integriraj(
+  int::DoloceniIntegral{T,TI}, kvad::Kvadratura{T}) where {T,TI}
+  I = zero(T)
+  for i in eachindex(kvad.x)
+    t = preslikaj(kvad.x[i], kvad.interval, int.interval)
+    f = int.fun(t)::TI
+    I += f * kvad.u[i]
   end
-  return (b - a) / (k.b - k.a) * I
+  return dolzina(int.interval) / dolzina(kvad.interval) * I
 end
 
-function Phi(x, k)
+integrator(kvad::AbstraktnaKvadratura{T}) where {T} =
+  integral::DoloceniIntegral{T} -> integriraj(integral, kvad)
+
+function phi(x::Float64, kvad::AbstraktnaKvadratura{Float64})
   f(t) = exp(-t^2 / 2)
-  return 0.5 + enaskoren2pi * integral(k, f, 0, x)
+  int = DoloceniIntegral{Float64,Float64}(f, Interval(0.0, x))
+  return 0.5 + enaskoren2pi * integriraj(int, kvad)
 end
 
-function erfc(x, k)
+function erfc(x::Float64, kvad::AbstraktnaKvadratura{Float64})
   t = 1 / x
   f(u) = exp(-1 / u^2) / u^2
-  integral(k, f, 0, t)
+  int = DoloceniIntegral{Float64,Float64}(f, Interval(0.0, t))
+  integriraj(int, kvad)
 end
 
-
-struct KvadData
-  a
-  b
-  fa
-  fb
+struct KvadraturniPar{T} <: AbstraktnaKvadratura{T}
+  k0::AbstraktnaKvadratura{T} # kvadratura nižjega reda
+  k1::AbstraktnaKvadratura{T} # kvadratura višjega reda
 end
 
-simpson(a, b, fa, fb, fm) = (b - a) / 6 * (fa + 4fm + fb)
-
-"""Evaluates the Simpson's Rule, also returning m and f(m) to reuse"""
-function simpson_mem(f, a, fa, b, fb)
-  m = (a + b) / 2
-  fm = f(m)
-  return (m, fm, (b - a) / 6 * (fa + 4 * fm + fb))
-end
-
-"""
-Efficient recursive implementation of adaptive Simpson's rule.
-Function values at the start, middle, end of the intervals are retained.
-"""
-function _quad_asr(f, a, fa, b, fb, eps, whole, m, fm)
-  lm, flm, left = simpson_mem(f, a, fa, m, fm)
-  rm, frm, right = simpson_mem(f, m, fm, b, fb)
-  delta = left + right - whole
-  if abs(delta) <= 15 * eps
-    return left + right + delta / 15, 1
-  end
-  Ileft, k_left = _quad_asr(f, a, fa, m, fm, eps / 2, left, lm, flm)
-  Iright, k_right = _quad_asr(f, m, fm, b, fb, eps / 2, right, rm, frm)
-
-  return Ileft + Iright, k_left + k_right
-end
-
-"""Integrate f from a to b using Adaptive Simpson's Rule with max error of eps."""
-function integral_asimpson(f, a, b, eps)
-  fa, fb = f(a), f(b)
-  m, fm, whole = simpson_mem(f, a, fa, b, fb)
-  return _quad_asr(f, a, fa, b, fb, eps, whole, m, fm)
-end
-
-struct Trapezna
-end
-
-integral(k::Trapezna, f, a, b) = (f(a) + f(b)) / (b - a)
-
-struct Simpson
-end
-
-integral(k::Simpson, f, a, b) = (b - a) / 6 * (f(a) + 4 * f((a + b) / 2) + f(b))
-
-struct KvadraturniPar
-  k0 # kvadratura
-  k1 # red kvadrature
-end
-
-function integral_napaka(k::KvadraturniPar, f, a, b)
-  I0 = integral(k.k0, f, a, b)
-  I1 = integral(k.k1, f, a, b)
+function oceninapako(integral::DoloceniIntegral, k::KvadraturniPar)
+  I0 = integriraj(integral, k.k0)
+  I1 = integriraj(integral, k.k1)
   return I1, I1 - I0
 end
 
-struct AdaptivnaKvadratura
-  kvad # kvadratura z oceno napake
-  rtol # relativna toleranca
+struct AdaptivnaKvadratura{T} <: AbstraktnaKvadratura{T}
+  kvad::AbstraktnaKvadratura{T} # kvadratura z oceno napake
+  rtol::Float64 # relativna toleranca
 end
 
-function integral_napaka(kvadratura::AdaptivnaKvadratura, f, a, b)
-  I, napaka = integral_napaka(kvadratura.kvad, f, a, b)
-  if abs(napaka) <= rtol * abs(I)
+function razdeli(interval::Interval)
+  a, b = interval.min, interval.max
+  c = (a + b) / 2
+  return Interval(a, c), Interval(c, b)
+end
+
+function razdeli(int::DoloceniIntegral{T,TI}) where {T,TI}
+  interval1, interval2 = razdeli(int.interval)
+  return DoloceniIntegral{T,TI}(int.fun, interval1),
+  DoloceniIntegral{T,TI}(int.fun, interval2)
+end
+
+function oceninapako(
+  integral::DoloceniIntegral{T,TI}, adkvad::AdaptivnaKvadratura{T}) where {T,TI}
+  I, napaka = oceninapako(integral, adkvad.kvad)
+  if abs(napaka) <= adkvad.rtol * abs(I)
     return I, napaka
   end
-  c = (a + b) / 2
-  I1, napaka1 = adaptivna(kvadratura, f, a, c)
-  I2, napaka2 = adaptivna(kvadratura, f, c, b)
+  int1, int2 = razdeli(integral)
+  I1, napaka1 = oceninapako(int1, adkvad)
+  I2, napaka2 = oceninapako(int2, adkvad)
   return I1 + I2, napaka1 + napaka2
 end
 
-function integral(kvad::AdaptivnaKvadratura, f, a, b)
-  I, napaka = integral_napaka(kvad, f, a, b)
-
-
-
-function integral(k::AdaptivnaKvadratura, f, a, b)
-  I, napaka, koraki = adaptivna(k.kvad, f, a, b, rtol)
+function integriraj(integral::DoloceniIntegral, k::AdaptivnaKvadratura)
+  I, _... = oceninapako(integral, k.kvad)
   return I
 end
 
@@ -185,7 +165,7 @@ function aproksimiraj(::Type{<:CebisevaVrsta}, fun, (a, b), n)
   return CebisevaVrsta(koef, (a, b))
 end
 
-export integral_asimpson
+export Interval, DoloceniIntegral, integrator, phi
 export Kvadratura, AdaptivnaKvadratura, trapez, simpson, gl, integral
 export CebisevaVrsta, vrednost, aproksimiraj, erfc
 

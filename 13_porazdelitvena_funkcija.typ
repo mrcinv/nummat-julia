@@ -5,42 +5,83 @@
 
 == Naloga
 
-- Implementiraj porazdelitveno funkcijo standardne normalne porazdelitve
+- Implementirajte porazdelitveno funkcijo standardne normalne porazdelitve
   $
     Phi(x) = 1/sqrt(2 pi) integral_(-oo)^x e^(-t^2/2) d t.
   $
-- Poskrbi, da je relativna napaka manjša od $0.5 dot 10^{-11}$. Definicijsko območje
-  razdeli na več delov in na vsakem delu uporabi primerno metodo, da zagotoviš relativno
-  natančnost.
+- Poskrbite, da je relativna napaka manjša od $0.5 dot 10^{-11}$. Definicijsko območje
+  razdelite na več delov in na vsakem delu uporabi primerno metodo, da zagotovite zahtevano
+  relativno natančnost.
 - Interval $(-oo, -1]$ transformiraj s funkcijo $1/x$ na interval $[-1, 0]$ in uporabi
-  interpolacijo s polinomom na Čebiševih točkah.
+  aproksimacijo s Čebiševimi polinomi.
   - Namesto funkcije $Phi(x)$ aproksimiraj funkcijo $x e^(x^2) Phi(x)$.
-  - Vrednosti funkcije $Phi(x)$ v Čebiševih točkah izračunaj
-- Na intervalu $[-1, a]$ za primerno izbran $a$ uporabi #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrove kvadrature].
-- Izberi $a$, da je na intervalu $[a, oo)$ vrednost na 10 decimalk enaka $1$.
+  - Vrednosti funkcije $Phi(x)$ v Čebiševih točkah izračunajte z adaptivno metodo s parom
+    Gauss-Legendrovih kvadratur
+- Na intervalu $[-1, 0]$ za primerno izbran $a$ uporabite
+  #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrove kvadrature].
+- Na intervalu $[0, oo)$ uporabite lastnost $Phi(x) = 1 - Phi(-x)$.
+
+== Razdelitev definicijskega območja
+
+Pri implementaciji neke funkcije sta pomembni dve stvari. Da je na celem defnicijskem območju
+relativna napaka omejena in da je časnovna zahtevnost izračuna omejena s konstanto, ki ni odvisna
+od argumenta funkcije. Za funkcijo kot je porazdelitvena funkcija normalne spremenljivke je
+oba pogoja zelo težko doseči z enim algoritmom. Zato je definicijsko območje bolje razdeliti na
+več delov in na vsakem delu izbrati numerično metodo, ki je najbolj primerna in zadosti
+omenjenima pogojema.
+
+#figure(
+  image("img/13-obmocja.png", width: 60%),
+  caption: [Razdelitev intervala $(-oo, oo)$ na tri dele, na katerih uporabimo različne metode]
+)
 
 == Izračun na $[-c, oo)$
-
 Izračunamo $Phi(-c)$ in $Phi(x) = Phi(-c) + integral_(-c)^x e^(-x^2/2)d x$. Integral izračunamo z
 Gauss-Legendrovimi kvadraturami s fiksnim številom vozlišč, tako da je absolutna napaka enakomerno
 omejena. Na $[b, oo)$ za dovolj velik $b$ je vrednost enaka $1$.
 
 == Izračun na $(-oo, -c]$
 
-Izračunati moramo $integral_(-oo)^(-x) e^(-t^2/2) d t$. Integral s transformacijo $u=sqrt(2)/t$
-prestavimo na končen interval. Ne pozabimo na transformacijo mej in diferenciala
-$d u = -sqrt(2)/t^2 d t$ oziroma $d t = -sqrt(2)/u^2 d u$
+Sledili bomo ideji iz @shepherd1981. Izračunali bomo komplementarno funkcijo napake
+#let erfc = math.op("erfc")
 $
-integral_(-oo)^(-x) e^(t^2/2) d t = -sqrt(2) integral_0^(-1/u) e^(-1/u^2)/u^2 d u
- = sqrt(2) integral_(-1/u)^0 e^(-1/u^2)/u^2 d u
+erfc(x) = integral_(x)^(oo) e^(-t^2) d t,
+$<eq:13-integral>
+za $x in [0, oo)$. Funkcija $Phi(x)$ lahko za negativne vrednosti $x$ izrazimo s funkcijo $erfc$ kot
+
 $
-Funkcija $(e^(-1/u^2))/(u^2)$ ni podobna polinomom, saj pri nič zelo hitro konvergira k $0$. Zato
-metode visokega reda ne bodo dale dobrih rezultatov in bomo raje uporabili sestavljena pravila
-na primer adaptivno Simpsonovo metodo.
+Phi(x) = 1/sqrt(pi) erfc(-x/sqrt(2)).
+$
+
+Vrednosti integrala $erfc(x)$ potrebujemo na intervalu $[c, oo)$. Da se izognemo neskončnim mejam,
+integral s transformacijo $t=1/x$ iz intervala $[c, oo)$ prestavimo na
+končen interval $[0, 1/c]$. V @shepherd1981 za transformacijo izberejo linearno ulomljeno preslikavo
+$t = (x - k)/(x + k)$, kjer $k$ določijo tako,
+da je konvergenca dobljene Čebiševe vrste čim hitrejša. Mi si bomo stvari poenostavili in izbrali
+preprostejšo transformacijo. Vpeljimo novo spremenljivko
+$u = 1/t$ v integral @eq:13-integral. Izračunamo diferencial $d t = -1/u^2 d u$ in integral
+$I(t) = erfc(x(t))$ zapišemo kot
+$
+I(t) =  -integral_t^0 exp(-1/u^2)/u^2 d u = integral_0^t exp(-1/u^2)/u^2 d u.
+$
+
+#figure(image("img/13-preslikan-integrand.svg", width:60%), caption: [Integrand
+$1/u^2 exp(-1/(2u^2))$, če integral $integral_(x)^(oo) exp(-t^2/2) d t$ preslikamo s
+preslikavo $t = 1/x$])
+
+Funkcija $1/(u^2)exp(-1/u^2)$ ni podobna polinomom, saj pri nič zelo hitro konvergira k $0$. Zato
+metode visokega reda ne bodo dale dobrih rezultatov in bomo raje uporabili adaptivno kvadraturo.
+
+== Adaptivna metode
 
 == Aproksimacija s polinomi Čebiševa
 
-#link("https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem#Weierstrass_approximation_theorem")[Weierstrassov izrek] pravi, da lahko poljubno zvezno funkcijo na končnem intervalu enakomerno na vsem intervalu aproksimiramo s polinomi. Polinom dane stopnje, ki neko funkcijo najbolje aproksimira je težko poiskati. Z razvojem funkcije po ortogonalnih polinomih Čebiševa, pa se optimalni aproksimaciji zelo približamo. Naj bo $f:[−1,1]->RR$ zvezna funkcija. Potem lahko $f$ zapišemo z neskončno Furierovo vrsto
+#link("https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem#Weierstrass_approximation_theorem")[Weierstrassov izrek]
+pravi, da lahko poljubno zvezno funkcijo na končnem intervalu enakomerno na vsem intervalu
+aproksimiramo s polinomi. Polinom dane stopnje, ki neko funkcijo najbolje aproksimira je težko
+poiskati. Z razvojem funkcije po ortogonalnih polinomih Čebiševa, pa se optimalni aproksimaciji
+zelo približamo. Naj bo $f:[−1,1]->RR$ zvezna funkcija. Potem lahko $f$ zapišemo z neskončno
+Furierovo vrsto
 
 $
 f(t)=sum_(n=0)^oo a_n T_n(t),
@@ -52,7 +93,6 @@ $
 a_0 = 1/pi integral_(-1)^(1) f(x)/sqrt(1-x^2) d x\
 a_n = 2/pi integral_(-1)^(1) (f(x)T_(n)(x))/sqrt(1-x^2) d x.
 $
-
 
 Polinomi Čebiševa so definirani z relacijo
 
@@ -75,13 +115,14 @@ T_2(x) &= 2x^2 - 1\
 T_3(x) &= 2x(2x^2 - 1) - x = 4x^3 - 3x
 $
 
-Namesto cele vrste @eq:13-vrsta, lahko obdržimo le prvih nekaj členov in funkcijo aproksimiramo s končno vsoto
+Namesto cele vrste @eq:13-vrsta, lahko obdržimo le prvih nekaj členov in funkcijo aproksimiramo
+s končno vsoto
 
 $
 f(x)approx C_N(x) = sum_(n=0)^N a_n T_(n)(x),
 $
 
-koeficiente $a_n$ pa poiščemo numerično z Gauss-Čebiševimi kvadraturami @dlmf3.
+koeficiente $a_n$ pa bomo poiskali numerično z Gauss-Čebiševimi kvadraturami @dlmf3.
 
 Vozlišča za Gauss-Čebiševa kvadraturo v $n$ vozliščih so v
 #link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševih vozliščih]
@@ -130,6 +171,8 @@ $
   |f(x) - C_N(x)| = |sum_(n=N+1)^oo a_n T_(n)(x)| <= sum_(n=N+1)^oo |a_n|
 $
 
+Kako vemo, kdaj je členov vrste dovolj, da je dosežena zahtevana natančnost. Izberemo $N$ tako, da
+je nekaj zaporednih čelnov $a_(N+1), a_(N+2), a_(N+3)$ manjših od
 Ker neskončne vrste $sum_(n=N+1)^oo |a_n|$ ne moremo sešteti, za približno oceno napake vzamemo kar
 zadnji koeficient $a_N$ v končni vsoti $C_N(x)$.
 
