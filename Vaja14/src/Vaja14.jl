@@ -2,10 +2,11 @@ module Vaja14
 using Vaja13
 import LinearAlgebra: eigen, eigvals, eigvecs, SymTridiagonal
 
-export VeckratniIntegral, integriraj, volumen, simpson
-
+export VeckratniIntegral, integriraj, volumen, simpson, MonteCarlo
+# simpson
 simpson(a, b, n) = Kvadratura(collect(LinRange(a, b, 2n + 1)),
   (b - a) / (6 * n) * vcat([1.0], repeat([4, 2], n - 1), [4, 1]), Interval(a, b))
+# simpson
 
 # VeckratniIntegral
 struct VeckratniIntegral{T,TI}
@@ -105,7 +106,7 @@ function integriraj(int::VeckratniIntegral{T,TI}, mc::MonteCarlo) where {T,TI}
   x = zeros(T, dim(int))
   for _ in 1:mc.n
     for i in eachindex(x)
-      x[i] = preslikaj(rand(rng), int.box[i], Interval(0.0, 1.0))
+      x[i] = preslikaj(rand(mc.rng), int.box[i], Interval(0.0, 1.0))
     end
     z::TI = int.fun(x)
     I += z

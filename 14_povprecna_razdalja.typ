@@ -76,9 +76,18 @@ integral_([a, b]^d) f(x_1, x_2 med dots med x_d) d x_1 d x_2 med dots med d x_d 
 sum_(i_1, i_2 med dots med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2) med dots med x_(i_d)),
 $<eq:14-prodkvad>
 kjer seštevamo po vseh možnih multi indeksih $(i_1, i_2 med dots med i_d) in {1, 2 med dots med n}^d$.
-Podobno lahko z linearno preslikavo formulo @eq:14-prodkvad razširimo na poljuben
-$d$-dimenzionalen
-Kvadraturni formuli @eq:14-prodkvad, ki jo dobimo na ta način, pravimo #emph[produktna formula].
+S preprosto linearno preslikavo formulo @eq:14-prodkvad razširimo na poljuben
+$d$-dimenzionalen kvader $[a_1, b_1] times [a_2, b_2] med dots med [a_d, b_d]$:
+
+$
+integral_(a_1)^(b_1) integral_(a_2)^(b_2)dots integral_(a_n)^(b_n)
+  f(x_1, x_2 med dots med x_d) d x_1 d x_2 med dots med d x_d approx\
+  product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2 med dots med i_d)
+  product_(j=1)^d w_(i_j) f(t_(1 i_1), t_(2  i_2) med dots med t_(d i_d)),
+$<eq:14-prodkvadkvad>
+kjer je $t_(i j)$ vozlišče $x_j$ preslikano na interval $[a_i, b_i]$.
+Kvadraturnim formulam @eq:14-prodkvad2, @eq:14-prodkvad in @eq:14-prodkvadkvad
+pravimo #emph[produktne formule].
 
 #opomba(naslov:[Produktne formule trpijo za prekletstvom dimenzionalnosti])[
 
@@ -104,6 +113,13 @@ notranjosti. Tako je matematik Sergey A. Smolyak razvil
 delno omilijo prekletstvo dimenzionalnosti.
 ]
 
+Definirajmo naslednje tipe in funkcije:
+- podatkovni tip #jl("VeckratniIntegral(fun, box)"), ki opiše večkratni integral na kvadru
+  $product [a_i, b_i]$ (@pr:14-veckratni-integral),
+- metodo #jl("integriraj(I::VeckrantiIntegral, kvad::Kvadratura)") za funkcijo #jl("integriraj"),
+  ki izračuna večkranti integral s kvadraturno formulo @eq:14-prodkvadkvad (@pr:14-preslikaj,
+  @pr:14-integriraj, @pr:14-naslednji).
+
 == Metoda Monte Carlo
 <sec:14-monte-carlo>
 
@@ -115,14 +131,15 @@ E(f(X)) = 1/V(B_d) integral_(B_d) f(x) d x.
 $
 
 Po #link("https://en.wikipedia.org/wiki/Central_limit_theorem")[centralnem limitnem izreku] je
-vzorčno povprečje za enostaven vzorec $x_1, x_2 med dots med x_n$:
+vzorčno povprečje :
 
 $
-overline(f(x)) = 1/(n)(f(x_1) + f(x_2) med dots med f(x_n)) ~ N(mu, sigma)
+overline(f(x)) = 1/(n)(f(x_1) + f(x_2) med dots med f(x_n))
 $
-porazdeljeno približno normalno s parametri $mu = E(f(X))$ in $sigma= sigma(f(X))/sqrt(n)$.
-Razpršenost porazdelitve pada, ko $n$ narašča, to pa
-pomeni, da je vzorčno povprečje za velike vzorce blizu vrednosti:
+
+za enostaven vzorec $x_1, x_2 med dots med x_n$ porazdeljeno približno normalno $N(mu, sigma)$ s
+parametri $mu = E(f(X))$ in $sigma= sigma(f(X))/sqrt(n)$. Razpršenost porazdelitve pada s
+$sqrt(n)$, zato je vzorčno povprečje za velike vzorce blizu vrednosti:
 
 $
 E(f(X)) = 1/V(B_d) integral_(B_d) f(x) d x.
@@ -140,28 +157,27 @@ ima pa prednost, da ne trpi za
 prekletstvom dimenzionalnosti. Zato se jo najpogosteje uporablja za računanje integralov v
 višjih dimenzijah.
 
-Definirajmo sedaj naslednje:
-- nov podatkovni tip `MonteCarlo(rng, n)`
-- novo metodo `integriraj(integral::VeckrantiIntegral, mc::MonteCarlo)`, ki dani integral izračuna
-  z metodo Monte Carlo (@pr:14-mc).
+Definirajmo sedaj naslednji tip in metodo:
+- podatkovni tip #jl("MonteCarlo(rng, n)") za parametre metode Monte Carlo in
+- novo metodo #jl("integriraj(integral::VeckrantiIntegral, mc::MonteCarlo)") za funkcijo
+  #jl("integriraj"), ki dani integral izračuna z metodo Monte Carlo (@pr:14-mc).
 
 == Povprečna razdalja med točkama na kvadratu $[0 , 1]^2$
 <povprečna-razdalja-med-točkama-na-kvadratu-012>
 
 Povprečna razdaljo lahko izračunamo s štirikratnem integralom
 
-$ bar(d) = integral_([0 , 1]^4) sqrt((x_1 - x_2)^2 + (y_1 - y_2)^2) d x_1 d x_2 d y_1 d y_2 . $
+$ overline(d) = integral_([0 , 1]^4) sqrt((x_1 - x_2)^2 + (y_1 - y_2)^2) d x_1 d x_2 d y_1 d y_2 . $
 
 Za izračun bomo uporabili produktno kvadraturo s sestavljeno Simpsonovo
 formulo in metodo Monte Carlo.
 
-```
-using NumMat, LinearAlgebra
-## povprečna razdalja med točkama v kocki [0,1]^2
-f(x) = norm(x[1:2]-x[3:4]); # razdalja
-x0 = LinRange(0, 1, 7); w = (x0[2]-x0[1])/3*[1 4 2 4 2 4 1];
-I = ndquad(f, x0, w, 4)
-```
+#let demo14(koda) = code_box(jlfb("scripts/14_quad4d.jl", koda))
+Najprej definiramo funkcijo razdalje:
+
+#demo14("# razdalja")
+
+#demo14("# povprecna")
 
 Poskusimo še z metodo Monte Carlo, kjer vozlišča izberemo slučajno
 enakomerno na izbranem območju.
@@ -223,4 +239,5 @@ println("Napaka pri Monte Carlo pada približno z n^(", red, ") za izbrane vzorc
 #vaja14("# integriraj")[Izračunaj večkratni integral s produktno kvadraturo]<pr:14-integriraj>
 #vaja14("# naslednji!")[Izračunaj naslednji multiindeks
 $(i_1, i_2 med dots med i_d) in {1, 2 med dots med n}^d$ ]<pr:14-naslednji>
+#vaja14("# simpson")[Izračunaj vozlišča in uteži za sestavljeno Simpsonovo pravilo]<pr:14-simpson>
 #vaja14("# mc")[Izračunaj večkratni integral z metodo Monte Carlo]<pr:14-mc>
