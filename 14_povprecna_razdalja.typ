@@ -177,58 +177,75 @@ Najprej definiramo funkcijo razdalje:
 
 #demo14("# razdalja")
 
+Nato pa še funkcijo, ki izračuna povprečno razdaljo:
+
 #demo14("# povprecna")
 
-Poskusimo še z metodo Monte Carlo, kjer vozlišča izberemo slučajno
-enakomerno na izbranem območju.
+Za izračun uporabimo sestavljeno Simpsonovo formulo:
 
-```
-function mcquad(fun, n, dim)
-    Ef = 0
-    for i=1:n
-      Ef += fun(rand(dim))
-    end
-    return Ef/n
-end
-mcquad(f, 100000, 6)
-```
+#demo14("# izracun")
+#code_box(raw(read("out/14-dp.out")))
 
-Poglejmo si, kako je s hitrostjo konvergence pri produktnih kvadraturah.
+Napako ocenimo tako, da izračun ponovimo z bolj natančno kvadraturno formulo. Na primer tako, da
+podvojimo število vozlišč v osnovni kvadrturi:
 
-```@example
-using Plots, Random
-Random.seed!(1234)
-ndquad_simpson(f, n, dim) = ndquad(f, LinRange(0, 1, 2n+1),
-                            1/(6n)*vcat([1], repeat([4,2], n-1), [4, 1]), dim)
-dim = 4
-I = ndquad_simpson(f, 20, dim)
-n = 3:15
-napake_s = []
-napake_mc = []
-for nk in n
-    push!(napake_s, ndquad_simpson(f, nk, dim) - I)
-    push!(napake_mc, mcquad(f, (2nk+1)^4, dim) - I)
-end
-scatter((2n.+1).^4, abs.(napake_s), scale=:log10, label="simpson")
-scatter!((2n.+1).^4, abs.(napake_mc), scale=:log10, label="Monte Carlo", title="Napake v odvisnosti od števila izračunov")
-```
+#demo14("# ocena napake")
+#code_box(raw(read("out/14-napaka.out")))
 
-Z zbranimi podatki lahko določimo približni red simpsonove produktne
-metode za 4 kratne integrale
+Isti rezultat izračunajmo še z metodo Monte Carlo:
 
-```@example
-konst, red = hcat(ones(size(n)), log.((2n.+1).^4))\log.(abs.(napake_s))
-println("Napaka produktne simpsonove formule pada z n^(", red, "), kjer je n število izračunov funkcijske vrednosti.")
-```
+#demo14("# mc izračun")
+#code_box(raw(read("out/14-dmc.out")))
 
-Podobno lahko vsaj približno ocenimo hitrost konvergence za metodo Monte
-Carlo. Pri čemer se moramo zavedati, da je vrednost in tudi napaka
-odvisna od zaporedja slučajnih vozlišč, zato je ocena zgolj okvirna:
+Poglejmo si, kako napaka pada, če povečamo število podintervalov v sestavljeni Simpsonovi formuli.
 
-```@example
-konst, red = hcat(ones(size(n)), log.((2n.+1).^4))\log.(abs.(napake_mc))
-println("Napaka pri Monte Carlo pada približno z n^(", red, ") za izbrane vzorce.")
-```
+#demo14("# napaka simpson")
+
+Iz rezultatov lahko ocenimo red metode. Zapišemo predoločeni sistem za logaritem napako v odvisnosti
+od logaritma števila funkcijskih izračunaov:
+
+$
+delta(n) = n^(-r)\
+log(delta(n)) = -r log(n)
+$
+Tako dobimo $k times 1$ predoločen sistem za en parameter $r$:
+$
+mat(log(n_1); log(n_2); dots.v; log(n_k)) dot.c vec(r) =
+ - vec(log(|delta_1|), log(|delta_2|), dots.v, log(|delta_k|)),
+$<eq:14-red>
+kjer so $delta_i$ izračunane napake za $n_i$ funkcijskih izračunov. Sistem <eq:14-red> rešimo po
+metodi najmanjših kvadratov z operatorjem #jl("\\"):
+
+#demo14("# red s")
+#code_box(raw(read("out/14-ksim.out")))
+
+Vidimo, da je red malo manj kot $1$. Za vsako novo točno decimalko moramo število
+korakov povečati za faktor $10^(1/r)$, kar je malo več kot $10$. Poglejmo si sedaj, kako se odreže
+metoda Monte Carlo.
+
+#demo14("# napaka mc")
+
+#figure(image("img/14-napaka.svg", width: 60%), caption: [Napaka Simpsonove produktne kvadrature in
+metode Monte Carlo v odvisnosti od števila funkcijskih izračunov])
+
+Vidimo, da je napaka pri metodi Monte Carlo precej bolj nepredvidljiva kot pri produktni Simpsonovi
+kvadraturi. To je posledica neprevidljivosti vzorčenja. Kljub temu je trend jasen.
+Podobno kot prej lahko ocenimo red metode Monte Carlo. Centralni limitni izrek pove, da bi moral
+biti red približno $1/2$.
+
+#demo14("# red mc")
+#code_box(raw(read("out/14-kmc.out")))
+
+Izračunan red je nekoliko večji, a to je zgolj posledica variabilnosti, ki ga prinaša s seboj
+vzorčenje.
+
+#opomba(naslov: [Kaj smo se naučili?] )[
+- Večkratni integral lahko izračunamo s produktnimi kvadraturami.
+- Produktne kvadrature trpijo za prekletsvom dimenzionalnosti.
+- Metoda Monte Carlo je enostavnoa in ne trpi za prekletstvom dimenzionalnosti, a konverira počasi.
+]
+
+#pagebreak()
 
 == Rešitve
 
@@ -241,3 +258,13 @@ println("Napaka pri Monte Carlo pada približno z n^(", red, ") za izbrane vzorc
 $(i_1, i_2 med dots med i_d) in {1, 2 med dots med n}^d$ ]<pr:14-naslednji>
 #vaja14("# simpson")[Izračunaj vozlišča in uteži za sestavljeno Simpsonovo pravilo]<pr:14-simpson>
 #vaja14("# mc")[Izračunaj večkratni integral z metodo Monte Carlo]<pr:14-mc>
+
+== Testi
+
+#let test14(koda, caption) = figure(code_box(jlfb("Vaja14/test/runtests.jl", koda)),
+  caption: caption)
+
+#test14("# naslednji")[Test izračuna naslednjega multiindeksa]
+#test14("# simpson")[Test izračuna sestavljenega Simpsonovega pravila]
+#test14("# preslikaj")[Test preslikave kvadrature na nov interval]
+#test14("# integriraj")[Test izračuna integrala s produktno kvadraturo]

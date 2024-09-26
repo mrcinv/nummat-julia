@@ -3,17 +3,22 @@ using Vaja13
 import LinearAlgebra: eigen, eigvals, eigvecs, SymTridiagonal
 
 export VeckratniIntegral, integriraj, volumen, simpson, MonteCarlo
+
 # simpson
+"""Poišči vozlišča in uteži za sestavljeno Simpsonovo pravilo na intervalu 
+`[a, b]` z delitvijo na `n` podintervalov."""
 simpson(a, b, n) = Kvadratura(collect(LinRange(a, b, 2n + 1)),
   (b - a) / (6 * n) * vcat([1.0], repeat([4, 2], n - 1), [4, 1]), Interval(a, b))
 # simpson
 
 # VeckratniIntegral
-struct VeckratniIntegral{T,TI}
+"""Podatkovni tip za večkratni integral."""
+struct VeckratniIntegral{T,TIntegral}
   fun # funkcija, ki jo integriramo
   box::Vector{Interval{T}}
 end
 
+"""Vrni dimenzijo večkratnega integrala."""
 dim(i::VeckratniIntegral) = length(i.box)
 # VeckratniIntegral
 
@@ -94,13 +99,21 @@ function naslednji!(index, n)
 end
 # naslednji!
 # mc
+"""Izračunaj volumen večrazsežne škatle `box`."""
 volumen(box::Vector{Interval{T}}) where {T} = prod(dolzina.(box))
 
+"""Podatkovna struktura za parametre metode Monte Carlo."""
 struct MonteCarlo
   rng
-  n::Int
+  n::Int # število vzorcev
 end
 
+"""
+  I = integriraj(int::::VeckratniIntegral{T,TI}, mc::MonteCarlo)
+
+Izračunaj približek za večkratni integral `int` z metodo Monte Carlo s parametri
+`mc`.
+"""
 function integriraj(int::VeckratniIntegral{T,TI}, mc::MonteCarlo) where {T,TI}
   I = zero(TI)
   x = zeros(T, dim(int))
