@@ -111,3 +111,9 @@ savefig("img/14-napaka.svg")
 k = reshape(log.(nmc), length(nmc), 1) \ log.(abs.(napakamc))
 # red mc
 term("14-kmc", k)
+
+# singularnost
+x(t) = [t, 0, 1 - t, 0]
+plot(t -> razdalja(x(t)), 0, 1)
+plot(t -> razdalja([t, t, 1 - t, 1 - t]), 0, 1)
+# singularnost

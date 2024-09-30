@@ -7,8 +7,10 @@
 == Naloga
 <naloga>
 
-- Ustvari podatkovni tip za tridiagonalno matriko ter implementiraj operacije množenja `*` z vektorjem in reševanja sistema  $A x=b$ `\`.   
-- Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da se od izhodišča oddaljimo za $k$ korakov.
+- Ustvari podatkovni tip za tridiagonalno matriko ter implementiraj operacije množenja `*` z
+  vektorjem in reševanja sistema  $A x=b$ z operatorjem `\`.
+- Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da
+  se od izhodišča oddaljimo za $k$ korakov.
   - Zapiši fundamentalno matriko za #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo], ki modelira slučajni sprehod, ki se lahko oddalji od izhodišča le za $k$ korakov.
   - Reši sistem s fundamentalno matriko in vektorjem enic.
   - Povprečno število korakov oceni še z vzorčenjem velikega števila simulacij slučajnega sprehoda.
@@ -30,7 +32,7 @@ $
 $
 
 Elementi tridiagonalne matrike, za katere se indeksa razlikujeta za več kot 1, so vsi
-enaki 0: 
+enaki 0:
 $ |i-j| > 1 => a_(i j) = 0. $
 
 Z implementacijo posebnega podatkovnega tipa za tridiagonalno matriko lahko prihranimo tako na
@@ -58,17 +60,17 @@ Zgornja definicija omogoča, da ustvarimo nove objekte tipa `Tridiag`
 ]
 
 #opomba(naslov: [Preverjanje skladnosti polj v objektu])[
-V zgornji definiciji `Tridiag` smo poleg deklaracije polj dodali tudi 
+V zgornji definiciji `Tridiag` smo poleg deklaracije polj dodali tudi
 #link("https://docs.julialang.org/en/v1/manual/constructors/#man-inner-constructor-methods")[notranji konstruktor]
-v obliki funkcije `Tridiag`. Vemo, da mora biti dolžina vektorjev `sd` in `zd` za ena 
+v obliki funkcije `Tridiag`. Vemo, da mora biti dolžina vektorjev `sd` in `zd` za ena
 manjša od dolžine vektorja `d`. Zato je pogoj najbolje preveriti, ko ustvarimo objekt in
-se nam s tem v nadaljevanju ni več treba ukvarjati. Z notranjim konstruktorjem lahko te 
+se nam s tem v nadaljevanju ni več treba ukvarjati. Z notranjim konstruktorjem lahko te
 pogoje uveljavimo ob nastanku objekta in preprečimo ustvarjanje objektov z nekonsistentnimi podatki.
 ]
 
-Želimo, da se matrike tipa `Tridiag` obnašajo podobno kot generične matrike vgrajenega tipa `Matrix`. Zato funkcijam, ki delajo z matrikami, dodamo specifične metode za podatkovni tip `Tridiag`. 
-Argumentu funkcije lahko dodamo informacijo o tipu, tako da dodamo `::Tip` 
-in na ta način definiramo specifično metodo, ki deluje le za dan podatkovni tip. Če želimo, da 
+Želimo, da se matrike tipa `Tridiag` obnašajo podobno kot generične matrike vgrajenega tipa `Matrix`. Zato funkcijam, ki delajo z matrikami, dodamo specifične metode za podatkovni tip `Tridiag`.
+Argumentu funkcije lahko dodamo informacijo o tipu, tako da dodamo `::Tip`
+in na ta način definiramo specifično metodo, ki deluje le za dan podatkovni tip. Če želimo, da
 metoda deluje za argumente tipa `Tridiag`, argumentu dodamo `::Tridiag`. Več informacij o
 #link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
 #link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih].
@@ -78,11 +80,11 @@ Implementirajmo naslednje metode specifične za tip `Tridiag`:
 - #jl("size(T::Tridiag)") vrne dimenzije matrike (@pr:03-size),
 - #jl("getindex(T::Tridiag, i, j)") vrne element `T[i,j]` (@pr:03-getindex),
 - #jl("setindex!(T::Tridiag, x, i, j)") nastavi element `T[i,j]` (@pr:03-setindex) in
-- #jl("*(T::Tridiag, x::Vector)") izračuna produkt matrike `T` z vektorjem `x` (@pr:03-produkt). 
+- #jl("*(T::Tridiag, x::Vector)") izračuna produkt matrike `T` z vektorjem `x` (@pr:03-produkt).
 
 Za tridiagonalne matrike je časovna zahtevnost množenja matrike z vektorjem bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^2)$).
 
-Preden nadaljujemo, preverimo, ali so funkcije pravilno implementirane. Napišemo avtomatske teste, ki jih lahko kadarkoli poženemo. V projektu `Vaja03` ustvarimo datoteko `Vaja03/test/runtests.jl` in vanjo zapišemo kodo, ki preveri pravilnost zgoraj definiranih funkcij.   
+Preden nadaljujemo, preverimo, ali so funkcije pravilno implementirane. Napišemo avtomatske teste, ki jih lahko kadarkoli poženemo. V projektu `Vaja03` ustvarimo datoteko `Vaja03/test/runtests.jl` in vanjo zapišemo kodo, ki preveri pravilnost zgoraj definiranih funkcij.
 
 #code_box[
   #jlfb("Vaja03/test/runtests.jl", "# glava")
@@ -115,20 +117,20 @@ Podobno definiramo teste še za druge funkcije. Primeri testov so v poglavju
 Poiskali bomo rešitev sistema linearnih enačb $T x = b$, kjer je matrika sistema $T$
 tridiagonalna. Sistem lahko rešimo z Gaussovo eliminacijo in obratnim vstavljanjem
 (glej učbenik @orel). Ker je v tridiagonalni matriki bistveno manj elementov, se število potrebnih
-operacij tako za Gaussovo eliminacijo kot za obratno vstavljanje bistveno zmanjša. Dodatno 
+operacij tako za Gaussovo eliminacijo kot za obratno vstavljanje bistveno zmanjša. Dodatno
 predpostavimo, da je matrika $T$ takšna, da med eliminacijo ni treba delati delnega pivotiranja.
-V nasprotnem primeru se tridiagonalna oblika matrike med Gaussovo eliminacijo podre in se algoritem 
-nekoliko zakomplicira. Za diagonalno dominantne matrike po stolpcih pri Gaussovi eliminaciji 
+V nasprotnem primeru se tridiagonalna oblika matrike med Gaussovo eliminacijo podre in se algoritem
+nekoliko zakomplicira. Za diagonalno dominantne matrike po stolpcih pri Gaussovi eliminaciji
 pivotiranje ni potrebno.
 
 Časovna zahtevnost Gaussove eliminacije brez pivotiranja je za tridiagonalni sistem $T x = b$ linearna $cal(O)(n)$ namesto kubična $cal(O)(n^3)$. Za obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša na linearno $cal(O)(n)$.
 
-Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napišimo funkcijo `\`: 
+Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napišimo funkcijo `\`:
 
 #code_box[ #jl("function \(T::Tridiagonal, b::Vector)")]
 
-ki poišče rešitev sistema $T x = b$ (rešitev je @pr:03-backslash). V datoteko 
-`Vaja03/test/runtests.jl` dodajte test, ki na primeru preveri pravilnost funkcije `\`. 
+ki poišče rešitev sistema $T x = b$ (rešitev je @pr:03-backslash). V datoteko
+`Vaja03/test/runtests.jl` dodajte test, ki na primeru preveri pravilnost funkcije `\`.
 
 == Slučajni sprehod
 <slučajni-sprehod>
@@ -138,8 +140,8 @@ v eni dimenziji. Slučajni sprehod je vrsta
 #link("https://en.wikipedia.org/wiki/Stochastic_process")[stohastičnega procesa],
 ki ga lahko opišemo z
 #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo] z
-množico stanj, ki je enako množici celih števil $ZZ$. Če se na nekem koraku slučajni sprehod nahaja 
-v stanju $n$, se lahko v naslednjem koraku z verjetnostjo $p in [0, 1]$ premakne v stanje $n - 1$ 
+množico stanj, ki je enako množici celih števil $ZZ$. Če se na nekem koraku slučajni sprehod nahaja
+v stanju $n$, se lahko v naslednjem koraku z verjetnostjo $p in [0, 1]$ premakne v stanje $n - 1$
 ali z verjetnostjo $q = 1 - p$ v stanje $n + 1$. Prehodne verjetnosti slučajnega sprehoda so enake:
 
 $
@@ -152,7 +154,7 @@ Markovska veriga je zaporedje slučajnih spremenljivk
 $ X_1, X_2, X_3, med dots $
 z vrednostmi v množici stanj ($ZZ$ za slučajni sprehod), za katere velja Markovska lastnost
 
-$ 
+$
  P(X_(i+1) = x | X_1 = x_1, X_2 = x_2 med dots med X_i = x_i) = P(X_(i+1) = x | X_i = x_i).
 $
 
@@ -204,20 +206,20 @@ $
 == Pričakovano število korakov
 Poiskati želimo pričakovano število korakov, ko se slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Zato bomo privzeli, da se sprehod v stanjih $-k$ in $k$ ustavi in se ne premakne več.
 
-Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za  absorbirajoče stanje $k$ je diagonalni element prehodne matrike enak $1$, vsi ostali elementi v vrstici pa $0$: 
+Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za  absorbirajoče stanje $k$ je diagonalni element prehodne matrike enak $1$, vsi ostali elementi v vrstici pa $0$:
 $
 p_(k k) & = P(X_(i+1)=k | X_i = k) = 1\
 p_(k l) & = P(X_(i+1)=l | X_i = k) = 0.
-$ 
+$
 
 Stanje, ki ni absorbirajoče, imenujemo #emph[prehodno stanje]. Markovske verige, ki vsebujejo vsaj eno absorbirajoče stanje, imenujemo
 #link("https://en.wikipedia.org/wiki/Absorbing_Markov_chain")[absorbirajoča Markovska veriga].
 
-Predpostavimo lahko, da je začetno stanje enako $0$. Iščemo pričakovano število korakov, ko se 
-slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Zanemarimo stanja, ki so več kot $k$ oddaljena 
-od izhodišča in stanji $k$ in $-k$ spremenimo v absorbirajoči stanji. Obravnavamo torej 
-absorbirajočo verigo z $2k+1$ stanji, pri kateri sta stanji $-k$ in $k$ absorbirajoči, ostala 
-stanja pa ne. Iščemo pričakovano število korakov, da iz začetnega stanja pridemo v eno od 
+Predpostavimo lahko, da je začetno stanje enako $0$. Iščemo pričakovano število korakov, ko se
+slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Zanemarimo stanja, ki so več kot $k$ oddaljena
+od izhodišča in stanji $k$ in $-k$ spremenimo v absorbirajoči stanji. Obravnavamo torej
+absorbirajočo verigo z $2k+1$ stanji, pri kateri sta stanji $-k$ in $k$ absorbirajoči, ostala
+stanja pa ne. Iščemo pričakovano število korakov, da iz začetnega stanja pridemo v eno od
 absorbirajočih stanj.
 
 Za izračun iskane pričakovane vrednosti uporabimo #link("https://en.wikipedia.org/wiki/Absorbing_Markov_chain#Canonical_form")[kanonično obliko prehodne matrike].
@@ -233,7 +235,7 @@ P  = mat(
 $
 kjer vrstice $[Q, T]$ ustrezajo prehodnim, vrstice $[0, I]$ pa absorbirajočim stanjem. Matrika $Q$
 opiše prehodne verjetnosti za sprehod med prehodnimi stanji, matrika $Q^m$ pa prehodne
-verjetnosti po $m$ korakih, če se sprehajamo le po prehodnih stanjih. 
+verjetnosti po $m$ korakih, če se sprehajamo le po prehodnih stanjih.
 
 Vsoto vseh potenc matrike $Q$
 $
@@ -266,15 +268,15 @@ in $-q = p - 1$ na prvi naddiagonali:
 
 $ I - Q = mat(delim: "(", 1, - q, 0, dots.h, 0; - p, 1, - q, dots.h, 0; dots.v, dots.down, dots.down, dots.down, dots.v; 0, dots.h, - p, 1, - q; 0, dots.h, 0, - p, 1). $
 
-Matrika $I - Q$ je tridiagonalna in po stolpcih diagonalno dominantna, zato lahko 
-uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi 
+Matrika $I - Q$ je tridiagonalna in po stolpcih diagonalno dominantna, zato lahko
+uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi
 matriko $I - Q$:
 
 #figure(
 code_box(
   jlfb("scripts/03_tridiag.jl", "# matrika_sprehod")
 ),
-caption: [Sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod, ki se konča, 
+caption: [Sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod, ki se konča,
 ko se prvič oddalji za $k$ korakov od izhodišča]
 )<pr:03-matrika-sprehod>
 
@@ -288,7 +290,7 @@ code_box[
 caption: [Izračunaj vektor pričakovanih števil korakov, ki jih potrebuje slučajni
 sprehod, da se iz začetnega stanja med $1$ in $2k-1$ premakne v stanje $0$ ali $2k$.]
 )
-V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots med 0 med dots k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots 0, 1, med dots med k-1}$. 
+V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots med 0 med dots k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots 0, 1, med dots med k-1}$.
 
 #code_box[
   #jlfb("scripts/03_tridiag.jl", "# koraki slika")
@@ -299,10 +301,10 @@ V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanj
   caption: [Pričakovano število korakov, ko slučajni sprehod prvič doseže stanji $-10$ ali $10$, v odvisnosti od začetnega stanja $i in {-9, -8 dots -1, 0, 1 dots 8, 9}$.]
 )
 
-Za konec se prepričajmo še s 
-#link("https://sl.wikipedia.org/wiki/Metoda_Monte_Carlo")[simulacijo Monte Carlo], da so 
+Za konec se prepričajmo še s
+#link("https://sl.wikipedia.org/wiki/Metoda_Monte_Carlo")[simulacijo Monte Carlo], da so
 rešitve, ki jih dobimo kot rešitev sistema, res prave. Slučajni sprehod simuliramo z generatorjem
-naključnih števil in izračunamo 
+naključnih števil in izračunamo
 #link("https://en.wikipedia.org/wiki/Sample_mean_and_covariance")[vzorčno povprečje] za število
 korakov $m$.
 
@@ -310,12 +312,12 @@ korakov $m$.
 code_box[
   #jlfb("scripts/03_tridiag.jl", "# simulacija")
 ],
-caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da oceno za pričakovano 
+caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da oceno za pričakovano
 število korakov.]
 )
 
 
-Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim 
+Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim
 povprečjem po velikem številu sprehodov.
 
 #code_box[

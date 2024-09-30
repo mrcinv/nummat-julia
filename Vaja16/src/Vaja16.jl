@@ -104,7 +104,7 @@ end
 
 # RK2
 struct RK2
- n # število korakov
+  n # število korakov
 end
 
 """
@@ -205,7 +205,8 @@ function vrednost(r::ResitevNDE, t)
   p = r.zp.p
   u = r.u
   tabt = r.t
-  hermiteint(t, tabt[i:i+1], u[i:i+1], [f(tabt[i], u[i], p), f(tabt[i+1], u[i+1], p)])
+  hermiteint(t, tabt[i-1:i], u[i-1:i],
+    [f(tabt[i-1], u[i-1], p), f(tabt[i], u[i], p)])
 end
 
 # Omogočimo, da rešitev NDE kličemo kot funkcijo

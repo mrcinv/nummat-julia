@@ -205,9 +205,82 @@ vrednostih in odvodih v krajiščih intervala $x_i$ in $x_(i+1)$.
 
 == Poševni met z zračnim uporom
 
+Poševni met opisuje gibanje točkastega telesa pod vplivom gravitacije. Enačbe, ki opisujejo poševni
+met, izpeljemo iz #link("https://sl.wikipedia.org/wiki/Newtonovi_zakoni_gibanja")[Newtonovih zakonov
+gibanja]. Položaj telesa opišemo z vektorjem položaja $bold(x) = [x, y, z]^T in RR^3$. Trajektorija
+je podana kot krivulja $bold(x)(t)$, ki opisuje položaj v odvisnoti od časa. Označimo z
 $
-x(t) =
+bold(v)(t)=dot(bold(x))(t) = (d dot(bold(x)))/(d t)
 $
+vektor hitrosti in z
+$
+bold(a)(t) = dot.double(bold(x))(t) = (d bold(v)(t))/(d t) = (d^2 bold(x)(t))/(d t^2)
+$
+vektor pospeška. Gibanje točkastega telesa z maso $m$ pod vplivom vsote vseh sil $bold(F)$, ki delujejo na
+dano telo opiše 2. Newtonov zakon:
+
+$
+bold(F) = m bold(a)(t).
+$<eq:16-2-newtonov-zakon>
+
+Sile, ki delujejo na telo so lahko odvisne tako od položaja, kot tudi od hitrosti. Sile, ki delujejo
+na telo pri poševnem metu sta sila teže $bold(F)_g$ in sila zračnega upora $bold(F)_u$. Predpostavimo
+lahko, da velja
+#link("https://sl.wikipedia.org/wiki/Upor_sredstva#Kvadratni_zakon_upora")[kvadratni zakon upora],
+po katerem je velikost sile upora sorazmerna kvadraatu velikosti hitrosi. Upor vedno kaže v
+nasprotni smeri hitrosti, zato lahko zapišemo
+$
+bold(F)_u = -C bold(v)norm(bold(v)),
+$
+kjer je konstanta $C$ odvisna od gostote medija in oblike točkastega telesa. Sila teže kaže
+vertikalno navzdol in je sorazmerna masi in težnemu pospešku $g$:
+$
+bold(F)_g = m bold(g) = -m g vec(0, 0, 1),
+$
+kjer je $bold(g) = g [0, 0, -1]^T$ vektor težnega pospeška. Vsoto vseh sil lahko zapišemo kot
+
+$
+bold(F) = -m bold(g) - C bold(v)norm(bold(v)).
+$<eq:16-vsota-sil>
+
+Ko vstavimo @eq:16-vsota-sil v 2. Newtonov zakon @eq:16-2-newtonov-zakon, dobimo sistem enačb 2.
+reda:
+
+$
+dot.double(bold(x))(t) = bold(a)(t) = m bold(F) = bold(g) -
+  C dot(bold(x))(t)norm(dot(bold(x))(t)).
+$<eq:16-sistem-2-reda>
+
+Če želimo uporabiti metode za numerično reševanje diferencialnih enačb, moramo sistem
+@eq:16-sistem-2-reda prevesti na sistem enačb 1. reda. To naredimo tako, da vpeljemo nove
+spremenljivke za komponente odvoda $dot(bold(x))(t)$. Oznake za nove spremenljivke se ponujajo kar
+same $bold(v)(t) = dot(bold(x))(t)$. Sistem enačb 2. reda @eq:16-sistem-2-reda je ekvivalenten
+sistemu enačb 1. reda:
+
+$
+dot(bold(x))(t) &= bold(v)(t)\
+dot(bold(v))(t) &= bold(g) - C dot(bold(x))(t)norm(dot(bold(x))(t)).
+$<eq:16-sistem-1-reda>
+
+V enačbah @eq:16-sistem-1-reda se v resnici skriva 6 enačb, po ena za vsako komponento vektorjev
+$bold(x)$ in $bold(v)$.
+
+Zapišimo sedaj vrednost tipa #jl("ZacetniProblem"), ki opiše začetni problem za enačbe
+@eq:16-sistem-1-reda. Vektorja $bold(x)$ in $bold(v)$ združimo v en vektor s 6 komponentami:
+
+$
+bold(u)(t)=vec(x, y, z, v_x, v_y, v_z)
+$
+
+in napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stani enačb
+@eq:16-sistem-1-reda:
+
+#demo16("# posevni")
+
+Nato napišemo še funkcijo, ki vrne vrednost tipa #jl("ZacetniProblem") za dane začetne pogoje in
+vrednosti parametrov:
+
+#demo16("# posevni zp")
 
 == Rešitve
 

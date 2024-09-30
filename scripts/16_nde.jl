@@ -1,12 +1,38 @@
-
-function posevni(u, _, p)
+using Vaja16
+# posevni
+"""
+Izračunaj desne strani enačb za poševni met.
+"""
+function f_posevni(_, u, p)
   v = u[4:6]
-  g = [0, 0, p[1]]
-  f = -g - p[2] * v * norm(v)
+  g = -[0, 0, p[1]]
+  f = g - p[2] * v * norm(v)
   return vcat(v, f)
 end
+# posevni
+# posevni zp
+"""
+Sestavi začetni problem za poševni met z začetnimi pogoji in parametri.
+"""
+function posevni_met(x0, v0, t, g, C)
+  u0 = vcat(x0, v0)
+  tint = [0, t]
+  p = [g, C]
+  return ZacetniProblem(f_posevni, u0, tint, p)
+end
+# posevni zp
 
-
+# primer 1
+zp = posevni_met([0.0, 0.0, 1.0], [10.0, 0.0, 10.0], 10, 10.0, 0.1)
+res = resi(zp, Euler(100))
+res(0)
+using Plots
+plot(t->res(t)[1], 0, 10)
+plot(t->res(t)[3], 0, 1)
+t = [1, 2, 3]
+plot(x-> searchsortedfirst(t, x), 0, 4)
+searchsortedfirst(t, 1)
+# primer 1
 # polje smeri
 using LinearAlgebra
 

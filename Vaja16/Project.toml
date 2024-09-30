@@ -2,3 +2,6 @@ name = "Vaja16"
 uuid = "8863f509-3951-4cd7-af83-60947875b11b"
 authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
 version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"

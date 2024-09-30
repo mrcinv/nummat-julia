@@ -3,7 +3,7 @@
 
 = Uvod v programski jezik Julia
 
-V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia]. Zavoljo
+V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @bezanson_julia_2017. Zavoljo
 učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov] in
 #link("https://docs.julialang.org/en/v1/manual/methods/")[funkcij, specializiranih glede na signaturo],
@@ -23,11 +23,11 @@ našega paketa in nariše sliko Geronove lemniskate. Na koncu bomo pripravili li
 poročilo v formatu PDF.
 
 == Namestitev in prvi koraki
- 
+
 Namestite programski jezik Julia, tako da sledite #link("https://julialang.org/downloads/")[navodilom],
 in v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
 (angl. _Read Eval Print Loop_ ali s kratico REPL) in v terminalu se pojavi ukazni pozivnik
-#text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato 
+#text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato
 Julia prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
 
 #code_box[
@@ -76,7 +76,7 @@ so funkcije, ki jih vpeljemo brez imena in jih kasneje ne moremo poklicati po im
   #repl("(x, y) -> sin(x) + y", "#1 (generic function with 1 method)")
 ]
 
-Anonimne funkcije uporabljamo predvsem kot argumente v drugih funkcijah. Funkcija 
+Anonimne funkcije uporabljamo predvsem kot argumente v drugih funkcijah. Funkcija
 ```jl map(f, v)``` na primer zahteva za prvi argument funkcijo `f`, ki jo nato aplicira na vsak
 element vektorja `v`:
 
@@ -87,9 +87,9 @@ element vektorja `v`:
   9")
 ]
 
-Vsaka funkcija v programskem jeziku Julia ima lahko več različnih definicij, glede na kombinacijo tipov argumentov, ki jih podamo. Posamezno 
+Vsaka funkcija v programskem jeziku Julia ima lahko več različnih definicij, glede na kombinacijo tipov argumentov, ki jih podamo. Posamezno
 definicijo funkcije imenujemo
-#link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[metoda]. Ob klicu funkcije Julia izbere najprimernejšo metodo. 
+#link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[metoda]. Ob klicu funkcije Julia izbere najprimernejšo metodo.
 
 #code_box[
   #repl("k(x::Number) = x^2", "k (generic function with 1 method)")
@@ -179,7 +179,7 @@ Izraz ```jl A\b``` vrne rešitev matričnega sistema $A x = b$:
   )
 ]
 
-Izračun se izvede v aritmetiki s plavajočo vejico, zato pride do zaokrožitvenih napak in 
+Izračun se izvede v aritmetiki s plavajočo vejico, zato pride do zaokrožitvenih napak in
 rezultat ni povsem točen. Naredimo še preizkus:
 
 #code_box[
@@ -188,7 +188,7 @@ rezultat ni povsem točen. Naredimo še preizkus:
   6.0")
 ]
 
-Operator `\` deluje za veliko različnih primerov. Med drugim ga 
+Operator `\` deluje za veliko različnih primerov. Med drugim ga
 lahko uporabimo tudi za iskanje rešitve pre-določenega sistema po metodi najmanjših kvadratov:
 
 #code_box[
@@ -224,7 +224,7 @@ Julia omogoča različne definicije iste funkcije za različne podatkovne tipe. 
 
 === Moduli
 
-#link("https://docs.julialang.org/en/v1/manual/modules/")[Moduli] pomagajo organizirati 
+#link("https://docs.julialang.org/en/v1/manual/modules/")[Moduli] pomagajo organizirati
 funkcije v enote in omogočajo uporabo istega imena za različne funkcije in tipe. Module definiramo z ```jl module ImeModula ... end```:
 
 #code_box[
@@ -235,7 +235,7 @@ funkcije v enote in omogočajo uporabo istega imena za različne funkcije in tip
 end", "Main.KrNeki")
 ]
 
-Če želimo funkcije, ki so definirane v modulu ```jl ImeModula```, uporabiti izven modula, moramo modul naložiti z ```jl using ImeModula```. Funkcije, ki so izvožene z ukazom ```jl export ime_funkcije``` lahko kličemo kar po imenu, ostalim funkcijam pa moramo dodati ime modula kot predpono. Modulom, ki niso del paketa in so definirani lokalno, moramo dodati piko, ko jih naložimo: 
+Če želimo funkcije, ki so definirane v modulu ```jl ImeModula```, uporabiti izven modula, moramo modul naložiti z ```jl using ImeModula```. Funkcije, ki so izvožene z ukazom ```jl export ime_funkcije``` lahko kličemo kar po imenu, ostalim funkcijam pa moramo dodati ime modula kot predpono. Modulom, ki niso del paketa in so definirani lokalno, moramo dodati piko, ko jih naložimo:
 
 #code_box[
   #repl("using .KrNeki", "")
@@ -243,7 +243,7 @@ end", "Main.KrNeki")
   #repl("KrNeki.čaj(1)", "-0.45969769413186023")
 ]
 
-Modul lahko naložimo tudi z ukazom ```jl import ImeModula```. 
+Modul lahko naložimo tudi z ukazom ```jl import ImeModula```.
 V tem primeru moramo vsem funkcijam iz modula dodati ime modula in piko kot predpono.
 
 === Paketi
@@ -280,7 +280,7 @@ opravilom.
   pomoč pridemo z znakom `?`.
 - Lupinski način s pozivom #text(red)[`shell>`] je namenjen izvajanju ukazov v
   sistemski lupini. V lupinski način vstopimo z znakom `;`.
-- Iz posebnih načinov pridemo nazaj v osnovni način s pritiskom na vračalko(⌫). 
+- Iz posebnih načinov pridemo nazaj v osnovni način s pritiskom na vračalko(⌫).
 ]
 
 Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl]. Najprej aktiviramo paketni način z vnosom znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`.
@@ -302,7 +302,7 @@ Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov #l
 
 Kodo lahko zapišemo tudi v datoteke. Vnašanje ukazov v interaktivni zanki je
 uporabno za preproste ukaze, na primer namesto kalkulatorja, za resnejše delo pa je bolje kodo shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku Julia končnico
-`.jl`. 
+`.jl`.
 
 Napišimo preprost program. Ukaze, ki smo jih vnesli doslej  , shranimo v datoteko z
 imenom `01uvod.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
@@ -322,8 +322,8 @@ ali pa v lupini operacijskega sistema:
   [
   Za lažje delo z datotekami s kodo potrebujemo dober urejevalnik besedila,
   ki je namenjen programiranju. Če še nimate priljubljenega urejevalnika,
-  priporočam #link("https://code.visualstudio.com/")[VS Code] in #link("https://www.julia-vscode.org/")[razširitev za Julio]. 
-   
+  priporočam #link("https://code.visualstudio.com/")[VS Code] in #link("https://www.julia-vscode.org/")[razširitev za Julio].
+
   Če odprete datoteko s kodo v urejevalniku VS Code, lahko s kombinacijo tipk
   `Ctrl + Enter` posamezno vrstico kode
   pošljemo v ukazno zanko za Julio, da se izvede. Na ta način združimo prednosti
@@ -332,7 +332,7 @@ ali pa v lupini operacijskega sistema:
 )
 
 Priporočam, da večino kode napišete v datoteke. V nadaljevanju bomo spoznali,
-kako organizirati datoteke v projekte in pakete tako, da lahko kodo uporabimo na več 
+kako organizirati datoteke v projekte in pakete tako, da lahko kodo uporabimo na več
 mestih.
 
 == Avtomatsko posodabljanje kode
@@ -383,7 +383,7 @@ $ cd nummat
 $ julia
 ```
   #repl("# s pritiskom na ] vključimo paketni način", none)
-  #pkg("activate . # pripravimo projektno okolje v korenski mapi", none) 
+  #pkg("activate . # pripravimo projektno okolje v korenski mapi", none)
   #pkg("", none, env: "nummat")
 ]
 
@@ -420,7 +420,7 @@ Datoteka `Project.toml` vsebuje le ime paketa `Plots` in identifikacijski niz:
   ```
 ]
 
-Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje,  so zabeleženi  v datoteki `Manifest.toml`. 
+Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje,  so zabeleženi  v datoteki `Manifest.toml`.
 
 == Vodenje različic s programom Git
 
@@ -430,7 +430,7 @@ Za vodenje različic priporočam uporabo programa #link("https://git-scm.com/")[
   #link("https://git-scm.com/")[Git] je sistem za vodenje različic, ki je postal _de facto_
 standard v razvoju programske opreme in tudi drugod, kjer se dela z besedilnimi
 datotekami. Priporočam, da si bralec ustvari svoj Git repozitorij, kjer si uredi
-kodo in zapiske, ki jo bo napisal pri spremljanju te knjige. 
+kodo in zapiske, ki jo bo napisal pri spremljanju te knjige.
 
 Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, lahko pa ga repliciramo na lastnem strežniku ali na enem od javnih spletnih skladišč
 programske kode, na primer #link("https://github.com/")[Github] ali
@@ -457,7 +457,7 @@ v katerem bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave
 paketa za vsako vajo posebej se bomo naučili, kako hitro začeti s projektom.
 Obenem bomo optimizirali potek dela in odpravili ozka grla v postopkih priprave projekta. Ponavljanje vedno istih postopkov nas prisili, da postopke kar se da poenostavimo in ponavljajoča se opravila avtomatiziramo. Na dolgi rok se tako lahko bolj posvečamo dejanskemu reševanju problemov.
 
-Za vajo bomo ustvarili paket `Vaja01`, s katerim bomo narisali 
+Za vajo bomo ustvarili paket `Vaja01`, s katerim bomo narisali
 #link(
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
 )[Geronovo lemniskato].
@@ -473,7 +473,7 @@ $ julia
 #pkg("generate Vaja01", none)
 ]
 
-Ukaz `generate` ustvari mapo `Vaja01` z osnovno strukturo 
+Ukaz `generate` ustvari mapo `Vaja01` z osnovno strukturo
 #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Juliji]:
 
 #code_box[
@@ -490,7 +490,7 @@ Vaja01
 
 Paket `Vaja01` nato dodamo v projektno okolje v korenski mapi `nummat`, da bomo lahko kodo iz paketa uporabili v programih in ukazni zanki:
 
-#code_box[ 
+#code_box[
 #pkg("activate . ", none)
 #pkg(
   "develop ./Vaja01 # paket dodamo projektnemu okolju",
@@ -509,14 +509,14 @@ pripravljene šablone
 enostavnosti bomo v sklopu te knjige projekte ustvarjali s `Pkg.generate`.
 ]
 
-Osnovna struktura paketa je pripravljena. Paketu bomo v nadaljevanju dodali še: 
+Osnovna struktura paketa je pripravljena. Paketu bomo v nadaljevanju dodali še:
 - kodo (@sec:01koda),
 - teste (@sec:01testi) in
 - dokumentacijo (@sec:01docs).
 
 == Koda <sec:01koda>
 
-Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo. Napisali bomo funkcije, ki izračunajo koordinate  
+Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo. Napisali bomo funkcije, ki izračunajo koordinate
 #link(
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
 )[Geronove lemniskate]:
@@ -533,7 +533,7 @@ V urejevalniku odpremo datoteko `Vaja01/src/Vaja01.jl` in vanjo shranimo definic
   caption: [Definicije funkcij v paketu `Vaja01`]
 )<pr:Vaja01>
 
-Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih 
+Funkcije iz datoteke `Vaja01/src/Vaja01.jl` lahko uvozimo z ukazom ```jl using Vaja01```, če smo paket `Vaja01` dodali v projektno okolje (`Project.toml`). V mapo `src` sodijo splošno uporabne funkcije, ki jih želimo uporabiti v drugih
 programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 
 #code_box[
@@ -544,7 +544,7 @@ programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 V datoteko `Vaja01/doc/01uvod.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
 
 #figure(
-  code_box(jlf("Vaja01/doc/01uvod.jl", 4, 11)), 
+  code_box(jlf("Vaja01/doc/01uvod.jl", 4, 11)),
 )
 
 Program `01uvod.jl` poženemo z ukazom:
@@ -571,16 +571,16 @@ Rezultat je slika lemniskate.
 
 == Testi <sec:01testi>
 
-Naslednji korak je, da dodamo avtomatske teste, s katerimi preizkusimo pravilnost kode, ki 
-smo je napisali v prejšnjem poglavju. Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri rezultat. 
+Naslednji korak je, da dodamo avtomatske teste, s katerimi preizkusimo pravilnost kode, ki
+smo je napisali v prejšnjem poglavju. Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri rezultat.
 
 #opomba(
   naslov: [Avtomatsko testiranje programov],
   [Pomembno je, da pravilnost programov preverimo. Najlažje to naredimo "na roke",
     tako da program poženemo in preverimo rezultat. Testiranje "na roke" ima veliko
     pomankljivosti. Zahteva veliko časa, je lahko nekonsistentno in je dovzetno
-    za človeške napake. 
-    
+    za človeške napake.
+
     Alternativa ročnemu testiranju programov so avtomatski testi.
     To so preprosti programi, ki izvedejo testirani program in
     rezultate preverijo. Avtomatski testi so pomemben del #link(
@@ -596,7 +596,7 @@ ki olajša pisanje testov. Vstopna točka za teste je datoteka `test/runtests.jl
   "https://docs.julialang.org/en/v1/stdlib/Test/#Test.@testset",
 )[\@testset] iz paketa `Test`.
 
-V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki primerjajo izračunane vrednosti s pravimi vrednostmi, ki smo jih izračunali 
+V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki primerjajo izračunane vrednosti s pravimi vrednostmi, ki smo jih izračunali
 "na roke":
 
 #figure(
@@ -608,10 +608,10 @@ V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki prime
 #opomba(
   naslov: [Primerjava števil s plavajočo vejico],
   [Pri računanju s števili s plavajočo vejico se izogibajmo primerjanju števil z
-  operatorjem `==`, ki števili primerja bit po bit. 
-  Pri izračunih, v katerih nastopajo števila s plavajočo vejico, pride do zaokrožitvenih napak. 
+  operatorjem `==`, ki števili primerja bit po bit.
+  Pri izračunih, v katerih nastopajo števila s plavajočo vejico, pride do zaokrožitvenih napak.
   Zato se različni načini izračuna za isto število praviloma razlikujejo na zadnjih
-  decimalkah. Na primer izraz ```jl asin(sin(pi/4)) - pi/4 ``` 
+  decimalkah. Na primer izraz ```jl asin(sin(pi/4)) - pi/4 ```
   ne vrne točne ničle ampak vrednost `-1.1102230246251565e-16`, ki pa je zelo
   majhno število. Za približno primerjavo dveh vrednosti `a` in `b` zato uporabimo izraz
   $
@@ -634,7 +634,7 @@ okolje in dodamo paket `Test`.
 Teste poženemo tako, da v paketnem načinu poženemo ukaz `test Vaja01`.
 
 #code_box[
-#pkg("test Vaja01", "Testing Vaja01 
+#pkg("test Vaja01", "Testing Vaja01
      Testing Running tests
      ...
      ...
@@ -642,8 +642,8 @@ Test Summary: | Pass  Total  Time
 Koordinata x  |    2      2  0.1s
 Test Summary: | Pass  Total  Time
 Koordinata y  |    2      2  0.0s
-     Testing Vaja01 tests passed", env:"nummat") 
-] 
+     Testing Vaja01 tests passed", env:"nummat")
+]
 
 == Dokumentacija <sec:01docs>
 
@@ -654,13 +654,13 @@ namestitev in uporabo programa ter druge vire z razlagami ozadja,
 teorije in drugih zadev, povezanih s projektom. Dobra dokumentacija lahko veliko
 pripomore k uspehu določenega programa. To še posebej velja za knjižnice.
 
-Slabo dokumentirane kode ne želi nihče uporabljati. Tudi če vemo, da kode ne bo 
+Slabo dokumentirane kode ne želi nihče uporabljati. Tudi če vemo, da kode ne bo
 uporabljal nihče drug razen nas samih, bodimo prijazni do samega sebe v prihodnosti
 in pišimo dobro dokumentacijo.
 
 V tej knjigi bomo pisali tri vrste dokumentacije:
 
-- dokumentacijo za posamezne funkcije v sami kodi, 
+- dokumentacijo za posamezne funkcije v sami kodi,
 - navodila za uporabnika v datoteki `README.md`,
 - poročilo v formatu PDF.
 
@@ -683,7 +683,7 @@ opisom funkcije, kot smo to naredili v programu @pr:Vaja01. Več o tem si lahko 
 
 === README dokument
 
-Dokument README (preberi me) je namenjen najbolj osnovnim informacijam o paketu. Dokument je vstopna točka za dokumentacijo in navadno vsebuje: 
+Dokument README (preberi me) je namenjen najbolj osnovnim informacijam o paketu. Dokument je vstopna točka za dokumentacijo in navadno vsebuje:
 - kratek opis projekta,
 - povezavo na dokumentacijo,
 - navodila za osnovno uporabo in
@@ -698,7 +698,7 @@ caption: [README.md vsebuje osnove informacije o projektu]
 
 === PDF poročilo
 
-V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@knuth84).   
+V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@knuth84).
 Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot komentarje v kodi.
 
 Za generiranje PDF dokumentov je potrebno namestiti
@@ -742,7 +742,7 @@ Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Juliji. 
   #pkg("add Weave", none, env: "nummat")
   #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
 ]
- 
+
 Poročilo se shrani v datoteko `Vaja01/pdf/01uvod.pdf`.
 
 #figure(

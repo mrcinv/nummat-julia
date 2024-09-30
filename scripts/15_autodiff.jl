@@ -50,3 +50,25 @@ capture("15-koren-auto-err") do
   y, dy = dkoren(2)
   dy - 1/(2y)
 end
+
+struct Elipsa{T}
+  a::T
+  b::T
+end
+
+ekscentricnost(e::Elipsa) = sqrt(1 - b^2/a^2)
+
+struct KeplerOrbit{T}
+  n::T # povprečno gibanje
+  e::Elipsa{T}
+end
+
+function eanomalija(M, e)
+  f(E) = M - E + e*sin(E)
+  df(E) = -1 + e*cos(E)
+  E = M
+  for i=1:5
+    E = E - f(E)/df(E)
+  end
+  return E
+end

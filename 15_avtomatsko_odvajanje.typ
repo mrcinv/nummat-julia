@@ -9,15 +9,19 @@ računalnikom:
 - numerično odvajanje s končnimi diferencami
 - avtomatsko odvajanje programske kode z uporabo verižnega pravila
 
-V tej vaji si bomo ogledali en način, kako lahko implementiramo
-#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje] v Juliji.
+V tej vaji si bomo ogledali, kako lahko implementiramo
+#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje] v Juliji z
+#link("https://en.wikipedia.org/wiki/Dual_number")[dualnimi števili].
+
 == Naloga
 
 - Definirajte podatkovni tip za dualna števila.
 - Za podatkovni tip dualnega števila definirajte osnovne operacije in elementarne
   funkcije, kot so $sin$, $cos$ in $exp$.
 - Uporabite dualna števila in izračunajte hitrost nebesnega telesa, ki se giblje po
-  Keplerjevi orbiti. Keplerjevo orbito izrazite z rešitvijo #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeve enačbe], ki jo rešite z Newtonovo metodo.
+  Keplerjevi orbiti. Keplerjevo orbito izrazite z rešitvijo
+  #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeve enačbe], ki jo rešite z
+  Newtonovo metodo.
 - Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabite
   posplošena dualna števila za izračun gradienta funkcije več spremenljivk.
 
@@ -137,6 +141,24 @@ in odvod $(f^2g)'(1)=3$.
 )
 
 #vaja15("# dual number")
+== Keplerjeva enačba
+
+#link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeva enačba]
+$
+M = E - e sin(E)
+$<eq:15-kepler>
+določa
+#link("https://sl.wikipedia.org/wiki/Ekscentri%C4%8Dna_anomalija")[ekscentrično anomalijo] za telo,
+ki se giblje po Keplerjevi orbiti.
+$
+M(t) = n(t - t_0)
+$
+
+Keplerjevo orbito lahko izračunamo, če poznamo $E(t)$
+$
+x(t)& = a(cos(E(t)) -e)\
+y(t)& = b sin(E(t))
+$
 
 == Računajne gradientov
 

@@ -181,7 +181,7 @@ zadnji koeficient $a_N$ v končni vsoti $C_N(x)$.
 Za majhne $x$ se vrednost $Phi$ približuje 0
 
 $
- lim_(x-<-oo) Phi(x) = 0.
+ lim_(x->oo) Phi(x) = 0.
 $
 Zato ni dovolj, da omejimo absolutno napako, ampak moramo poskrbeti, da je tudi relativna napaka
 dovolj majhna. Formula
