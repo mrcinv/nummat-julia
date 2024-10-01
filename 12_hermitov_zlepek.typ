@@ -295,7 +295,7 @@ Problemu se izognemo, če namesto ekvidistančnih točk uporabimo
 - Zaradi Rungejevega pojava interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
   ni najboljša izbira. Interpolacija na Čebiševih točkah pa deluje tudi za visoke stopnje polinoma.
 - Zlepki so enostavni za uporabo, učinkoviti (malo operacij za izračun) in imajo v določenih
-  primerih boljše lastnosti kot polinomi visokih stopenj
+  primerih boljše lastnosti kot polinomi visokih stopenj.
 ]
 == Rešitve
 

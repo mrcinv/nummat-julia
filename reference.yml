@@ -179,8 +179,8 @@ kochenderfer_algorithms_2019:
   type: book
   title: Algorithms for Optimization
   author:
-  - Kochenderfer, Mykel J
-  - Wheeler, Tim A
+    - Kochenderfer, Mykel J
+    - Wheeler, Tim A
   date: 2019
   publisher: The {MIT} Press
   location: Cambridge, Massachusetts
@@ -191,12 +191,12 @@ kochenderfer_algorithms_2019:
 
 bezanson_julia_2017:
   type: article
-  title: 'Julia: A Fresh Approach to Numerical Computing'
+  title: "Julia: A Fresh Approach to Numerical Computing"
   author:
-  - Bezanson, Jeff
-  - Edelman, Alan
-  - Karpinski, Stefan
-  - Shah, Viral B.
+    - Bezanson, Jeff
+    - Edelman, Alan
+    - Karpinski, Stefan
+    - Shah, Viral B.
   date: 2017-01
   page-range: 65–98
   url:
@@ -207,7 +207,18 @@ bezanson_julia_2017:
     issn: 0036-1445, 1095-7200
   parent:
     type: periodical
-    title: '{SIAM} Review'
+    title: "{SIAM} Review"
     issue: 1
     volume: 59
 
+plestenjak2015:
+  type: book
+  title: Razširjen uvod v numerične metode
+  author: Plestenjak, Bor
+  date: 2015
+  publisher: DMFA - založništvo
+  volume: 52
+  edition: 1. natis
+  page-range: 418
+  serial-number:
+    isbn: 978-961-212-264-5

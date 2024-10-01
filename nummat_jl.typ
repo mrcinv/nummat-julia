@@ -8,6 +8,26 @@
   authors: ("Martin Vuk",),
   doc,
 )
+#rect[
+Kataložni zapis o publikaciji (CIP)
+]
+
+#v(1fr)
+
+Digitalna izdaja je prosto dostopna\
+This digital publication is freely available\
+http://zalozba.fri.uni-lj.si/vuk2024.pdf\
+#let doi(id) = link("https://doi.org/" + id, id)
+DOI: #doi("XXXX/XXXX")
+
+Recenzenta / Reviewers:\
+prof. dr. Emil Žagar in doc. dr. Aljaž Zalar
+
+Založnik: Založba UL FRI, Ljubljana\
+Izdajatelj: UL Fakulteta za računalništvo in informatiko, Ljubljana\
+Urednik: prof. dr. Franc Solina
+
+Copyright © 2024 Založba UL FRI. All rights reserved.
 
 #include "00_uvod.typ"
 
