@@ -1,5 +1,6 @@
 using Vaja16
 # posevni
+using LinearAlgebra
 """
 Izračunaj desne strani enačb za poševni met.
 """
@@ -23,16 +24,22 @@ end
 # posevni zp
 
 # primer 1
-zp = posevni_met([0.0, 0.0, 1.0], [10.0, 0.0, 10.0], 10, 10.0, 0.1)
-res = resi(zp, Euler(100))
-res(0)
+zp = posevni_met([0.0, 0.0, 1.0], [10.0, 5.0, 20.0], 3., 10.0, 0.1)
+res = resi(zp, Euler(2000))
 using Plots
-plot(t->res(t)[1], 0, 10)
+plot!(t->res(t)[1], t->res(t)[3], 0, 3)
 plot(t->res(t)[3], 0, 1)
-t = [1, 2, 3]
-plot(x-> searchsortedfirst(t, x), 0, 4)
-searchsortedfirst(t, 1)
 # primer 1
+
+# primer 2
+res100 = resi(zp, RK2(100))
+res200 = resi(zp, RK2(200))
+plot(t -> norm(res100(t) - res200(t)), zp.tint...)
+x = [u[1] for u in res.u]
+y = [u[3] for u in res.u]
+scatter(res.t)
+# primer 2
+
 # polje smeri
 using LinearAlgebra
 
