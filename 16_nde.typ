@@ -1,7 +1,7 @@
 #import "julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba
 
-= Reševanje začetnega problema za NDE
+= Začetni problem za NDE
 
 Navadna diferencialna enačba
 
@@ -23,8 +23,8 @@ V naslednji vaji bomo napisali knjižnico za reševanje začetnega problema za N
   točkah s Hermitovim kubičnim zlepkom (@sec:12-zlepki).
 5. Napisane funkcije uporabite, da poiščete rešitev začetnega problema za poševni met z zračnim uporom.
   Kako daleč leti telo preden pade na tla? Koliko časa leti?
-6. Ocenite napako, tako da rezultat izračunajte z dvakrat manjšim korakom.
-
+6. Za metode brez kontrole koraka ocenite napako tako, da približek izračunajte ponovno z dvakrat
+   manjšim korakom. Nato uporabite #link("")[Richardsonovo ekstrapolacijo].
 
 == Reševanje enačbe z eno spremenljivko
 
@@ -154,11 +154,13 @@ numerično rešitev.
 )
 
 Približke, ki jih bomo izračunali z različnimi metodami bomo tudi shranili v poseben podatkovni tip
-#jl("ResitevNDE").
+#jl("ResitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunane približke rešitve bomo
+v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki smo jih izračunali s funkcijo desnih
+strani. Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermitovim zlepkom.
 
 #figure(
   vaja16("# ResitevNDE"),
-  caption: [Podatkovni tip, ki vsebuje vse numerično rešitev začetnega problema]
+  caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema]
 )
 
 Definirajmo podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
@@ -176,8 +178,7 @@ Faktor $2$ v enačbi $u'(t) = - 2 t u$ lahko obravnavamo kot parameter enačbe.
 #demo16("# euler 2")
 
 #figure(
-  image("img/16-euler-napaka.svg", width: 60%), caption: [Napaka Eulerjeve metode za $100$ in
-  $200$ korakov]
+  image("img/16-euler-napaka.svg", width: 60%), caption: [Napaka Eulerjeve metode za različni velikosti koraka]
 )
 
 #opomba(naslov: [Večlična razdelitev in posebni podatkovni tipi omogočajo abstraktno obravnavo])[
@@ -193,15 +194,16 @@ prilagodljiva in omogoča enostavno dodajanje na primer novih numeričnih metod,
 formulacij samega problema.
 ]
 
-
 == Hermitova interpolacija
 
 Približne metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
 spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s
 #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom], ki smo ga
 že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermitov
-zlepek je na intervalu $(x_i, x_(i+1))$ enak kubičnemu polinomu, ki se z rešitvijo ujema v
-vrednostih in odvodih v krajiščih intervala $x_i$ in $x_(i+1)$.
+zlepek je na intervalu $[t_i, t_(i+1)]$ določen z vrednostmi rešitve in odvodi v krajiščih
+intervala. Ti podatki so shranjeni v vrednosti tipa #jl("ResitevNDE").
+Napišimo sedaj funkcijo #jl("vrednost(res::ResitevNDE, t)"), ki vrne približek
+za rešitev NDE v dani točki (@pr:16-vrednost).
 
 == Poševni met z zračnim uporom
 
@@ -282,6 +284,94 @@ vrednosti parametrov:
 
 #demo16("# posevni zp")
 
+Primerjali bomo vse tri metode, ki smo jih do sedaj spoznali. Za različne vrednosti koraka bomo
+izračunali približek in ga primerjali s pravo rešitvijo. Ker prave rešitve ne poznamo, bomo
+uporabili približek, ki ga dobimo z metodo Runge Kutta 4. reda s polovičnim korakom. Napako bomo
+ocenili tako, da bomo poiskali največno napako med $n$ različnimi vrednostih $t$ na danem intervalu
+$[t_0, t_k]$.
+
+#demo16("# napaka")
+
+#figure(image("img/16-primerjava.svg", width: 60%), caption: [Napaka za različne metode v
+odvisnosti od velikosti koraka])
+
+#opomba(naslov: [Kako izbrati primerno metodo?])[
+V tej vaji smo spoznali 3 različne metode: Eulerjevo, Runge-Kutta reda 2 in reda 4.
+]
+
+== Dolžina meta
+Za različne začetne pogoje in parametre želimo poiskati, kako daleč leti telo, preden pade na
+tla. Predpostavimo, da so tla na višini $0$. Najprej bomo poiskali, kdaj telo zadene tla. To se bo
+zgodilo takrat, ko bo višina enaka $0$. Iskani čas je rešitev enačbe
+$
+z(t) = 0.
+$<eq:16-tla>
+Vrednost $z(t)$ je ena komponenta rešitve začetnega problema. Enačba @eq:16-tla je nelinearna
+enačba, za katero pa ne poznamo eksplicitne formule. Kljub temu laho za iskanje rešitev uporabimo
+metode za reševanje nelinearnih enačb. Problema se bomo lotili malce bolj splošno. Enačbo @eq:16-tla
+lahko zapišemo kot:
+
+$
+g(t) = F(bold(u)(t)) = 0,
+$<eq:16-pogoj>
+
+kjer je $u(t)$ rešitev začetnega problema @eq:16-sistem-1-reda, funkcija $F(bold(u))$ pa vrne tretjo
+komponento vektorja $bold(u)$:
+
+$
+F([x, y, z, v_x, v_y, v_z]) = z.
+$
+
+Za reševanje enačbe $g(t)=0$ lahko uporabimo metode za reševanje nelinearnih enačb na primer
+bisekcijo ali Newtonovo metodo. Uporabili bomo Newtonovo metodo, saj
+lahko vrednost odvoda $dot(bold(u))(t)$ in s tem tudi $g'(t)=d/(d t) F(bold(u)(t))$ izračunamo iz desnih
+strani diferencialne enačbe:
+
+$
+g'(t) = d/(d t) F(bold(u)(t)) = nabla F(bold(u)(t)) dot.c dot(bold(u))(t) =
+  nabla F dot.c f(t, bold(u)(t), p).
+$
+
+Z numeričnimi metodami dobimo približek za začetni problem v obliki zaporedja približkov
+$
+bold(u)_0, bold(u)_1 med dots med bold(u)_n
+$
+za vrednosti v določenih časovnih trenutkih $t_0, t_1 med dots med t_n$. Za vsak izračun $g(t)$
+bi morali vsakič znova izračunati začetni del zaporedja $bold(u)_i$. Da se
+temu izognemo, najprej poiščimo interval $[t_(i), t_(i+1)]$ na katerem leži ničla. V tabeli
+poiščemo $i$ za katerega je
+$
+F(bold(u)_(i)) F(bold(u)_(i+1)) < 0.
+$
+
+S tem, ko smo poiskali interval $[t_(i), t_(i+1)]$ na katerem je ničla, smo ničlo poiskali z
+natančnostjo  $delta = |t_(i+1) - t_(i)|$. Zmanjšanje koraka osnovne metode bi sicer dalo boljši
+približek, vendar se tudi časovna zahtevnost poveča za enak faktor, kot se zmanjša natančnost.
+Bistveno bolje je uporabiti eno od metod za reševanje nelinearnih enačb.
+
+Vrednosti $t_i$ in $bold(u)_i$
+uporabimo kor nov začetni približek za začetni problem. Tako lahko zgolj z enim korakom izbrane
+metode izračunamo $g(t)=F(bold(u)(t))$ za katerikoli $t in [t_(i), t_(i+1)]$.
+
+#opomba(naslov: [Iskanje ničle v tabeli])[
+Denimo, da imamo tabelo vrednosti funkcije $[f_1, f_2 med dots med f_n]$ in bi želeli poiskati
+ničlo. Pogoj $f_i = 0$ ne bo najboljši, saj zaradi zaokrožitvenih napak skoraj zagotovo ne bo
+izpolnjen. Tudi pogoj $|f_i| < epsilon$ ni dosti boljši, ker je ničla lahko med dvema
+vrednostima $f_i$ in $f_(i+1)$, čeprav sta vrednosti daleč stran od ničle. Ničla je zagotovo tam,
+kjer funkcija spremeni predznak. Pravi pogoj je zato
+$
+f_i dot.c f_(i+1) < 0.
+$
+]
+
+Napišimo naslednje funkcije:
+- #jl("niclaint(res::ResitevNDE, F)"), ki poišče interval, na katerem je za dana funkcija
+  #jl("F(t, u, du)") enaka $0$ (@pr:16-niclaint).
+- #jl("nicla(res::ResitevNDE, F, DF)"), ki poišče ničlo funkcije #jl("F(t, u, du)")
+  za dano rešitev začetnega problema. Za računanje novih vrednosti naj uporabi metodo #jl("RK4")
+  (@pr:16-nicla).
+
+
 == Rešitve
 
 #figure(
@@ -290,30 +380,44 @@ vrednosti parametrov:
 )<pr:16-euler>
 
 #figure(
+  vaja16("# resi"),
+  caption: [Funkcija #jl("resi"), ki poišče rešitev začetnega problema z različnimi metodami.
+  Posamezne metode implementiramo tako, da definiramo metode za funkcijo #jl("korak").]
+)<pr:16-resi>
+
+#figure(
   vaja16("# Euler"),
-  caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
-  z Eulerjevo metodo z enakimi koraki]
+  caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
+  z enim korako Eulerjeve metode]
 )<pr:16-euler-resi>
-
-#figure(
-  vaja16("# RK2"),
-  caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
-  z metodo Runge Kutta reda 2]
-)<pr:16-rk2>
-
-#figure(
-  vaja16("# RK2Kontrola"),
-  caption: [Metoda za funkcijo #jl("resi"), ki poišče rešitev začetnega problema
-  z metodo Runge Kutta reda 2 s kontrolo koraka]
-)<pr:16-rk2kontrola>
-
-#figure(
-  vaja16("# hermite"),
-  caption: [Izračun vrednosti Hermitovega kubičnega polinoma]
-)<pr:16-hermite>
 
 #figure(
   vaja16("# interpolacija"),
   caption: [Vmesne vrednosti rešitve NDE, izračunamo s Hermitovim kubičnim
   zlepkom]
 )<pr:16-vrednost>
+
+#figure(
+  vaja16("# RK2"),
+  caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
+  z enim korakom metode Runge Kutta reda 2]
+)<pr:16-rk2>
+
+
+#figure(
+  vaja16("# RK4"),
+  caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
+  z enim korakom metode Runge Kutta reda 4]
+)<pr:16-rk4>
+
+#figure(
+  vaja16("# niclaint"),
+  caption: [Poišči interval $[t_(i), t_(i+1)]$, na katerem ima funkcija $g(t) = F(bold(u)(t))$ ničlo
+  ]
+)<pr:16-niclaint>
+
+
+#figure(
+  vaja16("# nicla"),
+  caption: [Poišči vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$]
+)<pr:16-nicla>

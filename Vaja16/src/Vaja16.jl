@@ -84,7 +84,9 @@ function korak(m::Euler{T}, fun, t0::T, u0, par, smer=1) where {T}
   h = smer * m.h
   return t0 + h, u0 + h * du, du
 end
+# Euler
 
+# resi
 """
   r = resi(zp::ZacetniProblem, resevalec::TR) where {TR<:ResevalecNDE}
 
@@ -102,12 +104,13 @@ julia> res = resi(problem, Euler(0.5)) # reši problem s korakom 0.5
 function resi(zp::ZacetniProblem{TU,TT,TP}, metoda::TM) where
 {TU,TT,TP,TM<:ResevalecNDE}
   t0, tk = zp.tint
+  u0 = zp.u0
   smer = sign(tk - t0)
-  t = TT[t0]
-  u = TU[zp.u0]
+  t = [t0]
+  u = [u0]
   du = TU[]
   while smer * t0 < smer * tk
-    t0, u0, du0 = korak(metoda, zp.f, t[i], u[i], zp.p, smer)
+    t0, u0, du0 = korak(metoda, zp.f, t0, u0, zp.p, smer)
     push!(t, t0)
     push!(u, u0)
     push!(du, du0)
@@ -115,7 +118,7 @@ function resi(zp::ZacetniProblem{TU,TT,TP}, metoda::TM) where
   push!(du, zp.f(t[end], u[end], zp.p)) # odvod v zadnjem približku
   return ResitevNDE(zp, t, u, du)
 end
-# Euler
+# resi
 
 # RK2
 struct RK2{T} <: ResevalecNDE
@@ -140,13 +143,13 @@ struct RK4{T} <: ResevalecNDE
   h::T
 end
 
-function korak(m::RK4, fun, t0, u0, par, smer)
-  h = smer * m.h
+function korak(res::RK4, fun, t0, u0, par, smer)
+  h = smer * res.h
   du = fun(t0, u0, par)
   k1 = h * du
-  k2 = h * fun(t0 + h / 2, u0 + k1 / 2)
-  k2 = h * fun(t0 + h / 2, u0 + k2 / 2)
-  k2 = h * fun(t0 + h, u0 + k3)
+  k2 = h * fun(t0 + h / 2, u0 + k1 / 2, par)
+  k3 = h * fun(t0 + h / 2, u0 + k2 / 2, par)
+  k4 = h * fun(t0 + h, u0 + k3, par)
   return t0 + h, u0 + (k1 + 2(k2 + k3) + k4) / 6, du
 end
 # RK4
@@ -185,6 +188,18 @@ end
 # interpolacija
 
 # nicla 
+function newton(fdf, x0, maxit=10, atol=1e-8)
+  for _ in 1:maxit # Newtonova metoda
+    z, dz = fdf(x0)
+    dx = -z / dz
+    x0 += dx
+    if abs(dx) < atol
+      return x0
+    end
+  end
+  throw("Newtonova metoda ne konvergira po $maxit korakih!")
+end
+
 function nicla(res::ResitevNDE, fun, dfun, maxit=10, atol=1e-8)
   t, u = res.t, res.u
   i = niclaint(res, fun)
@@ -197,6 +212,9 @@ function nicla(res::ResitevNDE, fun, dfun, maxit=10, atol=1e-8)
   newton(rhs, t[i], maxit, atol)
 end
 
+# nicla
+
+# niclaint
 function niclaint(res::ResitevNDE, fun)
   t, u, du = res.t, res.u, res.du
   n = length(t)
@@ -207,17 +225,6 @@ function niclaint(res::ResitevNDE, fun)
   end
   throw("Ni intervala z ničlo")
 end
+# niclaint
 
-function newton(fdf, x0, maxit=10, atol=1e-8)
-  for _ in 1:maxit # Newtonova metoda
-    z, dz = fdf(x0)
-    dx = -z / dz
-    x0 += dx
-    if abs(dx) < atol
-      return x0
-    end
-  end
-  throw("Newtonova metoda ne konvergira po $maxit korakih!")
-end
-# nicla
 end # module Vaja16

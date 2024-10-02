@@ -2523,7 +2523,7 @@ uuid = "79e29d65-3952-45e3-af11-ce4b49c223cb"
 version = "0.1.0"
 
 [[deps.Vaja16]]
-deps = ["LinearAlgebra"]
+deps = ["LinearAlgebra", "Vaja12"]
 path = "Vaja16"
 uuid = "8863f509-3951-4cd7-af83-60947875b11b"
 version = "0.1.0"

@@ -4,10 +4,13 @@ using LinearAlgebra
 """
 Izračunaj desne strani enačb za poševni met.
 """
-function f_posevni(_, u, p)
-  v = u[4:6]
-  g = -[0, 0, p[1]]
-  f = g - p[2] * v * norm(v)
+function f_posevni(_, u, par)
+  g, c = par
+  n = div(length(u), 2)
+  v = u[n+1:end]
+  fg = zero(v)
+  fg[end] = -g
+  f = fg - c * v * norm(v)
   return vcat(v, f)
 end
 # posevni
@@ -17,27 +20,27 @@ Sestavi začetni problem za poševni met z začetnimi pogoji in parametri.
 """
 function posevni_met(x0, v0, t, g, C)
   u0 = vcat(x0, v0)
-  tint = [0, t]
+  tint = (0.0, t)
   p = [g, C]
   return ZacetniProblem(f_posevni, u0, tint, p)
 end
 # posevni zp
 
 # primer 1
-zp = posevni_met([0.0, 0.0, 1.0], [10.0, 5.0, 20.0], 3., 10.0, 0.1)
-res = resi(zp, Euler(2000))
+zp = posevni_met([0.0, 1.0], [10.0, 20.0], 3.0, 10.0, 0.1)
+res = resi(zp, Euler(0.1))
 using Plots
-plot!(t->res(t)[1], t->res(t)[3], 0, 3)
-plot(t->res(t)[3], 0, 1)
+plot(t -> res(t)[1], 0, 3, label="\$x(t)\$")
+plot!(t -> res(t)[2], 0, 3, label="\$y(t)\$")
+plot!(t -> res(t)[3], 0, 3, label="\$v_x(t)\$")
+plot!(t -> res(t)[4], 0, 3, label="\$v_y(t)\$")
 # primer 1
 
+plot(t->res(t)[1], t->res(t)[2], 0, 3, label="pot izstrelka")
+
 # primer 2
-res100 = resi(zp, RK2(100))
-res200 = resi(zp, RK2(200))
-plot(t -> norm(res100(t) - res200(t)), zp.tint...)
-x = [u[1] for u in res.u]
-y = [u[3] for u in res.u]
-scatter(res.t)
+res2 = resi(zp, Euler(0.00001))
+plot(t -> norm(res(t) - res2(t), Inf), zp.tint..., label="napaka")
 # primer 2
 
 # polje smeri
@@ -113,26 +116,20 @@ using Vaja16
 
 tint = (-0.5, 0.5)
 u0 = 1
-plt = risi_polje(fun, tint, (u0, 1.5))
+risi_polje(vzorci_polje(fun, tint, (u0, 1.5)))
 
 C = u0 / exp(-tint[1]^2)
-plot!(plt, x -> C * exp(-x^2), tint[1], tint[2],
+plot!(x -> C * exp(-x^2), tint[1], tint[2],
   label="prava rešitev", legend=:topleft)
 
 
-u, t = Vaja16.euler(fun, 1.0, [-0.5, 0.5], 4)
-plot!(plt, t, u, marker=:circle, label="približna rešitev za \$n=4\$",
+t4, u4 = Vaja16.euler(fun, 1.0, (-0.5, 0.5), 4)
+plot!(t4, u4, marker=:circle, label="približna rešitev za \$n=4\$",
   xlabel="\$t\$", ylabel="\$u\$")
 
-u, t = Vaja16.euler(fun, 1.0, [-0.5, 0.5], 8)
-plot!(plt, t, u, marker=:circle, label="približna rešitev za \$n=8\$",
+t8, u8 = Vaja16.euler(fun, 1.0, [-0.5, 0.5], 8)
+plot!(t8, u8, marker=:circle, label="približna rešitev za \$n=8\$",
   xlabel="\$t\$", ylabel="\$u\$")
-# for i = 2:4
-#  C = u[i] / exp(-t[i]^2)
-#  plot!(plt, x -> C * exp(-x^2), t[i], t[end],
-#    label="\$u(t); u(t_$(i-1))=u_$(i-1)\$")
-#end
-plt
 # euler 1
 
 savefig("img/16-euler.svg")
@@ -142,10 +139,34 @@ fun(t, u, p) = -p * t * u
 problem = ZacetniProblem(fun, 1.0, (-0.5, 1.0), 2.0)
 upravi(t) = exp(-t^2) / exp(-0.5^2)
 
-res100 = resi(problem, Euler(100))
-plot(res100.t, res100.u - upravi.(res100.t), label="\$n=100\$")
-res200 = resi(problem, Euler(200))
-plot!(res200.t, res200.u - upravi.(res200.t), label="\$n=200\$")
+res1 = resi(problem, Euler(0.1))
+scatter(res1.t, res1.u - upravi.(res1.t), label="\$h=0.1\$")
+res2 = resi(problem, Euler(0.05))
+scatter!(res2.t, res2.u - upravi.(res2.t), label="\$h=0.05\$")
 # euler 2
 
 savefig("img/16-euler-napaka.svg")
+
+# napaka
+zp = posevni_met([0.0, 2.0], [10.0, 20.0], 3., 9.8, 0.1)
+function napaka(resevalec, zp, resitev, nvzorca=100)
+  priblizek = resi(zp, resevalec)
+  t0, tk = zp.tint
+  t = range(t0, tk, nvzorca)
+  maximum(t -> norm(priblizek(t) - resitev(t)), t)
+end
+
+
+h = 3 ./ (2 .^ (2:10))
+resitev = resi(zp, RK4(h[end]/2))
+napakaEuler = [napaka(Euler(hi), zp, resitev) for hi in h]
+napakaRK2 = [napaka(RK2(hi), zp, resitev) for hi in h]
+napakaRK4 = [napaka(RK4(hi), zp, resitev) for hi in h]
+scatter(h, napakaEuler, xscale=:log10, yscale=:log10, label="Euler")
+scatter!(h, napakaRK2, xscale=:log10, yscale=:log10, label="RK2")
+scatter!(h, napakaRK4, xscale=:log10, yscale=:log10, label="RK4", legend=:topleft)
+# napaka
+savefig("img/16-primerjava.svg")
+
+# ničla
+# ničla

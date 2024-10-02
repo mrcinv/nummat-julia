@@ -120,31 +120,24 @@ to preprosto nimajo interesa ali časa.
 
 === Matematično nihalo
 <matematično-nihalo>
-Kotni odmik $theta lr((t))$ \(v radianih) pri nedušenem nihanju nitnega
-nihala opišemo z diferencialno enačbo
+Kotni odmik $theta(t)$ \(v radianih) pri nedušenem nihanju uteži obešene na vrvici
+opišemo z diferencialno enačbo
 
-$ g / l sin lr((theta lr((t)))) plus theta^(prime prime) lr((t)) eq 0 comma quad theta lr((0)) eq theta_0 comma med theta^prime lr((0)) eq theta_0^prime comma $
+$
+g / l sin(theta(t)) + theta^(prime prime)(t) = 0,
+  quad theta(0) = theta_0, med theta^prime(0) = theta_0^prime,
+$
 kjer je $g eq 9.80665 m slash s^2$ težni pospešek in $l$ dolžina nihala.
-Napišite funkcijo `nihalo`, ki računa odmik nihala ob določenem času.
+Napišite funkcijo, ki izračuna odmik nihala ob določenem času.
 Enačbo drugega reda prevedite na sistem prvega reda in računajte z
-metodo Runge-Kutta četrtega reda:
+metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5]
+(algoritem 7.5 v @orel).
 
-$ k_1 & eq & h thin f lr((x_n comma y_n))\
-k_2 & eq & h thin f lr((x_n plus h slash 2 comma y_n plus k_1 slash 2))\
-k_3 & eq & h thin f lr((x_n plus h slash 2 comma y_n plus k_2 slash 2))\
-k_4 & eq & h thin f lr((x_n plus h comma y_n plus k_3))\
-y_(n plus 1) & eq & y_n plus lr((k_1 plus 2 k_2 plus 2 k_3 plus k_4)) slash 6 dot.basic $
-
-Klic funkcije naj bo oblike `odmik=nihalo(l,t,theta0,dtheta0,n)`
-
-- kjer je `odmik` enak odmiku nihala ob času `t`,
-- dolžina nihala je `l`,
-- začetni odmik \(odmik ob času $0$) je `theta0`
-- in začetna kotna hitrost \($theta prime lr((0))$) je `dtheta0`,
-- interval $lr([0 comma t])$ razdelimo na `n` podintervalov enake
-  dolžine.
-
-Primerjajte rešitev z nihanjem harmoničnega nihala. Za razliko od
-harmoničnega nihala \(sinusno nihanje), je pri matematičnem nihalu
-nihajni čas odvisen od začetnih pogojev \(energije). Narišite graf, ki
-predstavlja, kako se nihajni čas spreminja z energijo nihala.
+Za različne začetne pogoje primerjajte rešitev z
+nihanjem harmoničnega nihala, ki je dano z enačbo
+$
+g/l theta(t) + dot.double(theta(t)) = 0.
+$
+Pri harmoničnem nihalu je nihajni čas neodvisen od začetnih pogojev, medtem ko
+je pri matematičnem nihalu nihajni čas narašča, ko se veča energija nihala.
+Narišite graf odvisnosti nihajnega časa matematičnega nihala od energije nihala.

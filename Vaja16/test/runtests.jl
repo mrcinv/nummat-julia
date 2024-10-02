@@ -13,6 +13,14 @@ end
   @test Vaja16.hermiteint(2, [1, 3], [1, 27], [3, 27]) ≈ 8
 end
 
-@testset "Eulerjeva metoda" begin
 
+@testset "Vrednost" begin
+  f(t) = [t^3, t^2]
+  df(t) = [3t.^2, 2t]
+  t = [0., 1., 2.]
+  zp = ZacetniProblem((t, x, p) -> df(t), [0.0, 0], [0.0, 2.0], nothing)
+  res = ResitevNDE(zp, f.(t), t)
+  @test res(0.) ≈ f(0)
+  @test res(1.) ≈ f(1)
+  @test res(2.) ≈ f(2)
 end
