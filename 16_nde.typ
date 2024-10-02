@@ -63,10 +63,10 @@ Poglejmo si, kako je videti polje smeri za enačbo @eq:16-nde1. Tangente vzorči
 mreži na pravokotniku $(t, u) in [-2, 2] times [0, 4]$. Za eksplicitno podano krivuljo $u = u(t)$ je
 vektor v smeri tangente podan s koordinatami $[1, u'(t)]$. Da dobimo lepšo sliko, vektor v smeri
 tangente normaliziramo in pomnožimo s primernim faktorjem, da se tangente na sliki ne prekrivajo.
+Napišimo funkcijo #jl("risi_polje(fun, (t0, tk), (u0, uk), n)"), ki nariše polje tangent za
+diferencialno enačbo (@pr:16-polje-smeri, @pr:16-risi-polje).
 
-#demo16("# polje smeri")
-
-Polje smeri nato narišemo s funkcijo #jl("quiver") iz paketa `Plots`:
+Narišimo polje smeri za enačbo @eq:16-nde1:
 
 #demo16("# polje slika")
 
@@ -373,6 +373,13 @@ Napišimo naslednje funkcije:
 
 
 == Rešitve
+#figure(
+  demo16("# polje smeri"), caption:[]
+)<pr:16-polje-smeri>
+
+#figure(
+  demo16("# risipolje"), caption:[]
+)<pr:16-risi-polje>
 
 #figure(
   vaja16("# euler plain"),

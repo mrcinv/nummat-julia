@@ -74,9 +74,10 @@ function vzorci_polje(fun, (t0, tk), (u0, uk), n=21)
 end
 # polje smeri
 
-# polje slika
+# risipolje
 using Plots
-function risi_polje(polje)
+function risi_polje(fun, (t0, tk), (u0, uk), n=21)
+  polje = vzorci_polje(fun, (t0, tk), (u0, uk), n)
   N = length(polje)
   x = polje[1][1]
   y = polje[1][2]
@@ -91,10 +92,11 @@ function risi_polje(polje)
     xlabel="\$t\$", ylabel="\$u\$", label=false
   )
 end
+# risipolje
 
+# polje slika
 fun(t, u) = -2 * t * u
-polje = vzorci_polje(fun, (-2, 2), (0, 4))
-plt = risi_polje(polje)
+plt = risi_polje(fun, (-2, 2), (0, 4))
 # polje slika
 
 # zacetni pogoj
