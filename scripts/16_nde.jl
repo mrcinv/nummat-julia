@@ -14,20 +14,14 @@ function f_posevni(_, u, par)
   return vcat(v, f)
 end
 # posevni
-# posevni zp
-"""
-Sestavi začetni problem za poševni met z začetnimi pogoji in parametri.
-"""
-function posevni_met(x0, v0, t, g, C)
-  u0 = vcat(x0, v0)
-  tint = (0.0, t)
-  p = [g, C]
-  return ZacetniProblem(f_posevni, u0, tint, p)
-end
-# posevni zp
 
 # primer 1
-zp = posevni_met([0.0, 1.0], [10.0, 20.0], 3.0, 10.0, 0.1)
+x0 = [0.0, 1.0]
+v0 = [10.0, 20.0]
+tint = (0.0, 3.0)
+g = 9.8
+c = 0.1
+zp = ZacetniProblem(f_posevni, vcat(x0, v0), tint, (g, c))
 res = resi(zp, Euler(0.1))
 using Plots
 plot(t -> res(t)[1], 0, 3, label="\$x(t)\$")
@@ -35,13 +29,18 @@ plot!(t -> res(t)[2], 0, 3, label="\$y(t)\$")
 plot!(t -> res(t)[3], 0, 3, label="\$v_x(t)\$")
 plot!(t -> res(t)[4], 0, 3, label="\$v_y(t)\$")
 # primer 1
-
-plot(t->res(t)[1], t->res(t)[2], 0, 3, label="pot izstrelka")
+savefig("img/16-komponente.svg")
 
 # primer 2
-res2 = resi(zp, Euler(0.00001))
+plot(t -> res(t)[1], t -> res(t)[2], 0, 3, label="pot izstrelka")
+# primer 2
+savefig("img/16-trajektorija.svg")
+
+# primer napaka
+res2 = resi(zp, Euler(0.001))
 plot(t -> norm(res(t) - res2(t), Inf), zp.tint..., label="napaka")
-# primer 2
+# primer napaka
+savefig("img/16-napaka-euler.svg")
 
 # polje smeri
 using LinearAlgebra
@@ -148,7 +147,7 @@ scatter!(res2.t, res2.u - upravi.(res2.t), label="\$h=0.05\$")
 savefig("img/16-euler-napaka.svg")
 
 # napaka
-zp = posevni_met([0.0, 2.0], [10.0, 20.0], 3., 9.8, 0.1)
+zp = ZacetniProblem(f_posevni, [0.0, 2.0, 10.0, 20.0], (0.0, 3.0), (9.8, 0.1))
 function napaka(resevalec, zp, resitev, nvzorca=100)
   priblizek = resi(zp, resevalec)
   t0, tk = zp.tint
@@ -158,7 +157,7 @@ end
 
 
 h = 3 ./ (2 .^ (2:10))
-resitev = resi(zp, RK4(h[end]/2))
+resitev = resi(zp, RK4(h[end] / 2))
 napakaEuler = [napaka(Euler(hi), zp, resitev) for hi in h]
 napakaRK2 = [napaka(RK2(hi), zp, resitev) for hi in h]
 napakaRK4 = [napaka(RK4(hi), zp, resitev) for hi in h]
@@ -169,4 +168,5 @@ scatter!(h, napakaRK4, xscale=:log10, yscale=:log10, label="RK4", legend=:toplef
 savefig("img/16-primerjava.svg")
 
 # ničla
+zp = ZacetniProblem
 # ničla

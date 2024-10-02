@@ -9,22 +9,25 @@ $
 u'(t) = f(t, u, p)
 $
 
-ima enolično rešitev za vsak začetni pogoj $u(t_0) = u_0$. Iskanje rešitve NDE z danim začetnim pogojem imenujemo #link("https://en.wikipedia.org/wiki/Initial_value_problem")[začetni problem].
+ima enolično rešitev za vsak začetni pogoj $u(t_0) = u_0$. Iskanje rešitve NDE z danim začetnim
+pogojem imenujemo #link("https://en.wikipedia.org/wiki/Initial_value_problem")[začetni problem].
 
-V naslednji vaji bomo napisali knjižnico za reševanje začetnega problema za NDE. Napisali  bomo naslednje:
+V naslednji vaji bomo napisali knjižnico za reševanje začetnega problema za NDE. Napisali bomo
+naslednje:
 
 1. Podatkovno strukturo, ki hrani podatke o začetnemu problemu.
 2. Podatkovno strukturo, ki hrani podatke o rešitvi začetnega problema.
 3. Različne metode za funkcijo `resi`, ki poiščejo približek za rešitev začetnega problema z različnimi metodami:
   - Eulerjevo metodo,
   - Runge-Kutta reda 2,
-  - prediktor korektor z Eulerjevo in implicitno trapezno metodo in kontrolo koraka.
+  - Runge-Kutta reda 4.
 4. Funkcijo `vrednost`, ki za dano rešitev začetnega problema izračuna vrednost rešitve v vmesnih
   točkah s Hermitovim kubičnim zlepkom (@sec:12-zlepki).
-5. Napisane funkcije uporabite, da poiščete rešitev začetnega problema za poševni met z zračnim uporom.
+5. Za primer bomo poiskali rešitev začetnega problema za poševni met z zračnim uporom.
   Kako daleč leti telo preden pade na tla? Koliko časa leti?
-6. Za metode brez kontrole koraka ocenite napako tako, da približek izračunajte ponovno z dvakrat
-   manjšim korakom. Nato uporabite #link("")[Richardsonovo ekstrapolacijo].
+6. Za vse tri metode bomo ocenili, kako se napaka spreminja v odvisnosti od dolžine koraka. Namesto
+   točne rešitve uporabimo približek, ki ga izračunamo s polovičnim korakom. Oceno lahko izboljšamo
+   z #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo ekstrapolacijo].
 
 == Reševanje enačbe z eno spremenljivko
 
@@ -101,8 +104,10 @@ numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto upo
 - z vektorjem koeficientov $[a_0, a_1 med dots med a_n]$ v razvoju $u(t) = sum a_k phi_k(t)$
   po dani bazi $phi_k(t)$.
 
-Metode, ki poiščejo približek za vektor vrednosti imenujemo #link("https://en.wikipedia.org/wiki/Collocation_method")[kolokacijske metode], metode, ki poiščejo približek za koeficiente v razvoju
-po bazi pa #link("https://en.wikipedia.org/wiki/Spectral_method")[spektralne metode].
+Metode, ki poiščejo približek za vektor vrednosti, imenujemo
+#link("https://en.wikipedia.org/wiki/Collocation_method")[kolokacijske metode], metode, ki poiščejo
+približek za koeficiente v razvoju po bazi pa
+#link("https://en.wikipedia.org/wiki/Spectral_method")[spektralne metode].
 Metode, ki jih bomo spoznali v nadaljevanju, sodijo med kolokacijske metode.
 
 === Eulerjeva metoda
@@ -278,11 +283,6 @@ in napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stan
 @eq:16-sistem-1-reda:
 
 #demo16("# posevni")
-
-Nato napišemo še funkcijo, ki vrne vrednost tipa #jl("ZacetniProblem") za dane začetne pogoje in
-vrednosti parametrov:
-
-#demo16("# posevni zp")
 
 Primerjali bomo vse tri metode, ki smo jih do sedaj spoznali. Za različne vrednosti koraka bomo
 izračunali približek in ga primerjali s pravo rešitvijo. Ker prave rešitve ne poznamo, bomo
