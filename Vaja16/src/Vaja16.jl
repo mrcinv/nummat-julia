@@ -30,21 +30,24 @@ end
 
 # ZacetniProblem
 """
-  zp = ZacetniProblem(f!, u0 tspan, p)
+  zp = ZacetniProblem(f, u0 tint, p)
 
-Podatkovna struktura s podatki za začetni problem za navadne diferencialne enačbo (NDE)
+Podatkovna struktura s podatki za začetni problem za 
+navadne diferencialne enačbo (NDE) oblike:
+
 ```math
-u'(t) = f(u, p, t).
+u'(t) = f(t, u, p).
 ```
-z začetnim pogojem ``u(t0) = u_0`` na intervalu ``tint=[t0, t_k]`` in
-vrednostmi parametrov `p`.
+Desna stran NDE je podana s funkcijo `f`, ki je odvisna od vrednosti `u`, `t` in
+parametrov enačbe `p`. Začetni pogoj ``u(t0) = u_0`` je določen s poljem `u0` 
+v začetni točki intervala ``tint=[t0, t_k]`` na katerem iščemo rešitev.
 
 ## Polja
 
 * `f`: funkcija, ki izračuna odvod (desne strani NDE)
 * `u0`: začetni pogoj
 * `tint`: časovni interval za rešitev
-* `p`: vrednosti parametrov
+* `p`: vrednosti parametrov enačbe
 """
 struct ZacetniProblem{TU,TT,TP}
   f       # desne strani NDE u' = f(t, u, p)
@@ -57,7 +60,8 @@ end
 # ResitevNDE
 """
 Podatkovna struktura, ki hrani približek za rešitev začetnega problema za NDE.
-Uporablja se predvesm kot tip, ki ga vrnejo metode za reševanje začetnega problema.
+Uporablja se predvesm kot tip, ki ga vrnejo metode za reševanje začetnega 
+problema.
 """
 struct ResitevNDE{TU,TT,TP}
   zp::ZacetniProblem{TU,TT,TP} # referenca na začetni problem

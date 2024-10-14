@@ -98,7 +98,7 @@ $<eq:16-zacetni-problem>
 
 pa #emph[začetni problem].
 
-Rešitev začetnega problema @eq:16-nde1 je funkcija $u(x)$. Funkcijo lahko
+Rešitev začetnega problema @eq:16-zacetni-problem je funkcija $u(x)$. Funkcijo $u(x)$ lahko
 numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto uporabljata, sta
 - z vektorjem vrednosti $[u_0, u_1, med dots med u_n]$ v danih točkah $t_0, t_1, med dots t_n$ ali
 - z vektorjem koeficientov $[a_0, a_1 med dots med a_n]$ v razvoju $u(t) = sum a_k phi_k(t)$
@@ -110,7 +110,7 @@ približek za koeficiente v razvoju po bazi pa
 #link("https://en.wikipedia.org/wiki/Spectral_method")[spektralne metode].
 Metode, ki jih bomo spoznali v nadaljevanju, sodijo med kolokacijske metode.
 
-=== Eulerjeva metoda
+== Eulerjeva metoda
 
 Najpreprostejša metoda za reševanje začetnega problema je
 #link("https://en.wikipedia.org/wiki/Euler_method")[Eulerjeva metoda].
@@ -199,6 +199,55 @@ prilagodljiva in omogoča enostavno dodajanje na primer novih numeričnih metod,
 formulacij samega problema.
 ]
 
+== Metode Runge - Kutta
+
+Implementirajmo še metodi Runge - Kutta drugega in četrtega reda podane z Butcherjevima tabelama
+
+$
+#table(columns: 2, stroke: none, align: bottom,
+  table(columns:3, stroke: none,
+    table.vline(x: 1, stroke: 0.5pt),
+    $0$, none, none,
+    $1$, $1$, none,
+    table.hline(stroke: 0.5pt),
+    none, $1/2$, $1/2$),
+  table(columns:5, stroke: none,
+    table.vline(x:1, stroke: 0.5pt),
+    $0$, none, none, none, none,
+    $1/2$, $1/2$, none, none, none,
+    $1/2$, $0$, $1/2$, none, none,
+    $1$, $0$, $0$, $1$, none,
+    table.hline(stroke: 0.5pt),
+    none, $1/6$, $1/3$, $1/3$, $1/6$)
+)
+$
+
+Naslednji približek za $u_(n+1) = u(t_(n)+h)$ za metodo drugega reda lahko zapišemo kot:
+
+$
+k_1 &= h f(t_(n), u_(n), p)\
+k_2 &= h f(t_(n) + h, u_(n) + k_1, p)\
+u_(n+1) &= u_n + 1/2(k_1 + k_2).
+$<eq:16-rk2>
+
+Za metodo četrtega reda pa je naslednji približek enak:
+
+$
+k_1 &= h f(t_(n), u_(n), p)\
+k_2 &= h f(t_(n) + 1/2 h, u_(n) + 1/2 k_1, p)\
+k_3 &= h f(t_(n) + 1/2 h, u_(n) + 1/2 k_2, p)\
+k_4 &= h f(t_(n) + h, u_(n) + k_3, p)\
+u_(n+1) &= u_n + 1/6(k_1 + 2k_2 + 2k_3 + k_4).
+$<eq:16-rk4>
+
+Definirajmo sedaj
+- podatkovni tip #jl("RK2"), ki predstavlja metodo drugega reda @eq:16-rk2 in funkcijo
+  #jl("korak(m::RK2, fun, t0, u0, par, smer)"), ki izračuna približek na naslednjem koraku
+  (@pr:16-rk2),
+- podatkovni tip  #jl("RK4"), ki predstavlja metodo četrtega reda @eq:16-rk4 in funkcijo
+  #jl("korak(m::RK4, fun, t0, u0, par, smer)"), ki izračuna približek na naslednjem koraku
+  (@pr:16-rk4).
+
 == Hermitova interpolacija
 
 Približne metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
@@ -208,8 +257,17 @@ spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo 
 zlepek je na intervalu $[t_i, t_(i+1)]$ določen z vrednostmi rešitve in odvodi v krajiščih
 intervala. Ti podatki so shranjeni v vrednosti tipa #jl("ResitevNDE").
 Napišimo sedaj funkcijo #jl("vrednost(res::ResitevNDE, t)"), ki vrne približek
-za rešitev NDE v dani točki (@pr:16-vrednost).
+za rešitev NDE v dani točki (@pr:16-vrednost). Vrednosti rešitve lahko na ta način izračunamo tudi
+za argumente $t$, ki so med približki, ki jih izračuna Eulerjeva ali kakšna druga metoda.
+Prikažemo Hermitovo interpolacijo na grafu:
 
+#demo16("# plot hermite")
+
+#figure(
+  image("img/16-hermite.svg", width: 60%),
+  caption: [Vmesne vrednosti med približki metode Runge - Kutta reda 2 interpoliramo s Hermitovim
+  zlepkom.]
+)
 == Poševni met z zračnim uporom
 
 Poševni met opisuje gibanje točkastega telesa pod vplivom gravitacije. Enačbe, ki opisujejo poševni
@@ -296,7 +354,24 @@ $[t_0, t_k]$.
 odvisnosti od velikosti koraka])
 
 #opomba(naslov: [Kako izbrati primerno metodo?])[
-V tej vaji smo spoznali 3 različne metode: Eulerjevo, Runge-Kutta reda 2 in reda 4.
+V tej vaji smo spoznali 3 različne metode: Eulerjevo, Runge-Kutta reda 2 in reda 4. Poleg omenjenih
+metod, obstaja še cel živalski vrt različnih metod za reševanje začetnega problema. Tule je
+na primer #link("https://docs.sciml.ai/DiffEqDocs/stable/solvers/ode_solve/")[seznam metod]
+implementiranih v paketu #jl("DifferentialEquations"), podrobneje pa so opisane v
+@hairer_solving_1993. Kako se odločimo, katero metodo izbrati?
+
+Izberemo metodo, ki ima red vsaj 4, sicer je treba korak zelo zmanjšati, da dobimo
+dovolj dobro natančnost. Za splošno rabo so najprimernejše metode s kontrolo koraka. Zelo popularna
+je metoda #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[Dormand - Prince reda 5, DOPRI5],
+ki jo privzeto uporabljajo Matlab, Octave in paket #jl("DifferentialEquations") za Julijo.
+
+Pri nekaterih NDE postanejo običajne metode kot so Runge - Kutta in DOPRI5 numerično nestabilne.
+Take enačbe imenujemo
+#link("https://en.wikipedia.org/wiki/Stiff_equation")[toge diferencialne enačbe]. Za toge
+diferencialne enačbe so razvili veliko specialnih metod (glej @hairer_solving_1996).
+
+Prav tako obstajajo metode, ki so prilagojene posebnim razredom diferencialnih enačb na primer
+enačbe na Liejevih grupah in homogenih prostorih, Hamiltonske enačbe in še mnogo drugih.
 ]
 
 == Dolžina meta

@@ -222,3 +222,44 @@ plestenjak2015:
   page-range: 418
   serial-number:
     isbn: 978-961-212-264-5
+hairer_solving_1993:
+  type: book
+  title: Solving Ordinary Differential Equations I
+  author:
+  - Hairer, Ernst
+  - Wanner, Gerhard
+  - Nørsett, Syvert P.
+  date: 1993
+  publisher: Springer
+  location: Berlin, Heidelberg
+  volume: 8
+  url:
+    value: http://link.springer.com/10.1007/978-3-540-78862-1
+    date: 2024-10-01
+  serial-number:
+    doi: 10.1007/978-3-540-78862-1
+    isbn: 978-3-540-56670-0 978-3-540-78862-1
+  parent:
+    type: book
+    title: Springer Series in Computational Mathematics
+
+hairer_solving_1996:
+  type: book
+  title: Solving Ordinary Differential Equations {II}
+  author:
+  - Hairer, Ernst
+  - Wanner, Gerhard
+  date: 1996
+  publisher: Springer
+  location: Berlin, Heidelberg
+  volume: 14
+  url:
+    value: http://link.springer.com/10.1007/978-3-642-05221-7
+    date: 2024-10-01
+  serial-number:
+    doi: 10.1007/978-3-642-05221-7
+    isbn: 978-3-642-05220-0 978-3-642-05221-7
+  parent:
+    type: book
+    title: Springer Series in Computational Mathematics
+
