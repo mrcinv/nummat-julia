@@ -3,28 +3,28 @@
 
 = Invariantna porazdelitev Markovske verige
 
-== Naloga
-
-- Implementiraj potenčno metodo za iskanje največje lastne vrednosti in lastnega vektorja matrike.
-- Uporabi potenčno metodo in poišči invariantno porazdelitev Markovske verige z
-  dano prehodno matriko $P$. Poišči invariantne porazdelitve za naslednja primera:
-    - veriga, ki opisuje skakanje konja (skakača) po šahovnici,
-    - veriga, ki opisuje brskanje po mini spletu s 5-10 stranmi (podobno spletni iskalniki
-      #link("https://en.wikipedia.org/wiki/PageRank")[razvrščajo strani po relevantnosti]).
-
-== Invariantna porazdelitev Markovske verige
 #let Pm = (math.cal[P])
 Z #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovskimi verigami] smo se že srečali v
-poglavju o tridiagonalnih sistemih (@tridiagonalni-sistemi). Porazdelitev Markovske verige $X_k$ je
-podana z matriko $Pm$, katere elementi so prehodne verjetnosti:
-
+poglavju o tridiagonalnih sistemih (@tridiagonalni-sistemi). Spomnimo se, da je Markovska veriga
+zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množici stanj. Stanja Markovske verige bomo označili kar z zaporednimi naravnimi števili $1, 2, med dots med n$. Na vsakem koraku je
+Markovska veriga v določenem stanju $X_(k) in {1, 2, med dots med n}$. Porazdelitev na naslednjem koraku $X_(k+1)$
+je odvisna zgolj od poradelitve na prejšnjem koraku $X_(k)$ in prehodnih verjetnosti za prehod iz stanja $i$ v stanje $j$:
 $
 p_(i j) = P(X_(k+1) = j | X_k = i).
 $
 
+Matrika $Pm = [p_(i j)]$, katere elementi so prehodne verjetnosti za prehod iz stanja $i$ v stanje $j$, imenujemo #emph[prehodna matrika Markovkse verige].
+
 Naj bo $X_k$ Markovska veriga z $n$ stanji in naj bo
 $bold(p)^((k)) = [p_1^((k)), p_2^((k)), dots p_n^((k))]$ porazdelitev po stanjih na $k$-tem koraku
- ($p_i^((k)) = P(X_k = i)$). Porazdelitev na naslednjem koraku $X_(k+1)$ dobimo tako, da
+ ($p_i^((k)) = P(X_k = i)$).
+
+ Porazdelitev $bold(p)^(k)$ Markovske verige je #emph[invariantna], če je za vse $k$ enaka:
+$
+  bold(p)^(k+1) = bold(p)^(k).
+$
+
+Porazdelitev na naslednjem koraku $X_(k+1)$ dobimo tako, da
 seštejemo verjetnosti po vseh možnih stanjih na prejšnjem koraku, pomnožene s pogojnimi verjetnostmi,
 da iz enega stanja preidemo v drugega:
 
@@ -33,8 +33,27 @@ $
  bold(p)^((k+1)) = Pm^T bold(p)^((k)).
 $
 
-Če zaporedje porazdelitev $p^((k))$ konvergira k limitni porazdelitvi $bold(p)^(oo)$, potem je
-limitna porazdelitev lastni vektor $Pm^T$ z lastno vrednostjo $1$:
+Od tod sledi, da je porazdelitev $bold(p)$ #emph[invariantna porazdelitev] Markovske verige s prehodno matriko $Pm$, če velja:
+
+$
+bold(p) = Pm^T bold(p).
+$
+
+Povedano drugače: invariatna porazdelitev za Markovsko verigo s prehodno matriko $Pm$ je lastni vektor matrike $Pm$ z lastno vrednostjo $1$.
+
+== Naloga
+
+- Implementiraj potenčno metodo za iskanje največje lastne vrednosti in lastnega vektorja dane matrike.
+- Uporabi potenčno metodo in poišči invariantno porazdelitev Markovske verige z
+  dano prehodno matriko $Pm$. Poišči invariantne porazdelitve za naslednja primera:
+    - veriga, ki opisuje skakanje konja (skakača) po šahovnici,
+    - veriga, ki opisuje brskanje po mini spletu s 5-10 stranmi (podobno spletni iskalniki
+      #link("https://en.wikipedia.org/wiki/PageRank")[razvrščajo strani po relevantnosti]).
+
+== Limitna porazdelitev Markovske verige
+
+Porazdelitev $bold(p)$ je #emph[limitna porazdelitev] Markovske verige, če porazdelitve na posameznih korakih $bold(p)^(k)$
+konvergirajo k $bold(p)$. Limitna porazdelitev je vedno invariantna in potemtakem lastni vektor $Pm^T$ z lastno vrednostjo $1$:
 
 $
   bold(p)^(oo) = lim_(k->oo) bold(p)^((k)) = lim_(k->oo) bold(p)^((k+1)) =
@@ -43,8 +62,7 @@ $
 
 Ker so vsote elementov po vrsticah za prehodno matriko $Pm$ enake $1$, je $1$ lastna vrednost
 matrike $Pm$ in zato tudi lastna vrednost matrike $Pm^T$. Posledično limitna porazdelitev $bold(p)^(oo)$
-vedno obstaja, ni pa nujno enolična. Ker matrika $Pm^T$ ne spremeni limitne porazdelitve
-$bold(p)^(oo)$, limitno porazdelitve imenujemo tudi #emph[invariantna porazdelitev].
+vedno obstaja, ni pa nujno enolična.
 
 Da se pokazati, da je $1$ po absolutni vrednosti največja lastna vrednost matrike $Pm$ in $Pm^T$, zato
 lahko invariantno porazdelitev poiščemo s
