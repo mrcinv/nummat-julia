@@ -107,10 +107,10 @@ $
  a_(m 1)x_1 - a_(m 2)x_2 + dots  - st(m)x_m = - a_(m m+1)x_(m+1) - dots - a_(m n)x_(n)\
 $<eq:06sistem-x>
 
-kjer je vrednost $a_(j i)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer
+kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer
 
 $
-  a_(j i) = cases(1 quad (i, j) in E(G), 0 quad (i, j) in.not E(G)).
+  a_(i j) = cases(1 quad (i, j) in E(G), 0 quad (i, j) in.not E(G)).
 $
 
  Matrika sistema @eq:06sistem-x je
@@ -131,10 +131,10 @@ Sistema za $y$ in $z$ imata iste koeficiente, kot sistem @eq:06-trojni-sistem, r
 desnih straneh, ki so odvisne od koordinat pritrjenih točk.
 
 Kakšne posebnosti ima matrika sistema @eq:06-matrika?  Matrika je simetrična in diagonalno dominantna.
-Res! Velja $st(j) = |N(j)|$ in zato
+Res! Velja namreč $st(i) = |N(i)|$ in zato:
 
 $
-  |a_(j j)| = |N(j)| >= |N(j) sect F^C| =  sum_(i eq.not j) |a_(j i)|.
+  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(j eq.not i) |a_(i j)|.
 $
 
 Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonali negativni, je
@@ -184,10 +184,6 @@ Poiščimo drugačno vložitev s fizikalno metodo, tako da vozlišča enega cikl
 po krožnici.
 
 #code_box(
-  svaja06("# lestev fix")
-)
-
-#code_box(
   svaja06("# lestev fiz")
 )
 
@@ -197,9 +193,9 @@ po krožnici.
   vozlišča so fiksna, notranja pa postavljena tako, da so sile vzmeti na povezavah v ravnovesju.]
 )
 
-== Dvodimenzionalna Mreža
+== Dvodimenzionalna mreža
 
-Preizkusimo algoritem na dvodiemzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo, če v ravnini pravokotnik razdelimo v pravokotno mrežo.
+Preizkusimo algoritem na dvodiemzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo, če v ravnini pravokotnik razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje, ki ustrezajo ogliščem pravokotnika.
 
 #code_box(
   svaja06("# mreža")

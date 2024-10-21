@@ -1,8 +1,6 @@
 
 using SparseArrays
 
-using Vaja06
-
 # lestev
 using Vaja06
 G = krozna_lestev(8)
@@ -13,15 +11,12 @@ graphplot(G, curves=false)
 
 savefig("img/06-lestev.svg")
 
-# lestev fix
+# lestev fiz
 t = range(0, 2pi, 9)[1:end-1]
 x = cos.(t)
 y = sin.(t)
-scatter(x[1:8], y[1:8], label="fiksna vozlišča")
-# lestev fix
-
-# lestev fiz
 tocke = hcat(hcat(x, y)', zeros(2, 8))
+# funkcija hcat zloži vektorje po stolpcih v matriko
 fix = 1:8
 
 vlozi!(G, fix, tocke)
