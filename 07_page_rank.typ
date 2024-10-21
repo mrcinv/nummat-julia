@@ -147,7 +147,7 @@ Poiščimo invariantno porazdelitev s potenčno metodo:
   jlfb("scripts/07_page_rank.jl", "# splet 1")
 )
 
-Preverimo, ali je dobljeni vektor res lastni vektor za lastno vrednost $1$, tako da izračunamo razliko $Pm^T bold(x) - bold(x)$, ki za lastni vektor konvergira k $0$:
+Preverimo, ali je dobljeni vektor res lastni vektor za lastno vrednost $1$, tako da izračunamo razliko $Pm^T bold(x) - bold(x)$ in preverimo, da je razlika blizu $0$:
 
 #code_box[
   #jlfb("scripts/07_page_rank.jl", "# splet 2")
@@ -246,7 +246,7 @@ vrednost $1$.
 
 #figure(
   image("img/07-konj.svg", width:60%),
-  caption: [Invariantna porazdelitev za konja na standardni $8 times 8$ šahovnici. Svetlejša polja so pogosteje obiskana.]
+  caption: [Limitna porazdelitev za konja na standardni $8 times 8$ šahovnici. Svetlejša polja so pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve na začetku.]
 )
 == Rešitve
 
