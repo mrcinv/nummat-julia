@@ -2,6 +2,8 @@
 using Plots
 l(t) = [sin(2t), cos(3t)]
 t = range(0, 2pi, 500)
+# Funkcija plot drugače interpretira vektor vektorjev, kot vektor parov (Tuple).
+# Zato vektorje koordinat spremenimo v pare koordinat (Tuple).
 plot(Tuple.(l.(t)), label=nothing)
 # krivulja
 
@@ -23,12 +25,12 @@ savefig("img/10-samopres.svg")
 # obmocje samopres
 using Vaja10: samopres
 mod2pi(x) = rem(x, 2pi)
-""" Poišči samopresečišče Lissjousove krivulje. Upoštevaj periodičnost."""
+""" Poišči samopresečišče Lissajousove krivulje. Upoštevaj periodičnost."""
 function splissajous(ts0)
   ts, it = samopres(l, dl, ts0)
   ts = mod2pi.(ts)
   if abs(ts[1] - ts[2]) < 1e-12
-    throw("Ista parametra ne pomenita samopresečišča.")
+    throw("Isti vrednosti parametra ne pomenita samopresečišča.")
   end
   return sort(ts), it
 end
@@ -66,8 +68,8 @@ savefig("img/10-krivulji.svg")
 
 # razdalja
 
-using Vaja10: razdajla2
-d2 = razdajla2(k1, k2)
+using Vaja10: razdalja2
+d2 = razdalja2(k1, k2)
 
 t = range(-pi, pi, 100)
 s = t
@@ -80,7 +82,6 @@ using BookUtils: capture
 # odvodi
 using ForwardDiff
 gradd2(ts) = ForwardDiff.gradient(ts -> d2(ts...), ts)
-v = gradd2([pi / 2, pi]) # vrednost grad(d2) v t=2, s=1
 # odvodi
 p("10_grad", v)
 
