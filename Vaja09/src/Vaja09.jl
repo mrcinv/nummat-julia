@@ -2,7 +2,13 @@ module Vaja09
 
 # newton
 using LinearAlgebra
+"""
+    x, it = newton(f, jf, x0)
 
+Poišči rešitev nelinearnega sistema enačb `f(x) = 0` z Newtonovo metodo.
+Argument `jf` je funkcija, ki vrne Jacobiijovo matriko funkcije`f`.
+Argument `x0`je začetni približek za Newtonovo metodo.
+"""
 function newton(f, jf, x0; maxit=100, atol=1e-8)
   for i = 1:maxit
     x = x0 - jf(x0) \ f(x0)
@@ -16,21 +22,41 @@ end
 # newton
 
 # box2d
+"Podatkovna struktura za interval"
 struct Interval
   min
   max
 end
 
-vsebuje(x, i::Interval) = x >= i.min && x <= i.max
+"Ali interval `I` vsebuje točko `x`?"
+vsebuje(x, I::Interval) = x >= I.min && x <= I.max
 
+"""
+Podatkovna struktura za pravokotnik vzporeden s koordinatnimi osmi (škatla).
+Pravokotnik je podan kot produkt dveh intervalov za spremenljivki `x`in `y`.
+"""
 struct Box2d
   int_x
   int_y
 end
 
+"Ali škatla `b` vsebuje dano točko `x`?"
 vsebuje(x, b::Box2d) = vsebuje(x[1], b.int_x) && vsebuje(x[2], b.int_y)
 
-diskretiziraj(i::Interval, n) = range(i.min, i.max, n)
+"""
+  x = diskretiziraj(I, n)
+
+Razdeli interval `I` na `n` enakih podintervalov. Vrni seznam krajišč
+poditntervalov.
+"""
+diskretiziraj(I::Interval, n) = range(I.min, I.max, n)
+
+"""
+  x = diskretiziraj(b, m, n)
+
+Razdeli škatlo `b` na manjše škatle. Vrni seznama krajišč
+poditntervalov v smereh `x` in `y`.
+"""
 diskretiziraj(b::Box2d, m, n) = (
   diskretiziraj(b.int_x, m), diskretiziraj(b.int_y, n))
 
@@ -39,11 +65,19 @@ diskretiziraj(b::Box2d, m, n) = (
 """
     x, y, Z, nicle, koraki = konvergenca(obmocje, metoda, n=50, m=50; maxit=50, tol=1e-3)
 
-Izračunaj h katerim vrednostim konvergira metoda `metoda`, če uporabimo različne
-začetne približke na pravokotniku `[a, b]x[c, d]` podanim z argumentom `obmocje`.
+Izračunaj, h katerim vrednostim konvergira metoda `metoda`, če uporabimo različne
+začetne približke na pravokotniku `[a, b]x[c, d]`, podanim z argumentom `obmocje`.
+
+Funkcija vrne:
+- seznam krajišč podintervalov v x smeri,
+- seznam krajišč podintervalov v y smeri,
+- matriko z indeksi ničle, h kateri metoda konvergira,
+- seznam ničel na izbranem območju,
+- matriko s številom korakov, ki jih metoda potrebuje, da najde ničlo.
 
 # Primer
-Konvergenčno območje za Newtonovo metodo za kompleksno enačbo ``z^3=1``
+Konvergenčno območje za Newtonovo metodo za reševajne
+kompleksne enačbe ``z^3=(x + i y) ^3 = 1``
 
 ```jl
 F((x, y)) = [x^3-3x*y^2; 3x^2*y-y^3];
