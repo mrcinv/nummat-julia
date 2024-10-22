@@ -3,10 +3,13 @@
 = Spektralno razvrščanje v gruče
 <spektralno-razvrščanje-v-gruče>
 
-Pokazali bomo metodo razvrščanja v gruče, ki uporabi
+#link("https://en.wikipedia.org/wiki/Cluster_analysis")[Razvrščanje v gruče ali gručenje] je
+postopek pri katerem množico objektov razdelimo v nekaj skupin ali gruč, v katerih
+so objekti, ki so si v nekem smisli podobni.
+Ogledali si bomo metodo, ki s
 #link("https://sl.wikipedia.org/wiki/Spektralna_teorija_grafov")[spektralno analizo
-Laplaceove matrike] podobnostnega grafa, tako da podatke
-preslika v prostor, v katerem jih je preprosteje razvrstiti.
+Laplaceove matrike] podobnostnega grafa podatke
+preslika v prostor, v katerem jih nato preprosteje razvrstimo z algoritmi gručenja.
 Sledili bomo postopku imenovanemu
 #link("https://en.wikipedia.org/wiki/Spectral_clustering")[spektralno gručenje], kot je
 opisan v @von_luxburg_tutorial_2007.
@@ -16,10 +19,11 @@ opisan v @von_luxburg_tutorial_2007.
 
 - Napiši funkcijo, ki zgradi podobnostni graf za podatke, podane kot oblak točk v
   $RR^d$. V podobnostnem grafu je vsaka točka v oblaku vozlišče, povezani pa so vsi pari
-  točko $i$ in $j$, ki so za manj kot $epsilon$ oddaljeni za primerno izbrani $epsilon$.
+  točk $i$ in $j$, ki so za manj kot $epsilon$ oddaljeni za primerno izbrani $epsilon$.
 - Napiši funkcijo, ki za dano simetrično matriko poišče $k$ po absolutni vrednosti najmanjših
   lastnih vrednosti in pripradajoče lastne vektorje.
-  Inverzno iteracijo uporabi za $k$ vektorjev in s QR razcepom poskrbi, da so ortogonalni. Faktor $Q$ konvergira k lastnim vektorjem,
+  Uporabi inverzno iteracijo za $k$ vektorjev in na vsakem koraku s QR razcepom poskrbi, da so
+  paroma ortogonalni. Faktor $Q$ v QR razcepu konvergira k lastnim vektorjem,
   diagonala faktorja $R$ pa h $k$ po absolutni vrednosti najmanjšim lastnim vrednostim matrike.
 - Funkcijo za iskanje lastnih vektorjev uporabi na Laplaceovi matriki podobnostnega grafa podatkov.
   Za primer podatkov naključno generiraj mešanico treh različnih Gaussovih porazdelitev.
@@ -137,23 +141,23 @@ vrednost uporabimo za nove koordinate.
 )
 
 Seveda se pri samem algoritmu gručenja ni treba omejiti le na dva lastna
-vektorja, ampak se izbere lastne vektorje za $k$ najmanjših neničelnih lastnih
+vektorja in iskati katere kombinacije komponent najbolj ločijo gruče. Preprosto
+sizberemo lastne vektorje za $k$ najmanjših neničelnih lastnih
 vrednosti in algoritem gručenja avtomatsko bolj upošteva dimenzije, v katerih so gruče
 najbolj razčlenjene.
 
 
 == Inverzna potenčna metoda
 <inverzna-potenčna-metoda>
-Ker nas zanima le nekaj najmanjših lastnih vrednosti, lahko njihov
-izračun in za izračun lastnih vektorjev uporabimo
+Ker nas zanima le nekaj najmanjših lastnih vrednosti, lahko za izračun uporabimo
 #link("https://en.wikipedia.org/wiki/Inverse_iteration")[inverzno potenčno metodo].
 Pri inverzni potenčni metodi zgradimo zaporedje približkov z rekurzivno
-formulo
+formulo:
 
 $ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((k)))/norm(A^(- 1) bold(x)^((k))). $<eq:9-inviter>
 
 Zaporedje približkov $bold(x^((k)))$ konvergira k lastnemu vektorju za najmanjšo
-lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka.
+lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka $bold(x)^((0))$.
 
 #opomba(naslov:
 [Namesto inverza uporabite LU razcep ali drugo metodo za reševanje linearnega sistema])[
@@ -240,13 +244,13 @@ Vidimo, da metoda konjugiranih gradientov zelo hitro konvergira za naš primer. 
 s QR razcepom smo učinkovito poiskali lastne vektorje Laplaceove matrike za najmanjše lastne
 vrednosti. Ti lastni vektorji pa izboljšajo proces gručenja.
 
+#opomba(naslov: [Velike količine podatkov zahtevajo učinkovite algoritme])[
 V našem primeru je bila količina podatkov majhna. Vendar bi z inverzno
 iteracijo s QR razcepom in metodo konjigiranih gradientov lahko obdelali tudi bistveno
 večje količine podatkov, pri katerih bi splošne metode, kot
 na primer QR iteracija za iskanje lastnih parov ali LU razcep za reševanje
 sistema, odpovedale.
 
-#opomba(naslov: [Velike količine podatkov zahtevajo učinkovite algoritme])[
 Z naraščanjem količine podatkov je nujno
 izbrati učinkovite metode. V praksi se količine podatkov merijo v miljonih in
 miljardah. Metode s kvadratno ali višjo časovno ali prostorsko zahtevnostjo so

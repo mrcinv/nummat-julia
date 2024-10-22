@@ -18,7 +18,7 @@ tocke = hcat(x, y)'
 r = 1.0
 G = graf_eps(tocke, r)
 L = laplace(G)
-spy(L)
+spy(L, legend=false)
 # laplace
 savefig("img/08_laplaceova_matrika.svg")
 
