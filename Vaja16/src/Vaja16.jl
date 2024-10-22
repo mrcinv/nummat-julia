@@ -1,6 +1,6 @@
 module Vaja16
 
-export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK4
+export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK4, nicla
 
 # euler plain
 """
@@ -208,9 +208,9 @@ function nicla(res::ResitevNDE, fun, dfun, maxit=10, atol=1e-8)
   t, u = res.t, res.u
   i = niclaint(res, fun)
   function rhs(tk) # desne strani enačbe
-    resevalec = RK4(tk - t)
-    smer = sign(tk - t)
-    t0, u0, du0, _ = korak(resevalec, res.zp.f, t[i], u[i], res.p, smer)
+    resevalec = RK4(tk - t[i])
+    smer = sign(tk - t[i])
+    t0, u0, du0 = korak(resevalec, res.zp.f, t[i], u[i], res.zp.p, smer)
     return fun(t0, u0, du0), dfun(t0, u0, du0)
   end
   newton(rhs, t[i], maxit, atol)
@@ -223,7 +223,7 @@ function niclaint(res::ResitevNDE, fun)
   t, u, du = res.t, res.u, res.du
   n = length(t)
   for i in 1:n-1
-    if fun(t[i], u[u], du[i]) * fun(t[i+1], u[u+1], du[i+1]) < 0
+    if fun(t[i], u[i], du[i]) * fun(t[i+1], u[i+1], du[i+1]) < 0
       return i
     end
   end

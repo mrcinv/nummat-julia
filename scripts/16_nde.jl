@@ -198,6 +198,40 @@ scatter!(h, napakaRK4, xscale=:log10, yscale=:log10, label="RK4", legend=:toplef
 # napaka
 savefig("img/16-primerjava.svg")
 
-# ničla
-zp = ZacetniProblem
-# ničla
+# nicla 1
+x0 = [0.0, 1.0]
+v0 = [10.0, 20.0]
+tint = (0.0, 3.0)
+g = 9.8
+c = 0.1
+zp = ZacetniProblem(f_posevni, vcat(x0, v0), tint, (g, c))
+res = resi(zp, RK4(0.3))
+scatter(res.t, [u[2] for u in res.u], label="približki za rešitev")
+# nicla 1
+savefig("img/16-nicla-1.svg")
+
+# nicla 2
+fun(_t, u, _du) = u[2]
+dfun(_t, u, _du) = u[4]
+i = Vaja16.niclaint(res, fun)
+scatter!(res.t[i:i+1], [res.u[i][2], res.u[i+1][2]], label="interval z ničlo")
+t0 = nicla(res, fun, dfun)
+scatter!([t0], [res(t0)[2]], label="ničla \$t=$(t0)\$")
+plot!(t -> res(t)[2], 0, t0, label="Hermitov zlepek", xlabel="\$t\$",
+  ylabel="višina \$y=u_2\$")
+# nicla 2
+savefig("img/16-nicla-2.svg")
+
+term("16-nicla-vrednost", (t0, res(t0)))
+
+# nicla 3
+t = range(0, t0, 100)
+x = [res(ti)[1] for ti in t]
+y = [res(ti)[2] for ti in t]
+plot(x, y, label="trajektorija", xlabel="\$x\$", ylabel="\$y\$")
+# nicla 3
+savefig("img/16-nicla-3.svg")
+
+# nicla 4
+(t0, res(t0))
+# nicla 4

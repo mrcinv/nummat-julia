@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jl, jlfb
+#import "julia.typ": code_box, jl, jlfb, repl, blk
 #import "admonitions.typ": opomba
 
 = Začetni problem za NDE
@@ -12,22 +12,24 @@ $
 ima enolično rešitev za vsak začetni pogoj $u(t_0) = u_0$. Iskanje rešitve NDE z danim začetnim
 pogojem imenujemo #link("https://en.wikipedia.org/wiki/Initial_value_problem")[začetni problem].
 
-V naslednji vaji bomo napisali knjižnico za reševanje začetnega problema za NDE. Napisali bomo
-naslednje:
+V tej vaji bomo napisali knjižnico za reševanje začetnega problema za NDE.
 
-1. Podatkovno strukturo, ki hrani podatke o začetnemu problemu.
-2. Podatkovno strukturo, ki hrani podatke o rešitvi začetnega problema.
-3. Različne metode za funkcijo `resi`, ki poiščejo približek za rešitev začetnega problema z različnimi metodami:
+== Naloga
+
+1. Definiraj podatkovno strukturo, ki hrani podatke o začetnemu problemu za NDE.
+2. Definiraj podatkovno strukturo, ki hrani podatke o rešitvi začetnega problema.
+3. Implementiraj različne metode za funkcijo `resi`, ki poiščejo približek za rešitev začetnega
+   problema z različnimi metodami:
   - Eulerjevo metodo,
   - Runge-Kutta reda 2,
   - Runge-Kutta reda 4.
-4. Funkcijo `vrednost`, ki za dano rešitev začetnega problema izračuna vrednost rešitve v vmesnih
+4. Napiši funkcijo `vrednost`, ki za dano rešitev začetnega problema izračuna vrednost rešitve v vmesnih
   točkah s Hermitovim kubičnim zlepkom (@sec:12-zlepki).
-5. Za primer bomo poiskali rešitev začetnega problema za poševni met z zračnim uporom.
-  Kako daleč leti telo preden pade na tla? Koliko časa leti?
-6. Za vse tri metode bomo ocenili, kako se napaka spreminja v odvisnosti od dolžine koraka. Namesto
-   točne rešitve uporabimo približek, ki ga izračunamo s polovičnim korakom. Oceno lahko izboljšamo
-   z #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo ekstrapolacijo].
+5. Obravnavaj poševni met z zračnim uporom. Iz Newtonovih zakonov gibanja in kvadratnega
+   zakona upora zapiši sistem NDE. Začetni problem reši z metodami, ki si jih implementiral.
+   Kako daleč leti telo preden pade na tla? Koliko časa leti?
+6. Za vse tri metode bomo oceni, kako se napaka spreminja v odvisnosti od dolžine koraka. Namesto
+   točne rešitve uporabi približek, ki ga izračunamo s polovičnim korakom.
 
 == Reševanje enačbe z eno spremenljivko
 
@@ -201,7 +203,7 @@ formulacij samega problema.
 
 == Metode Runge - Kutta
 
-Implementirajmo še metodi Runge - Kutta drugega in četrtega reda podane z Butcherjevima tabelama
+Implementirajmo še metodi Runge - Kutta drugega in četrtega reda podani z Butcherjevima tabelama
 
 $
 #table(columns: 2, stroke: none, align: bottom,
@@ -240,7 +242,7 @@ k_4 &= h f(t_(n) + h, u_(n) + k_3, p)\
 u_(n+1) &= u_n + 1/6(k_1 + 2k_2 + 2k_3 + k_4).
 $<eq:16-rk4>
 
-Definirajmo sedaj
+Definirajmo sedaj:
 - podatkovni tip #jl("RK2"), ki predstavlja metodo drugega reda @eq:16-rk2 in funkcijo
   #jl("korak(m::RK2, fun, t0, u0, par, smer)"), ki izračuna približek na naslednjem koraku
   (@pr:16-rk2),
@@ -344,7 +346,7 @@ in napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stan
 
 Primerjali bomo vse tri metode, ki smo jih do sedaj spoznali. Za različne vrednosti koraka bomo
 izračunali približek in ga primerjali s pravo rešitvijo. Ker prave rešitve ne poznamo, bomo
-uporabili približek, ki ga dobimo z metodo Runge Kutta 4. reda s polovičnim korakom. Napako bomo
+uporabili približek, ki ga dobimo z metodo Runge-Kutta 4. reda s polovičnim korakom. Napako bomo
 ocenili tako, da bomo poiskali največno napako med $n$ različnimi vrednostih $t$ na danem intervalu
 $[t_0, t_k]$.
 
@@ -374,7 +376,7 @@ Prav tako obstajajo metode, ki so prilagojene posebnim razredom diferencialnih e
 enačbe na Liejevih grupah in homogenih prostorih, Hamiltonske enačbe in še mnogo drugih.
 ]
 
-== Dolžina meta
+== Čas in dolžina meta
 Za različne začetne pogoje in parametre želimo poiskati, kako daleč leti telo, preden pade na
 tla. Predpostavimo, da so tla na višini $0$. Najprej bomo poiskali, kdaj telo zadene tla. To se bo
 zgodilo takrat, ko bo višina enaka $0$. Iskani čas je rešitev enačbe
@@ -446,14 +448,58 @@ Napišimo naslednje funkcije:
   za dano rešitev začetnega problema. Za računanje novih vrednosti naj uporabi metodo #jl("RK4")
   (@pr:16-nicla).
 
+#let demo16str(koda) = blk("scripts/16_nde.jl", koda)
+#let meter = $upright(m)$
+#let sekunda = $upright(s)$
+Funkcijo #jl("nicla") uporabimo za poševni met. Uporabili bomo relativno velik
+korak, da bo postopek iskanja ničle bolj nazoren. Rešimo začetni problem za poševni
+met @eq:16-sistem-1-reda s parametri $g=9.8 meter slash sekunda^2$, $c=0.1$, z začetnim
+položajem $x = 0meter, y = 1meter$ in začetno hitrostjo
+$v_(x) = 10 meter slash sekunda, v_(y) = 20 meter slash sekunda$. Enote so v
+ v numeričnem izračunu izpuščene.
 
+#demo16("# nicla 1")
+
+Približki za rešitev so precej narazen, saj smo za izračun uporabili
+relativno velik korak $h=0.3$. Kljub temu je zaradi visokega reda metode Runge-Kutta
+izračun dokaj natančen. V naslednjem koraku v tabeli približko, ki smo jo dobili
+z metodo Runge-Kutta, poiščemo interval, na katerem druga komponenta $u_2$
+spremeni predznak. Nato z Newtonovo metodo rešimo nelinearno enačbo $u_2(t) = 0$.
+
+#demo16("# nicla 2")
+#figure(image("img/16-nicla-2.svg", width: 60%),
+caption: [Slika ilustrira postopek, s katerim poiščemo, koliko časa
+izstrelek leti, preden pade na tla. Najprej poiščemo približke za rešitev z metodo Runge-Kutta reda 4.
+Nato poiščemo interval med približki, na katerem višina $y = u_2$ spremeni predznak. Z Newtonovo
+metodo rešimo enačbo $u_2(t)=0$.])
+
+#pagebreak()
+Vrednost #jl("t0") predstavlja čas leta, medtem ko dolžino leta zaberemo iz
+prve komponente rešitve.
+
+#code_box(
+repl(demo16str("# nicla 4"), read("out/16-nicla-vrednost.out"))
+)
+
+Iz rezultata razberemo, da je čas leta približno $2.57 sekunda$, medtem ko je
+dolžina, ki jo izstrelek doseže enaka $9.67 meter$. Narišimo še
+trajektorijo sistema, ki je podana s parametrično krivuljo $(x(t), y(t)) = (u_1(t), u_2(t))$.
+
+#demo16("# nicla 3")
+#figure(image("img/16-nicla-3.svg", width: 60%),
+caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže tla])
+
+#pagebreak()
 == Rešitve
 #figure(
-  demo16("# polje smeri"), caption:[]
+  demo16("# polje smeri"),
+  caption:[Funkcija izračuna polje smeri za NDE prvega reda v vozliščih
+  pravokotni mreže na danem pravokotniku.]
 )<pr:16-polje-smeri>
 
 #figure(
-  demo16("# risipolje"), caption:[]
+  demo16("# risipolje"), caption:[Funkcija nariše polje smeri za NDE prvega reda
+  v ravnini $t, u$.]
 )<pr:16-risi-polje>
 
 #figure(
@@ -476,30 +522,31 @@ Napišimo naslednje funkcije:
 #figure(
   vaja16("# interpolacija"),
   caption: [Vmesne vrednosti rešitve NDE, izračunamo s Hermitovim kubičnim
-  zlepkom]
+  zlepkom.]
 )<pr:16-vrednost>
 
 #figure(
   vaja16("# RK2"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
-  z enim korakom metode Runge Kutta reda 2]
+  z enim korakom metode Runge-Kutta reda 2]
 )<pr:16-rk2>
 
 
 #figure(
   vaja16("# RK4"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
-  z enim korakom metode Runge Kutta reda 4]
+  z enim korakom metode Runge-Kutta reda 4]
 )<pr:16-rk4>
 
 #figure(
   vaja16("# niclaint"),
-  caption: [Poišči interval $[t_(i), t_(i+1)]$, na katerem ima funkcija $g(t) = F(bold(u)(t))$ ničlo
+  caption: [Funkcija poišče interval $[t_(i), t_(i+1)]$, na katerem ima funkcija
+  $g(t) = F(bold(u)(t))$ ničlo.
   ]
 )<pr:16-niclaint>
 
 
 #figure(
   vaja16("# nicla"),
-  caption: [Poišči vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$]
+  caption: [Funkcija poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$]
 )<pr:16-nicla>
