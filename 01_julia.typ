@@ -196,6 +196,56 @@ lahko uporabimo tudi za iskanje rešitve pre-določenega sistema po metodi najma
  0.5999999999999999
  0.5111111111111114")
 ]
+
+=== Zanke in kontrolne strukture
+
+Za zanko z znanim številom korakov uporabimo ukaz #jl("for"):
+
+#code_box[
+  #repl("for i=1:3
+  println(\"Trenutni števec je $i\"
+end", "Trenutni števec je 1
+Trenutni števec je 2
+Trenutni števec je 3")
+]
+
+Julija podpira tudi sintakso z ukazom #jl("for i in vektor") podobno kot Python. Namesto
+razpona #("1:3"), ki je tipa #jl("LinRange") lahko for zanko izvedemo tudi po vektorju:
+
+#code_box[
+  #repl("for i in [2, 3, 1]
+  println(\"Trenutni števec je $i\"
+end", "Trenutni števec je 2
+Trenutni števec je 3
+Trenutni števec je 1")
+]
+
+Julija omogoča še vrsto drugih konstruktov, ki so v bistvu zanke. Poglejmo si, kako lahko
+na tri različne načine, kako iz danega vektorja #jl("v = [1, 2, 3]") sestavimo vektor
+funkcijskih vrednosti #jl("[f(1), f(2), f(3)]") za dano funkcijo $f$.
+
+#code_box[
+  #repl("v = [1, 2, 3]", none)
+  #repl("f(x) = x^2", none)
+  #repl("[f(xi) for xi in x] # podobno kot v Pythonu","3-element Vector{Int64}:
+  1
+  4
+  9")
+  #repl("f.(v) # operator . je alias za funkcijo broadcast, ki funkcijo aplicira na komponente",
+   "3-element Vector{Int64}:
+  1
+  4
+  9"
+    )
+  #repl("map(f, v)","3-element Vector{Int64}:
+  1
+  4
+  9")
+]
+
+Zanko lahko izvedemo tudi z ukazom #jl("while"), ki deluje podobno kot v drugih
+programskih jezikih. Podobno kot v drugih programskih jezikih deluje tudi #jl("if") stavek.
+
 === Podatkovni tipi<sec:02-tipi>
 
 #link("https://docs.julialang.org/en/v1/manual/types/")[Podatkovne tipe] definiramo z ukazom `struct`. Ustvarimo tip, ki predstavlja točko z dvema koordinatama:
