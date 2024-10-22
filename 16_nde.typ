@@ -548,5 +548,5 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže
 
 #figure(
   vaja16("# nicla"),
-  caption: [Funkcija poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$]
+  caption: [Funkcija poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$.]
 )<pr:16-nicla>

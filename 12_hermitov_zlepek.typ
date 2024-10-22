@@ -170,7 +170,7 @@ Napako polinomske interpolacije v splošnem zapišemo kot:
 $
 f(x) - p_n(x) = (f^((n+1))(xi))/((n+1)!)product_(k=1)^(n) (x-x_i),
 $
-kjer je $xi$ neznana vrednost znotraj interpolacijskega območja.
+kjer je $xi$ neznana vrednost znotraj interpolacijskega območja, ki je odvisna od vrednosti $x$.
 Ker imamo poleg vrednosti na voljo odvode interpolacijski točki štejemo dvojno. Tako dobimo naslednjo
 formulo za napako:
 $
