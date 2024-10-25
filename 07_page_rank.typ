@@ -1,4 +1,5 @@
 #import "julia.typ": code_box, jl, jlfb
+#import "admonitions.typ": opomba
 #import "@preview/fletcher:0.5.1": diagram, node, edge
 
 = Invariantna porazdelitev Markovske verige
@@ -248,6 +249,13 @@ vrednost $1$.
   image("img/07-konj.svg", width:60%),
   caption: [Limitna porazdelitev za konja na standardni $8 times 8$ šahovnici. Svetlejša polja so pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve na začetku.]
 )
+
+#opomba(naslov: [Kaj smo se naučili?])[
+- Tudi pri iskanju lastnih vektorjev in vrednosti se iterativne metode dobro obnesejo.
+- Potenčna metoda se obnese tudi pri matrikah zelo velikih dimenzij.
+- Problem lastnih vrednosti se pojavi pri študiju Markovskih verig.
+]
+
 == Rešitve
 
 #figure(

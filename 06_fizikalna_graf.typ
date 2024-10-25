@@ -1,4 +1,5 @@
 #import "julia.typ": code_box, jl, jlfb
+#import "admonitions.typ": opomba
 #import "@preview/cetz:0.2.2" as cetz: canvas
 #import "@preview/fletcher:0.5.1" as fletcher: diagram, node, edge
 
@@ -216,6 +217,11 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   image("img/06-mreza-krog.svg", width: 60%),
   caption: [Dvodimenzionalna mreža vložena s fizikalno metodo. Rob mreže je enakomerno razporejen po krožnici.]
 )
+
+#opomba(naslov:[Kaj smo se naučili?])[
+- Kako zapisati linearni sistem za spremenljivke, ki ustrezajo vozliščem grafa.
+- Spoznali smo še eno iterativno metodo, ki deluje za pozitivno definitne matrike.
+]
 
 == Rešitve
 

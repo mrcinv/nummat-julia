@@ -592,6 +592,12 @@ primer sistema, ki ga dobimo z diskretizacijo Laplaceove enačbe.
 #figure(image("img/04-konv-sor.svg", width:60%), caption:[ Odvisnost potrebnega število korakov SOR iteracije
 od parametra $omega$])
 
+#opomba(naslov: [Kaj smo se naučili?])[
+- Kako rešiti sistem linearnih enačb s spremenljivkami, ki so postavljene v matriko.
+- Diskretizacija diferencialnih enačb privede do linearnegih sistemov.
+- Iterativne metode so posebej uporabne za reševanje linearnih sistemov
+  velikih dimenzij z redkimi matrikami.
+]
 
 == Rešitve
 

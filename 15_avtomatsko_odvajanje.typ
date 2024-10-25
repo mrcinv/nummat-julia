@@ -5,25 +5,35 @@
 V grobem poznamo tri načine, kako lahko izračunamo odvod funkcije z
 računalnikom:
 
-- simbolično odvajanje
-- numerično odvajanje s končnimi diferencami
-- avtomatsko odvajanje programske kode z uporabo verižnega pravila
+- #link("https://en.wikipedia.org/wiki/Computer_algebra")[simbolično odvajanje],
+- #link("https://en.wikipedia.org/wiki/Numerical_differentiation")[numerično odvajanje] s
+  končnimi diferencami in
+- #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje]
+  programske kode z uporabo verižnega pravila.
 
-V tej vaji si bomo ogledali, kako lahko implementiramo
-#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje] v Juliji z
+Pri praktični uporabi v programiranju ima simbolično odvajanje težave pri odvajanju kompleksnih
+programov, saj mora program prevesti v en sam matematični izraz. Ti izrazi
+lahko za programe, ki vsebujejo zanke ali rekurzijo, hitro postanejo neobvladljivi.
+Pri numeričnem odvajanju imamo težave z zaokrožitvenimi napakami. Tako simbolično kot tudi
+numerično odvajanje je počasno pri računanju gradientov funkcij več spremenljivk.
+Avtomatsko odvajanje ne trpi za omenjenimi težavami.
+
+V tej vaji bomo implementirali avtomatsko odvajanje v Juliji z
 #link("https://en.wikipedia.org/wiki/Dual_number")[dualnimi števili].
 
 == Naloga
 
-- Definirajte podatkovni tip za dualna števila.
-- Za podatkovni tip dualnega števila definirajte osnovne operacije in elementarne
+- Definiraj podatkovni tip za dualna števila.
+- Za podatkovni tip dualnega števila definiraj osnovne operacije in elementarne
   funkcije, kot so $sin$, $cos$ in $exp$.
-- Uporabite dualna števila in izračunajte hitrost nebesnega telesa, ki se giblje po
-  Keplerjevi orbiti. Keplerjevo orbito izrazite z rešitvijo
-  #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeve enačbe], ki jo rešite z
-  Newtonovo metodo.
-- Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabite
+- Uporabi dualna števila in izračunaj hitrost nebesnega telesa, ki se giblje po
+  Keplerjevi orbiti. Keplerjevo orbito izrazimo z rešitvijo
+  #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeve enačbe], ki jo lahko
+  rešiš z Newtonovo metodo.
+- Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabi
   posplošena dualna števila za izračun gradienta funkcije več spremenljivk.
+- Uporabi funkcijo za računanje gradienta za aproksimacijo podatkov z
+  #link("")[logistično funkcijo].
 
 == Ideja avtomatskega odvoda
 

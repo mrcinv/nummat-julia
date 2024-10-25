@@ -1,4 +1,5 @@
 #import "julia.typ": jlfb, code_box, jl
+#import "admonitions.typ": opomba
 
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
@@ -215,6 +216,11 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se 
   ),
   caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolirajo dane točke. Iskana krivulja, ki interpolira dane točke, je nivojska krivulja za vrednost $-1$.]
 )
+
+#opomba(naslov: [Kaj smo se naučili?])[
+- Implicitna oblika krivulj in ploskev je lahko zelo uporabna.
+- Pri interpolaciji potrebujemo toliko parametrov, kot je na voljo podatkov.
+]
 
 == Rešitve
 

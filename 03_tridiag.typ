@@ -251,12 +251,12 @@ Pričakovano število korakov, da dosežemo absorbirajoče stanje iz
 začetnega stanja $i$, je $i$-ta komponenta produkta matrike
 $N$ z vektorjem samih enic:
 
-$ bar(bold(m)) = N bold(1) = (I - Q)^(- 1) bold(1). $
+$ bold(m) = N bold(1) = (I - Q)^(- 1) bold(1). $
 
-Če želimo poiskati pričakovano število korakov $bar(bold(m))$, moramo rešiti sistem
+Če želimo poiskati pričakovano število korakov $bold(m)$, moramo rešiti sistem
 linearnih enačb:
 
-$ (I - Q) bar(bold(m)) = bold(1). $
+$ (I - Q) bold(m) = bold(1). $
 
 
 Če nas zanima, kdaj bo sprehod prvič za $k$ oddaljen od izhodišča, lahko
@@ -323,6 +323,12 @@ povprečjem po velikem številu sprehodov.
 #code_box[
   #jlfb("scripts/03_tridiag.jl", "# poskus")
   #out("out/03_tridiag_1.out")
+]
+
+#opomba(naslov: [Kaj smo se naučili?])[
+- Z upoštevanjem lastnosti linearnih sistemov lahko prihranimo veliko prostora in časa.
+- Linearni sistemi se pogosto pojavijo, ko rešujemo matematične probleme, čeprav na
+  prvi pogled nimajo nobene zveze z linearno algebro.
 ]
 
 == Rešitve
