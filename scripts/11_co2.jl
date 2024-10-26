@@ -15,7 +15,8 @@ t = [l[4] for l in data]
 co2 = [l[5] for l in data]
 using Plots
 scatter(t, co2, xlabel="leto",
-  ylabel="parts per milion (ppm)", label="co2", markersize=1)
+  ylabel="delci na miljon (ppm)",
+  label="koncentracija \$\\mathrm{CO}_2\$", markersize=1)
 # plot
 savefig("img/11_co2.svg")
 
@@ -29,11 +30,11 @@ p = N \ b
 
 using BookUtils
 
-capture("11_cond") do
-  # cond
-  cond(A), cond(N)
-  # cond
-end
+# cond
+cond(A), cond(N)
+# cond
+
+term("11_cond", (cond(A), cond(N)))
 
 # baza
 plot(A[:, 1] / norm(A[:, 1]), ylims=[0, 0.025], label="\$A_1\$")
@@ -42,20 +43,30 @@ plot!(A[:, 3] / norm(A[:, 3]), label="\$A_3\$")
 # baza
 savefig("img/11_baza.svg")
 
-# premik
+# premik 1
 τ = sum(t) / length(t)
+# premik 1
+# premik 2
 A = hcat(ones(size(t)), t .- τ, (t .- τ) .^ 2, cos.(2pi * t), sin.(2pi * t))
-o = cond(A)
-# premik
+# premik 2
+# premik 3
+cond(A), cond(A'A)
+# premik 3
 
-BookUtils.p("11_cond_premik", o)
+BookUtils.p("11_cond_premik", (cond(A), cond(A'A)))
 
-# qr
-F = qr(A) # vrednost posebnega tipa, ki predstavlja QR razcep
+# qr 1
+F = qr(A)
+# qr 1
+# qr 2
 p_qr = F \ co2 # ekvivalentno R\(Q'*b)
+# qr 2
+# qr 3
 p_norm = (A' * A) \ (A' * co2) # rešitev z normalnim sistemom
+# qr 3
+# qr 4
 razlika = norm(p_norm - p_qr)
-# qr
+# qr 4
 
 BookUtils.p("11_razlika", razlika)
 
@@ -65,14 +76,16 @@ end
 
 # trend
 model_trend(t) = p_qr[1:3]' * [1, t - τ, (t - τ)^2]
-plot(model_trend, t[1], t[end], label="Trend naraščanja CO2")
+plot(model_trend, t[1], t[end], label="Trend naraščanja \$\\mathrm{CO}_2\$",
+  xlabel="leto", ylabel="koncentracija \$\\mathrm{CO}_2\$ (ppm)")
 # trend
 
 savefig("img/11_trend.svg")
 
-capture("11_napoved") do
-  # napoved
-  model(t) = p_qr' * [1, t - τ, (t - τ)^2, cos(2pi * t), sin(2pi * t)]
-  napoved = model.([2030, 2040, 2050])
-  # napoved
-end
+# napoved 1
+model(t) = p_qr' * [1, t - τ, (t - τ)^2, cos(2pi * t), sin(2pi * t)]
+# napoved 1
+# napoved 2
+napoved = model.([2030, 2040, 2050])
+# napoved 2
+term("11_napoved", napoved)
