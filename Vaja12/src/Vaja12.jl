@@ -3,13 +3,13 @@ module Vaja12
 """
     NewtonovPolinom(a, x)
 
-Vrni [newtonov interpolacijski polinom](https://en.wikipedia.org/wiki/Newton_polynomial)
+Vrni [Newtonov interpolacijski polinom](https://en.wikipedia.org/wiki/Newton_polynomial)
 oblike `a[1]+a[2](x-x[1])+a[3](x-x[1])(x-x[2])+...`
 s koeficienti `a` in vozlišči `x`.
 
 # Primer
 
-Poglejmo si polinom ``1+x+x(x-1)``, ki je definiran s koeficienti `[1, 1, 1]` in z vozlišči
+Poglejmo polinom ``1+x+x(x-1)``, ki je definiran s koeficienti `[1, 1, 1]` in z vozlišči
 ``x_0 = 0`` in ``x_1 = 1``
 
 ```jldoctest
@@ -27,7 +27,7 @@ end
 """
     vrednost(p::NewtonovPolinom, x)
 
-Izračuna vrednot newtonovega polinoma `p` v `x` s Hornerjevo methodo.
+Izračunaj vrednot Newtonovega polinoma `p` v `x` s Hornerjevo methodo.
 
 # Primer
 
@@ -55,8 +55,8 @@ using LinearAlgebra
     p = interpoliraj(NewtonovPolinom, x, f)
 
 Izračunaj koeficiente Newtonovega interpolacijskega polinoma, ki interpolira
-podatke `y(x[k])=f[k]`. Če se katere vrednosti `x` večkrat ponovijo, potem
-metoda predvideva, da so v `f` poleg vrednosti, podani tudi odvodi.
+podatke `y(x[k])=f[k]`. Če se katere vrednosti `x` ponovijo,
+metoda predvideva, da so v `f` poleg vrednosti podani tudi odvodi.
 
 # Primer
 
