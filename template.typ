@@ -35,7 +35,7 @@
           // get the index of the equation
           let equation-index = counter(math.equation).at(equation-location).at(0)
           // create the label with the supplement and the custom look
-          link(equation-location, 
+          link(equation-location,
             equation-label(heading-index, equation-index)
           )
         },
@@ -74,7 +74,7 @@
   v(1em)
   text(18pt, authors.join(", "))
   v(2fr)
-  text(18pt, datetime.today().display("[year]"))
+  text(18pt, datetime.today().display("[day]. [month]. [year]"))
   set align(left)
   set page(numbering: "1")
   doc
