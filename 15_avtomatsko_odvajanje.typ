@@ -32,9 +32,12 @@ V tej vaji bomo v Juliji implementirali avtomatsko odvajanje z
   rešiš z Newtonovo metodo.
 - Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabi
   posplošena dualna števila za izračun gradienta funkcije več spremenljivk.
-- Uporabi funkcijo za računanje gradienta za aproksimacijo podatkov z
-  #link("https://en.wikipedia.org/wiki/Logistic_function")[logistično funkcijo] s
-  #link("https://en.wikipedia.org/wiki/Maximum_likelihood_estimation")[cenilko največjega verjetja].
+- Uporabi funkcijo za računanje gradienta in izračunaj gradient
+  #link("https://en.wikipedia.org/wiki/Ackley_function")[Ackleyeve funkcije]:
+  $
+  f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
+  $<eq:15-ackley>
+  ki se uporablja za testiranje optimizacijskih algoritmov.
 
 == Ideja avtomatskega odvoda
 
@@ -47,7 +50,73 @@ P = k_(n) circle.tiny k_(n-1) med dots med k_2 circle.tiny k_1.
 $
 Pri avtomatskem odvajanju želimo program za računanje vrednosti neke
 funkcije spremeniti v program, ki poleg vrednosti funkcije računa tudi vrednost odvoda pri istih
-argumentih. Matematično
+argumentih. Matematično lahko program ali funkcijo obravnavamo kot preslikavo med vhodnimi argumenti
+in izhodnimi vrednostmi:
+$
+P: RR^n -> RR^m
+$
+
+Vsak korak programa je prav tako preslikava $k_(i): RR^(n_i)-> RR^(m_i)$. Če uporabimo verižno
+pravilo, je odvod programa $P$ z danimi argumenti $bold(x)$ enak produktu:
+
+$
+D P(bold(x)) = D k_(n)(bold(x)_(n-1)) dot.c D k_(n-1)(bold(x)_(n-2))med  dots.c med D k_1(bold(x)_0),
+$<eq:15-verizno>
+
+kjer je $bold(x)_i = k_(i)(k_(i-1) dots k_2(k_1(bold(x)))dots)$ stanje lokalnih spremenljivk po tem,
+ko se je izvedel $i$-ti korak.
+
+Oglejmo si preprost primer funkcije, ki z Newtonovo metodo izračuna kvadratni koren.
+
+#let demo15(koda) = code_box(
+  jlfb("scripts/15_autodiff.jl", koda)
+)
+#demo15("# koren")
+
+V programu moramo odvajati vsako vrstico kode posebej. Poglejmo prvo vrstico funkcije
+#jl("koren")
+
+#code_box(jl("y = 1 + (x-1)/2"))
+
+Nova lokalna spremenljivka $y$ je funkcija $x$ in njen odvod je
+
+$
+y'(x) = (1 + (x - 1)/2)' = 1/2.
+$
+
+V zanki nato ponavljamo
+
+#code_box(jl("y = (y - x/y)/2"))
+
+Označimo z $y_i$ vrednost spremenlivke $y$ na $i$-tem koraku zanke.
+Vrednost $y_i$ je odvisna od vrednosti $x$, za njen izračun potrebujemo tudi vrednost
+$y$ na prejšnjem koraku $y_(i-1)(x)$. Vrstico programa lahko zapišemo kot rekurzivno enačbo
+
+$
+ y_(i)(x) = 1/2 (y_(i-1)(x) - (x)/(y_(i-1)(x))).
+$
+
+Če rekurzivno enačbo odvajamo, dobimo
+
+$
+y'_(i)(x) = 1/2 (y'_(i-1)(x) - 1/(y_(i-1)(x)) - (x y'_(i-1)(x))/(y_(i-1)(x)^2)).
+$
+
+Program #jl("koren") dopolnimo, da hkrati računa vrednosti funkcije in vrednosti odvoda. To storimo
+tako, da na vsakem koraku posodobimo vrednosti odvodov spremenljivk, ki jih na tem koraku
+posodobimo.
+
+#demo15("# dkoren")
+
+Preverimo, če naša funkcija deluje. Odvod korenske funkcije je enak $(sqrt(x))' = 1/(2 sqrt(x))$.
+
+#let demo15raw(koda) = blk("scripts/15_autodiff.jl", koda)
+#code_box[
+  #repl(demo15raw("# koren 2"), read("out/15-koren.out"))
+  #repl(demo15raw("# koren 3"), read("out/15-napaka.out"))
+
+]
+
 == Dualna števila
 
 #link("https://en.wikipedia.org/wiki/Dual_number")[Dualna števila] so števila
@@ -194,9 +263,6 @@ Keplerjeva enačba ima eno samo rešitev. Res, funkcija $f(E) = E - e sin(E)$ je
 in surjektivna na $(-oo, oo)$, saj je odvod $f'(E) = 1 - e cos(E) >= 0$ vedno nenegativen. Keplerjevo
 enačbo @eq:15-kepler predstavimo grafično:
 
-#let demo15(koda) = code_box(
-  jlfb("scripts/15_autodiff.jl", koda)
-)
 #demo15("# enacba")
 
 #figure(image("img/15-enacba.svg", width: 60%),
@@ -222,7 +288,6 @@ Hitrost telesa v določenem trenutku lahko izračunamo z avtomatskim odvodom. Na
 dualno število $t + epsilon$ za vrednost $t$ v kateri bi radi izračunali hitrost. Nato v funkcijo
 #jl("orbita")  vstavimo $t + epsilon$ in dobimo koordinate podane z dualnimi števili.
 
-#let demo15raw(koda) = blk("scripts/15_autodiff.jl", koda)
 #code_box[
  #repl(demo15raw("# hitrost 0"),read("out/15-dual-t.out"))
  #repl(demo15raw("# hitrost 1"),read("out/15-polozaj.out"))
@@ -234,20 +299,9 @@ Dualni del koordinat je enak vektorju hitrosti:
 
 == Računajne gradientov
 
-== Cenilka največjega verjetja
-#let LL = $cal(L)$
-Avtomatsko računaje gradienta bomo preiskusili pri iskanju cenilke največjega verjetja z gradientno
-metodo. Cenilka največjega verjetja je izbira parametrov $phi$ verjetnostnega modela, pri kateri je
-verjetje $LL(phi, x)$ največje za dane podatke $x$ in parametre $phi$. Denimo, da imamo
-verjetnostni model za slučajno spremenljivko $X$, ki je odvisen od parametrov $phi$. Slučajna
-spremenljivka je lahko tudi vektorska. Verjetnost, da $X$ doseže neko vrednost $bold(x)$ je
-podana bodisi s funkcijo gostote verjetnosti $p(bold(x), phi)$ za zvezne spremenljivke ali s
-funkcijo verjetnosti $p(bold(x), phi) = P(X=bold(X)| phi)$ za diskretne spremenljivke.
-Za dano vrednost slučajne spremenljivke $bold(x)$ je funkcija verjetja funkcija odvisna od $phi$
-$
-phi -> p(bold(x), phi)
-$
+== Gradient Ackleyeve funkcije
 
+Kot primer
 
 == Rešitve
 

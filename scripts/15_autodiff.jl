@@ -99,7 +99,7 @@ using Vaja15
 # hitrost 0
 t0 = t[5] + ε
 # hitrost 0
-  term("15-dual-t", t0)
+term("15-dual-t", t0)
 
 # hitrost 1
 o0 = orbita(t0, a, b, n)
@@ -113,12 +113,26 @@ odvod.(o0)
 
 term("15-hitrost", odvod.(o0))
 
+# koren
+"""
+    y = koren(x)
 
+Izračunaj vrednost korenske funkcije za argument `x`.
+"""
+function koren(x)
+  y = 1 + (x - 1) / 2
+  for i = 1:5
+    y = (y + x / y) / 2
+  end
+  return y
+end
+# koren
+
+# dkoren
 """
     y, dy = dkoren(x)
 
-Izračunaj vrednost korenske funkcije in  njenega odvoda za argument
-`x`.
+Izračunaj vrednost korenske funkcije in  njenega odvoda za argument `x`.
 """
 function dkoren(x)
   y = 1 + (x - 1) / 2
@@ -129,8 +143,20 @@ function dkoren(x)
   end
   return y, dy
 end
+# dkoren
 
 using BookUtils
+# koren 2
+y, dy = dkoren(2)
+# koren 2
+term("15-koren", (y, dy))
+# koren 3
+napaka = dy - 1 / (2sqrt(2))
+# koren 3
+term("15-napaka", napaka)
+
+dkoren(0)
+
 capture("15-koren-auto-err") do
   y, dy = dkoren(2)
   dy - 1 / (2y)
@@ -141,7 +167,7 @@ struct Elipsa{T}
   b::T
 end
 
-ekscentricnost(e::Elipsa) = sqrt(1 - b^2 / a^2)
+ekscentricnost(e::Elipsa) = sqrt(1 - e.b^2 / e.a^2)
 
 struct KeplerOrbit{T}
   n::T # povprečno gibanje
@@ -157,3 +183,20 @@ function eanomalija(M, e)
   end
   return E
 end
+
+# ackley
+"""
+Izračunj vrednost Ackleyeve funkcije za argument `x` 
+s parametri `a`, `b` in `c`. 
+"""
+function ackley(x, a, b, c)
+  d = length(x)
+  S1 = 0.0
+  S2 = 0.0
+  for xi in x
+    S1 += xi * xi
+    S2 += cos(c * xi)
+  end
+  return -a * exp(-b * sqrt(S1 / d)) - exp(S2 / d) + a + MathConstants.e
+end
+# ackley
