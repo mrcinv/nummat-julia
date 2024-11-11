@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jlfb
+#import "julia.typ": code_box, jlfb, jl, repl, blk
 
 = Avtomatsko odvajanje z dualnimi števili
 
@@ -18,7 +18,7 @@ Pri numeričnem odvajanju imamo težave z zaokrožitvenimi napakami. Tako simbol
 numerično odvajanje je počasno pri računanju gradientov funkcij več spremenljivk.
 Avtomatsko odvajanje ne trpi za omenjenimi težavami.
 
-V tej vaji bomo implementirali avtomatsko odvajanje v Juliji z
+V tej vaji bomo v Juliji implementirali avtomatsko odvajanje z
 #link("https://en.wikipedia.org/wiki/Dual_number")[dualnimi števili].
 
 == Naloga
@@ -33,7 +33,8 @@ V tej vaji bomo implementirali avtomatsko odvajanje v Juliji z
 - Posploši dualna števila, da je komponenta pri $epsilon$ lahko vektor. Uporabi
   posplošena dualna števila za izračun gradienta funkcije več spremenljivk.
 - Uporabi funkcijo za računanje gradienta za aproksimacijo podatkov z
-  #link("")[logistično funkcijo].
+  #link("https://en.wikipedia.org/wiki/Logistic_function")[logistično funkcijo] s
+  #link("https://en.wikipedia.org/wiki/Maximum_likelihood_estimation")[cenilko največjega verjetja].
 
 == Ideja avtomatskega odvoda
 
@@ -146,11 +147,16 @@ $
 
 in odvod $(f^2g)'(1)=3$.
 
+Definirajmo podatkovni tip #jl("DualNumber"), ki predstavlja dualno število, nato pa še osnovne
+računske operacije za ta tip in elementarne funkcije #jl("sin"), #jl("cos"), #jl("exp") in
+#jl("log").
+
 #let vaja15(koda) = code_box(
   jlfb("Vaja15/src/Vaja15.jl", koda)
 )
 
 #vaja15("# dual number")
+
 == Keplerjeva enačba
 
 #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeva enačba]
@@ -159,24 +165,96 @@ M = E - e sin(E)
 $<eq:15-kepler>
 določa
 #link("https://sl.wikipedia.org/wiki/Ekscentri%C4%8Dna_anomalija")[ekscentrično anomalijo] za telo,
-ki se giblje po Keplerjevi orbiti.
-$
-M(t) = n(t - t_0)
-$
+ki se giblje po Keplerjevi orbiti v odvisnoti od
+#link("https://sl.wikipedia.org/wiki/Elipsa#Izsrednost_(ekscentri%C4%8Dnost)")[ekscentičnosti]
+orbite $e$ in #link("https://en.wikipedia.org/wiki/Mean_anomaly")[povprečne anomalije] $M$.
 
 Keplerjevo orbito lahko izračunamo, če poznamo $E(t)$
+
 $
-x(t)& = a(cos(E(t)) -e)\
-y(t)& = b sin(E(t))
+x(t)& = a(cos(E(t)) -   e)\
+y(t)& = b sin(E(t)),
 $
+
+kjer so $a$ in $b$ polosi elipse. Elipsa je premaknjena tako, da je en od fokusov v točki $(0, 0)$.
+Ekscentričnost $e$ je odvisna od razmerja polosi
+
+$
+e = sqrt(1-b^2/a^2) in [0, 1].
+$
+
+Vrednost $E(t)$ izračunamo iz Keplerjeve enačbe, saj velja
+2. Keplerjev zakon, ki pravi, da se povprečna anomalija $M(t)$ spreminja enakomerno:
+
+$
+M(t) = n(t - t_0).
+$
+
+Keplerjeva enačba ima eno samo rešitev. Res, funkcija $f(E) = E - e sin(E)$ je naraščajoča
+in surjektivna na $(-oo, oo)$, saj je odvod $f'(E) = 1 - e cos(E) >= 0$ vedno nenegativen. Keplerjevo
+enačbo @eq:15-kepler predstavimo grafično:
+
+#let demo15(koda) = code_box(
+  jlfb("scripts/15_autodiff.jl", koda)
+)
+#demo15("# enacba")
+
+#figure(image("img/15-enacba.svg", width: 60%),
+  caption: [Leva in desna stran Keplerjeve enačbe za $M=5$ in $e=0.5$])
+
+Vidimo, da je rešitev Keplerjeve enačbe blizu vrednosti $M$, in vrednost $M$ lahko izberemo za
+začetni približek. Rešitev tako lahko hitro poiščemo z Newtonovo metodo za funkcijo:
+
+$
+g(E) = M - E + e sin(E).
+$
+
+Napišimo funkcijo #jl("keplerE(M, e)"), ki izračuna vrednost ekscentrične anomalije za dane
+vrednosti ekscentičnosti $e$ in povprečne anomalije $M$. Nato napišimo funkcijo
+#jl("orbita(t, a, b, n)"), ki izračuna položaj orbite v času $t$, če je v času $t=0$ telo najbližje
+masnemu središču.
+
+#figure(image("img/15-orbita.svg", width: 60%), caption: [Položaji telesa na orbiti v enakomernih
+časovnih razmikih. Drugi Keplerjev zakon pravi, da zveznica med telesom
+in masnim središčem, v enakem času pokrije enako ploščino.])
+
+Hitrost telesa v določenem trenutku lahko izračunamo z avtomatskim odvodom. Najprej definiramo
+dualno število $t + epsilon$ za vrednost $t$ v kateri bi radi izračunali hitrost. Nato v funkcijo
+#jl("orbita")  vstavimo $t + epsilon$ in dobimo koordinate podane z dualnimi števili.
+
+#let demo15raw(koda) = blk("scripts/15_autodiff.jl", koda)
+#code_box[
+ #repl(demo15raw("# hitrost 0"),read("out/15-dual-t.out"))
+ #repl(demo15raw("# hitrost 1"),read("out/15-polozaj.out"))
+]
+
+Dualni del koordinat je enak vektorju hitrosti:
+
+#code_box(repl(demo15raw("# hitrost 1"),read("out/15-hitrost.out")))
 
 == Računajne gradientov
 
+== Cenilka največjega verjetja
+#let LL = $cal(L)$
+Avtomatsko računaje gradienta bomo preiskusili pri iskanju cenilke največjega verjetja z gradientno
+metodo. Cenilka največjega verjetja je izbira parametrov $phi$ verjetnostnega modela, pri kateri je
+verjetje $LL(phi, x)$ največje za dane podatke $x$ in parametre $phi$. Denimo, da imamo
+verjetnostni model za slučajno spremenljivko $X$, ki je odvisen od parametrov $phi$. Slučajna
+spremenljivka je lahko tudi vektorska. Verjetnost, da $X$ doseže neko vrednost $bold(x)$ je
+podana bodisi s funkcijo gostote verjetnosti $p(bold(x), phi)$ za zvezne spremenljivke ali s
+funkcijo verjetnosti $p(bold(x), phi) = P(X=bold(X)| phi)$ za diskretne spremenljivke.
+Za dano vrednost slučajne spremenljivke $bold(x)$ je funkcija verjetja funkcija odvisna od $phi$
+$
+phi -> p(bold(x), phi)
+$
+
+
 == Rešitve
 
-#figure(caption: [], vaja15("# operacije"))
-#figure(caption: [], vaja15("# funkcije"))
-#figure(caption: [], vaja15("# vektor dual"))
-#figure(caption: [], vaja15("# operacije dual"))
-#figure(caption: [], vaja15("# funkcije dual"))
-#figure(caption: [], vaja15("# gradient"))
+#figure(caption: [Osnovne operacije med dualnimi števili], vaja15("# operacije"))
+#figure(caption: [Elementarne funkcije za dualna števila], vaja15("# funkcije"))
+#figure(caption: [Izračunaj odvod funkcije ene spremenljivke], vaja15("# odvod"))
+#figure(caption: [Podatkovni tip za mešanico dualnih števil], vaja15("# vektor dual"))
+#figure(caption: [Osnovne operacije med vektorskimi dualnimi števili], vaja15("# operacije dual"))
+#figure(caption: [Elementarne funkcije za vektorska dualna števila], vaja15("# funkcije dual"))
+#figure(caption: [Funkcija izračuna gradiant funkcije vektorske spremenljivke v dani točki], vaja15("# gradient"))

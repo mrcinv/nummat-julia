@@ -27,15 +27,20 @@ import Base: +, -, *, /, ^
 +(a::DualNumber, b::DualNumber) = DualNumber(a.x + b.x, a.dx + b.dx)
 -(a::DualNumber) = DualNumber(-a.x, -a.dx)
 -(a::DualNumber, b::DualNumber) = DualNumber(a.x - b.x, a.dx - b.dx)
+/(a::DualNumber, b::DualNumber) = DualNumber(a.x / b.x,
+    (b.x * a.dx - a.x * b.dx) / b.x^2)
 ^(a::DualNumber, b::Number) = DualNumber(a.x^b, b * a.x^(b - 1) * a.dx)
 ^(a::Number, b::DualNumber) = DualNumber(a^b.x, log(a)a^b.x * b.dx)
 # operacije
 # funkcije
-import Base: sin, cos, exp, log
+import Base: sin, cos, exp, log, abs, isless
 sin(a::DualNumber) = DualNumber(sin(a.x), cos(a.x) * a.dx)
 cos(a::DualNumber) = DualNumber(cos(a.x), -sin(a.x) * a.dx)
 exp(a::DualNumber) = DualNumber(exp(a.x), exp(a.x) * a.dx)
 log(a::DualNumber) = DualNumber(log(a.x), a.dx / a.x)
+abs(a::DualNumber) = DualNumber(abs(a.x), sign(a.x) * a.dx)
+isless(a::DualNumber, b::DualNumber) = isless(a.x, b.x)
+isless(a::DualNumber, b::Number) = isless(a.x, b)
 # funkcije
 # odvod
 odvod(a::DualNumber) = a.dx
@@ -85,6 +90,16 @@ log(a::Dual) = Dual(log(a.x), a.dx / a.x)
 # funkcije dual
 
 # gradient
+"""
+    x = spremenljivka(v)
+
+Generiraj vektor `x` vektorskih dualnih števil za vrednost vektorske 
+spremenljivke `v`. Komponente vektorja `x` so vektorska dualna števila
+z vrednostmi enakimi komponentam vektorja `v` in parcialnimi odvodi enakimi
+1, če se indeksa komponente in parcialnega odvoda ujemata in 0 sicer.
+Reszultat te funkcije lahko uporabimo kot vhodni argument pri računanju
+gradienta vektorske funkcije z argumentom `v`.
+"""
 function spremenljivka(v::Vector{T}) where {T}
     n = length(v)
     x = Vector{Dual}()
@@ -96,6 +111,16 @@ function spremenljivka(v::Vector{T}) where {T}
     return x
 end
 
+"""
+    g = gradient(f, x)
+
+Izračunaj gradient vektorske funkcije `f` v danem vektorju `x`.
+# Primer
+```jl
+f(x) = x[1]*x[2] + x[2]*sin(x[1])
+gradient(f, [1., 2.])
+```
+"""
 gradient(f, x::Vector) = odvod(f(spremenljivka(x)))
 # gradient
 
