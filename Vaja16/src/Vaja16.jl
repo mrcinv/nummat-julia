@@ -33,7 +33,7 @@ end
   zp = ZacetniProblem(f, u0 tint, p)
 
 Podatkovna struktura s podatki za začetni problem za 
-navadne diferencialne enačbo (NDE) oblike:
+navadne diferencialne enačbe (NDE) oblike:
 
 ```math
 u'(t) = f(t, u, p).
@@ -42,7 +42,7 @@ Desna stran NDE je podana s funkcijo `f`, ki je odvisna od vrednosti `u`, `t` in
 parametrov enačbe `p`. Začetni pogoj ``u(t0) = u_0`` je določen s poljem `u0` 
 v začetni točki intervala ``tint=[t0, t_k]`` na katerem iščemo rešitev.
 
-## Polja
+## Atributi
 
 * `f`: funkcija, ki izračuna odvod (desne strani NDE)
 * `u0`: začetni pogoj
@@ -52,7 +52,7 @@ v začetni točki intervala ``tint=[t0, t_k]`` na katerem iščemo rešitev.
 struct ZacetniProblem{TU,TT,TP}
   f       # desne strani NDE u' = f(t, u, p)
   u0::TU  # začetna vrednost
-  tint::Tuple{TT,TT}    # interval na katerem iščemo rešitev
+  tint::Tuple{TT,TT}    # interval, na katerem iščemo rešitev
   p::TP       # parametri sistema
 end
 # ZacetniProblem
@@ -60,8 +60,7 @@ end
 # ResitevNDE
 """
 Podatkovna struktura, ki hrani približek za rešitev začetnega problema za NDE.
-Uporablja se predvesm kot tip, ki ga vrnejo metode za reševanje začetnega 
-problema.
+Uporablja se kot tip, ki ga vrnejo metode za reševanje začetnega problema.
 """
 struct ResitevNDE{TU,TT,TP}
   zp::ZacetniProblem{TU,TT,TP} # referenca na začetni problem
@@ -179,8 +178,8 @@ using Vaja12
 """
     y = vrednost(r, t)
 
-Izračunaj vrednost rešitve `r` v točki `t`. Funkcija za izračun vrednosti uporabi
-Hermitov zlepek.
+Izračunaj vrednost rešitve `r` v točki `t`. Funkcija za izračun vrednosti
+uporabi interpolacijo s Hermitovim zlepkom.
 """
 function vrednost(r::ResitevNDE, t)
   z = Vaja12.HermitovZlepek(r.t, r.u, r.du)

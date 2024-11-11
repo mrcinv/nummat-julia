@@ -18,7 +18,7 @@ function daljica(f, t, u, l)
 end
 
 """ 
-Vzorči polje smeri za NDE 1. reda `u' = fun(t, u)` na pravokotniku
+Vzorči smerno polje za NDE 1. reda `u' = fun(t, u)` na pravokotniku
 `[t0, tk] x [u0, uk]` z `n` delilnimi točkami v obeh smereh.
 """
 function vzorci_polje(fun, (t0, tk), (u0, uk), n=21)
@@ -72,9 +72,9 @@ plt
 
 savefig("img/16-resitve.svg")
 
-# euler 1
 using Vaja16
 
+# euler 1
 tint = (-0.5, 0.5)
 u0 = 1
 risi_polje(fun, tint, (u0, 1.5))
@@ -96,8 +96,8 @@ plot!(t8, u8, marker=:circle, label="približna rešitev za \$n=8\$",
 savefig("img/16-euler.svg")
 
 # euler 2
-fun(t, u, p) = -p * t * u
-problem = ZacetniProblem(fun, 1.0, (-0.5, 1.0), 2.0)
+fun(t, u, p) = p * t * u
+problem = ZacetniProblem(fun, 1.0, (-0.5, 1.0), -2.0)
 upravi(t) = exp(-t^2) / exp(-0.5^2)
 
 res1 = resi(problem, Euler(0.1))
@@ -109,9 +109,9 @@ scatter!(res2.t, res2.u - upravi.(res2.t), label="\$h=0.05\$")
 savefig("img/16-euler-napaka.svg")
 
 # demo hermite
-fun(t, u, p) = -p * t * u
+fun(t, u, p) = p * t * u
 upravi(t) = exp(-t^2) / exp(-0.5^2)
-zp = ZacetniProblem(fun, upravi(-0.5), (-0.5, 0.5), 2.0)
+zp = ZacetniProblem(fun, upravi(-0.5), (-0.5, 0.5), -2.0)
 res = resi(zp, Euler(0.5))
 res(0.1) # vrednost v vmesni točki t=0.1
 # demo hermite
@@ -122,9 +122,9 @@ term("16_t05", res(0.1))
 
 # plot hermite
 using Plots
-fun(t, u, p) = -p * t * u
+fun(t, u, p) = p * t * u
 upravi(t) = exp(-t^2) / exp(-0.5^2)
-zp = ZacetniProblem(fun, upravi(-0.5), (-0.5, 0.5), 2.0)
+zp = ZacetniProblem(fun, upravi(-0.5), (-0.5, 0.5), -2.0)
 res = resi(zp, RK2(0.5))
 scatter(res.t, res.u, label="približki RK2")
 plot!(t -> res(t), res.t[1], res.t[end], label="Hermitova interpolacija")
