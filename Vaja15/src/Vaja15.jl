@@ -33,7 +33,8 @@ import Base: +, -, *, /, ^
 ^(a::Number, b::DualNumber) = DualNumber(a^b.x, log(a)a^b.x * b.dx)
 # operacije
 # funkcije
-import Base: sin, cos, exp, log, abs, isless
+import Base: sin, cos, exp, log, abs, isless, sqrt
+sqrt(a::DualNumber) = DualNumber(sqrt(a.x), 0.5 / sqrt(a.x) * a.dx)
 sin(a::DualNumber) = DualNumber(sin(a.x), cos(a.x) * a.dx)
 cos(a::DualNumber) = DualNumber(cos(a.x), -sin(a.x) * a.dx)
 exp(a::DualNumber) = DualNumber(exp(a.x), exp(a.x) * a.dx)
@@ -61,28 +62,33 @@ Predstavlja vrednost `f` odvisno od `n` spremenljivk in njen gradient
 ``\\nabla f = f__1 \\frac{\\partial}{\\partial x_1} + f_2 \\frac{\\partial}{\\partial x_2}
 + ... f_n \\frac{\\partial}{\\partial x_n}``.
 """
-struct Dual <: Number
-    x::Float64
-    dx::Vector{Float64}
+struct Dual{T} <: Number
+    x::T
+    dx::Vector{T}
 end
 
 odvod(y::Dual) = y.dx
 vrednost(y::Dual) = y.x
-
-convert(::Type{Dual}, x::Real) = Dual(x, [zero(x)])
-promote_rule(::Type{Dual}, ::Type{<:Number}) = Dual
 # vektor dual
 # operacije dual
-*(a::Dual, b::Dual) = Dual(a.x * b.x, a.x * b.dx .+ a.dx * b.x)
-+(a::Dual, b::Dual) = Dual(a.x + b.x, a.dx .+ b.dx)
+*(a::Dual, b::Dual) = Dual(a.x * b.x, a.x * b.dx + a.dx * b.x)
+*(a::Number, b::Dual) = Dual(a * b.x, a * b.dx)
+*(a::Dual, b::Number) = Dual(a.x * b, a.dx * b)
++(a::Dual, b::Dual) = Dual(a.x + b.x, a.dx + b.dx)
++(a::Number, b::Dual) = Dual(a + b.x, b.dx)
++(a::Dual, b::Number) = Dual(a.x + b, a.dx)
 -(a::Dual) = Dual(-a.x, -a.dx)
--(a::Dual, b::Dual) = Dual(a.x - b.x, a.dx .- b.dx)
-^(a::Dual, b::Float64) = Dual(a.x .^ b, b * a.x^(b - 1) * a.dx)
-^(a::Float64, b::Dual) = Dual(a .^ b.x, log(a) * a^b.x * b.dx)
-/(a::Dual, b::Dual) = Dual(a.x / b.x, (b.x * a.dx - a.x * b.dx) / b.x^2)
-/(a::Float64, b::Dual) = Dual(a / b.x, (-a * b.dx / b.x^2))
+-(a::Dual, b::Dual) = Dual(a.x - b.x, a.dx - b.dx)
+-(a::Number, b::Dual) = Dual(a - b.x, -b.dx)
+-(a::Dual, b::Number) = Dual(a.x - b, a.dx)
+^(a::Dual, b::Number) = Dual(a.x .^ b, b * a.x^(b - 1) * a.dx)
+^(a::Number, b::Dual) = Dual(a .^ b.x, log(a) * a^b.x * b.dx)
+/(a::Dual, b::Dual) = Dual(a.x / b.x, (1 / b.x^2) * (b.x * a.dx - a.x * b.dx))
+/(a::Number, b::Dual) = Dual(a / b.x, (-a * b.dx / b.x^2))
+/(a::Dual, b::Number) = Dual(a.x / b, (1 / b) * a.dx)
 # operacije dual
 # funkcije dual
+sqrt(a::Dual{T}) where {T} = Dual(sqrt(a.x), (0.5 / sqrt(a.x)) * a.dx)
 sin(a::Dual) = Dual(sin(a.x), cos(a.x) * a.dx)
 cos(a::Dual) = Dual(cos(a.x), -sin(a.x) * a.dx)
 exp(a::Dual) = Dual(exp(a.x), exp(a.x) * a.dx)

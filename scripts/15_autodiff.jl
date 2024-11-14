@@ -184,6 +184,7 @@ function eanomalija(M, e)
   return E
 end
 
+using Vaja15
 # ackley
 """
 Izračunj vrednost Ackleyeve funkcije za argument `x` 
@@ -197,6 +198,22 @@ function ackley(x, a, b, c)
     S1 += xi * xi
     S2 += cos(c * xi)
   end
-  return -a * exp(-b * sqrt(S1 / d)) - exp(S2 / d) + a + MathConstants.e
+  y = a + MathConstants.e
+  y -= a * exp(-b * sqrt(S1 / d))
+  y -= exp(S2 / d)
+  return y
 end
 # ackley
+
+# ack 1
+x0 = Vaja15.spremenljivka(x0)
+# ack 1
+
+# ack 2
+y = ackley(x0, 1, 2, 3)
+# ack 2
+
+using BookUtils
+
+term("15-ackley-1", x0)
+term("15-ackley-2", y)

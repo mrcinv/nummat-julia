@@ -1,4 +1,5 @@
 #import "julia.typ": code_box, jlfb, jl, repl, blk
+#import "admonitions.typ": opomba
 
 = Avtomatsko odvajanje z dualnimi števili
 
@@ -299,16 +300,126 @@ Dualni del koordinat je enak vektorju hitrosti:
 
 == Računajne gradientov
 
+Parcialne odvode funkcije več spremenljivk lahko ravno tako izračunamo z
+dualnimi števili. Pri tem moramo paziti, da za odvode po različnih spremenljivkah
+uporabimo neodvisne dualne enote. Poglejmo si primer funkcije dveh spremenljivk
+$
+  f(x, y) = x^2y + y^3sin(x).
+$
+Ker imamo dva parcialna odvoda $partial / (partial x)$ in $partial / (partial y)$,
+potrebujemo dve dualni enoti $epsilon_x$ in $epsilon_y$, ki sta neodvisni in zadoščata
+pogojem:
+$
+  epsilon_x^2=0, quad epsilon_y^2 = 0 quad #text[ in ] epsilon_x epsilon_y = 0.
+$
+V funkcijo $f(x, y)$ vstavimo $x + epsilon_x$ in $y + epsilon_y$ in dobimo
+v 1-tok funkcije $f(x, y)$:
+$
+  f(x + epsilon_x, y + epsilon_y) = (x + epsilon_x)^2(y + epsilon_y) +
+  (y + epsilon_y)^3sin(x + epsilon_x) =\
+  (x^2 + 2x epsilon_x)(y + epsilon_y) + (y^3 + 3y^2 epsilon_y)(sin(x) + cos(x)epsilon_x) =\
+  x^2y + y^3sin(x) + 2x y epsilon_x + x^2 epsilon_y + 3y^2sin(x)epsilon_y +y^3cos(x)epsilon_x =\
+  f(x, y) + (2x y + y^3cos(x))epsilon_x + (x^2 + 3y^2sin(x))epsilon_y.
+$
+Vidimo, da sta koeficienta pri $epsilon_x$ in $epsilon_y$ ravno parcialna odvoda
+
+$
+  (partial f)/(partial x) &= 2x y + y^3cos(x)\
+  (partial f)/(partial y) &= x^2 + 3y^2sin(x).
+$
+
+Za lažjo implementacijo, koeficiente pri $epsilon_x$ in $epsilon_y$ postavimo v
+vektor in zapišemo
+
+$
+  epsilon_x = vec(1, 0)epsilon, quad epsilon_y = vec(0, 1)epsilon.
+$
+
+Za funkcijo $n$ spremenljivk $f(x_1, x_2, med dots med x_n)$ dobimo:
+
+$
+  epsilon_1 = vec(1, 0, dots.v, 0)epsilon, quad
+  epsilon_2 = vec(0, 1, dots.v, 0)epsilon, quad dots quad
+  epsilon_(n) = vec(0, 0, dots.v, 1)epsilon
+$
+in
+$
+f(x_1 + epsilon_1, x_2 + epsilon_2, med dots med x_(n) + epsilon_n) =
+  f(x_1, x_2,  med dots x_(n)) + nabla f(x_1, x_2, med dots x_(n))epsilon.
+$
+
+V Juliji definirajmo vektorska dualna števila tipa #jl("Dual"), ki opisujejo
+elemente oblike
+$
+  a + vec(b_1, b_2, dots.v, b_(n))epsilon.
+$
+
+Podobno kot pri navadnih dualnih številih nato definiramo osnovne računske
+operacije in nekatere elementarne funkcije (@pr:15-dual, @pr:15-dual-op).
+
+#opomba(naslov: [Odvajanje naprej, odvajanje nazaj]
+)[
+Z dualnimi števili lahko učinkovito računamo odvode in gradiente funkcij.
+To metodo lahko posplošimo tudi na računaje Jacobijevih matrik in višjih odvodov.
+V osnovi metoda temleji na verižnem pravilu in zapisu programa kot kompozituma posameznih
+korakov. Formula za odvod <eq:15-verizno>, ki jo tako dobimo, odvod predstavlja kot produkt
+matrik
+$
+  D P(bold(x)) = D k_(n)(bold(x)_(n-1)) dot.c D k_(n-1)(bold(x)_(n-2)) med dots.c med D k_1(bold(x)).
+$<eq:15-produkt-odvodov>
+
+Matrike $D k_(i)(bold(x)_(i-1))$ so lahko različnih dimenzij in vrstni red množenja
+posameznih faktorjev vpliva na velikost spomina, ki ga potrebujemo.
+
+V praksi sta se uveljavila dva načina računanja produkta. Produkt @eq:15-produkt-odvodov
+lahko računamo sproti, tako da zmnožimo matrike takoj, ko so na voljo. To pomeni, da množimo z desne.
+Če metoda deluje na ta način, pravimo, da uporablja #emph[način odvajanje naprej]
+(angl. #emph[forward mode]).
+
+Drug razred metod, ki ga imenujemo #emph[način odvajanja nazaj] (angl.
+#emph[bacward mode]),
+množi matrike v produktu @eq:15-produkt-odvodov z leve. To pa pomeni, da odvodov ne mora računati
+sproti, ampak lahko z računanjem odvodov začne šele, ko je izračun vrednosti funkcije končan.
+Metode računanja nazaj so navadno implementirane kot transformacija izvorne kode, medtem ko
+metode računanja naprej navadno implementiramo z definicijo novih podatkovnih tipov ali razdredov.
+
+Računanje z dualnimi števili uporablja način odvajanja naprej.
+]
 == Gradient Ackleyeve funkcije
 
-Kot primer
+Izračunajmo gradient funkcije #link("https://en.wikipedia.org/wiki/Ackley_function")[Ackleyeve funkcije]:
+$
+f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
+$<eq:15-ackley>
+ki se uporablja za testiranje optimizacijskih algoritmov. Najprej napišimo funkcijo v Juliji, ki
+izračuna Ackleyevo funkcijo:
+
+#figure(caption: [Funkcija za izračun Ackleyeve funkcije], demo15("# ackley"))
+
+Gradient izračunamo tako, da najprej ustvarimo vektor dualnih števil in ga vstavimo v funkcijo:
+
+#code_box[
+  #repl(demo15raw("# ack 1"), read("out/15-ackley-1.out"))
+  #repl(demo15raw("# ack 2"), read("out/15-ackley-2.out"))
+]
+
+Dualni del rezultata je gradient funkcije.
+
+#opomba(naslov: [Kaj smo se naučili?])[
+  - Odvode programov učinkovito računamo z avtomatskim odvajanjem.
+  - Obstajata dva načina avtomatskega odvajanja #emph[način odvajanja naprej] in
+    #emph[način odvajanja nazaj].
+  - Odvajanje naprej lahko implementiramo z dualnimi števili.
+]
 
 == Rešitve
 
 #figure(caption: [Osnovne operacije med dualnimi števili], vaja15("# operacije"))
 #figure(caption: [Elementarne funkcije za dualna števila], vaja15("# funkcije"))
 #figure(caption: [Izračunaj odvod funkcije ene spremenljivke], vaja15("# odvod"))
-#figure(caption: [Podatkovni tip za mešanico dualnih števil], vaja15("# vektor dual"))
-#figure(caption: [Osnovne operacije med vektorskimi dualnimi števili], vaja15("# operacije dual"))
+#figure(caption: [Podatkovni tip za mešanico dualnih števil], vaja15("# vektor dual"))<pr:15-dual>
+#figure(
+  caption: [Osnovne operacije med vektorskimi dualnimi števili],
+  vaja15("# operacije dual"))<pr:15-dual-op>
 #figure(caption: [Elementarne funkcije za vektorska dualna števila], vaja15("# funkcije dual"))
 #figure(caption: [Funkcija izračuna gradiant funkcije vektorske spremenljivke v dani točki], vaja15("# gradient"))
