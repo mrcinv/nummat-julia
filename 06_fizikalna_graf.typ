@@ -1,7 +1,7 @@
 #import "julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba
-#import "@preview/cetz:0.2.2" as cetz: canvas
-#import "@preview/fletcher:0.5.1" as fletcher: diagram, node, edge
+#import "@preview/cetz:0.3.1" as cetz: canvas
+#import "@preview/fletcher:0.5.2" as fletcher: diagram, node, edge
 
 = Fizikalna metoda za vložitev grafov
 

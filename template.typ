@@ -5,14 +5,12 @@
   // define the numbering for an equation
   // first locate, where we are in the document
   set math.equation(
-    numbering: equation => locate(
-      loc => {
+    numbering: equation => context {
         // get the heading index at the location at offset 0 for heading level 1
-        let heading-index = counter(heading).at(loc).at(0)
+        let heading-index = counter(heading).at(here()).at(0)
         // create the label
-        equation-label(heading-index, equation)
-      },
-    ),
+        return equation-label(heading-index, equation)
+    }
   )
 
   // overwrite, how a reference is displayed
@@ -26,10 +24,9 @@
     if f == math.equation {
       // for an equation do this block
       // a locate is required for a query
-      locate(
-        loc => {
+      context {
           // query the location of the equation the reference points at
-          let equation-location = query(it.target, loc).first().location()
+          let equation-location = query(it.target).first().location()
           // get the index of the heading at the location of the equation
           let heading-index = counter(heading).at(equation-location).at(0)
           // get the index of the equation
@@ -38,8 +35,7 @@
           link(equation-location,
             equation-label(heading-index, equation-index)
           )
-        },
-      )
+        }
     } else {
       // for anything else use the default
       it

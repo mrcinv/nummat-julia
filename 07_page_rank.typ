@@ -1,6 +1,6 @@
 #import "julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba
-#import "@preview/fletcher:0.5.1": diagram, node, edge
+#import "@preview/fletcher:0.5.2": diagram, node, edge
 
 = Invariantna porazdelitev Markovske verige
 
