@@ -55,7 +55,7 @@ Copyright © 2024 Založba UL FRI. All rights reserved.
 
 #include "12_hermitov_zlepek.typ"
 
-#include "13_porazdelitvena_funkcija.typ"
+#include "13_integrali.typ"
 
 #include "14_povprecna_razdalja.typ"
 
