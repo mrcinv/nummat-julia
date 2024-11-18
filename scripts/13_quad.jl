@@ -2,7 +2,17 @@ using Vaja13
 using Plots
 using Profile
 
+f(x) = abs(2 - x^2)
+plot(f, -1, 2)
+
+plot(x -> atan(1/x), -2, 2)
+
+
+
+
 using FastGaussQuadrature
+
+
 glkvad(n) = Kvadratura(gausslegendre(n)..., Interval(-1.0, 1.0))
 glintegrator(n) = integrator(glkvad(n))
 phi(kvad) = x -> Vaja13.phi(x, kvad)

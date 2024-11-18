@@ -2,6 +2,9 @@ module Vaja13
 
 using FastGaussQuadrature
 
+"""
+Podatkovna struktura za interval `[min, max]`.
+"""
 struct Interval{T}
   min::T
   max::T
@@ -10,31 +13,54 @@ end
 """Izračunaj predznačeno dolžino intervala."""
 dolzina(int::Interval) = int.max - int.min
 
+"""
+Podatkovna struktura za določeni integral funkcije `fun` na danem intervalu. 
+"""
 struct DoloceniIntegral{T1,T2}
   fun
   interval::Interval{T1}
 end
 
+"""
+Abstrakten podatkovni tip, ki predstavlja kvadraturno formulo za 
+numerično računanje določenega integrala.
+"""
 abstract type AbstraktnaKvadratura{T} end
 
+"""
+Podatkovna struktura, ki vsebuje uteži, vozlišča in interval 
+kvadrature za izračun približka določenega integrala na danem 
+intervalu.
+# Primer
+```jl
+# trapezna formula na intervalu [0, 1]
+trapez = Kvadratura([0, 1], [0.5, 0.5], Interval(0, 1))
+```
+"""
 struct Kvadratura{T} <: AbstraktnaKvadratura{T}
   x::Vector{T} # vozlišča
   u::Vector{T} # uteži
   interval::Interval{T}
 end
 
-"""Preslikaj vrednost `x` z intervala `int1` na interval `int2` z linearno 
-funkcijo."""
+"""
+  t = preslikaj(x, int1, int2)
+
+Z linearno preslikavo preslikaj vrednost `x` z intervala `int1` na 
+interval `int2`."""
 function preslikaj(x::T, int1::Interval{T}, int2::Interval{T}) where {T}
   return dolzina(int2) / dolzina(int1) * (x - int1.min) + int2.min
 end
 
-const enaskoren2pi = 1 / sqrt(2pi)
+"""
+  I = integriraj(integral, kvadratura)
 
-
+Izračunaj približek za določeni integral `integral` s kvadraturno formulo 
+`kvadratura`.
+"""
 function integriraj(
   int::DoloceniIntegral{T,TI}, kvad::Kvadratura{T}) where {T,TI}
-  I = zero(T)
+  I = zero(TI)
   for i in eachindex(kvad.x)
     t = preslikaj(kvad.x[i], kvad.interval, int.interval)
     f = int.fun(t)::TI
@@ -43,9 +69,14 @@ function integriraj(
   return dolzina(int.interval) / dolzina(kvad.interval) * I
 end
 
+
+
 integrator(kvad::AbstraktnaKvadratura{T}) where {T} =
   integral::DoloceniIntegral{T} -> integriraj(integral, kvad)
 
+
+
+const enaskoren2pi = 1 / sqrt(2pi)
 function phi(x::Float64, kvad::AbstraktnaKvadratura{Float64})
   f(t) = exp(-t^2 / 2)
   int = DoloceniIntegral{Float64,Float64}(f, Interval(0.0, x))

@@ -22,7 +22,7 @@ glede na to, kakšno funkcijo integriramo.
   #link("https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/")[FastGaussQuadrature.jl].
 - Implementirane metode uporabi za izračun naslednjih integralov
   $
-    integral_0^3 sin(x) d x #text[ in ] integral_(-1)^2 |2 - x^2| d x.
+    integral_0^3 sin(x) d x quad #text[ in ] quad integral_(-1)^2 |2 - x^2| d x.
   $
   Napako oceni tako, da rezultat primerjaš z rezultatom, ki ga dobiš, če uporabiš dvakrat več
   vozlišč in uporabiš
@@ -32,6 +32,36 @@ glede na to, kakšno funkcijo integriramo.
   $
     integral_0^3 sin(x) d x.
   $
+
+== Gaussove kvadraturne formule
+
+$
+ integral_(-1)^1 f(t) d t approx sum_(k=1)^N w_k f(t_k)
+$<eq:10-gauss-lagendre>
+
+Spremembo intervala z $[a, b]$ na $[-1, 1]$ naredimo z linearno transformacijo oziroma uvedbo
+nove spremenljivke $t in [-1, 1]$:
+
+$
+  t(x) = 2(x - a)/(b - a) - 1 quad #text[ in ] quad x(t) = (b - a) / 2 t + (a + b) / 2.
+$
+
+Intergral na $[a, b]$ lahko zapišemo
+
+$
+  integral_(a)^(b) f(x) d x = integral_(-1)^1 f(x(t)) x'(t) d t =
+  1/2 (b - a) integral_(-1)^1 f(x(t)) d t.
+$
+
+Gauss-Legendrove formule na $[a, b]$
+
+$
+  integral_(a)^(b) f(x) d x = 1/2 (b-a) sum_(k=1)^N w_k f(x_k),
+$
+kjer je
+$
+  x_k = (b - a)/2 t_k + (a + b)/2.
+$
 
 == Tabela podatkov z mersko napako
 
