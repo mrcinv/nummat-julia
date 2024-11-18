@@ -22,11 +22,11 @@ using Plots
 bar(x, label=false)
 # splet 3
 savefig("img/07-rang.svg")
-# konj
-P = prehodna_matrika(Konj(8, 8))
+# skakač
+P = prehodna_matrika(Skakač(8, 8))
 
 x, it = potencna(P', rand(64))
-# konj
+# skakač
 using LinearAlgebra
 capture("07_lastne") do
   # lastne

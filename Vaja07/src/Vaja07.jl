@@ -29,29 +29,29 @@ function k_v_ij(k, m)
 end
 # indeksi
 
-# konj
+# skakač
 """
-  Konj(m, n)
+  Skakač(m, n)
 
-Podatkovna struktura, ki označuje Markovsko verigo za konja na šahovnici
+Podatkovna struktura, ki označuje Markovsko verigo za skakača na šahovnici
 dimenzije `m` x `n`.
 """
-struct Konj
+struct Skakač
   m
   n
 end
-# konj
+# skakač
 # prehodna_matrika
 using SparseArrays
 """
-  P = prehodna_matrika(k::Konj)
+  P = prehodna_matrika(k::Skakač)
 
-Poišči prehodno matriko za Markovsko verigo, ki opisuje skanje figure konja po
-šahovnici. 
+Poišči prehodno matriko za Markovsko verigo, ki opisuje skanje figure skakača po
+šahovnici.
 """
-function prehodna_matrika(konj::Konj)
-  m = konj.m
-  n = konj.n
+function prehodna_matrika(skakač::Skakač)
+  m = skakač.m
+  n = skakač.n
   N = m * n
   P = spzeros(N, N)
   skoki = [(1, 2), (2, 1), (-1, 2), (-2, 1),
@@ -72,7 +72,7 @@ function prehodna_matrika(konj::Konj)
 end
 # prehodna_matrika
 
-export potencna, Konj, prehodna_matrika
+export potencna, Skakač, prehodna_matrika
 
 
 end # module Vaja07

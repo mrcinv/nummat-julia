@@ -270,3 +270,7 @@ $
 
 in uporabimo Gauss-Laguerove kvadrature @eq:10-gauss-laguerre za funkcijo
 $f(u) = e^(-(u-x)^2/2 + u)$.
+
+= Domače naloge
+
+== Gradientni spust z iskanjem po premici

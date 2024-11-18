@@ -9,7 +9,7 @@ Z #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovskimi verigami] smo 
 poglavju o tridiagonalnih sistemih (@tridiagonalni-sistemi). Spomnimo se, da je Markovska veriga
 zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množici stanj. Stanja Markovske verige bomo označili kar z zaporednimi naravnimi števili $1, 2, med dots med n$. Na vsakem koraku je
 Markovska veriga v določenem stanju $X_(k) in {1, 2, med dots med n}$. Porazdelitev na naslednjem koraku $X_(k+1)$
-je odvisna zgolj od poradelitve na prejšnjem koraku $X_(k)$ in prehodnih verjetnosti za prehod iz stanja $i$ v stanje $j$:
+je odvisna zgolj od porazdelitve na prejšnjem koraku $X_(k)$ in prehodnih verjetnosti za prehod iz stanja $i$ v stanje $j$:
 $
 p_(i j) = P(X_(k+1) = j | X_k = i).
 $
@@ -47,7 +47,7 @@ Povedano drugače: invariatna porazdelitev za Markovsko verigo s prehodno matrik
 - Implementiraj potenčno metodo za iskanje največje lastne vrednosti in lastnega vektorja dane matrike.
 - Uporabi potenčno metodo in poišči invariantno porazdelitev Markovske verige z
   dano prehodno matriko $Pm$. Poišči invariantne porazdelitve za naslednja primera:
-    - veriga, ki opisuje skakanje konja (skakača) po šahovnici,
+    - veriga, ki opisuje skakanje skakača (skakača) po šahovnici,
     - veriga, ki opisuje brskanje po mini spletu s 5-10 stranmi (podobno spletni iskalniki
       #link("https://en.wikipedia.org/wiki/PageRank")[razvrščajo strani po relevantnosti]).
 
@@ -167,19 +167,19 @@ Invariantno porazdelitev predstavimo s stolpčnim diagramom:
 
 Iz diagrama vidimo, da je najpogosteje obiskana spletna stran $4$, najredkeje pa spletna stran $5$.
 
-== Skakanje konja po šahovnici
+== Skakanje skakača po šahovnici
 
-Tudi naključno skakanje konja po šahovnici lahko opišemo z Markovsko verigo. Stanja Markovske
-verige so polja na šahovnici, prehodne verjetnosti pa določimo tako, da konj v naslednji potezi
+Tudi naključno skakanje skakača po šahovnici lahko opišemo z Markovsko verigo. Stanja Markovske
+verige so polja na šahovnici, prehodne verjetnosti pa določimo tako, da skakač v naslednji potezi
 naključno skoči na eno od polj, ki so mu dostopna. Predpostavimo, da so vsa dostopna polja enako
 verjetna.
 
 #figure(
   image("img/07poteze_konja.png", width: 40%),
-  caption: [Možne poteze, ki jih lahko naredita beli in črni konj na $5 times 5$ šahovnici]
+  caption: [Možne poteze, ki jih lahko naredita beli in črni skakač na $5 times 5$ šahovnici]
 )
 Stanja označimo s pari
-indeksov $(i, j)$, ki označujejo posamezno polje. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je konj na polju $(i, j)$.
+indeksov $(i, j)$, ki označujejo posamezno polje. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je skakač na polju $(i, j)$.
 Ponovno se srečamo s problemom iz prejšnjega poglavja (@minimalne-ploskve), kako elemente matrike
 postaviti v vektor. Elemente matrike zložimo v vektor po stolpcih. Preslikava med indeksi $i, j$ v
 matriki in indeksom $k$ v vektorju je podana s formulami
@@ -198,14 +198,14 @@ Za lažje delo napišimo funkciji
 ki izračunata preslikavo med indeksi $i, j$ v matriki in indeksom $k$ v vektorju (@pr:07indeksi).
 
 Nato definirajmo:
-- podatkovno strukturo #jl("Konj(m, n)"), ki predstavlja Markovsko verigo za konja na
-  $m times n$ šahovnici (@pr:07konj) in
-- funkcijo #jl("prehodna_matrika(k::Konj)"), ki vrne
-  prehodno matriko za Markovsko verigo za konja (@pr:07prehodna).
+- podatkovno strukturo #jl("Skakač(m, n)"), ki predstavlja Markovsko verigo za skakača na
+  $m times n$ šahovnici (@pr:07skakač) in
+- funkcijo #jl("prehodna_matrika(k::Skakač)"), ki vrne
+  prehodno matriko za Markovsko verigo za skakača (@pr:07prehodna).
 Invariantno porazdelitev poskusimo poiskati s potenčno metodo:
 
 #code_box(
-  jlfb("scripts/07_page_rank.jl", "# konj")
+  jlfb("scripts/07_page_rank.jl", "# skakač")
 )
 
 Potenčna metoda ne konvergira, saj ima matrika $Pm^T$ dve dominantni lastni vrednosti $1$ in $-1$.
@@ -247,7 +247,8 @@ vrednost $1$.
 
 #figure(
   image("img/07-konj.svg", width:60%),
-  caption: [Limitna porazdelitev za konja na standardni $8 times 8$ šahovnici. Svetlejša polja so pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve na začetku.]
+  caption: [Limitna porazdelitev za skakača na standardni $8 times 8$ šahovnici. Svetlejša polja so
+  pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve na začetku.]
 )
 
 #opomba(naslov: [Kaj smo se naučili?])[
@@ -276,16 +277,16 @@ vrednost $1$.
 
 #figure(
   code_box(
-    jlfb("Vaja07/src/Vaja07.jl", "# konj")
+    jlfb("Vaja07/src/Vaja07.jl", "# skakač")
   ),
-  caption: [Podatkovni tip, ki predstavlja  Markovsko verigo za konja na
+  caption: [Podatkovni tip, ki predstavlja  Markovsko verigo za skakača na
   šahovnici]
-)<pr:07konj>
+)<pr:07skakač>
 
 #figure(
   code_box(
     jlfb("Vaja07/src/Vaja07.jl", "# prehodna_matrika")
   ),
-  caption: [Funkcija, ki ustvari prehodno matriko za Markovsko verigo za konja na
+  caption: [Funkcija, ki ustvari prehodno matriko za Markovsko verigo za skakača na
   šahovnici]
 )<pr:07prehodna>
