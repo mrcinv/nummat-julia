@@ -236,7 +236,8 @@ $
 bold(x) = [u_(11), u_(21) med dots med u_(m 1), u_(12), u_(22) med dots med u_(1 m) med dots med u_(m-1 n), u_(m n)]^T.
 $
 
-Iz enačb @eq:ravnovesje lahko potem razberemo matriko A. Za $n = m = 3$ dobimo $9 times 9$ matriko
+Iz enačb @eq:ravnovesje lahko potem razberemo matriko $A$. Za $n = m = 3$ dobimo matriko velikosti
+$9 times 9$
 
 $
 A^(9, 9) = mat(-4, 1, 0, 1, 0, 0, 0, 0, 0; 1, -4, 1, 0, 1, 0, 0,
