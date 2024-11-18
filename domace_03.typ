@@ -1,7 +1,8 @@
-= 3. domača naloga
+= Tretja domača naloga
 
 == Navodila
 <navodila>
+
 Zahtevana števila izračunajte na #strong[10 decimalk] \(z relativno
 natančnostjo $bold(10^(minus 10))$) Uporabite lahko le osnovne
 operacije, vgrajene osnovne matematične funkcije `exp`, `sin`, `cos`, …,
@@ -14,16 +15,10 @@ predmetu, čeprav na koncu rešitev morda ne bo optimalna. Kljub temu
 pazite na #strong[časovno in prostorsko zahtevnost], saj bo od tega
 odvisna tudi ocena.
 
-Izberite #strong[eno] izmed nalog. Domačo nalogo lahko delate skupaj s
-kolegi, vendar morate v tem primeru rešiti toliko različnih nalog, kot
-je študentov v skupini.
-
 Če uporabljate drug programski jezik, ravno tako kodi dodajte osnovno
 dokumentacijo in teste.
 
-== Težje naloge
-<težje-naloge>
-=== Ničle Airijeve funkcije
+== Ničle Airijeve funkcije
 <ničle-airijeve-funkcije>
 Airyjeva funkcija je dana kot rešitev začetnega problema
 
@@ -33,9 +28,7 @@ dovoljeno uporabiti vgrajene funkcijo za reševanje diferencialnih enačb.
 Lahko pa uporabite Airyjevo funkcijo `airyai` iz paketa
 `SpecialFunctions.jl`, da preverite ali ste res dobili pravo ničlo.
 
-==== Namig
-<namig>
-Za računanje vrednosti $y lr((x))$ lahko uporabite Magnusovo metodo reda
+#emph[Namig]: Za računanje vrednosti $y lr((x))$ lahko uporabite Magnusovo metodo reda
 4 za reševanje enačb oblike
 
 $ y prime lr((x)) eq A lr((x)) y comma $ pri kateri nov približek
@@ -51,7 +44,7 @@ $lr([A comma B]) eq A B minus B A$. Eksponentno funkcijo na matriki
 \($exp lr((sigma_(k plus 1)))$) pa v programskem jeziku julia dobite z
 ukazom `exp`.
 
-=== Dolžina implicinto podane krivulje
+== Dolžina implicinto podane krivulje
 <dolžina-implicinto-podane-krivulje>
 Poiščite približek za dolžino krivulje, ki je dana implicitno z enačbama
 
@@ -62,14 +55,14 @@ Krivuljo lahko poiščete kot rešitev diferencialne enačbe
 
 $ dot(bold(x)) lr((t)) eq nabla F_1 times nabla F_2 dot.basic $
 
-=== Perioda limitnega cikla
+== Perioda limitnega cikla
 <perioda-limitnega-cikla>
 Poiščite periodo limitnega cikla za diferencialno enačbo
 
 $ x prime.double lr((t)) minus 4 lr((1 minus x^2)) x prime lr((t)) plus x eq 0 $
 na 10 decimalk natančno.
 
-=== Obhod lune
+== Obhod lune
 <obhod-lune>
 Sondo Appolo pošljite iz Zemljine orbite na tir z vrnitvijo brez potiska
 \(free-return trajectory), ki obkroži Luno in se vrne nazaj v Zemljino
@@ -77,7 +70,7 @@ orbito. Rešujte sistem diferencialnih enačb, ki ga dobimo v koordinatnem
 sistemu, v katerem Zemlja in Luna mirujeta \(omejen krožni problem treh
 teles). Naloge ni potrebno reševati na 10 decimalk.
 
-==== Omejen krožni problem treh teles
+=== Omejen krožni problem treh teles
 <omejen-krožni-problem-treh-teles>
 Označimo z $M$ maso Zemlje in z $m$ maso Lune. Ker je masa sonde
 zanemarljiva, Zemlja in Luna krožita okrog skupnega masnega središča.
@@ -101,7 +94,7 @@ $ x^(̈) & eq x plus 2 dot(y) minus mu^(‾) / R^3 lr((x plus mu)) minus mu / r^
 y^(̈) & eq y minus 2 dot(x) minus mu^(‾) / R^3 y minus mu / r^3 y comma\
 z^(̈) & eq minus mu^(‾) / R^3 z minus mu / r^3 z dot.basic $
 
-=== Perioda geostacionarne orbite
+== Perioda geostacionarne orbite
 
 Oblika planeta Zemlja ni čisto pravilna krogla. Zato tudi gravitacijsko polje ne deluje v vseh smereh enako. Gravitacijsko polje lahko zapišemo kot odvod gravitacijskega potenciala
 
@@ -113,13 +106,10 @@ kjer je $V(bold(r))$ skalarna funkcija položaja $bold(r)$.
 #link("https://en.wikipedia.org/wiki/Gravity_of_Earth")[Zemljina gravitacija]
 #link("https://en.wikipedia.org/wiki/Geopotential_model")[Zemljin gravitacijski potencial].
 
-== Lažja naloga \(ocena največ 9)
-<lažja-naloga-ocena-največ-9>
-Naloga je namenjena tistim, ki jih je strah eksperimentiranja ali pa za
-to preprosto nimajo interesa ali časa.
 
-=== Matematično nihalo
+== Matematično nihalo \(ocena največ 9)
 <matematično-nihalo>
+
 Kotni odmik $theta(t)$ \(v radianih) pri nedušenem nihanju uteži obešene na vrvici
 opišemo z diferencialno enačbo
 
