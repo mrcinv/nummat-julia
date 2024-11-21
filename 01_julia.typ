@@ -203,7 +203,7 @@ Za zanko z znanim številom korakov uporabimo ukaz #jl("for"):
 
 #code_box[
   #repl("for i=1:3
-  println(\"Trenutni števec je $i\"
+  println(\"Trenutni števec je $i\")
 end", "Trenutni števec je 1
 Trenutni števec je 2
 Trenutni števec je 3")
@@ -214,7 +214,7 @@ razpona #("1:3"), ki je tipa #jl("LinRange") lahko for zanko izvedemo tudi po ve
 
 #code_box[
   #repl("for i in [2, 3, 1]
-  println(\"Trenutni števec je $i\"
+  println(\"Trenutni števec je $i\")
 end", "Trenutni števec je 2
 Trenutni števec je 3
 Trenutni števec je 1")
