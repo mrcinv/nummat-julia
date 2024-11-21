@@ -244,7 +244,36 @@ funkcijskih vrednosti #jl("[f(1), f(2), f(3)]") za dano funkcijo $f$.
 ]
 
 Zanko lahko izvedemo tudi z ukazom #jl("while"), ki deluje podobno kot v drugih
-programskih jezikih. Podobno kot v drugih programskih jezikih deluje tudi #jl("if") stavek.
+programskih jezikih.
+
+Podobno kot v drugih programskih jezikih deluje tudi #jl("if") stavek:
+
+#code_box(repl("if 1 < 2
+  println(\"1 je manj kot 2\")
+else
+  println(\"1 je več ali enako 2\")
+end", "1 je manj kot 2"))
+
+Rezultat #jl("if") stavka je enak rezultatu veje, ki se izvede.
+
+#code_box(repl("x = if 1 < 2
+  1
+else
+  2
+end","1"))
+
+#pagebreak()
+Prejšnji izraz #jl("if/else") krajše zapišemo s tričlenskim operatorjem (#jl("pogoj ? a : b")):
+
+#code_box(repl("x = 1 < 2 ? 1 : 2", "1" ))
+
+Če izpustimo #jl("else") del, je rezultat #jl("if") stavka bodisi rezultat telesa, če je pogoj
+izpolnjen, bodisi enak vrednosti #jl("nothing"), če pogoj ni izpolnjen:
+
+#code_box[#repl("x = if 1 > 2
+  1
+end", none)
+#repl("typeof(x)", "Nothing")]
 
 === Podatkovni tipi<sec:02-tipi>
 
