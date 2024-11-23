@@ -9,7 +9,7 @@ mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo 
 
 
 #opomba(
-  naslov: [Implementacija elementarnih funkcij v Juliji],
+  naslov: [Implementacija elementarnih funkcij v Julii],
 [ Lokacijo metod, ki računajo določeno funkcijo, lahko dobite z ukazoma #jl("methods") in #jl("@which").
 Tako bo ukaz #jl("methods(sqrt)") izpisal implementacije kvadratnega korena za vse podatkovne tipe,
 ki jih Julia podpira. Ukaz #jl("@which(sqrt(2.0))") pa razkrije metodo, ki računa koren za
@@ -24,7 +24,7 @@ Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren
 - Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[Newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.
 - Kako je konvergenca odvisna od vrednosti `x`?
 - Nariši graf potrebnega števila korakov v odvisnosti od argumenta `x`.
-- Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Juliji).
+- Uporabi lastnosti #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[zapisa s plavajočo vejico] in izpelji formulo za približno vrednost korena, ki uporabi eksponent (funkcija #link("https://docs.julialang.org/en/v1/base/numbers/#Base.Math.exponent")[exponent] v Julii).
 - Implementiraj funkcijo `koren(x)`, tako da je časovna zahtevnost neodvisna od argumenta `x`. Grafično preveri, ali funkcija dosega zahtevano natančnost za poljubne vrednosti argumenta `x`.
 
 
@@ -224,7 +224,7 @@ $
 sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1";" quad  o = 0, sqrt(2)";" quad o=1)
 $
 
-Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Juliji za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
+Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
 #figure(
     code_box(
@@ -257,7 +257,7 @@ lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 #opomba(naslov: [Julia omogoča več definicij iste funkcije])[
     Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polmorfizma
     v objektno orientiranih jezikih, kjer se metoda izbere ne le na podlagi razreda
-    objekta, ki to metodo kliče, se v Juliji metodo izbere na podlagi tipov vseh vhodnih argumentov.
+    objekta, ki to metodo kliče, se v Julii metodo izbere na podlagi tipov vseh vhodnih argumentov.
     Ta lastnost omogoča pisanje generične kodo, ki deluje za zelo različne vhodne argumente.
 
     Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na to, katere argumente podamo funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo #jl("koren(2.0, 1.0)"), se izvede različica @code:02-koren-x-y0, ko pa pokličemo #jl("koren(2.0)"), se izvede @code:02-koren-x.
@@ -297,5 +297,5 @@ Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanj
 
 //      [#jl("spy") - grafično predstavi neničelne elemente matrike]
 //   ),
-//   caption: [Funkcije v Juliji, ki smo jih uporabili v @sec:02-koren.]
+//   caption: [Funkcije v Julii, ki smo jih uporabili v @sec:02-koren.]
 // )

@@ -146,7 +146,7 @@ Metoda konjugiranih gradientov in druge iterativne metode so zelo primerne za re
 Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
 ki bi dodale neničelne elemente.
 
-== Rešitev v Juliji
+== Rešitev v Julii
 
 Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl],
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.

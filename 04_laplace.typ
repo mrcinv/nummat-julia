@@ -330,7 +330,7 @@ $
   A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
 $
 
-#opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Juliji])[
+#opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Julii])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in
 računanje Kroneckerjevega produkta. Z ukazom `reshape` pa lahko iz vektorja
 znova zgradimo matriko.
@@ -366,7 +366,7 @@ in ga bomo lahko dodali v polje za operator v `RobniProblemPravokotnik`:
 ]
 
 #opomba(naslov: [Abstraktni podatkovni tipi])[
-Programski jezik Julija ne pozna razredov. Uporaba
+Programski jezik Julia ne pozna razredov. Uporaba
 #link("https://docs.julialang.org/en/v1/manual/types/#man-abstract-types")[abstraktnih podatkovnih tipov],
 kot je `Laplace`, omogoča #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizem].
 Na ta način lahko kodo organiziramo tako, da odraža abstraktne matematične pojme, kot je v našem
@@ -468,7 +468,7 @@ matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator
   poveča. Kljub temu sta L in U v razcepu še vedno precej redki matriki.]
 )
 
-#opomba(naslov: [Podatkovni tipi za matrične razcepe v Juliji])[
+#opomba(naslov: [Podatkovni tipi za matrične razcepe v Julii])[
 V knjižnici #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra")[LinearAlgebra]
 so implementacije standardnih matričnih razcepov,
 kot so LU razcep, razcep Choleskega, QR razcep in drugi. Rezultat, ki ga Julia vrne, ko
@@ -602,7 +602,7 @@ od parametra $omega$])
 
 == Rešitve
 
-// Uporabili smo naslednje funkcije in knjižnice v `Juliji`:
+// Uporabili smo naslednje funkcije in knjižnice v `Julii`:
 
 // #rect(
 //   table(columns: 2, stroke: none,

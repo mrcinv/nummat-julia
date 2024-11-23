@@ -251,7 +251,7 @@ R bold(p) &= Q^T bold(y).
 $
 
 Matrika $R$ je zgornje trikotna, tako da lahko sistem rešimo z obratnim vstavljanjem.
-V Juliji uporabimo funkcijo #jl("qr"), ki vrne posebni podatkovni tip,
+V Julii uporabimo funkcijo #jl("qr"), ki vrne posebni podatkovni tip,
 posebej namenjen QR razcepu matrike:
 
 #code_box[
@@ -263,7 +263,7 @@ posebej namenjen QR razcepu matrike:
 
 Razlika med rešitvijo s QR razcepom in normalnim sistemom je zanemarljiva.
 Vendar se QR uporablja, ker je numerično stabilnejši v primerjavi z
-normalnim sistemom. Tudi vgrajen operator `\` v Juliji in Matlabu uporabi QR razcep,
+normalnim sistemom. Tudi vgrajen operator `\` v Julii in Matlabu uporabi QR razcep,
 če je sistem predoločen.
 
 == Kaj pa #co2?

@@ -365,7 +365,7 @@ implementiranih v paketu #jl("DifferentialEquations"), podrobneje pa so opisane 
 Izberemo metodo, ki ima red vsaj 4, sicer je treba korak zelo zmanjšati, da dobimo
 dovolj dobro natančnost. Za splošno rabo so najprimernejše metode s kontrolo koraka. Zelo popularna
 je metoda #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[Dormand - Prince reda 5, DOPRI5],
-ki jo privzeto uporabljajo Matlab, Octave in paket #jl("DifferentialEquations") za Julijo.
+ki jo privzeto uporabljajo Matlab, Octave in paket #jl("DifferentialEquations") za Julio.
 
 Pri nekaterih NDE postanejo običajne metode kot so Runge - Kutta in DOPRI5 numerično nestabilne.
 Take enačbe imenujemo

@@ -79,7 +79,7 @@ $<eq:12-sistem-baza>
 Za ostale polinome dobimo podobne sisteme, ki imajo isto matriko sistema, razlikujejo pa se v
 desnih straneh. Če desne strani postavimo v matriko, dobimo ravno identično matriko.
 Inverznoa matrika sistema @eq:12-sistem-baza ima v stolpcih ravno koeficiente baznih polinomov
-$h_(i j)(t)$. Inverz izračunamo z Julijo.
+$h_(i j)(t)$. Inverz izračunamo z Julio.
 
 #let demo12(koda) = code_box(jlfb("scripts/12_zlepki.jl", koda))
 
@@ -130,12 +130,12 @@ kjer $t$ izračunamo kot $t(x)$ iz @eq:12-tx. Sedaj napišemo naslednje funkcije
   izračuna vrednost Hermitovega zlepka #jl("z") v dani točki #jl("x") (@pr:12-zlepek).
 
   #opomba(naslov:[Vrednosti kot funkcije])[
-  Na primeru Hermitovega zlepka lahko ilustriramo, kako v Juliji ustvarimo vrednosti, ki se obnašajo
+  Na primeru Hermitovega zlepka lahko ilustriramo, kako v Julii ustvarimo vrednosti, ki se obnašajo
   kot funkcije. Tako lahko zapis v programskemu jeziku približamo matematičnemu zapisu.
   Za Hermitov zlepek smo definirali tip #jl("HermitovZlepek") in funkcijo
   #jl("vrednost"), s katero lahko izračunamo vrednost Hermitovega zlepka v
   dani točki. Vrednost tipa #jl("HermitovZlepek") hrani interpolacijske podatke
-  in hkrati predstavlja zlepek kot funkcjo. V Juliji lahko definiramo, da se vrednosti
+  in hkrati predstavlja zlepek kot funkcjo. V Julii lahko definiramo, da se vrednosti
   tipa #("HermitovZlepek")
   #link("https://docs.julialang.org/en/v1/manual/methods/#Function-like-objects")[obnašajo kot funkcije]:
 

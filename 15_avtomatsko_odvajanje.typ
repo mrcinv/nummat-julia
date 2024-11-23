@@ -19,7 +19,7 @@ Pri numeričnem odvajanju imamo težave z zaokrožitvenimi napakami. Tako simbol
 numerično odvajanje je počasno pri računanju gradientov funkcij več spremenljivk.
 Avtomatsko odvajanje ne trpi za omenjenimi težavami.
 
-V tej vaji bomo v Juliji implementirali avtomatsko odvajanje z
+V tej vaji bomo v Julii implementirali avtomatsko odvajanje z
 #link("https://en.wikipedia.org/wiki/Dual_number")[dualnimi števili].
 
 == Naloga
@@ -348,7 +348,7 @@ f(x_1 + epsilon_1, x_2 + epsilon_2, med dots med x_(n) + epsilon_n) =
   f(x_1, x_2,  med dots x_(n)) + nabla f(x_1, x_2, med dots x_(n))epsilon.
 $
 
-V Juliji definirajmo vektorska dualna števila tipa #jl("Dual"), ki opisujejo
+V Julii definirajmo vektorska dualna števila tipa #jl("Dual"), ki opisujejo
 elemente oblike
 $
   a + vec(b_1, b_2, dots.v, b_(n))epsilon.
@@ -391,7 +391,7 @@ Izračunajmo gradient funkcije #link("https://en.wikipedia.org/wiki/Ackley_funct
 $
 f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
 $<eq:15-ackley>
-ki se uporablja za testiranje optimizacijskih algoritmov. Najprej napišimo funkcijo v Juliji, ki
+ki se uporablja za testiranje optimizacijskih algoritmov. Najprej napišimo funkcijo v Julii, ki
 izračuna Ackleyevo funkcijo:
 
 #figure(caption: [Funkcija za izračun Ackleyeve funkcije], demo15("# ackley"))

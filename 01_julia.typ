@@ -16,7 +16,7 @@ Cilji tega poglavja so:
 - ustvariti prvi paket in
 - ustvariti prvo poročilo v formatu PDF.
 
-Tekom te vaje bomo pripravili svoj prvi paket v Juliji, ki bo vseboval parametrično enačbo
+Tekom te vaje bomo pripravili svoj prvi paket v Julii, ki bo vseboval parametrično enačbo
 #link("https://sl.wikipedia.org/wiki/Geronova_lemniskata")[Geronove lemniskate], in napisali teste,
 ki bodo preverili pravilnost funkcij v paketu. Nato bomo napisali skripto, ki uporabi funkcije iz
 našega paketa in nariše sliko Geronove lemniskate. Na koncu bomo pripravili lično
@@ -189,7 +189,7 @@ rezultat ni povsem točen. Naredimo še preizkus:
 ]
 
 Operator `\` deluje za veliko različnih primerov. Med drugim ga
-lahko uporabimo tudi za iskanje rešitve pre-določenega sistema po metodi najmanjših kvadratov:
+lahko uporabimo tudi za iskanje rešitve predoločenega sistema po metodi najmanjših kvadratov:
 
 #code_box[
   #repl("[1 2; 3 1; 2 2] \ [1, 2, 3] # rešitev za predoločen sistem", "2-element Vector{Float64}:
@@ -209,7 +209,7 @@ Trenutni števec je 2
 Trenutni števec je 3")
 ]
 
-Julija podpira tudi sintakso z ukazom #jl("for i in vektor") podobno kot Python. Namesto
+Julia podpira tudi sintakso z ukazom #jl("for i in vektor") podobno kot Python. Namesto
 razpona #("1:3"), ki je tipa #jl("LinRange") lahko for zanko izvedemo tudi po vektorju:
 
 #code_box[
@@ -220,7 +220,7 @@ Trenutni števec je 3
 Trenutni števec je 1")
 ]
 
-Julija omogoča še vrsto drugih konstruktov, ki so v bistvu zanke. Poglejmo si, kako lahko
+Julia omogoča še vrsto drugih konstruktov, ki so v bistvu zanke. Poglejmo si, kako lahko
 na tri različne načine, kako iz danega vektorja #jl("v = [1, 2, 3]") sestavimo vektor
 funkcijskih vrednosti #jl("[f(1), f(2), f(3)]") za dano funkcijo $f$.
 
@@ -327,10 +327,12 @@ V tem primeru moramo vsem funkcijam iz modula dodati ime modula in piko kot pred
 
 === Paketi
 
-Nabor funkcij, ki so na voljo v Juliji, je omejen, zato pogosto uporabimo knjižnice, ki vsebujejo dodatne funkcije. Knjižnica funkcij v Juliji se imenuje #link("https://julialang.org/packages/")[paket]. Funkcije v paketu so združene v modul, ki ima isto ime kot paket.
+Nabor funkcij, ki so na voljo v Julii, je omejen, zato pogosto uporabimo knjižnice, ki vsebujejo dodatne funkcije.
+Knjižnica funkcij v Julii se imenuje #link("https://julialang.org/packages/")[paket]. Funkcije v
+paketu so združene v modul, ki ima isto ime kot paket.
 
 Julia ima vgrajen upravljalnik s paketi, ki omogoča dostop do paketov, ki so del
-Julije, kot tudi tistih, ki jih prispevajo uporabniki. Poglejmo si primer, kako
+Julie, kot tudi tistih, ki jih prispevajo uporabniki. Poglejmo si primer, kako
 uporabiti ukaz `norm`, ki izračuna različne norme vektorjev in matrik. Ukaz
 `norm` ni del osnovnega nabora funkcij, ampak je del modula `LinearAlgebra`, ki je že
 vključen v program Julia. Če želimo uporabiti `norm`, moramo najprej uvoziti
@@ -352,7 +354,7 @@ paketni način vnosa v ukazni zanki. Do paketnega načina pridemo, če za pozivn
 Julia ukazna zanka (REPL) pozna več načinov, ki so namenjeni različnim
 opravilom.
 - Osnovni način s pozivom #text(green.darken(20%))[`julia>`] je namenjen vnosu
-  kode v Juliji.
+  kode v Julii.
 - Paketni način s pozivom #text(blue)[`pkg>`] je namenjen upravljanju s paketi. V
   paketni način pridemo, če vnesemo znak `]`.
 - Način za pomoč s pozivom #text(orange)[`help?>`] je namenjen pomoči. V način za
@@ -397,7 +399,7 @@ ali pa v lupini operacijskega sistema:
 ]
 
 #opomba(
-  naslov: [Urejevalniki in programska okolja za Julijo],
+  naslov: [Urejevalniki in programska okolja za Julio],
   [
   Za lažje delo z datotekami s kodo potrebujemo dober urejevalnik besedila,
   ki je namenjen programiranju. Če še nimate priljubljenega urejevalnika,
@@ -469,7 +471,7 @@ $ julia
 Zgornji ukaz ustvari datoteko `Project.toml` in pripravi novo projektno okolje v mapi `nummat`.
 
 #opomba(
-  naslov: [Projektno okolje v Juliji],
+  naslov: [Projektno okolje v Julii],
 )[Projektno okolje je mapa, ki vsebuje datoteko `Project.toml` z informacijami o paketih in zahtevanih različicah paketov.  Projektno okolje aktiviramo z ukazom ```jl Pkg.activate("pot/do/mape/z/okoljem")``` oziroma v paketnem načinu z:
 
 #code_box[
@@ -480,7 +482,7 @@ Uporaba projektnega okolja delno rešuje problem #link(
     "https://sl.wikipedia.org/wiki/Obnovljivost",
   )[ponovljivosti], ki ga najlepše ilustriramo z izjavo #quote[Na mojem računalniku pa koda dela!]. Projektno okolje namreč vsebuje tudi datoteko `Manifest.toml`, ki hrani različice in kontrolne vsote za pakete iz `Project.toml` in vse njihove odvisnosti. Ta informacija omogoča, da Julia naloži vedno iste različice vseh odvisnosti, kot v času, ko je bila datoteka `Manifest.toml` zadnjič posodobljena.
 
-Projektna okolja v Juliji so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].
+Projektna okolja v Julii so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].
 ]
 
 Projektnemu okolju dodamo pakete, ki jih bomo rabili v nadaljevanju. Zaenkrat je to le
@@ -553,7 +555,7 @@ $ julia
 ]
 
 Ukaz `generate` ustvari mapo `Vaja01` z osnovno strukturo
-#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Juliji]:
+#link("https://pkgdocs.julialang.org/v1/creating-packages/")[paketa v Julii]:
 
 #code_box[
 ```shell
@@ -696,7 +698,7 @@ V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki prime
   $
     |a - b| < epsilon,
   $
-  kjer je $epsilon$ večji od pričakovane zaokrožitvene napake. V Juliji lahko za približno primerjavo števil in vektorjev uporabimo operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].],
+  kjer je $epsilon$ večji od pričakovane zaokrožitvene napake. V Julii lahko za približno primerjavo števil in vektorjev uporabimo operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].],
 )
 
 Preden lahko poženemo teste, moramo ustvariti testno okolje. Sledimo #link(
@@ -755,10 +757,10 @@ V tej knjigi bomo pisali tri vrste dokumentacije:
 
 === Dokumentacija funkcij in tipov
 
-Funkcije in podatkovne tipe v Juliji dokumentiramo tako, da pred definicijo dodamo niz z
+Funkcije in podatkovne tipe v Julii dokumentiramo tako, da pred definicijo dodamo niz z
 opisom funkcije, kot smo to naredili v programu @pr:Vaja01. Več o tem si lahko preberete #link(
   "https://docs.julialang.org/en/v1/manual/documentation/",
-)[v poglavju o dokumentaciji] priročnika za Julijo.
+)[v poglavju o dokumentaciji] priročnika za Julio.
 
 === README dokument
 
@@ -815,7 +817,7 @@ Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo program
   caption: [Program za pripravo PDF dokumenta],
 )
 
-Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Juliji. Preden poženemo program `makedocs.jl`, moramo projektnemu okolju `nummat` dodati paket `Weave.jl`.
+Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Julii. Preden poženemo program `makedocs.jl`, moramo projektnemu okolju `nummat` dodati paket `Weave.jl`.
 
 #code_box[
   #pkg("add Weave", none, env: "nummat")
@@ -834,7 +836,7 @@ Poročilo se shrani v datoteko `Vaja01/pdf/01uvod.pdf`.
 #opomba(
   naslov: [Alternativni paketi za pripravo PDF dokumentov],
 )[
-Poleg paketa `Weave.jl` je na voljo še nekaj programov, ki so primerni za pripravo PDF dokumentov s programi v Juliji:
+Poleg paketa `Weave.jl` je na voljo še nekaj programov, ki so primerni za pripravo PDF dokumentov s programi v Julii:
 
 - #link("https://github.com/JuliaLang/IJulia.jl")[IJulia],
 - #link("https://github.com/fredrikekre/Literate.jl")[Literate.jl] in
@@ -886,7 +888,7 @@ Vaja01
 ```
 ]
 
-Preden nadaljujete, ponovno preverite, če vse deluje tako, kot bi moralo. V Juliji aktivirajte projektno okolje:
+Preden nadaljujete, ponovno preverite, če vse deluje tako, kot bi moralo. V Julii aktivirajte projektno okolje:
 
 #code_box[
   #repl("# pritisnite ] za vstop v paketni način", none)

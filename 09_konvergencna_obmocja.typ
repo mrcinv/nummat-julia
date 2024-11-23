@@ -134,7 +134,7 @@ V našem primeru smo Jacobijevo matriko izračunali na roke, saj je bila funkcij
 desnih strani preprosta.
 Če je funkija $bF$ bolj kompleksna ali je ne poznamo v naprej, lahko Jacobijevo matriko odvodov
 učinkovito izračunamo z
-#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatskim odvajanjem]. V Juliji
+#link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatskim odvajanjem]. V Julii
 uporabimo funkcijo #jl("jacobian") iz paketa
 #link("https://juliadiff.org/ForwardDiff.jl/stable/")[ForwardDiff].
 ]

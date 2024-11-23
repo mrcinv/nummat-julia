@@ -7,7 +7,7 @@ Preprost paket, ki definira koordinatne funkcije [Geronove lemniskate](https://s
 ```jl
 include("Vaja01/doc/01uvod.jl")
 ```
-v interaktivni zanki Julije.
+v interaktivni zanki Julie.
 
 ## Testi
 

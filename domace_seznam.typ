@@ -185,7 +185,7 @@ Nekaj nasvetov, kako lahko testiramo kodo.
 Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode,
 ki se izvede med testi, imenujemo #link(
   "https://en.wikipedia.org/wiki/Code_coverage",
-)[pokritost kode (angl. Code Coverage)]. V Juliji lahko pokritost kode dobimo
+)[pokritost kode (angl. Code Coverage)]. V Julii lahko pokritost kode dobimo
 z argumentom ```jl coverage=true```, ki ga dodamo metodi `Pkg.test`:
 
 #code_box(
