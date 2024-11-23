@@ -155,7 +155,7 @@ $ X_1, X_2, X_3, med dots $
 z vrednostmi v množici stanj ($ZZ$ za slučajni sprehod), za katere velja Markovska lastnost
 
 $
- P(X_(i+1) = x | X_1 = x_1, X_2 = x_2 med dots med X_i = x_i) = P(X_(i+1) = x | X_i = x_i).
+ P(X_(i+1) = x | X_1 = x_1, X_2 = x_2, med dots, med X_i = x_i) = P(X_(i+1) = x | X_i = x_i).
 $
 
 Ta pove, da je verjetnost za prehod v naslednje stanje odvisna le od prejšnjega stanja

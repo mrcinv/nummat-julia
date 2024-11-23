@@ -47,7 +47,7 @@ opravimo na vhodnih podatkih. Matematično lahko vsak korak programa zapišemo k
 ki stare vrednosti spremenljivk pred izvedbo koraka preslika v nove vrednosti po izvedbi koraka.
 Program si lahko predstavljamo kot kompozitum posameznih korakov
 $
-P = k_(n) circle.tiny k_(n-1) med dots med k_2 circle.tiny k_1.
+P = k_(n) circle.tiny k_(n-1) circle.tiny med dots med circle.tiny k_2 circle.tiny k_1.
 $
 Pri avtomatskem odvajanju želimo program za računanje vrednosti neke
 funkcije spremeniti v program, ki poleg vrednosti funkcije računa tudi vrednost odvoda pri istih

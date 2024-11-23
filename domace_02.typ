@@ -142,7 +142,7 @@ $ l(x) = cases(delim: "{", frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum fra
 
 Čebiševe točke so podane na intervalu $lr([- 1 , 1])$ s formulo
 
-$ x_k = cos((2k -1)/(2n) pi), quad k = 0,1 med dots med n-1, $
+$ x_k = cos((2k -1)/(2n) pi), quad k = 0,1, med dots, med n-1, $
 
 vrednosti uteži $lambda_k$ pa so enake
 

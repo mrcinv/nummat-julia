@@ -104,7 +104,7 @@ pa #emph[začetni problem].
 Rešitev začetnega problema @eq:16-zacetni-problem je funkcija $u(x)$. Funkcijo $u(x)$ lahko
 numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto uporabljata, sta:
 - z vektorjem vrednosti $[u_0, u_1, med dots med u_n]$ v danih točkah $t_0, t_1, med dots t_n$ ali
-- z vektorjem koeficientov $[a_0, a_1 med dots med a_n]$ v razvoju $u(t) = sum a_k phi_k(t)$
+- z vektorjem koeficientov $[a_0, a_1, med dots, med a_n]$ v razvoju $u(t) = sum a_k phi_k(t)$
   po dani bazi $phi_k(t)$.
 
 Metode, ki poiščejo približek za vektor vrednosti, imenujemo
@@ -118,7 +118,7 @@ Metode, ki jih bomo spoznali v nadaljevanju, uvrščamo med kolokacijske metode.
 Najpreprostejša metoda za reševanje začetnega problema je
 #link("https://en.wikipedia.org/wiki/Euler_method")[Eulerjeva metoda].
 Za dani začetni problem @eq:16-zacetni-problem bomo poiskali vrednosti $u_i = u(t_i)$ v
-točkah $t_0 < t_1 < med dots med t_n=t_k$ na intervalu $[t_0, t_k]$. Vrednosti $u_i$ poiščemo tako,
+točkah $t_0 < t_1 < med dots med < t_n=t_k$ na intervalu $[t_0, t_k]$. Vrednosti $u_i$ poiščemo tako,
 da najprej izračunamo približek $u_1$ za $t_1$ in nato z isto metodo rešimo začetni
 problem z začetnim pogojem $u(t_1) = u_1$. Pri Eulerjevi metodi naslednjo vrednost dobimo tako, da
 izračunamo vrednost na tangenti v točki $(t_k, u_k)$. Tako rekurzivno dobimo približke za vrednosti
@@ -410,9 +410,9 @@ $
 
 Z numeričnimi metodami dobimo približek za začetni problem v obliki zaporedja približkov
 $
-bold(u)_0, bold(u)_1 med dots med bold(u)_n
+bold(u)_0, bold(u)_1, med dots, med bold(u)_n
 $
-za vrednosti ob časih $t_0, t_1 med dots med t_n$. Za vsak izračun $h(t)$
+za vrednosti ob časih $t_0, t_1, med dots, med t_n$. Za vsak izračun $h(t)$
 bi morali vsakič znova izračunati začetni del zaporedja $bold(u)_i$. Da se
 temu izognemo, najprej poiščimo interval $[t_(i), t_(i+1)]$, na katerem leži ničla. V tabeli
 poiščemo $i$, za katerega je:
@@ -430,7 +430,7 @@ uporabimo kot nov začetni približek za začetni problem. Tako lahko zgolj z en
 metode izračunamo $h(t)=F(bold(u)(t))$ za poljuben $t in [t_(i), t_(i+1)]$.
 
 #opomba(naslov: [Iskanje ničle v tabeli])[
-Imamo tabelo vrednosti funkcije $[f_1, f_2 med dots med f_n]$ in želimo poiskati ničlo. Pogoj $f_i = 0$ ni najboljši, saj zaradi zaokrožitvenih napak skoraj zagotovo ni nikoli izpolnjen. Tudi pogoj $|f_i| < epsilon$ ni dosti boljši, ker je ničla lahko med dvema
+Imamo tabelo vrednosti funkcije $[f_1, f_2, med dots, med f_n]$ in želimo poiskati ničlo. Pogoj $f_i = 0$ ni najboljši, saj zaradi zaokrožitvenih napak skoraj zagotovo ni nikoli izpolnjen. Tudi pogoj $|f_i| < epsilon$ ni dosti boljši, ker je ničla lahko med dvema
 vrednostima $f_i$ in $f_(i+1)$, čeprav sta vrednosti daleč stran od ničle. Ničla pa je zagotovo tam,
 kjer funkcija spremeni predznak. Pravi pogoj je zato:
 $

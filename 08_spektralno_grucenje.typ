@@ -220,11 +220,11 @@ premikom Laplaceove matrike za $epsilon I$.
 
 Inverzna iteracija @eq:9-inviter konvergira k lastnemu vektorju za najmanjšo lastno vrednost.
 Lastne vektorje za katero drugo lastno vrednost, poiščemo preprosto s premikom.
-Naj ima matrika $A$ lastne vrednosti $lambda_1, lambda_2 med dots med lambda_n$, potem ima matrika
+Naj ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, med dots, med lambda_n$, potem ima matrika
 
 $ A - delta I $
 
-lastne vrednosti $lambda_1 - delta, lambda_2 - delta med dots med lambda_n - delta$. Če izberemo
+lastne vrednosti $lambda_1 - delta, lambda_2 - delta, med dots, med lambda_n - delta$. Če izberemo
 $delta$ dovolj blizu $lambda_k$ lahko poskrbimo, da je $lambda_k - delta$ najmanjša lastna vrednost
 matrike $A - delta I$. Tako lahko z inverzno iteracijo za matriko $A - delta I$ poiščemo lastni vektor za poljubno lastno
 vrednost.

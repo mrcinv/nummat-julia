@@ -157,7 +157,7 @@ Vozlišča za Gauss-Čebiševa kvadraturo v $n$ vozliščih so v
 #link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševih vozliščih]
 
 $
-  x_k = cos((2k +1)/(2n)pi), quad k=0, med dots med n-1,
+  x_k = cos((2k +1)/(2n)pi), quad k=0, med dots, med n-1,
 $
 
 uteži pa so vse enake $w_k = pi/n$. Za vrsto $C_N(x)$ uporabimo kvadraturne formule z $N+1$ vozlišči.

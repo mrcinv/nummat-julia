@@ -54,14 +54,14 @@ Kvadraturo zapišemo kot funkcijo končnega števila funkcijskih vrednosti v izb
 tudi obravnavamo kot funkcijo na prostoru integrabilnih funkcij:
 
 $
-  K(f) = k(f(x_1), f(x_2), med dots med f(x_(n))).
+  K(f) = k(f(x_1), f(x_2), med dots, med f(x_(n))).
 $
 
 Funkcija $I_([a, b])$ je linearen funkcional, zato želimo, da je tudi kvadratura $K$ linearen
-funkcional, kar pa pomeni, da mora biti funkcija $k(f(x_1), f(x_2), med dots med f(x_(n))$ linearna in
+funkcional, kar pa pomeni, da mora biti funkcija $k(f(x_1), f(x_2), med dots, med f(x_(n))$ linearna in
 
 $
-  K(f) = k(f(x_1), f(x_2), med dots med f(x_(n))) = sum_(i=1)^n u_i f(x_i).
+  K(f) = k(f(x_1), f(x_2), med dots, med f(x_(n))) = sum_(i=1)^n u_i f(x_i).
 $
 
 Izjema so adaptivne metode, pri katerih je izbira vozlišč $x_i$ odvisna od izbire funkcije $f$, ki

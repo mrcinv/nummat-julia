@@ -114,7 +114,7 @@ $
 Namesto funkcije $u: [a, b] times [c, d] arrow.r bb(R)$
 tako iščemo le vrednosti
 
-$ u_(i j) = u(x_j, y_i), quad i=1 med dots med n, quad j=1 med dots med m. $
+$ u_(i j) = u(x_j, y_i), quad i=1, med dots, med n, quad j=1, med dots, med m. $
 
 //#figure([#image("sosedi.png")], caption: [
 // sosednja vozlišča
@@ -233,7 +233,7 @@ jih moramo najprej razvrstiti v vektor $bold(x)=[x_1, x_2, dots]^T$.
 Najpogosteje elemente $u_(i j)$ razvrstimo v vektor $bold(x)$ po stolpcih, tako da je:
 
 $
-bold(x) = [u_(11), u_(21) med dots med u_(m 1), u_(12), u_(22) med dots med u_(1 m) med dots med u_(m-1 n), u_(m n)]^T.
+bold(x) = [u_(11), u_(21), med dots, med u_(m 1), u_(12), u_(22), med dots, med u_(1 m), med dots, med u_(m-1 n), u_(m n)]^T.
 $
 
 Iz enačb @eq:ravnovesje lahko potem razberemo matriko $A$. Za $n = m = 3$ dobimo matriko velikosti

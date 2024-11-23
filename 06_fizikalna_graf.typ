@@ -84,7 +84,7 @@ $
    -st(j)z_j + z_(i_1) + z_(i_2) + dots + z_(i_(st(i))) &= 0,
 $
 
-kjer je $st(j)=|N(j)|$ stopnja vozlišča $j$ in $i_1, i_2 med dots med i_(st(j)) in N(j)$. Ker so koordinate $x$, $y$ in $z$ med seboj neodvisne, dobimo za vsako koordinato en sistem enačb.
+kjer je $st(j)=|N(j)|$ stopnja vozlišča $j$ in $i_1, i_2, med dots, med i_(st(j)) in N(j)$. Ker so koordinate $x$, $y$ in $z$ med seboj neodvisne, dobimo za vsako koordinato en sistem enačb.
 Za koordinato $x$ dobimo naslednji sistem:
 $
   -st(1)x_1 + sum_(i in N(1)) x_(i) &= 0\

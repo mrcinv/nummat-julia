@@ -71,18 +71,18 @@ $<eq:14-prodkvad2>
 Formulo @eq:14-prodkvad2 posplošimo za integrale v več dimenzijah:
 
 $
-integral_([a, b]^d) f(x_1, x_2 med dots med x_d) d x_1 d x_2 med dots med d x_d approx
-sum_(i_1, i_2 med dots med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2) med dots med x_(i_d)),
+integral_([a, b]^d) f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx
+sum_(i_1, i_2, med dots, med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2), med dots, med x_(i_d)),
 $<eq:14-prodkvad>
-kjer seštevamo po vseh možnih multi indeksih $(i_1, i_2 med dots med i_d) in {1, 2 med dots med n}^d$.
+kjer seštevamo po vseh možnih multi indeksih $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$.
 S preprosto linearno preslikavo formulo @eq:14-prodkvad razširimo na poljuben
-$d$-dimenzionalen kvader $[a_1, b_1] times [a_2, b_2] med dots med [a_d, b_d]$:
+$d$-dimenzionalen kvader $[a_1, b_1] times [a_2, b_2] times med dots med times [a_d, b_d]$:
 
 $
 integral_(a_1)^(b_1) integral_(a_2)^(b_2)dots integral_(a_n)^(b_n)
-  f(x_1, x_2 med dots med x_d) d x_1 d x_2 med dots med d x_d approx\
-  product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2 med dots med i_d)
-  product_(j=1)^d w_(i_j) f(t_(1 i_1), t_(1 i_2) med dots med t_(d i_d)),
+  f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx\
+  product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2, med dots, med i_d)
+  product_(j=1)^d w_(i_j) f(t_(1 i_1), t_(1 i_2), med dots, med t_(d i_d)),
 $<eq:14-prodkvadkvad>
 kjer je $t_(i j)$ vozlišče $x_(j)$ preslikano na interval $[a_i, b_i]$.
 Kvadraturnim formulam @eq:14-prodkvad2, @eq:14-prodkvad in @eq:14-prodkvadkvad
@@ -125,11 +125,11 @@ Definirajmo naslednje tipe in funkcije:
 Naj bo
 
 $
-X ~ U([a_1, b_1] times [a_2, b_2] med dots med [a_d, b_d])
+X ~ U([a_1, b_1] times [a_2, b_2] times  med dots med times [a_d, b_d])
 $
 
 enakomerno porazdeljena slučajna spremenljivka na
-$B_d = [a_1, b_1] times [a_2, b_2] med dots med [a_d, b_d]$.
+$B_d = [a_1, b_1] times [a_2, b_2] times med dots med times [a_d, b_d]$.
 Potem je pričakovana vrednost funkcije $f(X)$ enaka večkratnemu integralu:
 
 $
@@ -137,10 +137,10 @@ E(f(X)) = 1/V(B_d) integral_(B_d) f(x) d x.
 $<eq:14-upanje>
 
 Po #link("https://en.wikipedia.org/wiki/Central_limit_theorem")[centralnem limitnem izreku] je
-vzorčno povprečje za enostaven vzorec $x_1, x_2 med dots med x_n$ porazdeljeno približno normalno:
+vzorčno povprečje za enostaven vzorec $x_1, x_2, med dots, med x_n$ porazdeljeno približno normalno:
 
 $
-overline(f(x)) = 1/(n)(f(x_1) + f(x_2) med dots med f(x_n)) ~ N(mu, sigma)
+overline(f(x)) = 1/(n)(f(x_1) + f(x_2) + med dots med + f(x_n)) ~ N(mu, sigma)
 $
 
 s parametri $mu = E(f(X))$ in $sigma= sigma(f(X))/sqrt(n)$. Razpršenost porazdelitve pada s
@@ -258,7 +258,7 @@ vzorčenje.
 #vaja14("# preslikaj")[Preslikaj kvadraturo na drug interval]<pr:14-preslikaj>
 #vaja14("# integriraj")[Izračunaj večkratni integral s produktno kvadraturo]<pr:14-integriraj>
 #vaja14("# naslednji!")[Izračunaj naslednji multiindeks
-$(i_1, i_2 med dots med i_d) in {1, 2 med dots med n}^d$ ]<pr:14-naslednji>
+$(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$ ]<pr:14-naslednji>
 #vaja14("# simpson")[Izračunaj vozlišča in uteži za sestavljeno Simpsonovo pravilo]<pr:14-simpson>
 #vaja14("# mc")[Izračunaj večkratni integral z metodo Monte Carlo]<pr:14-mc>
 

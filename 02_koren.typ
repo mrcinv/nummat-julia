@@ -68,7 +68,11 @@ y_(n+1) &= y_n - (y_n^2 - x)/(2y_n) = (2y_n^2 - y_n^2 + x)/(2y_n) = 1/2((y_n^2 +
 y_(n+1) &= 1/2(y_n + x/y_n).
 $ <eq:02heron>
 
-Rekurzivno formulo @eq:02heron imenujemo #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Haronov obrazec]. Zgornja formula določa zaporedje, ki vedno konvergira bodisi k $sqrt(x)$ ali $-sqrt(x)$, odvisno od izbire začetnega približka. Poleg tega, da zaporedje hitro konvergira k limiti, je program izjemno preprost. Poglejmo, kako izračunamo $sqrt(2)$:
+Rekurzivno formulo @eq:02heron imenujemo
+#link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronov obrazec].
+Zgornja formula določa zaporedje, ki vedno konvergira bodisi k $sqrt(x)$ ali $-sqrt(x)$, odvisno od
+izbire začetnega približka. Poleg tega, da zaporedje hitro konvergira k limiti, je program izjemno
+preprost. Poglejmo, kako izračunamo $sqrt(2)$:
 
 #code_box([
 #repl(blk("scripts/02_koren.jl","# koren1"), read("out/02_koren_1.out"))
@@ -168,7 +172,7 @@ funkcijo, ki sama določi število korakov iteracije:
 
 == Izbira začetnega približka
 
-Kako bi učinkovito izbrali dober začetni približek? Dokazati je mogoče, da rekurzivno zaporedje @eq:02heron konvergira ne glede na izbran začetni približek. Problem je, da je število korakov iteracije večje, dlje kot je začetni približek oddaljen od rešitve. Če želimo, da bo časovna zahtevnost funkcije neodvisna od argumenta, moramo poskrbeti, da za poljubni argument uporabimo dovolj dober začetni približek. Poskusimo lahko za začetni približek uporabiti kar samo število $x$. Malce boljši približek dobimo s Taylorjevem razvojem korenske funkcije okrog števila 1
+Kako bi učinkovito izbrali dober začetni približek? Dokazati je mogoče, da rekurzivno zaporedje @eq:02heron konvergira ne glede na izbran začetni približek. Problem je, da je število korakov iteracije večje, dlje kot je začetni približek oddaljen od rešitve. Če želimo, da bo časovna zahtevnost funkcije neodvisna od argumenta, moramo poskrbeti, da za poljubni argument uporabimo dovolj dober začetni približek. Poskusimo lahko za začetni približek uporabiti kar samo število $x$. Malce boljši približek dobimo s Taylorjevim razvojem korenske funkcije okrog števila 1
 
 $
 sqrt(x) = 1 + 1/2(x-1) + ... approx 1/2 + x/2.

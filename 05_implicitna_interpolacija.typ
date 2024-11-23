@@ -108,20 +108,20 @@ Problem @eq:05enacbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, dots
 izpolnjen sistem enačb:
 
 $
-F(bx_1, w_1, w_2 med dots med w_n) = f_1\
+F(bx_1, w_1, w_2, med dots, med w_n) = f_1\
 dots.v\
-F(bx_n, w_1, w_2 med dots med w_n) =  f_n.
+F(bx_n, w_1, w_2, med dots, med w_n) =  f_n.
 $<eq:05int>
 
 Enačbe @eq:05int so linearne za koeficiente $w_1, dots w_n$:
 
 $
-w_1 phi_1(bx_1) + w_2 phi_2(bx_1) med dots med w_n phi_n(bx_1) = f_1\
+w_1 phi_1(bx_1) + w_2 phi_2(bx_1) + med dots med + w_n phi_n(bx_1) = f_1\
 dots.v\
-w_1 phi_1(bx_n) + w_2 phi_2(bx_n) med dots med w_n phi_n(bx_n) = f_n.
+w_1 phi_1(bx_n) + w_2 phi_2(bx_n) + med dots med + w_n phi_n(bx_n) = f_n.
 $<eq:05lin-sistem>
 
-Vektor desnih strani sistema @eq:05lin-sistem je kar vektor funkcijskih vrednosti $[f_1, f_2 med dots med f_n]$, matrika sistema pa je enaka:
+Vektor desnih strani sistema @eq:05lin-sistem je kar vektor funkcijskih vrednosti $[f_1, f_2, med dots, med f_n]$, matrika sistema pa je enaka:
 
 $
 mat(

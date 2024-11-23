@@ -36,12 +36,12 @@ začetne približke.
 Išečmo rešitev sistem $n$ nelinearnih enačb z $n$ neznankami:
 
 $
-f_1(x_1, x_2, med dots med x_n)&=0\
-f_2(x_1, x_2, med dots med x_n)&=0\
+f_1(x_1, x_2, med dots, med x_n)&=0\
+f_2(x_1, x_2, med dots, med x_n)&=0\
 dots.v\
-f_(n)(x_1, x_2, med dots med x_n)&=0,
+f_(n)(x_1, x_2, med dots, med x_n)&=0,
 $<eq:9-nelin-sistem>
-kjer so $f_1, f_2, med dots med f_n$ nelinearne funkcije več spremenljik.
+kjer so $f_1, f_2, med dots, med f_n$ nelinearne funkcije več spremenljik.
 Sistem @eq:9-nelin-sistem lahko zapišemo v vektorski obliki:
 
 $
