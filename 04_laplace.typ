@@ -38,7 +38,8 @@ naloge:
   #link("https://docs.julialang.org/en/v1/stdlib/SparseArrays/")[SparseArrays] za varčno hranjenje
   matrike sistema.
 - Preveri, kako se število neničelnih elementov poveča pri LU razcepu razpršene matrike.
-- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija)  na elementih matrike višinskih vrednosti ploskvein reši
+- Uporabi iterativne metode (Jacobijeva, Gauss-Seidlova in SOR iteracija)  na elementih matrike
+  višinskih vrednosti ploskve in reši
   sistem enačb brez eksplicitne uporabe matrike sistema.
 - Nariši primer minimalne ploskve.
 - Animiraj konvergenco iterativnih metod.
