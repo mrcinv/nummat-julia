@@ -22,7 +22,8 @@ glede na to, kakšno funkcijo integriramo.
   #link("https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/")[FastGaussQuadrature.jl].
 - Implementirane metode uporabi za izračun naslednjih integralov
   $
-    integral_0^3 sin(x) d x quad #text[ in ] quad integral_(-1)^2 |2 - x^2| d x.
+    integral_0^3 sin(x^2) d x, integral_(-oo)^(-5)e^(-x^2) d x quad #text[ in ]
+    quad integral_(-1)^2 |2 - x^2| d x.
   $
   Napako oceni tako, da rezultat primerjaš z rezultatom, ki ga dobiš, če uporabiš dvakrat več
   vozlišč in uporabiš
@@ -33,13 +34,96 @@ glede na to, kakšno funkcijo integriramo.
     integral_0^3 sin(x) d x.
   $
 
+== Trapezno in Simpsonovo pravilo
+
+== Sestavljena pravila
+
+#opomba(naslov: [Zakaj so vse kvadraturne formule utežene vsote?])[
+Vse kvadrature, ki jih poznamo, lahko na nek način prevedemo na  uteženo
+vsoto funkcijskih vrednosti
+$
+  integral_a^b f(x) = sum_(i=1)^n u_i f(x_i).
+$
+
+Zakaj je tako? Integral lahko obravnavamo kot funkcijo na prostoru integrabilnih  funkcij
+
+$
+  I_([a, b]): f |-> integral_a^b f(x) d x.
+$
+Kvadraturo zapišemo kot funkcijo končnega števila funkcijskih vrednosti v izbranih vozliščih in jo
+tudi obravnavamo kot funkcijo na prostoru integrabilnih funkcij:
+
+$
+  K(f) = k(f(x_1), f(x_2), med dots med f(x_(n))).
+$
+
+Funkcija $I_([a, b])$ je linearen funkcional, zato želimo, da je tudi kvadratura $K$ linearen
+funkcional, kar pa pomeni, da mora biti funkcija $k(f(x_1), f(x_2), med dots med f(x_(n))$ linearna in
+
+$
+  K(f) = k(f(x_1), f(x_2), med dots med f(x_(n))) = sum_(i=1)^n u_i f(x_i).
+$
+
+Izjema so adaptivne metode, pri katerih je izbira vozlišč $x_i$ odvisna od izbire funkcije $f$, ki
+jo integriramo. Zato adaptivne metode strogo gledano niso linearni funkcionali, kljub temu, da jih
+lahko prevedemo na uteženo vsoto.
+]
+== Preslikava na drug interval
+
+Določeni integral
+
+$
+  integral_(a)^(b) f(x) d x
+$<eq:13-int-a-b>
+
+lahko s preprosto linearno preslikavo premaknemo na drug interval $[c, d]$. V integral @eq:13-int-a-b
+vpeljemo novo spremenljivko $t = t(x) = k x + n$, ki preslika interval $[a, b]$ na interval $[c, d]$.
+Formulo za $t$ določimo tako, da najprej preslikamo $[a, b]$ s preslikavo $s = (x - a)/(b-a)$ na
+$[0, 1]$ in nato $s$ preslikamo $t = (d - c)s + c$ z intervala $[0, 1]$ na interval $[c, d]$.
+Inverzno preslikavo $x = x(t)$ izračunamo enako:
+
+$
+  t(x) = (d - c)/(b - a)(x - a) + c quad #text[ in ] quad
+  x(t) = (b - a)/(d - c)(t - c) + a.
+$
+
+Integral @eq:13-int-a-b lahko sedaj preslikamo na $[c, d]$:
+
+$
+  integral_(a)^(b) f(x) d x = integral_(t(a))^(t(b)) f(x(t)) x'(t) d t =
+  (b-a)/(d-c) integral_c^d f((b -a)/(d-c)(t -c) + a) d t.
+$<eq:13-int-ab-cd>
+
+Pri izpeljavi @eq:13-int-ab-cd smo upoštevali, da je $d x = x'(t) d t = (b -a)/(d -c) d t$.
+Če imamo kvadraturno formulo za interval $[a, b]$:
+
+$
+  integral_a^b f(x) d x approx sum_(i=1)^n u_i f(x_i),
+$
+
+lahko s preslikavo @eq:13-int-ab-cd zapišemo kvadraturno formulo za poljuben interval $[c, d]$:
+
+$
+  integral_c^d f(t) d t = (d - c)/(b - a)integral_a^b f(t(x)) d x approx
+  (d - c)/(b - a) sum_(i=1)^n u_i f(t_i),
+$
+
+kjer so nova vozlišča $t_i$ enaka:
+
+$
+  t_i = (d - c)/(b - a)(x_i - a) + c.
+$
+
+Napišimo sedaj funkcijo $jl("preslikaj(k::Kvadratura, int::Interval)")$, ki dano kvadraturo
+#jl("kvad") preslika v kvadraturo za interval #jl("int") (@pr:13-preslikaj).
+
 == Gaussove kvadraturne formule
 
 $
  integral_(-1)^1 f(t) d t approx sum_(k=1)^N w_k f(t_k)
 $<eq:10-gauss-lagendre>
 
-Spremembo intervala z $[a, b]$ na $[-1, 1]$ naredimo z linearno transformacijo oziroma uvedbo
+Spremembo intervala z $[a, b]$ na $[-1, 1]$ naredimo z linearno preslikavo oziroma uvedbo
 nove spremenljivke $t in [-1, 1]$:
 
 $
@@ -63,6 +147,7 @@ $
   x_k = (b - a)/2 t_k + (a + b)/2.
 $
 
+
 == Tabela podatkov z mersko napako
 
 Predpostavimo, da je merska napaka $epsilon$ slučajna spremenljivka, ki je porazdeljena normalno
@@ -73,3 +158,6 @@ povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 == Rešitve
 
 #let vaja13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/src/Vaja13.jl", koda)))
+
+#vaja13("# preslikaj")[Funkciji,
+  ki preslikata števila in kvadrature med dvema intervaloma]<pr:13-preslikaj>

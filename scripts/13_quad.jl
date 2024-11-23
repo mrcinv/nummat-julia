@@ -8,8 +8,45 @@ plot(f, -1, 2)
 plot(x -> atan(1/x), -2, 2)
 
 
+f(x) = exp(-x^2)
+plot(f, -30, -5)
+interval = Interval(-30., -5.)
+rtol = 1e-10
+atol = rtol*exp(-25)
+kvad = AdaptivnaKvadratura(simpson(interval), atol, 4)
+
+I0, x = integriraj(f, kvad)
+length(x)
+scatter!(x, f.(x))
+kvad1 = AdaptivnaKvadratura(simpson(interval), abs(I0)*rtol, 4)
+I1, x = integriraj(f, kvad1)
+kvad2 = AdaptivnaKvadratura(simpson(interval), abs(I0)*rtol/10, 4)
+I2, x = integriraj(f, kvad2)
+(I2 - I1)/I2
+scatter!(x, f.(x))
+scatter!(x, zero(x) .- 1.5)
 
 
+function phi(x)
+  rtol = 1e-10
+  atol = min(max(exp(-x^2) * rtol, 1e-313), rtol)
+  interval = Interval(-28., x)
+  f(x) = exp(-x^2)
+  kvad = AdaptivnaKvadratura(simpson(interval), atol, 4)
+  I, _ = integriraj(f, kvad)
+  if abs(I) < 1e-314
+    return I
+  end
+  kvad = AdaptivnaKvadratura(simpson(interval), rtol*abs(I), 4)
+  I, _ = integriraj(f, kvad)
+  return I
+end
+
+plot(x->phi(x)/sqrt(pi)*exp(x^2)*(-x), -26.5, -2)
+
+f(x) = - phi(x)*exp(x^2)*x
+f(-26.)
+phi(-26.)*exp(26^2)*26
 using FastGaussQuadrature
 
 
