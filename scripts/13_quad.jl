@@ -45,16 +45,23 @@ I_gl = [integriraj(int_3, glkvad(k)) for k in n_gl]
 
 diff(I_gl)
 
-I_p = integriraj(int_1, glkvad(2 * n_gl[end]))
-# napaka sin
+atol = 1e-13
+I_p, x = integriraj(int_3, AdaptivnaKvadratura(Simpson(1), atol, 4))
+n_ad = length(x)
+scatter(x, h.(x), label="krajišča podintervalov",
+  legend=:bottomleft)
+plot!(h, int_3.interval.min, int_3.interval.max, label="\$h(x)=|2 -x^2|\$")
+savefig("img/13-adaptivna-abs.svg")
+
+# napaka abs
 scatter(n .+ 1, abs.(I_trapez .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_simpson .- I_p), label="napaka Simpsonove formule",)
 scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10, 
   label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
-  legend=:bottomright)
-# napaka sin
-
+  legend=:topright)
+# napaka abs
+savefig("img/13-napaka-abs.svg")
 
 gl78 = Vaja13.KvadraturniPar(glkvad(7), glkvad(8))
 

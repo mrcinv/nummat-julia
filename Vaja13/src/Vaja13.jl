@@ -119,7 +119,7 @@ function glkvad(n)
 end
 
 struct AdaptivnaKvadratura{T}
-  kvad::Kvadratura
+  kvad::AbstraktnaKvadratura
   atol::T
   red::Integer
 end
@@ -129,32 +129,31 @@ function razpolovi(interval::Interval)
   return Interval(interval.min, c), Interval(c, interval.max)
 end
 
-function integriraj(fun, akvad::AdaptivnaKvadratura)
-  kvad = akvad.kvad
-  atol = akvad.atol
-  red = akvad.red
-  I0 = integriraj(fun, kvad)
-  leviI = integriraj(fun, kvad)
-  desniI = integriraj(fun, kvad)
+function razpolovi(i::Integral)
+  levi, desni = razpolovi(i.interval)
+  return Integral(i.fun, levi), Integral(i.fun, desni)
+end
+
+function integriraj(i::Integral, adk::AdaptivnaKvadratura)
+  kvad = adk.kvad
+  atol = adk.atol
+  red = adk.red
+  I0 = integriraj(i, kvad)
+  levi, desni = razpolovi(i)
+  leviI = integriraj(levi, kvad)
+  desniI = integriraj(desni, kvad)
   napaka = leviI + desniI - I0
   k = 2^red - 1
   if abs(napaka) < k * atol
-    return leviI + desniI + napaka / k, [int.min, leva_kvad.int.max,
-      desna_kvad.int.max]
+    return leviI + desniI + napaka / k,
+    [levi.interval.min, levi.interval.max, desni.interval.max]
   else
-    I1, x1 = integriraj(fun,
-      AdaptivnaKvadratura(leva_kvad, atol / 2, red))
-    I2, x2 = integriraj(fun,
-      AdaptivnaKvadratura(desna_kvad, atol / 2, red))
+    I1, x1 = integriraj(levi, adk)
+    I2, x2 = integriraj(desni, adk)
     return I1 + I2, vcat(x1, x2[2:end])
   end
 end
 
-function razdeli(interval::Interval)
-  a, b = interval.min, interval.max
-  c = (a + b) / 2
-  return Interval(a, c), Interval(c, b)
-end
 
 cebiseve_tocke(n) = [cos((2k + 1)pi / (2n)) for k in 0:n-1]
 
