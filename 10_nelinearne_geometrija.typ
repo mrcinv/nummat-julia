@@ -7,7 +7,7 @@ Ko obravnavamo geometrijske objekte, ki so ukrivljeni (na primer krožnice,
 krivulje, ukrivljene ploskve), lahko probleme pogosto prevedemo na reševanje
 sistema nelinearnih enačb. Ogledali si bomo dva primera, kjer problem rešimo
 na ta način: iskanje samopresečišča
-krivulje in minimlne razdalje med dvema krivuljama.
+krivulje in minimalne razdalje med dvema krivuljama.
 
 == Naloga
 
@@ -17,7 +17,7 @@ krivulje in minimlne razdalje med dvema krivuljama.
    za parametre $a = b = 1$, $n=3$ in $m=2$.
 - Poišči najmanjšo razdaljo med dvema parametrično podanima krivuljama:
     $
-    (x_1(t), y_1(t)) = &(2 cos(t) + 1/3, sin(t) + 1/4) \
+    (x_1(t), y_1(t)) = &(2 cos(t) + 1/3, sin(t) + 1/4), \
     (x_2(s), y_2(s)) = &(1/3 cos(s) - 1/2 sin(s), 1/3 cos(s) + 1/2 sin(t)).
     $
   - Zapiši razdaljo med točko na prvi krivulji in točko na drugi krivulji kot funkcijo
@@ -35,11 +35,11 @@ krivulje in minimlne razdalje med dvema krivuljama.
 Poiščimo samopresečišča
 #link("https://sl.wikipedia.org/wiki/Lissajousova_krivulja")[Lissajousove krivulje]
 $
-x(t) = a sin(n t)\
+x(t) = a sin(n t),\
 y(t) = b cos(m t)
 $<eq:10-lissajous>
 
-za parametre $a=b=1$, $n=2$ in $m=3$. Za lažjo prdstavo najprej narišemo krivuljo.
+za parametre $a=b=1$, $n=2$ in $m=3$. Za lažjo predstavo najprej narišemo krivuljo.
 
 #let demo10(koda) = code_box(
   jlfb("scripts/10_geom.jl", koda)
@@ -53,19 +53,19 @@ za parametre $a=b=1$, $n=2$ in $m=3$. Za lažjo prdstavo najprej narišemo krivu
 
 Iščemo parametra $t$ in $s$, ki sta različna $t eq.not s$ in za katera velja
 $
-x(t) = x(s)\
+x(t) = x(s),\
 y(t) = y(s).
 $<eq:10-samopres>
 
 Dobili smo torej sistem dveh nelinearnih enačb z dvema neznankama. Rešitve sistema @eq:10-samopres
 poiščemo z Newtonovo metodo, ki smo jo spoznali v prejšnjem poglavju \(@9-poglavje\). Newtonova
 metoda zahteva, da sistem enačb prevedemo v vektorsko enačbo $F(bold(x))=bold(0)$. Funkcija,
-katere ničlo iščemo, je:
+katere ničlo iščemo, je
 $
 F(vec(delim: "[", t, s)) = vec(delim: "[", x(t) - x(s), y(t) - y(s)),
 $
 
-njena Jacobijeva matrika pa:
+njena Jacobijeva matrika pa
 
 $
 J F(vec(delim: "[", t, s)) = mat(
@@ -91,7 +91,9 @@ $2pi$.
 
 #figure(image("img/10-obmocje-samopres.svg", width: 60%),
   caption: [Območje konvergence za samopresečišča Lissajousove krivulje])
-Narišimo sedaj še krivuljo in na njej označimo sva samopresečišča.
+
+Narišimo sedaj še krivuljo in na njej označimo vsa samopresečišča.
+
 #demo10("# vsa samopres")
 
 #figure(image("img/10-vsa-samopres.svg", width: 60%)
@@ -103,7 +105,7 @@ Narišimo sedaj še krivuljo in na njej označimo sva samopresečišča.
 Naj bosta $K_1$ in $K_2$ parametrično podani krivulji:
 
 $
-  K_1: bk_1(t) = (x_1(t), y_1(t)); quad t in RR\
+  K_1: bk_1(t) = (x_1(t), y_1(t)); quad t in RR,\
   K_2: bk_2(s) = (x_2(s), y_2(s)); quad s in RR.
 $
 Narišimo obe krivulji na istem grafu.
@@ -130,8 +132,8 @@ $ d_(h)(K_1, K_2) = max(max_(T_1 in K_1) min_(T_2 in K_2) d(T_1, T_2),
 $
 
 Če sta množici blizu v Hausdorffovi razdalji, je vsaka točka ene množice blizu
-drugi množici. Medtem ko je minimalna razdalja med dvema krivuljama vedno končna,
-pa je lahko Hausdorffova razdalja tudi neskončna (na primer, če je ena krivulja omejena,
+drugi množici. Minimalna razdalja med dvema krivuljama je vedno končna, medtem ko
+je Hausdorffova razdalja lahko tudi neskončna (na primer, če je ena krivulja omejena,
 druga pa neomejena).
 ]
 

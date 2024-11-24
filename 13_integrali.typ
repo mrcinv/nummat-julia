@@ -15,8 +15,8 @@ glede na to, kakšno funkcijo integriramo.
 - Definiraj podatkovni tip, ki predstavlja določeni integral funkcije na danem intervalu.
 - Definiraj podatkovni tip #jl("Kvadratura"), ki hrani podatke o utežeh in vozliščih
   za dano kvadraturo na danem intervalu.
-- Implementiraj funkcijo #jl("integriraj(integral, ::Kvadratura)"), ki z dano kvadraturo izračuna
-  integral.
+- Implementiraj funkcijo #jl("integriraj(int, kvad::Kvadratura)"), ki s kvadraturo #jl("kvad")
+  izračuna integral `int`.
 - Implementiraj sestavljeno trapezno, sestavljeno Simpsonovo, Gauss-Legendrove kvadrature in
   adaptivno Simpsonovo metodo. Za izračun uteži in vozlišč Gauss-Legendrovih kvadratur uporabi paket
   #link("https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/")[FastGaussQuadrature.jl].
@@ -95,27 +95,27 @@ $
 $<eq:13-int-ab-cd>
 
 Pri izpeljavi @eq:13-int-ab-cd smo upoštevali, da je $d x = x'(t) d t = (b -a)/(d -c) d t$.
-Če imamo kvadraturno formulo za interval $[a, b]$:
+Če imamo kvadraturno formulo za interval $[c, d]$:
 
 $
-  integral_a^b f(x) d x approx sum_(i=1)^n u_i f(x_i),
+  integral_c^d f(t) d t approx sum_(i=1)^n u_i f(t_i),
 $
 
-lahko s preslikavo @eq:13-int-ab-cd zapišemo kvadraturno formulo za poljuben interval $[c, d]$:
+lahko s preslikavo @eq:13-int-ab-cd zapišemo kvadraturno formulo za poljuben interval $[a, b]$:
 
 $
-  integral_c^d f(t) d t = (d - c)/(b - a)integral_a^b f(t(x)) d x approx
-  (d - c)/(b - a) sum_(i=1)^n u_i f(t_i),
+  integral_a^b f(x) d x = (b - a)/(d - c)integral_c^d f(x(t)) d t approx
+  (b - a)/(d - c) sum_(i=1)^n u_i f(x_i),
 $
 
-kjer so nova vozlišča $t_i$ enaka:
+kjer so nova vozlišča $x_i$ enaka:
 
 $
-  t_i = (d - c)/(b - a)(x_i - a) + c.
+  x_i = (b - a)/(d - c)(t_i - c) + a.
 $
 
-Napišimo sedaj funkcijo $jl("preslikaj(k::Kvadratura, int::Interval)")$, ki dano kvadraturo
-#jl("kvad") preslika v kvadraturo za interval #jl("int") (@pr:13-preslikaj).
+Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
+približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-integriraj).
 
 == Gaussove kvadraturne formule
 
@@ -159,5 +159,9 @@ povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 
 #let vaja13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/src/Vaja13.jl", koda)))
 
-#vaja13("# preslikaj")[Funkciji,
-  ki preslikata števila in kvadrature med dvema intervaloma]<pr:13-preslikaj>
+#vaja13("# integriraj")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-integriraj>
+
+== Testi
+
+#let test13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/test/runtests.jl", koda)))
+#test13("# integriraj")[Test za funkcijo #jl("integriraj")]

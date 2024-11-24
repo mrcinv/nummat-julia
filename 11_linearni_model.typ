@@ -53,17 +53,17 @@ natanko enaka vrednosti, ki jo predvidi model $M (p , x_i)$. To
 predpostavko zapišemo s sistemom enačb:
 
 $
-y_1 &= M (p , x_1) = p_1 phi_1 (x_1) + dots.h p_k phi_k (x_1)\
-y_2 &= M (p , x_2) = p_1 phi_1 (x_2) + dots.h p_k phi_k (x_2)\
+y_1 &= M (p , x_1) = p_1 phi_1 (x_1) + dots + p_k phi_k (x_1)\
+y_2 &= M (p , x_2) = p_1 phi_1 (x_2) + dots + p_k phi_k (x_2)\
 dots.v\
-y_n &= M (p , x_n) = p_1 phi_1 (x_n) + dots.h p_k phi_k (x_n).
+y_n &= M (p , x_n) = p_1 phi_1 (x_n) + dots + p_k phi_k (x_n).
 $<eq:11-sistem>
 
 Neznanke v zgornjem sistemu so parametri $p_j$ in za #strong[linearni
 model] so enačbe linearne. To je tudi ena glavnih prednosti linearnega
 modela. Meritve redko povsem sledijo modelu, zato sistem
 @eq:11-sistem v splošnem ni rešljiv, saj je meritev običajno več
-kot je parametrov sistema. Sistem @eq:11-sistem je
+kot parametrov sistema. Sistem @eq:11-sistem je
 #strong[predoločen];. Lahko pa poiščemo vrednosti parametrov $p_j$, pri
 katerih bo razlika med meritvami in modelom kar se da majhna. Izkaže se,
 da je najboljša mera za odstopanje modela od podatkov kar vsota
@@ -103,7 +103,7 @@ so vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov,
 v določenem smislu najboljša cenilka za parametre modela.
 Bolj natančno:
 #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem")[Gauss-Markov izrek]
-pravi, da je cenilka za parametre linearnega modela z najmanjšo varianco
+pravi, da so cenilke za parametre linearnega modela z najmanjšo varianco
 ravno vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov.
 Ob predpostavki, da so napake meritev nekorelirane slučajne spremenljivke z
 enakimi variancami in pričakovano vrednostjo $0$.]
@@ -112,7 +112,7 @@ enakimi variancami in pričakovano vrednostjo $0$.]
 <opis-sprememb-koncentracije-co2>
 Na observatoriju
 #link("http://www.esrl.noaa.gov/gmd/obop/mlo/")[Mauna Loa] na Havajih že
-vrso let spremljajo koncentracijo #co2 v ozračju in podatke objavljajo
+vrsto let spremljajo koncentracijo #co2 v ozračju in podatke objavljajo
 na svoji spletni strani v različnih oblikah. Oglejmo si
 tedenska povprečja koncentracije od začetka meritev leta 1974:
 
@@ -158,7 +158,7 @@ pri katerih je vsota kvadratov razlik med napovedjo modela in
 izmerjenimi vrednostmi najmanjša. Zapišimo vsoto kvadratov kot evklidsko
 normo razlike med vektorjem napovedi modela $A bold(p)$ in vektorjem
 izmerjenih vrednosti $bold(y)$. Iščemo torej vektor parametrov $bold(p)$, pri
-katerem je:
+katerem je vrednost
 
 $ norm(A bold(p) - bold(y))_2^2 $
 
@@ -184,8 +184,8 @@ Normalni sistem $A^T A bold(p) = A^T bold(y)$ je kvadraten in ima enolično reš
 #demo11("# normalni")
 
 Problem normalnega sistema @eq:11-normalni-sistem je, da je zelo občutljiv.
-#emph[Število občutljivosti] matrike sistema pove, ali je matrika slabo pogojena.
-in je posledično sistem občutljiv. Izračunamo ga z ukazom #jl("cond"):
+#emph[Število občutljivosti] matrike sistema pove, ali je matrika slabo pogojena
+in je sistem posledično občutljiv. Izračunamo ga z ukazom #jl("cond"):
 
 #code_box(
  repl(demo11raw("# cond"), read("out/11_cond.out"))

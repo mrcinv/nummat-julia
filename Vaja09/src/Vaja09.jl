@@ -76,7 +76,7 @@ Funkcija vrne:
 - matriko s številom korakov, ki jih metoda potrebuje, da najde ničlo.
 
 # Primer
-Konvergenčno območje za Newtonovo metodo za reševajne
+Konvergenčno območje za Newtonovo metodo za reševanje
 kompleksne enačbe ``z^3=(x + i y) ^3 = 1``
 
 ```jl
@@ -109,8 +109,8 @@ function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
         continue
       end
     end
-    Z[j, i] = k # vrednost elementa je enka indeksu ničle
-    koraki[j, i] = it # številu korakov metode
+    Z[j, i] = k # vrednost elementa je enaka indeksu ničle
+    koraki[j, i] = it # število korakov metode
   end
   return x, y, Z, nicle, koraki
 end

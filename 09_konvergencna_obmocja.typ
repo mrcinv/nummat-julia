@@ -18,13 +18,13 @@ začetne približke.
 - Implementiraj Newtonovo metodo za reševanje sistemov nelinearnih enačb.
 - Poišči rešitev dveh nelinearnih enačb z dvema neznankama:
   $
-    x^3 - 3x y^2 & = 1\
+    x^3 - 3x y^2 & = 1,\
     3x^2 y - y^3 & = 0.
   $<eq:09primer>
 - Sistem nelinearnih enačb ima navadno več rešitev. Grafično predstavi, h kateri rešitvi
   konvergira Newtonova metoda v odvisnosti od začetnega približka.
   Začetne približke izberi na pravokotni mreži. Vozliščem v mreži priredi različne barve,
-  glede na to, h kateri rešitvi konvergira Newtonova metoda. Ves postopek zapiši v funkcijo
+  glede na to, h kateri rešitvi konvergira Newtonova metoda. Cel postopek zapiši v funkcijo
   `konvergencno_obmocje`.
 
 == Newtonova metoda za sisteme enačb
@@ -36,8 +36,8 @@ začetne približke.
 Išečmo rešitev sistem $n$ nelinearnih enačb z $n$ neznankami:
 
 $
-f_1(x_1, x_2, med dots, med x_n)&=0\
-f_2(x_1, x_2, med dots, med x_n)&=0\
+f_1(x_1, x_2, med dots, med x_n)&=0,\
+f_2(x_1, x_2, med dots, med x_n)&=0,\
 dots.v\
 f_(n)(x_1, x_2, med dots, med x_n)&=0,
 $<eq:9-nelin-sistem>
@@ -53,7 +53,7 @@ vektorja, $bF: RR^n -> RR^n$ pa vektorska funkcija z vektorskim argumentom.
 Komponente vektorske funkcije $F(bold(x))$ so leve strani nelinearnih enačb @eq:9-nelin-sistem:
 
 $
-bF(bx) = vec(f_1(x_1, x_2 dots x_n), f_2(x_1, x_2 dots x_n), dots.v, f_(n)(x_1, x_2 dots x_n)).
+bF(bx) = vec(f_1(x_1, x_2, dots, x_n), f_2(x_1, x_2, dots, x_n), dots.v, f_(n)(x_1, x_2, dots, x_n)).
 $
 
 Denimo, da je $bx^((k))$ približek za rešitev enačbe @eq:09enacba. Funkcijo $bF$
@@ -70,10 +70,10 @@ parcialnih odvodov komponent $f_(i)(x_1, x_2, dots)$ po koordinatah $x_j$
 
 $
   JF(bx) = mat(
-    (partial f_1(bx))/(partial x_1), (partial f_1(bx))/(partial x_2), dots, (partial f_1(bx))/(partial x_n);
-    (partial f_2(bx))/(partial x_1), (partial f_2(bx))/(partial x_2), dots, (partial f_2(bx))/(partial x_n);
+    (partial f_1)/(partial x_1)(bx), (partial f_1)/(partial x_2)(bx), dots, (partial f_1)/(partial x_n)(bx);
+    (partial f_2)/(partial x_1)(bx), (partial f_2)/(partial x_2)(bx), dots, (partial f_2)/(partial x_n)(bx);
     dots.v, dots.v, dots.down, dots.v;
-    (partial f_(n)(bx))/(partial x_1), (partial f_(n)(bx))/(partial x_2), dots, (partial f_(n)(bx))/(partial x_n);
+    (partial f_(n))/(partial x_1)(bx), (partial f_(n))/(partial x_2)(bx), dots, (partial f_(n))/(partial x_n)(bx);
   ).
 $
 
@@ -103,7 +103,7 @@ Poglejmo si, kako uporabimo Newtonovo metodo za enačbe @eq:09primer. Spremenlji
 v vektor $bx=[x, y]$ in za lažje pisanje programa vpeljemo komponente $x_1=x$ in $x_2=y$.
 Sistem enačb @eq:09primer preuredimo tako, da je na desni strani $0$:
 $
-x_1^3 - 3x_1x_2^2 - 1 &= 0\
+x_1^3 - 3x_1x_2^2 - 1 &= 0,\
 3x_1^2x_2 - x_2^3 &= 0.
 $
 

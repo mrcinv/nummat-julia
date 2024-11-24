@@ -38,7 +38,7 @@ so si v nekem smislu blizu. Podobnostni graf lahko ustvarimo na več
 načinov:
 
 - #strong[$epsilon$ okolice]: s točko $x_k$ povežemo vse točke, ki ležijo v
-  $epsilon$ okolici te točke
+  $epsilon$ okolici te točke,
 - #strong[$k$ najbližji sosedi]: $x_k$ povežemo z $x_i$, če je
   $x_i$ med $k$ najbližjimi točkami. Tako dobimo usmerjen graf,
   zato ponavadi upoštevamo povezavo v obe smeri.
@@ -84,7 +84,7 @@ grafa. Postopek je sledeči:
 - Za stolpce matrike $Q^T$ izvedemo izbran algoritem gručenja
   (npr. algoritem $k$ povprečij).
 
-V tej vaji bomo postopek gručenja izpustili. Ogledali si bomo grafično, kako
+V tej vaji bomo postopek gručenja izpustili. Grafično si bomo ogledali, kako
 je videti oblak točk v novem koordinatnem sistemu.
 
 == Primer
@@ -141,8 +141,8 @@ vrednost uporabimo za nove koordinate.
 )
 
 Seveda se pri samem algoritmu gručenja ni treba omejiti le na dva lastna
-vektorja in iskati katere kombinacije komponent najbolj ločijo gruče. Preprosto
-sizberemo lastne vektorje za $k$ najmanjših neničelnih lastnih
+vektorja in iskati, katere kombinacije komponent najbolj ločijo gruče. Preprosto
+izberemo lastne vektorje za $k$ najmanjših neničelnih lastnih
 vrednosti in algoritem gručenja avtomatsko bolj upošteva dimenzije, v katerih so gruče
 najbolj razčlenjene.
 
@@ -213,26 +213,26 @@ Poleg tega je Laplaceova matrika simetrična in pozitivno semidefinitna.
 Zato za rešitev sistema uporabimo
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
 Težava je, ker ima Laplaceova matrika grafa tudi lastno vrednost $0$, zato metoda konjugiranih
-gradientov ne konvergira, če jo uporabimo na Laplaceovi matriki. To lahko rešimo s preprostim
+gradientov ne konvergira, če jo uporabimo na njej. To lahko rešimo s preprostim
 premikom Laplaceove matrike za $epsilon I$.
 
 == Premik
 
 Inverzna iteracija @eq:9-inviter konvergira k lastnemu vektorju za najmanjšo lastno vrednost.
-Lastne vektorje za katero drugo lastno vrednost, poiščemo preprosto s premikom.
-Naj ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, med dots, med lambda_n$, potem ima matrika
+Lastne vektorje za druge lastne vrednosti poiščemo s premikom.
+Če ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, med dots, med lambda_n$, potem ima matrika
 
 $ A - delta I $
 
 lastne vrednosti $lambda_1 - delta, lambda_2 - delta, med dots, med lambda_n - delta$. Če izberemo
-$delta$ dovolj blizu $lambda_k$ lahko poskrbimo, da je $lambda_k - delta$ najmanjša lastna vrednost
+$delta$ dovolj blizu $lambda_k$, lahko poskrbimo, da je $lambda_k - delta$ najmanjša lastna vrednost
 matrike $A - delta I$. Tako lahko z inverzno iteracijo za matriko $A - delta I$ poiščemo lastni vektor za poljubno lastno
 vrednost.
 
 Podobno lahko premaknemo Laplaceovo matriko, da postane strogo pozitivno definitna. Potem
-lahko za reševanje sistema uporabimo metodo konjugiranih gradientov. Namesto da računamo lastne
-vrednosti in vektorje matrike $L$, iščemo lastne vrednosti in vektorje malce premaknjene matrike
-$L + epsilon I$, ki ima enake lastne vektorje kot $L$.
+lahko za reševanje sistema uporabimo metodo konjugiranih gradientov. Namesto lastnih
+vrednosti in vektorjev matrike $L$, iščemo lastne vrednosti in vektorje malce premaknjene matrike
+$L + epsilon I$ z enakimi lastnimi vektorji kot $L$.
 
 #demo8("# inviter")
 
@@ -256,7 +256,7 @@ izbrati učinkovite metode. V praksi se količine podatkov merijo v miljonih in
 miljardah. Metode s kvadratno ali višjo časovno ali prostorsko zahtevnostjo so
 pri tako velikih količinah podatkov neuporabne. V tem primeru
 je mogoče izvesti spektralno gručenje le, če
-uporabimo učinkovite metode kot sta #emph[inverzna iteracija s
+uporabimo učinkovite metode, kot sta #emph[inverzna iteracija s
 QR razcepom]
 in #emph[metoda konjugiranih gradientov].
 ]

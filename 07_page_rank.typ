@@ -140,7 +140,7 @@ Pm = mat(
   1/2, 0, 1/2, 0, 0, 0;
   0, 0, 0, 0, 0, 1;
   0, 1, 0, 0, 0, 0;
-)
+).
 $
 Poiščimo invariantno porazdelitev s potenčno metodo:
 

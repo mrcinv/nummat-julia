@@ -279,7 +279,9 @@ Opazimo, da se število korakov ne spreminja več z naraščanjem argumenta, kar
 #opomba(naslov: [Hitro računanje obratne vrednosti kvadratnega korena])[
 Pri razvoju računalniških iger, ki poskušajo verno prikazati 3-dimenzionalni svet na zaslonu, se veliko uporablja normiranje
 vektorjev. Pri normiranju je treba komponente vektorja deliti z normo vektorja, ki je enaka korenu vsote kvadratov komponent. Kot smo
-spoznali pri računanju kvadratnega korena s Heronovim obrazcem, je posebej problematično poiskati ustrezen začetni približek, ki je dovolj blizu pravi rešitvi. Tega problema so se zavedali tudi inženirji igre Quake, ki so razvili posebej zvit, skoraj magičen način za izračun funkcije $1/sqrt(x).$
+spoznali pri računanju kvadratnega korena s Heronovim obrazcem, je posebej problematično poiskati
+ustrezen začetni približek, ki je dovolj blizu pravi rešitvi. Tega problema so se zavedali tudi
+inženirji igre Quake, ki so razvili posebej zvit, skoraj magičen način za izračun funkcije $1/sqrt(x).$
 Metoda uporabi posebno vrednost `0x5f3759df`, da pride do dobrega začetnega
 približka, nato pa še en korak #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonove metode].
 Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanju obratne vrednosti kvadratnega korena].

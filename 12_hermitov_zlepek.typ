@@ -7,7 +7,7 @@ Pri interpolaciji iščemo #emph[interpolacijsko funkcijo], ki se v danih točka
 vrednostmi. Najbolj znana je interpolacija s polininomi. Če je danih točk veliko, je pogosto bolje
 namesto ene interpolacijske funkcije z veliko parametri interval razdeliti na več podintervalov in
 na vsakem uporabiti različne interpolacijske funkcije z malo parametri.
-Funkcijam, ki so definirana z različnimi predpisi na različnih intervalih, pravimo zlepki.
+Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pravimo zlepki.
 
 == Naloga
 
@@ -70,15 +70,15 @@ $
 koeficiente baznega polinoma $h_(00)(t)$:
 
 $
-h_(00)(0) &= a_0 = 1\
-h'_(00)(0) &= a_1  = 0\
-h_(00)(1) & = a_0 + a_1 + a_2 +a_3=0\
+h_(00)(0) &= a_0 = 1,\
+h'_(00)(0) &= a_1  = 0,\
+h_(00)(1) & = a_0 + a_1 + a_2 +a_3=0,\
 h'_(00)(1) & = a_1 + 2a_2 +3a_3=0.
 $<eq:12-sistem-baza>
 
 Za ostale polinome dobimo podobne sisteme, ki imajo isto matriko sistema, razlikujejo pa se v
 desnih straneh. Če desne strani postavimo v matriko, dobimo ravno identično matriko.
-Inverznoa matrika sistema @eq:12-sistem-baza ima v stolpcih ravno koeficiente baznih polinomov
+Inverzna matrika sistema @eq:12-sistem-baza ima v stolpcih ravno koeficiente baznih polinomov
 $h_(i j)(t)$. Inverz izračunamo z Julio.
 
 #let demo12(koda) = code_box(jlfb("scripts/12_zlepki.jl", koda))
@@ -89,9 +89,9 @@ $h_(i j)(t)$. Inverz izračunamo z Julio.
 Bazni polinomi so enaki
 
 $
-h_(00)(t) &= 1 - 3t^2 + 2t^3\
-h_(01)(t) &= 3t^2 - 2t^3\
-h_(10)(t) &= t - 2t^2 + t^3\
+h_(00)(t) &= 1 - 3t^2 + 2t^3,\
+h_(01)(t) &= 3t^2 - 2t^3,\
+h_(10)(t) &= t - 2t^2 + t^3,\
 h_(11)(t) &= -t^2 + t^3.
 $
 
@@ -171,7 +171,7 @@ image("img/12-interpolacija.svg"), image("img/12-napaka.svg")),
 == Ocena za napako
 
 Oceno za napako interpolacije lahko za Hermitov polinomom izračunamo analitično.
-Napako polinomske interpolacije v splošnem zapišemo kot:
+Napako polinomske interpolacije v splošnem zapišemo kot
 $
 f(x) - p_(n)(x) = (f^((n+1))(xi))/((n+1)!)product_(k=1)^(n) (x-x_i),
 $
@@ -189,8 +189,8 @@ in je dosežen v stacionarni točki. Poiščimo torej stacionarno točko $p(x)$,
 intervala $[x_1, x_2]$. Odvod je enak
 $
 p'(x) &= 2(x-x_1)(x-x_2)^2 + 2(x-x_1)^2(x-x_2)\
-&= 2(x-x_1)(x-x_2)(x-x_2 + x-x_1) =
-  4(x-x_1)(x-x_2)(x - (x_1 + x_2)/2).
+&= 2(x-x_1)(x-x_2)(x-x_2 + x-x_1) \
+&= 4(x-x_1)(x-x_2)(x - (x_1 + x_2)/2).
 $
 Polinom $p(x)$ ima tri stacionarne točke: dve v krajiščih intervala in eno v njegovem
 središču $(x_1+x_2)/2$. Vrednost polinoma v središču je tudi največja vrednost, dosežena
@@ -240,8 +240,8 @@ Naj bodo $x_1, x_2, med dots med x_n$ vrednosti neodvisne spremenljivke in $y_1,
 vrednosti neznane funkcije. Interpolacijski polinom, ki interpolira podatke $x_i, y_i$, je polinom $p(x)$,
 za katerega velja:
 $
-p(x_1) &= y_1\
-p(x_2) & = y_2\
+p(x_1) &= y_1,\
+p(x_2) & = y_2,\
 dots.v\
 p(x_(n)) &= y_(n).
 $<eq:12-int-enacbe>
@@ -255,10 +255,10 @@ $
 Pri tem smo uporabili Newtonovo bazo polinomov za dane interpolacijske točke:
 
 $
-1, x-x_1, (x-x_1)(x-x_2), med dots med product_(k=1)^(n-2) (x-x_k) #text[ in ] product_(k=1)^(n-1) (x-x_k),
+1, x-x_1, (x-x_1)(x-x_2), med dots, med product_(k=1)^(n-2) (x-x_k) #text[ in ] product_(k=1)^(n-1) (x-x_k).
 $
 
-saj je koeficiente $a_i$ lažje izračunati, kot če bi bil polinom zapisan v standardni bazi. Poleg tega
+Koeficiente $a_i$ je namreč lažje izračunati, kot če bi bil polinom zapisan v standardni bazi. Poleg tega
 je računanje vrednosti polinoma v standardni bazi lahko numerično nestabilno, če so vrednosti $x_i$
 relativno blizu. Koeficiente $a_i$ lahko poiščemo bodisi tako, da rešimo spodnje trikotni sistem,
 ki ga dobimo iz enačb @eq:12-int-enacbe, ali pa z
