@@ -1,40 +1,31 @@
 using Vaja13
 using Test
 
-
-# preslikava
-@testset "Preslikava" begin
-  x = [-1, 0, 1]
-  t = [preslikaj(xi, Interval(-1, 1), Interval(4, 8)) for xi in x]
-  @test t ≈ [4, 6, 8]
+# trapezna
+@testset "Trapezna metoda" begin
+  i = Integral(x -> 2x + 1, Interval(1.0, 3.0))
+  @test integriraj(i, Trapezna(4)) ≈ 10
 end
+# trapezna
 
-@testset "Preslikava kvadrature" begin
-  kvad = Kvadratura([1.0, 2.0, 3.0], [1.0, 2.0, 3.0], Interval(0.0, 4.0))
-  kvad2 = preslikaj(kvad, Interval(-3.0, -1.0))
-  @test kvad2.x ≈ [-2.5, -2, -1.5]
-  @test kvad2.u ≈ [0.5, 1.0, 1.5]
-  @test kvad2.int.min ≈ -3
-  @test kvad2.int.max ≈ -1
+# simpson
+@testset "Simpsonova metoda" begin
+  # Simpsonva metoda je točna za polinome 2. stopnje
+  integral = Integral(x -> x^2, Interval(-1.0, 2.0))
+  @test integriraj(integral, Simpson(3)) ≈ 3
 end
-# preslikava
+# simpson
 
 # kvadratura
 @testset "Kvadratura" begin
   # Simpsonova kvadratura
-  kvad = Kvadratura([0.0, 1.0, 2.0], [1, 4, 1] * (1 / 3), Interval(0.0, 2.0))
+  k = Kvadratura([0.0, 2.0], [1., 1.], Interval(0.0, 2.0))
   # Simpsonovo pravilo je točno za polinome stopnje 2
-  @test integriraj(x -> x^2, kvad) ≈ 8 / 3
+  i = Integral(x -> 2x + 1, Interval(-1.0, 3.0))
+  @test integriraj(i, k) ≈ 12
 end
-
 # kvadratura
 
-# trapezna
-@testset "Trapezna metoda" begin
-  kvad = trapezna(Interval(1.0, 3.0), 4)
-  @test kvad.x ≈ [1, 1.5, 2, 2.5, 3]
-end
-# trapezna
 @testset "Čebiševe točke" begin
   x = Vaja13.cebiseve_tocke(5)
   @test minimum(x) > -1
