@@ -11,18 +11,18 @@ end
 # simpson
 @testset "Simpsonova metoda" begin
   # Simpsonva metoda je točna za polinome 2. stopnje
-  integral = Integral(x -> x^2, Interval(-1.0, 2.0))
-  @test integriraj(integral, Simpson(3)) ≈ 3
+  integral = Integral(x -> x^2, Interval(-1.0, 3.0))
+  @test integriraj(integral, Simpson(3)) ≈ 28 /3
 end
 # simpson
 
 # kvadratura
 @testset "Kvadratura" begin
   # Simpsonova kvadratura
-  k = Kvadratura([0.0, 2.0], [1., 1.], Interval(0.0, 2.0))
+  k = Kvadratura([0.0, 1.5, 3.0], [1., 4., 1.]*(1.5/3), Interval(0.0, 3.0))
   # Simpsonovo pravilo je točno za polinome stopnje 2
-  i = Integral(x -> 2x + 1, Interval(-1.0, 3.0))
-  @test integriraj(i, k) ≈ 12
+  i = Integral(x -> x^2, Interval(-1.0, 3.0))
+  @test integriraj(i, k) ≈ 28 / 3
 end
 # kvadratura
 

@@ -148,6 +148,10 @@ $
 $
 
 
+#figure(caption: [Absolutna vrednost napake pri izračunu $integral_0^3 sin(x^2) d x$ z različnimi
+  kvadraturami],
+  image("img/13-napaka-sin.svg", width: 60%))
+
 == Tabela podatkov z mersko napako
 
 Predpostavimo, da je merska napaka $epsilon$ slučajna spremenljivka, ki je porazdeljena normalno

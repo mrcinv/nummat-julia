@@ -75,7 +75,7 @@ function integriraj(i::Integral, k::Simpson)
     I += 4 * i.fun(a + (j - 0.5) * h)
     I += 2 * i.fun(a + j * h)
   end
-  return h / 6 * I
+  return (h / 6) * I
 end
 
 # simpson
@@ -109,6 +109,14 @@ function integriraj(i::Integral, k::Kvadratura)
 end
 
 # integriraj
+
+# gl kvadratura
+using FastGaussQuadrature
+
+function glkvad(n)
+  x, u = gausslegendre(n)
+  return Kvadratura(x, u, Interval(-1.0, 1.0))
+end
 
 struct AdaptivnaKvadratura{T}
   kvad::Kvadratura
@@ -220,7 +228,7 @@ function aproksimiraj(::Type{<:CebisevaVrsta}, fun, int::Interval, n::Int)
   return CebisevaVrsta(koef, int)
 end
 
-export Interval, Integral, Trapezna, Simpson, integriraj
+export Interval, Integral, Trapezna, Simpson, integriraj, glkvad
 export Kvadratura, CebisevaVrsta, aproksimiraj, AdaptivnaKvadratura
 
 end # module Vaja13
