@@ -1,6 +1,41 @@
 using Vaja13
 using Plots
 
+x = [0.5, 1.5]
+plot(sin, x..., fillrange=0, fillalpha=0.1, c=1, 
+  xrange=[0.2, 1.8], label="\$\\int_a^b f(x) dx\$", 
+  xticks = false)
+plot!(x, sin.(x), fillrange=0, fillalpha=1, 
+  c=:black, fillcolor=6, label="trapezna formula",
+  framestyle=:zerolines,
+  showaxis=:x)
+plot!(x, sin.(x), label=false, c=:black, seriestype=:sticks)
+plot!(x, zero(x), label=false, c=:black)
+annotate!(x, 0.03*[-1, -1], ["\$a\$", "\$b\$"])
+annotate!(x + 0.1*[-1, 1], sin.(x) + 0.01*[1, 1], ["\$f(a)\$", "\$f(b)\$"])
+annotate!(1, 0.2, "\$\\int_a^b f(x) dx \\approx \\frac{b - a}{2}\\left(f(a)+f(b)\\right)\$")
+
+savefig("img/13-trapez.svg")
+
+f(x) = sin(x+1)
+x = range(0, 3, 6)
+plot(f, x[1], x[end], fillrange=(x -> 0), 
+  fillalpha=0.4, c=1, label="\$\\int_a^b f(x) dx\$",
+  showaxis=:x,
+  framestyle=:zerolines, ticks=false,
+  grid=false, xlims=[-0.2, 3.2], 
+  ylims=[f(x[end])-0.15, f(x[2]) + 0.15])
+annotate!(x, 0.1*[-1, -1, -1, -1, 1, 1], 
+  vcat(["\$x_0=a\$"], ["\$x_{$i}\$" for i in 1:4],["\$x_5=b\$"]))
+annotate!((x[2]+x[3])/2, 0.1, "\$h\$")
+plot!(x, f.(x), fillrange=(x->0), filalpha=0.1, c=:black, fillcolor=:6, label="sestavljena trapezna formula")
+plot!(x, f.(x), seriestype=:sticks, c=:black, label=false)
+scatter!(x, f.(x), label=false, markercolor=1)
+annotate!(x + 0.1*[1, 1, 1, 1, -1, -1], f.(x) + 0.1*[1, 1, 1, 1, -1, -1], 
+  vcat(["\$f(a)\$"], ["\$f(x_{$i})\$" for i in 1:4],["\$f(b)\$"]))
+
+savefig("img/13-sest-trapez.svg")
+
 f(x) = sin(x^2)
 int_1 = Integral(f, Interval(0.0, 3.0))
 
@@ -18,7 +53,7 @@ I_p = integriraj(int_1, glkvad(2 * n_gl[end]))
 # napaka sin
 scatter(n .+ 1, abs.(I_trapez .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_simpson .- I_p), label="napaka Simpsonove formule",)
-scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10, 
+scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10,
   label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
   legend=:bottomright)
@@ -39,7 +74,7 @@ I_simpson = [integriraj(int_3, Simpson(k)) for k in n]
 
 diff(I_simpson)
 
-n_gl = 2 .^(5:20)
+n_gl = 2 .^ (5:20)
 
 I_gl = [integriraj(int_3, glkvad(k)) for k in n_gl]
 
@@ -56,7 +91,7 @@ savefig("img/13-adaptivna-abs.svg")
 # napaka abs
 scatter(n .+ 1, abs.(I_trapez .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_simpson .- I_p), label="napaka Simpsonove formule",)
-scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10, 
+scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10,
   label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
   legend=:topright)
