@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba
-#import "julia.typ": code_box, jl, jlfb
+#import "julia.typ": code_box, jl, jlfb, repl, blk
 
 = Integrali
 
@@ -35,7 +35,7 @@ kako izbrati primerno metodo, glede na to, kakšno funkcijo integriramo.
     integral_0^3 sin(x) d x.
   $
 
-== Trapezno in Simpsonovo pravilo
+== Trapezno pravilo in sestavljeno trapezno pravilo
 
 #emph[Trapezno pravilo] izhaja iz formule za ploščino trapeza. Integral $f$ na $[a, b]$ ocenimo s
 ploščino trapeza z oglišči $(a, 0)$, $(a, f(a))$, $(b, f(b))$ in $(b, 0)$
@@ -84,13 +84,85 @@ Definirajmo naslednje tipe in funkcije:
 - metodo #jl("integriraj(i::Integral, k::Trapezna)"), ki izračuna približek za integral #jl("i")
   s sestavljno trapezno formulo #jl("k") (@pr:13-int-trapez).
 
-Sestavljena Simpsonova formula z $2n$ enakomernimi koraki $h$:
+== Simpsonovo pravilo
+
+Simpsonovo pravilo za izračun približka integrala poleg vrednosti funkcije v krajiščih uporabi še
+vrednost funkcije na sredini. Pravilo lahko napišemo v naslednji obliki:
+
+$
+  integral_0^h f(x) d x = A f(a) + B f((a + b)/2) + C f(b) + R_f,
+$
+
+kjer so $A$, $B$ in $C$ uteži in $R_f$ enaka razliki med pravo vrednostjo in približkom. Uteži
+določimo z metodo nedoločenih koeficientov. Vrednosti $A$, $B$ in $C$ določimo tako, da je $R_f = 0$
+za polinome čim višjih stopenj. Začnemo s polinomom stopnje $0$, se pravi s konstanto $1$
+$
+  integral_0^h d x = h = A + B + C.
+$
+Nadaljujemo s polinomi $x$ in $x^2$
+$
+  integral_0^h x d x = h^2/2 = A dot.c 0 + B dot.c h/2 + C dot.c h\
+  integral_0^h x^2 d x = h^3/3 = A dot.c 0 + B dot.c h^2/4 + C dot.c h^2\
+$
+Za uteži $A$, $B$ in $C$ dobimo sistem linearnih enačb
+$
+ h &= A + B + C,\
+ h &= B + 2C,\
+ 4h &= 3B + 12C,
+$
+ki ga v matrični obliki lahko zapišemo kot
+$
+  mat(1, 1, 1; 0, 1, 2; 0, 3, 12)vec(A, B, C) = h vec(1, 1, 4)
+$
+#pagebreak()
+in ga rešimo z Julio
+
+#let demo13raw(koda) = blk("scripts/13_quad.jl", koda)
+#code_box(
+  repl(demo13raw("# abc"), read("out/13-abc.out"))
+)
+
+Vrednosti uteži so enake $A=h/6$, $B=2h/3$ in $C=h/6$, Simpsonovo pravilo pa se glasi:
+$
+  integral_0^h f(x) d x = h/6 (f(a) + 4f((a+b)/2) + f(b)) + R_f.
+$
+
+Formulo za napako $R_f$ dobimo tako, da v formulo vstavimo polinome še višjih stopenj, dokler
+napaka ni več enaka $0$. Za $x^3$ je napaka $R_f$ enaka $0$
+
+$
+integral_0^h x^3 d x = h^4/4 =  2h/3 dot.c h^3/8 + h/6 dot.c h^3 = 1/4 h^4,
+$
+
+za $x^4$, pa ne več
+
+$
+integral_0^h x^4 d x = h^5/5 =  2h/3 dot.c h^4/16 + h/6 dot.c h^4 + R_(x^4) = 5/(24) h^5 + R_(x^4)\
+R_(x^4) = -1/(120) h^5.
+$
+
+Ker je $x^4$ najnižja stopnja polinoma, pri kateri napaka vedno enaka $0$, bo v formuli za napako
+nastopala vrednost četrtega odvoda $f^((4))(xi)$ v neznani točki $xi$. Napako lahko zapišemo kot
+$R_f = C h^5 f^((4))(xi)$ in
+
+$
+  R_(x^4) = C h^5 (x^4)^((4)) = C h^5 4! = -1/120 h^5\
+  C = -1/2880.
+$
+
+Podobno kot trapezno lahko tudi Simpsonovo pravilo preoblikujemo v sestavljeno pravilo. Sestavljeno
+Simpsonovo pravilo z $2n$ enakomernimi koraki $h$ je dano kot:
+
 $
   integral_a^b f(x) d x approx h/3 (f(a) + f(b) +
   4sum_(k=1)^n f(a + (2k - 1) h) + 2sum_(j=1)^(n-1)f(a+2 j h)),
 $<eq:13-simpson>
 
-kjer je $h = (b - a)/(2n)$.
+kjer je $h = (b - a)/(2n)$. Napaka sestavljenega pravila @eq:13-simpson je enaka
+
+$
+ -1/180 h^4(b-a)f^((4))(xi).
+$
 
 Definirajmo naslednje tipe in metode:
 - podatkovni tip #jl("Simpson(n::Int)"), ki predstavlja sestavljeno Simpsonovo formulo,
@@ -112,11 +184,28 @@ Vrednostim $u_k$ pravimo #emph[uteži], $x_k$ pa #emph[vozlišča] kvadraturne f
 trapezno formulo so uteži enake $u_0 = u_n = h/2$ in $u_k = h, quad 1<= k<=n-1$
 vozlišča pa $x_k = a + k h$.
 
+Pri trapezni in Simpsonovi kvadraturi so vozlišča razporejena na robu in sredini
+integracijskega intervala, uteži pa so določene tako, da je formula točna za polinome čim višjih
+stopenj. To ni optimalna izbira. Če dovolimo, da so vozlišča razporejena drugače, lahko
+dobimo kvadraturo, ki je točna za polinome višjih stopenj. Za integral na intervalu $[-1, 1]$
+dobimo #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreove]
+kvadrature
+
 $
- integral_(-1)^1 f(t) d t approx sum_(k=1)^N w_k f(t_k)
+ integral_(-1)^1 f(t) d t approx sum_(k=1)^n w_k f(t_k),
 $<eq:10-gauss-lagendre>
 
-Spremembo intervala z $[a, b]$ na $[-1, 1]$ naredimo z linearno preslikavo oziroma uvedbo
+ki so del družine
+#link("https://en.wikipedia.org/wiki/Gaussian_quadrature")[Gaussovih kvadratur]. Za
+Gauss-Legendrovo kvadraturo z $n$ vozlišči so ničle Legendreovega
+polinoma stopnje $n$ optimalna izbira vozlišč. Vozlišča $x_k$ in uteži $u_k$ za Gaussove kvadrature
+lahko poiščemo z
+#link("https://en.wikipedia.org/wiki/Gaussian_quadrature#The_Golub-Welsch_algorithm")[Golub-Welschovim algoritmom],
+a to presega obseg te vaje. Za izračun vozlišč in uteži bomo uporabili knjižnico
+#jl("FastGaussQuadrature.jl").
+
+Če želimo Gauss-Legendreovo kvadraturo uporabiti na poljubnem intervalu $[a, b]$,
+moramo interval $[-1, 1]$ preslikati na $[a, b]$. To naredimo z linearno preslikavo oziroma uvedbo
 nove spremenljivke $t in [-1, 1]$:
 
 $
@@ -127,10 +216,9 @@ Intergral na $[a, b]$ lahko zapišemo
 
 $
   integral_(a)^(b) f(x) d x = integral_(-1)^1 f(x(t)) x'(t) d t =
-  1/2 (b - a) integral_(-1)^1 f(x(t)) d t.
+  1/2 (b - a) integral_(-1)^1 f(x(t)) d t,
 $
-
-Gauss-Legendrove formule na $[a, b]$
+kjer smo upoštevali, da je $x'(t) = 1/2 (b-a)$. Gauss-Legendrove formule na $[a, b]$ so tako
 
 $
   integral_(a)^(b) f(x) d x = 1/2 (b-a) sum_(k=1)^N w_k f(x_k),
@@ -139,6 +227,8 @@ kjer je
 $
   x_k = (b - a)/2 t_k + (a + b)/2.
 $
+
+Napišimo sedaj
 #opomba(naslov: [Zakaj so vse kvadraturne formule utežene vsote?])[
 Vse kvadrature, ki jih poznamo, lahko na nek način prevedemo na  uteženo
 vsoto funkcijskih vrednosti
@@ -169,6 +259,11 @@ Izjema so adaptivne metode, pri katerih je izbira vozlišč $x_i$ odvisna od izb
 jo integriramo. Zato adaptivne metode strogo gledano niso linearni funkcionali, kljub temu, da jih
 lahko prevedemo na uteženo vsoto.
 ]
+
+Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
+približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-int-gl) in funkcijo
+#jl("glkvad(n::Int)"), ki vrne Gauss-Legendrovo kvadraturo za interval $[-1, 1]$ z $n$ vozlišči
+(@pr:13-glkvad).
 
 #figure(caption: [Absolutna vrednost napake pri izračunu $integral_0^3 sin(x^2) d x$ z različnimi
   kvadraturami],
@@ -220,9 +315,6 @@ $
   x_i = (b - a)/(d - c)(t_i - c) + a.
 $
 
-Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
-približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-int-gl).
-
 == Adaptivne metode
 
 #opomba(naslov:[Ponovna uporaba že izračunanih funkcijskih vrdnosti])[
@@ -251,6 +343,15 @@ $epsilon ~ N(0, sigma)$. V tem primeru metode visokega reda nič ne koristijo. V
 zgolj bolje ocenil prispevek napake $epsilon$, ki pa je še vedno neznana. Zato v tem primeru
 povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 
+#opomba(naslov: [Kaj smo se naučili?])[
+  - Kvadraturne formule se večinoma prevedejo na uteženo vsoto funkcijskih vrednostih v
+    vozliščih kvadrature.
+  - Gauss-Legendrove kvadrature so najbolj primerne za integrale funkcij, ki jih lahko dobro
+    aproksimiramo s polinomi.
+  - Za splošno rabo so najbolj primerne adaptivne kvadrature.
+  - V prisotnosti šuma, kvadrature visokega reda niso veliko boljše kot trapezno pravilo.
+]
+
 == Rešitve
 
 #let vaja13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/src/Vaja13.jl", koda)))
@@ -263,6 +364,7 @@ povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 #vaja13("# integriraj simpson")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-simpson>
 #vaja13("# Kvadratura")[Podatkovni tip za splošno kvadraturno formulo]<pr:13-Kvadratura>
 #vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-gl>
+#vaja13("# glkvad")[Izračunaj uteži in vozlišča za Gauss-Legendrovo kvadraturo z $n$ vozlišči.]<pr:13-glkvad>
 
 == Testi
 

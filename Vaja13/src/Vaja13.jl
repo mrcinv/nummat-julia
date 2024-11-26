@@ -110,13 +110,14 @@ end
 
 # integriraj
 
-# gl kvadratura
+# glkvad
 using FastGaussQuadrature
 
 function glkvad(n)
   x, u = gausslegendre(n)
   return Kvadratura(x, u, Interval(-1.0, 1.0))
 end
+# glkvad
 
 struct AdaptivnaKvadratura{T}
   kvad::AbstraktnaKvadratura

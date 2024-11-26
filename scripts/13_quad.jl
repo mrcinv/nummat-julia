@@ -1,6 +1,13 @@
 using Vaja13
 using Plots
 
+# abc
+abc = [1 1 1; 0 1 2; 0 3 12]\[1, 1, 4]
+# abc
+
+using BookUtils
+term("13-abc", abc)
+
 x = [0.5, 1.5]
 plot(sin, x..., fillrange=0, fillalpha=0.1, c=1, 
   xrange=[0.2, 1.8], label="\$\\int_a^b f(x) dx\$", 
