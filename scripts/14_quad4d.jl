@@ -17,16 +17,12 @@ razdalja([1, 2, 3, 4])
 
 # povprecna
 """Izračunaj povprečno razdaljo med dvema točkama na danem pravokotniku."""
-function povprecna_razdalja(
-  box::Vector{Interval{Float64}}, kvadratura)
+function povprecna_razdalja(box::Vector{Interval{Float64}}, kvadratura)
   integral = VeckratniIntegral{Float64,Float64}(razdalja, vcat(box, box))
   I = integriraj(integral, kvadratura)
   return I / volumen(box)^2
 end
 # povprecna
-
-using FastGaussQuadrature
-kvad_gl(n) = Kvadratura(gausslegendre(n)..., Interval(-1.0, 1.0))
 
 using BookUtils
 

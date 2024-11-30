@@ -75,7 +75,53 @@ Za formulo @eq:13-trapez pravimo, da je sestavljena formula z enakomernim korako
 intervala $h = (b - a)/n$, bližje je vsota @eq:13-trapez pravi vrednosti integrala. V nadaljevanju
 se bomo prepričali, da za trapezno formulo, napaka pada približno sorazmerno s $h^2$.
 
-Definirajmo naslednje tipe in funkcije:
+Preden se lotimo implementacije trapeznega in sestavljenega trapeznega pravila, bomo napisali teste,
+ki bodo preverili pravilnost bodoče implementacije.
+
+#opomba(naslov: [Testno voden razvoj])[
+  V tej vaji bomo sledili
+  načinu razvoja programske opreme, ki se imenuje
+  #link("https://sl.wikipedia.org/wiki/Testno_voden_razvoj")[testno voden razvoj]. Ideja testno
+ vodenega razvoja je, da se najprej napiše teste in šele nato kodo, ki zadovolji te teste. S tem se
+ pozornost preusmeri iz implementacije na uporabo in iz ustvarjalca kode na uporabnika. S tem ko
+ najprej napišemo test, moramo najprej razmisliti, kako bo naša koda uporabljena. Tako se vživimo v
+ vlogo uporabnika in začasno odmislimo implementacijo. Prednosti testno vodenega razvoja so tako
+ dvojne. Uporabniška izkušnja je boljša, poleg tega pa je koda preverjena vsaj na enem primeru.
+]
+
+Vemo, da je trapezno pravilo in zato tudi sestavljeno trapezno pravilo točno za linearne funkcije.
+Zato bomo v testu integrirali linearno funkcijo.
+
+Da lahko napišemo test, si moramo najprej zamisliti, kako bomo kodo uporabljali.
+V našem primeru želimo izračunati približek za določeni integral in za to uporabiti sestavljeno
+trapezno pravilo. Osnovni pojem je integral, zato si zasluži svoj podatkovni tip #jl("Integral").
+Določeni integral ima dve sestavini: funkcijo in interval. In tako bo imel podatkovni tip
+#jl("Integral") dve polji #jl("f") za funkcijo in #jl("interval") za interval. Za daljše ime
+#jl("interval") se odločimo, da preprečimo zamenjavo s precej podobno besedo #emph[integral].
+
+Interval bi lahko predstavili s parom ali nizom števil, vendar raje definiramo
+nov podatkovni tip #jl("Interval"), ki vsebuje dve polji #jl("min") in #jl("max").
+Na prvi pogled se zdi, da vpeljava novega tipa nima smisla, saj par števil #jl("(1.0, 2.0)") in
+vrednost #jl("Interval(1.0, 2.0)") vsebujeta iste podatke. Vendar pa nosi vrednost
+tipa #jl("Interval") dodatno informacijo o vlogi, ki jo ima v programu. Ločevanje po vlogi in
+ne le po obliki podatkov je priporčljivo, saj lahko prepreči napake, ki jih je sicer težko odkriti
+in so posledica zamenjave podatkov iste oblike, ki pa nastopajo v različnih vlogah.
+
+Ko smo določili zapis integrala, moramo razmisliti, kako v programu predstaviti sestavljeno trapezno
+pravilo. V objektno orientiranih programskih
+jezikih bi definirali vmesnik za splošno kvadraturo in razred za sestavljeno trapezno pravilo, ki ta
+vmesnik implementira. Julia uporablja večlično razdelitev, ki omogoča definicijo več
+specializiranih metod za isto funkcijo. Izbira metode je odvisna od tipa vhodnih podatkov. Zato je
+naravno, da za sestavljeno trapezno pravilo definiramo svoj podatkovni tip #jl("Trapezna")
+in metodo #jl("integriraj(i::Integral, m::Trapezna)") za splošno funkcijo #jl("integriraj"). Test
+povzame odločitve in zasnovo programskega vmesnika, kot smo si ga zamislili.
+
+#let test13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/test/runtests.jl", koda)))
+
+#test13("# trapezna")[Test za sestavljeno trapezno formulo]
+
+#pagebreak()
+Definirajmo naslednje tipe in funkcije in poskrbimo, da bo test uspešen:
 - tip #jl("Interval(a, b)"), ki predstavlja zaprti interval $[a, b]$ (@pr:13-Interval),
 - tip #jl("Integral(fun, interval::Interval)"), ki predstavlja določeni integral funkcije #jl("fun")
   na intervalu #jl("interval") (@pr:13-Integral),
@@ -86,69 +132,16 @@ Definirajmo naslednje tipe in funkcije:
 
 == Simpsonovo pravilo
 
-Simpsonovo pravilo za izračun približka integrala poleg vrednosti funkcije v krajiščih uporabi še
-vrednost funkcije na sredini. Pravilo lahko napišemo v naslednji obliki:
+Simpsonovo pravilo dobimo tako, da poleg vrednosti funkcije v krajiščih intervala uporabimo še
+vrednost funkcije v središču intervala. Tako dobimo formulo:
 
 $
-  integral_0^h f(x) d x = A f(a) + B f((a + b)/2) + C f(b) + R_f,
+  integral_0^h f(x) d x = h/6 (f(a) + 4f((a+b)/2) + f(b)) + R_f,
 $
 
-kjer so $A$, $B$ in $C$ uteži in $R_f$ enaka razliki med pravo vrednostjo in približkom. Uteži
-določimo z metodo nedoločenih koeficientov. Vrednosti $A$, $B$ in $C$ določimo tako, da je $R_f = 0$
-za polinome čim višjih stopenj. Začnemo s polinomom stopnje $0$, se pravi s konstanto $1$
-$
-  integral_0^h d x = h = A + B + C.
-$
-Nadaljujemo s polinomi $x$ in $x^2$
-$
-  integral_0^h x d x = h^2/2 = A dot.c 0 + B dot.c h/2 + C dot.c h\
-  integral_0^h x^2 d x = h^3/3 = A dot.c 0 + B dot.c h^2/4 + C dot.c h^2\
-$
-Za uteži $A$, $B$ in $C$ dobimo sistem linearnih enačb
-$
- h &= A + B + C,\
- h &= B + 2C,\
- 4h &= 3B + 12C,
-$
-ki ga v matrični obliki lahko zapišemo kot
-$
-  mat(1, 1, 1; 0, 1, 2; 0, 3, 12)vec(A, B, C) = h vec(1, 1, 4)
-$
-#pagebreak()
-in ga rešimo z Julio
-
-#let demo13raw(koda) = blk("scripts/13_quad.jl", koda)
-#code_box(
-  repl(demo13raw("# abc"), read("out/13-abc.out"))
-)
-
-Vrednosti uteži so enake $A=h/6$, $B=2h/3$ in $C=h/6$, Simpsonovo pravilo pa se glasi:
-$
-  integral_0^h f(x) d x = h/6 (f(a) + 4f((a+b)/2) + f(b)) + R_f.
-$
-
-Formulo za napako $R_f$ dobimo tako, da v formulo vstavimo polinome še višjih stopenj, dokler
-napaka ni več enaka $0$. Za $x^3$ je napaka $R_f$ enaka $0$
-
-$
-integral_0^h x^3 d x = h^4/4 =  2h/3 dot.c h^3/8 + h/6 dot.c h^3 = 1/4 h^4,
-$
-
-za $x^4$, pa ne več
-
-$
-integral_0^h x^4 d x = h^5/5 =  2h/3 dot.c h^4/16 + h/6 dot.c h^4 + R_(x^4) = 5/(24) h^5 + R_(x^4)\
-R_(x^4) = -1/(120) h^5.
-$
-
-Ker je $x^4$ najnižja stopnja polinoma, pri kateri napaka vedno enaka $0$, bo v formuli za napako
-nastopala vrednost četrtega odvoda $f^((4))(xi)$ v neznani točki $xi$. Napako lahko zapišemo kot
-$R_f = C h^5 f^((4))(xi)$ in
-
-$
-  R_(x^4) = C h^5 (x^4)^((4)) = C h^5 4! = -1/120 h^5\
-  C = -1/2880.
-$
+kjer je napaka enaka $R_f = -1/2880 h^5 f^((4))(xi)$ za neznano vrednost $xi in [0, h]$. Obstoj
+vrednosti $xi$ je posledica Lagrangevega izreka in vrednost $xi$ je odvisna od funkcije $f$, ki
+jo integriramo. Izpeljavo Simpsonovega pravila si lahko ogledate v @sec:13-izpeljava[poglavju].
 
 Podobno kot trapezno lahko tudi Simpsonovo pravilo preoblikujemo v sestavljeno pravilo. Sestavljeno
 Simpsonovo pravilo z $2n$ enakomernimi koraki $h$ je dano kot:
@@ -158,13 +151,20 @@ $
   4sum_(k=1)^n f(a + (2k - 1) h) + 2sum_(j=1)^(n-1)f(a+2 j h)),
 $<eq:13-simpson>
 
-kjer je $h = (b - a)/(2n)$. Napaka sestavljenega pravila @eq:13-simpson je enaka
+kjer je $h = (b - a)/(2n)$. Napaka sestavljenega pravila @eq:13-simpson je enaka:
 
 $
  -1/180 h^4(b-a)f^((4))(xi).
 $
 
-Definirajmo naslednje tipe in metode:
+Podobno kot pri trapeznem pravilu sledimo testno vodenemu razvoju in najprej napišemo test. Večino
+zasnove smo določili že pri trapeznem pravilu. Preostane nam le še podatkovni tip za Simpsonovo
+pravilo, ki ga imenujemo #jl("Simpson"). Vemo, da je Simpsonovo pravilo točno za polinome 3. stopnje,
+zato v testu uporabimo polinom 3. stopnje.
+
+#test13("# simpson")[Test sestavljenega Simpsonovega pravila]
+
+Definirajmo naslednje tipe in metode ter poskrbimo, da se test pravilno izvede:
 - podatkovni tip #jl("Simpson(n::Int)"), ki predstavlja sestavljeno Simpsonovo formulo,
   (@pr:13-simpson) in
 - metodo #jl("integriraj(i::Integral, k::Simpson)") za funkcijo #jl("integriraj"), ki
@@ -368,5 +368,71 @@ povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 
 == Testi
 
-#let test13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/test/runtests.jl", koda)))
-#test13("# integriraj")[Test za funkcijo #jl("integriraj")]
+
+== Izpeljava Simpsonovega pravila<sec:13-izpeljava>
+
+Simpsonovo pravilo za izračun približka integrala poleg vrednosti funkcije v krajiščih uporabi še
+vrednost funkcije na sredini. Pravilo lahko napišemo v naslednji obliki:
+
+$
+  integral_0^h f(x) d x = A f(a) + B f((a + b)/2) + C f(b) + R_f,
+$
+
+kjer so $A$, $B$ in $C$ uteži in $R_f$ enaka razliki med pravo vrednostjo in približkom. Uteži
+določimo z metodo nedoločenih koeficientov. Vrednosti $A$, $B$ in $C$ določimo tako, da je $R_f = 0$
+za polinome čim višjih stopenj. Začnemo s polinomom stopnje $0$, se pravi s konstanto $1$
+$
+  integral_0^h d x = h = A + B + C.
+$
+Nadaljujemo s polinomi $x$ in $x^2$
+$
+  integral_0^h x d x = h^2/2 = A dot.c 0 + B dot.c h/2 + C dot.c h\
+  integral_0^h x^2 d x = h^3/3 = A dot.c 0 + B dot.c h^2/4 + C dot.c h^2\
+$
+Za uteži $A$, $B$ in $C$ dobimo sistem linearnih enačb
+$
+ h &= A + B + C,\
+ h &= B + 2C,\
+ 4h &= 3B + 12C,
+$
+
+ki ga v matrični obliki lahko zapišemo kot
+
+$
+  mat(1, 1, 1; 0, 1, 2; 0, 3, 12)vec(A, B, C) = h vec(1, 1, 4)
+$
+
+in ga rešimo z Julio
+
+#let demo13raw(koda) = blk("scripts/13_quad.jl", koda)
+#code_box(
+  repl(demo13raw("# abc"), read("out/13-abc.out"))
+)
+
+Vrednosti uteži so enake $A=h/6$, $B=2h/3$ in $C=h/6$, Simpsonovo pravilo pa se glasi:
+$
+  integral_0^h f(x) d x = h/6 (f(a) + 4f((a+b)/2) + f(b)) + R_f.
+$
+
+Formulo za napako $R_f$ dobimo tako, da v formulo vstavimo polinome še višjih stopenj, dokler
+napaka ni več enaka $0$. Za $x^3$ je napaka $R_f$ enaka $0$
+
+$
+integral_0^h x^3 d x = h^4/4 =  2h/3 dot.c h^3/8 + h/6 dot.c h^3 = 1/4 h^4,
+$
+
+za $x^4$, pa ne več
+
+$
+integral_0^h x^4 d x = h^5/5 =  2h/3 dot.c h^4/16 + h/6 dot.c h^4 + R_(x^4) = 5/(24) h^5 + R_(x^4)\
+R_(x^4) = -1/(120) h^5.
+$
+
+Ker je $x^4$ najnižja stopnja polinoma, pri kateri napaka vedno enaka $0$, bo v formuli za napako
+nastopala vrednost četrtega odvoda $f^((4))(xi)$ v neznani točki $xi$. Napako lahko zapišemo kot
+$R_f = C h^5 f^((4))(xi)$ in
+
+$
+  R_(x^4) = C h^5 (x^4)^((4)) = C h^5 4! = -1/120 h^5\
+  C = -1/2880.
+$

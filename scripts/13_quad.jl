@@ -1,6 +1,7 @@
 using Vaja13
 using Plots
 
+# Izračun koeficientov Simpsonove formule
 # abc
 abc = [1 1 1; 0 1 2; 0 3 12]\[1, 1, 4]
 # abc
@@ -8,6 +9,7 @@ abc = [1 1 1; 0 1 2; 0 3 12]\[1, 1, 4]
 using BookUtils
 term("13-abc", abc)
 
+# Graf, ki ilustrira trapezno formulo
 x = [0.5, 1.5]
 plot(sin, x..., fillrange=0, fillalpha=0.1, c=1, 
   xrange=[0.2, 1.8], label="\$\\int_a^b f(x) dx\$", 
@@ -24,6 +26,7 @@ annotate!(1, 0.2, "\$\\int_a^b f(x) dx \\approx \\frac{b - a}{2}\\left(f(a)+f(b)
 
 savefig("img/13-trapez.svg")
 
+# graf, ki ilustrira sestavljeno trapezno formulo
 f(x) = sin(x+1)
 x = range(0, 3, 6)
 plot(f, x[1], x[end], fillrange=(x -> 0), 
@@ -43,7 +46,13 @@ annotate!(x + 0.1*[1, 1, 1, 1, -1, -1], f.(x) + 0.1*[1, 1, 1, 1, -1, -1],
 
 savefig("img/13-sest-trapez.svg")
 
+# Primer sin(x^3) na [0, 3]
+# sin x2
 f(x) = sin(x^2)
+plot(f, 0, 3, fillrange=0, fillalpha=0.4, label="\$\\int_0^3 \\sin(x^2) dx\$")
+# sin x2
+savefig("img/13-sinx2.svg")
+
 int_1 = Integral(f, Interval(0.0, 3.0))
 
 n = 2 .^ (3:10)

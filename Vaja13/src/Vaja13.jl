@@ -18,7 +18,7 @@ dolzina(int::Interval) = int.max - int.min
 Podatkovna struktura za določeni integral funkcije `fun` na danem intervalu. 
 """
 struct Integral{T}
-  fun
+  f
   interval::Interval{T}
 end
 # Integral
@@ -44,9 +44,9 @@ function integriraj(i::Integral, k::Trapezna)
   a = i.interval.min
   b = i.interval.max
   h = (b - a) / k.n
-  I = (i.fun(a) + i.fun(b)) / 2
+  I = (i.f(a) + i.f(b)) / 2
   for j in 1:k.n-1
-    I += i.fun(a + j * h)
+    I += i.f(a + j * h)
   end
   return h * I
 end
@@ -70,10 +70,10 @@ function integriraj(i::Integral, k::Simpson)
   a = i.interval.min
   b = i.interval.max
   h = (b - a) / k.n
-  I = (i.fun(a) + i.fun(b) + 4 * i.fun(b - h / 2))
+  I = (i.f(a) + i.f(b) + 4 * i.f(b - h / 2))
   for j in 1:k.n-1
-    I += 4 * i.fun(a + (j - 0.5) * h)
-    I += 2 * i.fun(a + j * h)
+    I += 4 * i.f(a + (j - 0.5) * h)
+    I += 2 * i.f(a + j * h)
   end
   return (h / 6) * I
 end
@@ -104,7 +104,7 @@ function integriraj(i::Integral, k::Kvadratura)
   razteg = dolzina(i.interval) / dolzina(k.interval)
   preslikaj(x) = razteg * (x - k.interval.min) + i.interval.min
   # zaporedje parov (u(j), x(j)) ustvarimo s funkcijo `zip`
-  I = sum(u * i.fun(preslikaj(x)) for (u, x) in zip(k.u, k.x))
+  I = sum(u * i.f(preslikaj(x)) for (u, x) in zip(k.u, k.x))
   return razteg * I
 end
 
@@ -132,7 +132,7 @@ end
 
 function razpolovi(i::Integral)
   levi, desni = razpolovi(i.interval)
-  return Integral(i.fun, levi), Integral(i.fun, desni)
+  return Integral(i.f, levi), Integral(i.f, desni)
 end
 
 function integriraj(i::Integral, adk::AdaptivnaKvadratura)
