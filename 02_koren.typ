@@ -3,8 +3,8 @@
 
 = Računanje kvadratnega korena<sec:02-koren>
 
-Računalniški procesorji navadno implementirajo le osnovne številske operacije:
-seštevanje, množenje in deljenje. Za računanje drugih matematičnih funkcij
+Računalniški procesorji navadno implementirajo le osnovne aritmetične operacije:
+seštevanje, množenje in deljenje. Za izračun vrednosti drugih matematičnih funkcij
 mora nekdo napisati program. Večina programskih jezikov vsebuje implementacijo elementarnih funkcij v standardni knjižnici. V tej vaji si bomo ogledali, kako implementirati korensko funkcijo.
 
 
@@ -41,11 +41,15 @@ Tako bomo imeli v delovnem okolju dostop do vseh funkcij, ki jih bomo definirali
 
 == Izbira algoritma
 
-Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu. O tem si lahko več preberete v #link("http://www.presek.si/21/1160-Domajnko.pdf")[članku v reviji Presek]. Če želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
+Z računanjem kvadratnega korena so se ukvarjali že pred 3500 leti v Babilonu.
+O tem si lahko več preberete v članku v reviji Presek @Domajnko_1993. Če želimo poiskati algoritem za računanje kvadratnega korena, se moramo najprej vprašati, kaj sploh je kvadratni koren. Kvadratni koren števila $x$ je definiran kot pozitivna vrednost $y$, katere kvadrat je enak $x$. Število $y$ je torej pozitivna rešitev enačbe
 
 $ y^2 = x. $ <eq:02koren>
 
-Da bi poiskali vrednost $sqrt(x)$, moramo rešiti _nelinearno enačbo_ @eq:02koren. Za numerično reševanje nelinearnih enačb obstaja cela vrsta metod. Ena najpopularnejših metod je #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonova ali tangentna] metoda, ki jo bomo uporabili tudi mi. Pri Newtonovi metodi rešitev enačbe
+Da bi poiskali vrednost $sqrt(x)$, moramo rešiti _nelinearno enačbo_ @eq:02koren. Za numerično
+reševanje nelinearnih enačb obstaja cela vrsta metod. Ena najpopularnejših je
+#link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[Newtonova ali tangentna] metoda, ki jo
+bomo uporabili tudi mi. Pri Newtonovi metodi rešitev enačbe
 
 $ f(x) = 0 $
 
@@ -55,13 +59,15 @@ $ x_(n+1) = x_n - f(x_n)/(f'(x_n)). $ <eq:02newton>
 
 Če zaporedje @eq:02newton konvergira, potem konvergira k rešitvi enačbe $f(x)=0$.
 
-Enačbo @eq:02koren najprej preoblikujemo v obliko, ki je primerna za reševanje z Newtonovo metodo. Premaknemo vse člene na eno stran, da je na drugi strani nič
+Enačbo @eq:02koren najprej preoblikujemo v obliko, ki je primerna za reševanje z Newtonovo metodo.
+Premaknemo vse člene na eno stran, da je na drugi strani nič, torej:
 
 $
 y^2 - x = 0.
 $
 
-V formulo za Newtonovo metodo vstavimo funkcijo $f(y) = y^2 - x$ in odvod $f'(y) = (d f)/(d y) = 2y$, da dobimo formulo:
+V formulo za Newtonovo metodo vstavimo funkcijo $f(y) = y^2 - x$ in odvod
+$f'(y) = d/(d y) f(y) = 2y$, da dobimo formulo:
 
 $
 y_(n+1) &= y_n - (y_n^2 - x)/(2y_n) = (2y_n^2 - y_n^2 + x)/(2y_n) = 1/2((y_n^2 + x)/(y_n))\
@@ -139,7 +145,9 @@ Pri iskanju kvadratnega korena lahko napako ocenimo tako, da primerjamo kvadrat 
  epsilon = (hat(y)^2 - x)/x = ((y(1 + delta))^2 - x)/x =
  (x(1+delta)^2 - x)/x =  (1 + delta)^2 - 1 = 2delta + delta^2.
  $
-Pri tem smo upoštevali, da je $y^2=x$. Relativna napaka kvadrata je enaka $epsilon = 2delta + delta^2$. Ker je $delta^2 << delta$, dobimo dovolj natančno oceno, če $delta^2$ zanemarimo
+Pri tem smo upoštevali, da je $y^2=x$. Relativna napaka kvadrata je enaka
+$epsilon = 2delta + delta^2$. Ker je $delta^2 << delta$, dobimo dovolj natančno oceno, če $delta^2$
+zanemarimo
 
 $
 delta = 1/2(epsilon - delta^2) < epsilon/2.
@@ -148,7 +156,7 @@ $
 Od tod dobimo pogoj, kdaj je približek dovolj natančen. Če je
 
 $
-|hat(y)^2 - x| < 2delta dot x
+|hat(y)^2 - x| < 2delta dot x,
 $
 
 potem velja začetna zahteva:
@@ -192,10 +200,11 @@ Začetni približek $1/2 + x/2$ dobro deluje za števila blizu 1. Če isto formu
 
 #figure(
     image("img/02_koren_tangenta.svg", width: 80%),
-    caption: [Korenska funkcija in tangenta v $1/2 + x/2$]
+    caption: [Korenska funkcija in tangenta $1/2 + x/2$ v točki $x=1$]
 )
 
-Za boljši približek, si pomagamo z načinom predstavitve števil v računalniku. Realna števila predstavimo s #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[števili s plavajočo vejico]. Število je zapisano v obliki
+Za boljši približek, si pomagamo z načinom predstavitve števil v računalniku. Realna števila
+predstavimo s #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[števili s plavajočo vejico]. Število je zapisano v obliki
 
 $
  x = m 2^e,
@@ -219,13 +228,13 @@ $
 Če eksponent delimo z $2$ in upoštevamo ostanek $e = 2d + o$, vrednost $sqrt(2^e)$ zapišemo kot
 
 $
-sqrt(2^e) approx 2^d dot cases(1";" quad  o = 0, sqrt(2)";" quad o=1.)
+  sqrt(2^e) approx 2^d dot cases(1","& quad  o = 0",", sqrt(2)","& quad o=1.)
 $
 
 Formula za približek je enaka:
 
 $
-sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1";" quad  o = 0, sqrt(2)";" quad o=1)
+  sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1","&  o = 0",", sqrt(2)","& o=1.)
 $
 
 Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
@@ -260,7 +269,7 @@ lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 
 #opomba(naslov: [Julia omogoča več definicij iste funkcije])[
     Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polmorfizma
-    v objektno orientiranih jezikih, kjer se metoda izbere ne le na podlagi razreda
+    v objektno orientiranih jezikih, kjer se metoda izbere le na podlagi razreda
     objekta, ki to metodo kliče, se v Julii metodo izbere na podlagi tipov vseh vhodnih argumentov.
     Ta lastnost omogoča pisanje generične kodo, ki deluje za zelo različne vhodne argumente.
 

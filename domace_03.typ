@@ -121,7 +121,7 @@ kjer je $g eq 9.80665 m slash s^2$ težni pospešek in $l$ dolžina nihala.
 Napišite funkcijo, ki izračuna odmik nihala ob določenem času.
 Enačbo drugega reda prevedite na sistem prvega reda in računajte z
 metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5]
-(algoritem 7.5 v @orel).
+@Orel_2004.
 
 Za različne začetne pogoje primerjajte rešitev z
 nihanjem harmoničnega nihala, ki je dano z enačbo

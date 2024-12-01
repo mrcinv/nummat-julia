@@ -148,7 +148,7 @@ izbire za funkcijo oblike $phi$:
 
 Če izberemo primerno funkcijo oblike, lahko
 dosežemo, da je matrika sistema @eq:05-matrika pozitivno definitna.  V tem primeru lahko za
-reševanje sistema uporabimo razcep Choleskega (poglavje 2.6 v @orel). Za funkcijo oblike bomo
+reševanje sistema uporabimo razcep Choleskega @Orel_2004. Za funkcijo oblike bomo
 izbrali Gaussovo funkcijo
 
 $

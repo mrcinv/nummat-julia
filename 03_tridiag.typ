@@ -116,7 +116,7 @@ Podobno definiramo teste še za druge funkcije. Primeri testov so v poglavju
 
 Poiskali bomo rešitev sistema linearnih enačb $T x = b$, kjer je matrika sistema $T$
 tridiagonalna. Sistem lahko rešimo z Gaussovo eliminacijo in obratnim vstavljanjem
-(glej učbenik @orel). Ker je v tridiagonalni matriki bistveno manj elementov, se število potrebnih
+(glej učbenik @Orel_2004). Ker je v tridiagonalni matriki bistveno manj elementov, se število potrebnih
 operacij tako za Gaussovo eliminacijo kot za obratno vstavljanje bistveno zmanjša. Dodatno
 predpostavimo, da je matrika $T$ takšna, da med eliminacijo ni treba delati delnega pivotiranja.
 V nasprotnem primeru se tridiagonalna oblika matrike med Gaussovo eliminacijo podre in se algoritem

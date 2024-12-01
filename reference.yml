@@ -1,8 +1,3 @@
-orel:
-  type: Book
-  title: Osnove numerične matematike
-  author: Orel, B.
-  date: 2020
 knuth84:
   type: article
   title: Literate programming
@@ -226,9 +221,9 @@ hairer_solving_1993:
   type: book
   title: Solving Ordinary Differential Equations I
   author:
-  - Hairer, Ernst
-  - Wanner, Gerhard
-  - Nørsett, Syvert P.
+    - Hairer, Ernst
+    - Wanner, Gerhard
+    - Nørsett, Syvert P.
   date: 1993
   publisher: Springer
   location: Berlin, Heidelberg
@@ -247,8 +242,8 @@ hairer_solving_1996:
   type: book
   title: Solving Ordinary Differential Equations {II}
   author:
-  - Hairer, Ernst
-  - Wanner, Gerhard
+    - Hairer, Ernst
+    - Wanner, Gerhard
   date: 1996
   publisher: Springer
   location: Berlin, Heidelberg
@@ -263,3 +258,29 @@ hairer_solving_1996:
     type: book
     title: Springer Series in Computational Mathematics
 
+Domajnko_1993:
+  type: article
+  title: Babilonski približek za [kvadradratni koren iz 2]
+  author: Domajnko, Vilko
+  date: 1993
+  page-range: 40-45
+  url: http://www.dlib.si/details/URN:NBN:SI:DOC-XLG3VQBN
+  serial-number:
+    issn: 0351-6652
+  parent:
+    type: periodical
+    title: Presek
+    issue: 1
+    volume: 21
+
+Orel_2004:
+  type: book
+  title: Osnove numerične matematike
+  author: Orel, Bojan
+  date: 2004
+  publisher: Fakulteta za računalništvo in informatiko
+  edition: 3. izd.
+  page-range: 179
+  serial-number:
+    isbn: 961-6209-19-1
+  note: 350 izv.
