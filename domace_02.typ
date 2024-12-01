@@ -155,8 +155,8 @@ $frac(sin x, x)$ na $lr([0 , 10])$ in $lr(|x^2 - 2 x|)$ na
 $lr([1 , 3])$. Za vsako funkcijo določi stopnjo polinoma, da napaka
 ne bo presegla $10^(- 6)$.
 
-== Gauss-Legendrove kvadrature
-<gauss-legendrove-kvadrature>
+== Gauss-Legendreove kvadrature
+<gauss-Legendreove-kvadrature>
 Izpelji #link("https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreovo integracijsko pravilo]
 na dveh točkah
 

@@ -5,7 +5,7 @@ import LinearAlgebra: eigen, eigvals, eigvecs, SymTridiagonal
 export VeckratniIntegral, integriraj, volumen, simpson, MonteCarlo
 
 # simpson
-"""Poišči vozlišča in uteži za sestavljeno Simpsonovo pravilo na intervalu 
+"""Poišči vozlišča in uteži za sestavljeno Simpsonovo pravilo na intervalu
 `[a, b]` z delitvijo na `n` podintervalov."""
 simpson(a, b, n) = Kvadratura(collect(LinRange(a, b, 2n + 1)),
   (b - a) / (6 * n) * vcat([1.0], repeat([4, 2], n - 1), [4, 1]), Interval(a, b))
@@ -26,7 +26,7 @@ dim(i::VeckratniIntegral) = length(i.box)
 import Vaja13: preslikaj, dolzina
 """
   kvad2 = preslikaj(kvad1::Kvadratura{T}, interval::Interval{T})
-  
+
 Preslikaj kvadraturo `kvad1` na drug `interval`.
 """
 function preslikaj(kvad::Kvadratura{T}, interval::Interval{T}) where {T}
@@ -83,7 +83,7 @@ end
 """
   naslednji!(index, n)
 
-Izračunanj naslednji multi index v zaporedju vseh multi indeksov 
+Izračunanj naslednji multi index v zaporedju vseh multi indeksov
 ``\\{1, 2, ... n\\}^d`` in ga zapiši v vektor `index`.
 """
 function naslednji!(index, n)
@@ -186,7 +186,7 @@ p_n(x) = (a(n)x+b(n))p_{n-1}(x) - c_n p_{n-2}(x)
 
 # Primer
 za računanje integrala z utežjo ``w(x)=1`` na intervalu ``[-1,1]``, lahko uporabimo
-[Legendrove ortogonalne polinome](https://sl.wikipedia.org/wiki/Legendrovi_polinomi),
+[Legendreove ortogonalne polinome](https://sl.wikipedia.org/wiki/Legendrovi_polinomi),
 ki zadoščajo rekurzivni zvezi
 
 ```math
@@ -198,7 +198,7 @@ Naslednji program izpiše vozlišča in uteži za n od 1 do 5
 ```julia
 a(n) = (2*n-1)/n; b(n) = 0.0; c(n) = (n-1)/n;
 μ = 2;
-println("Gauss-Legendrove kvadrature")
+println("Gauss-Legendreove kvadrature")
 for n=1:5
   x0, w = gauss_quad_rule(a, b, c, μ, n);
   println("n=\$n")
@@ -224,7 +224,7 @@ end
 """
   x0, w0 = gauss_legendre_rule(n)
 
-Izračunaj vozlišča in uteži za Gauss-Legendrove kvadrature z Golub-Welschovim
+Izračunaj vozlišča in uteži za Gauss-Legendreove kvadrature z Golub-Welschovim
 algoritmom.
 """
 function gauss_legendre_rule(n)

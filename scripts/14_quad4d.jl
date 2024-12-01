@@ -3,9 +3,9 @@ using LinearAlgebra
 
 # razdalja
 """
-Izračunaj razdaljo med dvema točkama podanima v enem vektorju `x`. 
-Koordinate prve točke so podana v prvi polovici, koordinate druge točke pa v 
-drugi polovici komponent vektorja `x`. 
+Izračunaj razdaljo med dvema točkama podanima v enem vektorju `x`.
+Koordinate prve točke so podana v prvi polovici, koordinate druge točke pa v
+drugi polovici komponent vektorja `x`.
 """
 function razdalja(x)
   d = div(length(x), 2)
@@ -47,7 +47,7 @@ using Random
 rng = Xoshiro(4526) # ustvarimo nov pseudo random generator
 mc = MonteCarlo(rng, 16^4) # uporabimo isto število izračunov kot prvič
 dmc = [
-  integriraj(integral, mc) for i in 1:5] # vsaka ponovitev vrne nekaj drugega 
+  integriraj(integral, mc) for i in 1:5] # vsaka ponovitev vrne nekaj drugega
 # mc izračun
 term("14-dmc", dmc)
 
@@ -74,7 +74,7 @@ scatter!(ngl .^ 4, abs.(napakegl), yscale=:log10, xscale=:log10,
 dgl = povprecna_razdalja(kvadrat, glkvvad(60))
 dgl - d1
 """
-Izračunaj sestavljeno Gauss-Legendrovo formulo s osnovnim pravilom s `k` 
+Izračunaj sestavljeno Gauss-Legendreovo formulo s osnovnim pravilom s `k`
 vozlišči in delitvijo na `n` podintervalov.
 """
 function glsest(k, n)

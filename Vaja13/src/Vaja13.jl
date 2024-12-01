@@ -2,6 +2,7 @@ module Vaja13
 
 using FastGaussQuadrature
 
+# Interval
 """
 Podatkovna struktura za interval `[min, max]`.
 """
@@ -9,13 +10,14 @@ struct Interval{T}
   min::T
   max::T
 end
+# Interval
 
 """Izračunaj predznačeno dolžino intervala."""
 dolzina(int::Interval) = int.max - int.min
 
 # Integral
 """
-Podatkovna struktura za določeni integral funkcije `fun` na danem intervalu. 
+Podatkovna struktura za določeni integral funkcije `fun` na danem intervalu.
 """
 struct Integral{T}
   f
@@ -25,22 +27,23 @@ end
 
 abstract type AbstraktnaKvadratura end
 
-# trapezna
+# Trapez
 """
 Parametri za sestavljeno trapezno pravilo. Sestavljeno trapezno
 pravilo ima en sam parameter `n`,  ki pove na koliko podintervalov
 razdelimo interval.
 """
-struct Trapezna <: AbstraktnaKvadratura
+struct Trapez <: AbstraktnaKvadratura
   n::Integer
 end
-
+# Trapez
+# integriraj trapez
 """
-    I = integriraj(i::Integral, k::Trapezna)
+    I = integriraj(i::Integral, k::Trapez)
 
 Izračunaj približek za integral `i` s sestavljeno trapezno kvadraturo.
 """
-function integriraj(i::Integral, k::Trapezna)
+function integriraj(i::Integral, k::Trapez)
   a = i.interval.min
   b = i.interval.max
   h = (b - a) / k.n
@@ -50,17 +53,18 @@ function integriraj(i::Integral, k::Trapezna)
   end
   return h * I
 end
-# trapezna
+# integriraj trapez
 
-# simpson
+# Simpson
 """
-Parametri za sestavljeno Simpsonovo pravilo. Pravilo ima en sam 
+Parametri za sestavljeno Simpsonovo pravilo. Pravilo ima en sam
 parameter `n`,  ki pove na koliko podintervalov razdelimo interval.
 """
 struct Simpson <: AbstraktnaKvadratura
   n::Integer
 end
-
+# Simpson
+# integriraj simpson
 """
     I = integriraj(i::Integral, k::Simpson)
 
@@ -77,17 +81,23 @@ function integriraj(i::Integral, k::Simpson)
   end
   return (h / 6) * I
 end
+# integriraj simpson
 
-# simpson
 
+# Kvadratura
+"""
+    Kvadratura(x, u, interval)
 
+Podatkovna struktura za splošno kvadraturo z danimi vozlišči in utežmi.
+"""
 struct Kvadratura{T} <: AbstraktnaKvadratura
   x::Vector{T}
   u::Vector{T}
   interval::Interval{T}
 end
+# Kvadratura
 
-# integriraj
+# integriraj gl
 """
     I = integriraj(i::Integral, k::Kvadratura)
 
@@ -107,12 +117,23 @@ function integriraj(i::Integral, k::Kvadratura)
   I = sum(u * i.f(preslikaj(x)) for (u, x) in zip(k.u, k.x))
   return razteg * I
 end
-
-# integriraj
+# integriraj gl
 
 # glkvad
 using FastGaussQuadrature
+"""
+    kvadratura = glkvad(n)
 
+Izračunaj vozlišča in uteži za Gauss-Legendreove kvadraturne formule z 
+`n` vozlišči. Funkcija vrne vrednost tipa `Kvadratura`, ki jo lahko uporabimo
+v funkcij `integriraj`.
+# Primer
+```jl
+k = glkvad(10)
+i = Integral(x->exp(-x^2), Interval(1.0, 2.0))
+integriraj(i, k)
+```
+"""
 function glkvad(n)
   x, u = gausslegendre(n)
   return Kvadratura(x, u, Interval(-1.0, 1.0))
@@ -207,7 +228,7 @@ end
   T = aproksimiraj(CebisevaVrsta, fun, int::Interval, n::Int)
 
 Aproksimiraj funkcijo `fun` na intervalu `int` s prvimi `n` členi
-Čebiševe vrste. 
+Čebiševe vrste.
 """
 function aproksimiraj(::Type{<:CebisevaVrsta}, fun, int::Interval, n::Int)
   koef = zeros(n + 1)
@@ -228,7 +249,7 @@ function aproksimiraj(::Type{<:CebisevaVrsta}, fun, int::Interval, n::Int)
   return CebisevaVrsta(koef, int)
 end
 
-export Interval, Integral, Trapezna, Simpson, integriraj, glkvad
+export Interval, Integral, Trapez, Simpson, integriraj, glkvad
 export Kvadratura, CebisevaVrsta, aproksimiraj, AdaptivnaKvadratura
 
 end # module Vaja13

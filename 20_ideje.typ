@@ -47,9 +47,9 @@ $
   aproksimacijo s Čebiševimi polinomi.
   - Namesto funkcije $Phi(x)$ aproksimiraj funkcijo $x e^(x^2) Phi(x)$.
   - Vrednosti funkcije $Phi(x)$ v Čebiševih točkah izračunajte z adaptivno metodo s parom
-    Gauss-Legendrovih kvadratur
+    Gauss-Legendreovih kvadratur
 - Na intervalu $[-1, 0]$ za primerno izbran $a$ uporabite
-  #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrove kvadrature].
+  #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreove kvadrature].
 - Na intervalu $[0, oo)$ uporabite lastnost $Phi(x) = 1 - Phi(-x)$.
 
 === Razdelitev definicijskega območja
@@ -68,7 +68,7 @@ omenjenima pogojema.
 
 === Izračun na $[-c, oo)$
 Izračunamo $Phi(-c)$ in $Phi(x) = Phi(-c) + integral_(-c)^x e^(-x^2/2)d x$. Integral izračunamo z
-Gauss-Legendrovimi kvadraturami s fiksnim številom vozlišč, tako da je absolutna napaka enakomerno
+Gauss-Legendreovimi kvadraturami s fiksnim številom vozlišč, tako da je absolutna napaka enakomerno
 omejena. Na $[b, oo)$ za dovolj velik $b$ je vrednost enaka $1$.
 
 === Izračun na $(-oo, -c]$
@@ -274,3 +274,93 @@ $f(u) = e^(-(u-x)^2/2 + u)$.
 = Domače naloge
 
 == Gradientni spust z iskanjem po premici
+
+== Preslikava na drug interval
+
+Določeni integral
+
+$
+  integral_(a)^(b) f(x) d x
+$<eq:13-int-a-b>
+
+lahko s preprosto linearno preslikavo premaknemo na drug interval $[c, d]$. V integral @eq:13-int-a-b
+vpeljemo novo spremenljivko $t = t(x) = k x + n$, ki preslika interval $[a, b]$ na interval $[c, d]$.
+Formulo za $t$ določimo tako, da najprej preslikamo $[a, b]$ s preslikavo $s = (x - a)/(b-a)$ na
+$[0, 1]$ in nato $s$ preslikamo $t = (d - c)s + c$ z intervala $[0, 1]$ na interval $[c, d]$.
+Inverzno preslikavo $x = x(t)$ izračunamo enako:
+
+$
+  t(x) = (d - c)/(b - a)(x - a) + c quad #text[ in ] quad
+  x(t) = (b - a)/(d - c)(t - c) + a.
+$
+
+Integral @eq:13-int-a-b lahko sedaj preslikamo na $[c, d]$:
+
+$
+  integral_(a)^(b) f(x) d x = integral_(t(a))^(t(b)) f(x(t)) x'(t) d t =
+  (b-a)/(d-c) integral_c^d f((b -a)/(d-c)(t -c) + a) d t.
+$<eq:13-int-ab-cd>
+
+Pri izpeljavi @eq:13-int-ab-cd smo upoštevali, da je $d x = x'(t) d t = (b -a)/(d -c) d t$.
+Če imamo kvadraturno formulo za interval $[c, d]$:
+
+$
+  integral_c^d f(t) d t approx sum_(i=1)^n u_i f(t_i),
+$
+
+lahko s preslikavo @eq:13-int-ab-cd zapišemo kvadraturno formulo za poljuben interval $[a, b]$:
+
+$
+  integral_a^b f(x) d x = (b - a)/(d - c)integral_c^d f(x(t)) d t approx
+  (b - a)/(d - c) sum_(i=1)^n u_i f(x_i),
+$
+
+kjer so nova vozlišča $x_i$ enaka:
+
+$
+  x_i = (b - a)/(d - c)(t_i - c) + a.
+$
+
+== Adaptivne metode
+
+#opomba(naslov:[Ponovna uporaba že izračunanih funkcijskih vrdnosti])[
+V naši implementaciji adaptivne metode smo vrednosti funkcije v nekatirh vozliščih večkrat
+izračunali. Hitrost smo žrtvovali v prid enostavnosti in preglednosti. V praksi se adaptivne
+metode implementira na način, da se funkcijske vrednosti v vsakem vozlišču izračuna samo enkrat
+in se nato te vrednosti uporabi v nadalnjih izračunih.
+
+To dobro deluje za kvadrature kot so Simpsonova in trapezna formula, ki spadajo med
+#link("https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas")[Newton-Cotesove] kvadrature.
+Za Gaussove kvadrature je več težav, saj se vozlišča kvadratur višjega reda ne prekrivajo z vozlišči
+kvadratur nižjega reda. Rešitev ponujajo
+#link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula")[Gauss-Kronrodove kvadrature],
+ki so podane kot pari kvadratur, pri katerem kvadratura višjega reda vsebuje vsa vozlišča
+kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendreova kvadratura z $n$ vozlišči.
+Nato se izbere dodatnih $n+1$ vozlišč in na novo določi uteži, tako da je druga kvadratura čim
+višjega reda.
+]
+
+== Tabela podatkov z mersko napako
+
+Predpostavimo, da je merska napaka $epsilon$ slučajna spremenljivka, ki je porazdeljena normalno
+$epsilon ~ N(0, sigma)$. V tem primeru metode visokega reda nič ne koristijo. Višji red metode bo
+zgolj bolje ocenil prispevek napake $epsilon$, ki pa je še vedno neznana. Zato v tem primeru
+povsem zadoščajo metode nizkega reda, kot je trapezna metoda. Poglejmo si primer.
+
+#demo13("# funkcija s šumom")
+#demo13("# podatki s šumom")
+
+#figure(caption: [Podatki s šumom], image("img/13-podatki-sum.svg", width: 60%))
+
+Poglejmo kako se obnaša napaka pri računanju integrala z različnimi kvadraturami.
+
+#demo13("# simulacija")
+
+#figure(caption: [Primerjava napak za različne metode pri dveh različnih poskusih.
+  Napaka numerične metode je zanemarljiva v primerjavi z napako, ki jo povzroči šum.],
+  kind: image,
+  table(columns: 2, stroke: none,
+    image("img/13-napaka-sum-1.svg"),
+    image("img/13-napaka-sum-2.svg"),
+  )
+)

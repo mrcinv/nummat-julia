@@ -18,22 +18,16 @@ kako izbrati primerno metodo, glede na to, kakšno funkcijo integriramo.
   za dano kvadraturo na danem intervalu.
 - Implementiraj funkcijo #jl("integriraj(int, kvad::Kvadratura)"), ki s kvadraturo #jl("kvad")
   izračuna integral `int`.
-- Implementiraj sestavljeno trapezno, sestavljeno Simpsonovo, Gauss-Legendrove kvadrature in
-  adaptivno Simpsonovo metodo. Za izračun uteži in vozlišč Gauss-Legendrovih kvadratur uporabi paket
+- Implementiraj sestavljeno trapezno, sestavljeno Simpsonovo, Gauss-Legendreove kvadrature in
+  adaptivno Simpsonovo metodo. Za izračun uteži in vozlišč Gauss-Legendreovih kvadratur uporabi paket
   #link("https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/")[FastGaussQuadrature.jl].
 - Implementirane metode uporabi za izračun naslednjih integralov
   $
-    integral_0^3 sin(x^2) d x, integral_(-oo)^(-5)e^(-x^2) d x quad #text[ in ]
-    quad integral_(-1)^2 |2 - x^2| d x.
+    integral_0^3 sin(x^2) d x quad #text[ in ] quad integral_(-1)^2 |2 - x^2| d x.
   $
   Napako oceni tako, da rezultat primerjaš z rezultatom, ki ga dobiš, če uporabiš dvakrat več
   vozlišč in uporabiš
   #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo ekstrapolacijo].
-- Simuliraj mersko napako, tako da vrednosti funkcije $sin(x)$ "pokvariš" s slučajnimi vrednostmi
-  porazdeljenimi normalno. Nato primerjaj različne metode za izračun integrala:
-  $
-    integral_0^3 sin(x) d x.
-  $
 
 == Trapezno pravilo in sestavljeno trapezno pravilo
 
@@ -112,22 +106,22 @@ pravilo. V objektno orientiranih programskih
 jezikih bi definirali vmesnik za splošno kvadraturo in razred za sestavljeno trapezno pravilo, ki ta
 vmesnik implementira. Julia uporablja večlično razdelitev, ki omogoča definicijo več
 specializiranih metod za isto funkcijo. Izbira metode je odvisna od tipa vhodnih podatkov. Zato je
-naravno, da za sestavljeno trapezno pravilo definiramo svoj podatkovni tip #jl("Trapezna")
-in metodo #jl("integriraj(i::Integral, m::Trapezna)") za splošno funkcijo #jl("integriraj"). Test
+naravno, da za sestavljeno trapezno pravilo definiramo svoj podatkovni tip #jl("Trapez")
+in metodo #jl("integriraj(i::Integral, m::Trapez)") za splošno funkcijo #jl("integriraj"). Test
 povzame odločitve in zasnovo programskega vmesnika, kot smo si ga zamislili.
 
 #let test13(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja13/test/runtests.jl", koda)))
 
-#test13("# trapezna")[Test za sestavljeno trapezno formulo]
+#test13("# Trapez")[Test za sestavljeno trapezno formulo]
 
 #pagebreak()
 Definirajmo naslednje tipe in funkcije in poskrbimo, da bo test uspešen:
 - tip #jl("Interval(a, b)"), ki predstavlja zaprti interval $[a, b]$ (@pr:13-Interval),
 - tip #jl("Integral(fun, interval::Interval)"), ki predstavlja določeni integral funkcije #jl("fun")
   na intervalu #jl("interval") (@pr:13-Integral),
-- tip #jl("Trapezna(n::Int)"), ki predstavlja sestavljeno trapezno formulo z $n$ enakomernimi koraki
-  (@pr:13-Trapezna) in
-- metodo #jl("integriraj(i::Integral, k::Trapezna)"), ki izračuna približek za integral #jl("i")
+- tip #jl("Trapez(n::Int)"), ki predstavlja sestavljeno trapezno formulo z $n$ enakomernimi koraki
+  (@pr:13-Trapez) in
+- metodo #jl("integriraj(i::Integral, k::Trapez)"), ki izračuna približek za integral #jl("i")
   s sestavljno trapezno formulo #jl("k") (@pr:13-int-trapez).
 
 == Simpsonovo pravilo
@@ -187,7 +181,7 @@ vozlišča pa $x_k = a + k h$.
 Pri trapezni in Simpsonovi kvadraturi so vozlišča razporejena na robu in sredini
 integracijskega intervala, uteži pa so določene tako, da je formula točna za polinome čim višjih
 stopenj. To ni optimalna izbira. Če dovolimo, da so vozlišča razporejena drugače, lahko
-dobimo kvadraturo, ki je točna za polinome višjih stopenj. Za integral na intervalu $[-1, 1]$
+dobimo kvadraturo, ki je točna za polinome še višjih stopenj. Za integral na intervalu $[-1, 1]$
 dobimo #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreove]
 kvadrature
 
@@ -197,12 +191,16 @@ $<eq:10-gauss-lagendre>
 
 ki so del družine
 #link("https://en.wikipedia.org/wiki/Gaussian_quadrature")[Gaussovih kvadratur]. Za
-Gauss-Legendrovo kvadraturo z $n$ vozlišči so ničle Legendreovega
-polinoma stopnje $n$ optimalna izbira vozlišč. Vozlišča $x_k$ in uteži $u_k$ za Gaussove kvadrature
-lahko poiščemo z
-#link("https://en.wikipedia.org/wiki/Gaussian_quadrature#The_Golub-Welsch_algorithm")[Golub-Welschovim algoritmom],
-a to presega obseg te vaje. Za izračun vozlišč in uteži bomo uporabili knjižnico
-#jl("FastGaussQuadrature.jl").
+Gauss-Legendreovo kvadraturo z $n$ vozlišči so ničle Legendreovega
+polinoma stopnje $n$ optimalna izbira vozlišč. Gauss-Legendreova kvadratura z $n$ vozlišči je točna
+za polinome stopnje $2n - 1$. Za $n=1$, dobimo sredinsko pravilo z vozliščem v $x_1=0$, ki je točna
+za linearne funkcije. Za $n=2$ dobimo formulo
+
+$
+  integral_(-1)^1 f(x) d x approx f(-1/sqrt(3)) + f(1/sqrt(3)),
+$<eq:13-gl2>
+
+ki je točna za kubične polinome.
 
 Če želimo Gauss-Legendreovo kvadraturo uporabiti na poljubnem intervalu $[a, b]$,
 moramo interval $[-1, 1]$ preslikati na $[a, b]$. To naredimo z linearno preslikavo oziroma uvedbo
@@ -218,7 +216,8 @@ $
   integral_(a)^(b) f(x) d x = integral_(-1)^1 f(x(t)) x'(t) d t =
   1/2 (b - a) integral_(-1)^1 f(x(t)) d t,
 $
-kjer smo upoštevali, da je $x'(t) = 1/2 (b-a)$. Gauss-Legendrove formule na $[a, b]$ so tako
+
+kjer smo upoštevali, da je $x'(t) = 1/2 (b-a)$. Gauss-Legendreove formule na $[a, b]$ so tako
 
 $
   integral_(a)^(b) f(x) d x = 1/2 (b-a) sum_(k=1)^N w_k f(x_k),
@@ -228,9 +227,54 @@ $
   x_k = (b - a)/2 t_k + (a + b)/2.
 $
 
-Napišimo sedaj
+
+Vozlišča $x_k$ in uteži $u_k$ za Gauss-Legendreove kvadrature ni tako enostavno poiskati, saj moramo
+poiskati ničle ustreznega Legendreovega polinoma in določiti uteži. Obstaja tudi
+#link("https://en.wikipedia.org/wiki/Gaussian_quadrature#The_Golub-Welsch_algorithm")[Golub-Welschovim algoritem],
+ki je vozlišča in uteži poišče kot lastne vrednosti posebej ustvarjene tridiagonalne matrike.
+A računanje vozlišč in uteži presega obseg te vaje in zato bomo za njihov izračun uporabili knjižnico
+#jl("FastGaussQuadrature.jl").
+
+Pri trapeznem in Simpsonovem pravilu smo uteži in vozlišča računali
+sproti med računanjem približka za integral. To smo si lahko privoščili, ker je izračun
+precej enostaven in ne zahteva veliko časa v primerjavi z izračunom utežene vsote. Pri
+Gauss-Legendreovih kvadraturah pa izračun vozlišč in uteži precej zahtevnejši, zato si je vozlišča
+in uteži smiselno shraniti za večkratno uporabo. Kvadrature bomo obravnavali splošno in definirali
+podatkovni tip #jl("Kvadratura"), ki predstavlja splošno kvadraturo oblike
+
+$
+  integral_a^b f(x) d x approx sum_(k=1)^n u_k f(x_k).
+$<eq:13-kvad>
+
+Če pogledamo podrobno je kvadratura @eq:13-kvad podana z vozlišči $x_1, x_2, med dots, med x_n$,
+utežmi $u_1, u_2, med dots, med u_n$ in intervalom $[a, b]$. Podatkovni tip #jl("Kvadratura") bo
+tako imel tri polja:
+- #jl("x") vektor vozlišč,
+- #jl("u") vektor uteži in
+- #jl("interval") interval.
+
+Ko imamo kvadraturo definirano, hočemo z njo izračunati integral. Napišimo v duhu testno vodenega
+razvoja test za uporabo podatka tipa #jl("Kvadratura"). Kot smo videli, lahko
+kvadraturo oblike @eq:13-kvad uporabimo na poljubnem intervalu, zato pričakujemo, da
+funkcija #jl("integriraj") deluje tudi za integrale po intervalih, ki niso enaki intervalu
+za kvadraturo. Za primer bomo uporabili Gauss-Legendreovo kvadraturo z dvema vozliščema @eq:13-gl2,
+ki je točna za kubične polinome.
+
+#test13("# kvadratura")[Test za integracijo s splošno kvadraturo oblike @eq:13-kvad]
+
+Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
+približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-int-gl).
+
+Napišimo sedaj test za Gauss-Legendreove kvadrature. Uporabimo dejstvo, da so kvadrature
+z $n$ vozlišči točne za polinome stopnje $2n-1$.
+
+#test13("# gl")[Test za generiranje Gauss-Legendreovih kvadratur]
+
+Napišimo funkcijo #jl("glkvad(n::Int)"), ki vrne Gauss-Legendreovo kvadraturo z $n$ vozlišči
+(@pr:13-glkvad).
+
 #opomba(naslov: [Zakaj so vse kvadraturne formule utežene vsote?])[
-Vse kvadrature, ki jih poznamo, lahko na nek način prevedemo na  uteženo
+Vse kvadrature, ki jih poznamo, lahko na nek način prevedemo na uteženo
 vsoto funkcijskih vrednosti
 $
   integral_a^b f(x) = sum_(i=1)^n u_i f(x_i).
@@ -241,15 +285,12 @@ Zakaj je tako? Integral lahko obravnavamo kot funkcijo na prostoru integrabilnih
 $
   I_([a, b]): f |-> integral_a^b f(x) d x.
 $
-Kvadraturo zapišemo kot funkcijo končnega števila funkcijskih vrednosti v izbranih vozliščih in jo
-tudi obravnavamo kot funkcijo na prostoru integrabilnih funkcij:
 
-$
-  K(f) = k(f(x_1), f(x_2), med dots, med f(x_(n))).
-$
-
-Funkcija $I_([a, b])$ je linearen funkcional, zato želimo, da je tudi kvadratura $K$ linearen
-funkcional, kar pa pomeni, da mora biti funkcija $k(f(x_1), f(x_2), med dots, med f(x_(n))$ linearna in
+Funkcija $I_([a, b])$ je linearen funkcional, zato želimo, da je tudi kvadratura $K(f)$ linearen
+funkcional. Če želimo kvadraturo v končnem času izračunati,
+mora biti odvisna le od končnega števila funkcijskih vrednosti. To pa pomeni, da mora biti funkcija
+$K(f)$ linearna kombinacija končnega števila funkcijskih vrednosti
+$f(x_1), f(x_2), med dots, med f(x_(n))$:
 
 $
   K(f) = k(f(x_1), f(x_2), med dots, med f(x_(n))) = sum_(i=1)^n u_i f(x_i).
@@ -260,96 +301,120 @@ jo integriramo. Zato adaptivne metode strogo gledano niso linearni funkcionali, 
 lahko prevedemo na uteženo vsoto.
 ]
 
-Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
-približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-int-gl) in funkcijo
-#jl("glkvad(n::Int)"), ki vrne Gauss-Legendrovo kvadraturo za interval $[-1, 1]$ z $n$ vozlišči
-(@pr:13-glkvad).
-
-#figure(caption: [Absolutna vrednost napake pri izračunu $integral_0^3 sin(x^2) d x$ z različnimi
-  kvadraturami],
-  image("img/13-napaka-sin.svg", width: 60%))
-
-== Preslikava na drug interval
-
-Določeni integral
-
-$
-  integral_(a)^(b) f(x) d x
-$<eq:13-int-a-b>
-
-lahko s preprosto linearno preslikavo premaknemo na drug interval $[c, d]$. V integral @eq:13-int-a-b
-vpeljemo novo spremenljivko $t = t(x) = k x + n$, ki preslika interval $[a, b]$ na interval $[c, d]$.
-Formulo za $t$ določimo tako, da najprej preslikamo $[a, b]$ s preslikavo $s = (x - a)/(b-a)$ na
-$[0, 1]$ in nato $s$ preslikamo $t = (d - c)s + c$ z intervala $[0, 1]$ na interval $[c, d]$.
-Inverzno preslikavo $x = x(t)$ izračunamo enako:
-
-$
-  t(x) = (d - c)/(b - a)(x - a) + c quad #text[ in ] quad
-  x(t) = (b - a)/(d - c)(t - c) + a.
-$
-
-Integral @eq:13-int-a-b lahko sedaj preslikamo na $[c, d]$:
-
-$
-  integral_(a)^(b) f(x) d x = integral_(t(a))^(t(b)) f(x(t)) x'(t) d t =
-  (b-a)/(d-c) integral_c^d f((b -a)/(d-c)(t -c) + a) d t.
-$<eq:13-int-ab-cd>
-
-Pri izpeljavi @eq:13-int-ab-cd smo upoštevali, da je $d x = x'(t) d t = (b -a)/(d -c) d t$.
-Če imamo kvadraturno formulo za interval $[c, d]$:
-
-$
-  integral_c^d f(t) d t approx sum_(i=1)^n u_i f(t_i),
-$
-
-lahko s preslikavo @eq:13-int-ab-cd zapišemo kvadraturno formulo za poljuben interval $[a, b]$:
-
-$
-  integral_a^b f(x) d x = (b - a)/(d - c)integral_c^d f(x(t)) d t approx
-  (b - a)/(d - c) sum_(i=1)^n u_i f(x_i),
-$
-
-kjer so nova vozlišča $x_i$ enaka:
-
-$
-  x_i = (b - a)/(d - c)(t_i - c) + a.
-$
-
-== Adaptivne metode
-
-#opomba(naslov:[Ponovna uporaba že izračunanih funkcijskih vrdnosti])[
-V naši implementaciji adaptivne metode smo vrednosti funkcije v nekatirh vozliščih večkrat
-izračunali. Hitrost smo žrtvovali v prid enostavnosti in preglednosti. V praksi se adaptivne
-metode implementira na način, da se funkcijske vrednosti v vsakem vozlišču izračuna samo enkrat
-in se nato te vrednosti uporabi v nadalnjih izračunih.
-
-To dobro deluje za kvadrature kot so Simpsonova in trapezna formula, ki spadajo med
-#link("https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas")[Newton-Cotesove] kvadrature.
-Za Gaussove kvadrature je več težav, saj se vozlišča kvadratur višjega reda ne prekrivajo z vozlišči
-kvadratur nižjega reda. Rešitev ponujajo
-#link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula")[Gauss-Kronrodove kvadrature],
-ki so podane kot pari kvadratur, pri katerem kvadratura višjega reda vsebuje vsa vozlišča
-kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendrova kvadratura z $n$ vozlišči.
-Nato se izbere dodatnih $n+1$ vozlišč in na novo določi uteži, tako da je druga kvadratura čim
-višjega reda.
-]
 == Primeri
 
+#let demo13(koda) = code_box(jlfb("scripts/13_quad.jl", koda))
+#let demo13raw(koda) = blk("scripts/13_quad.jl", koda)
+Metode, ki smo jih implementirali v prejšnjih poglavjih, bomo uporabili za izračun integrala
+$
+  integral_0^3 sin(x^2) d x.
+$<eq:13-sinx2>
 
-== Tabela podatkov z mersko napako
+#demo13("# sin x2")
+#figure(caption: [Graf funkcije, ki jo integriramo], image("img/13-sinx2.svg", width: 60%))
 
-Predpostavimo, da je merska napaka $epsilon$ slučajna spremenljivka, ki je porazdeljena normalno
-$epsilon ~ N(0, sigma)$. V tem primeru metode visokega reda nič ne koristijo. Višji red metode bo
-zgolj bolje ocenil prispevek napake $epsilon$, ki pa je še vedno neznana. Zato v tem primeru
-povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
+Izračunajmo integral @eq:13-sinx2 z metodami, ki smo jih implementirali. Za vse metode
+uporabimo enako število vozlišč.
+
+#code_box[
+  #repl(demo13raw("# primer 1.0"), none)
+  #repl(demo13raw("# primer 1.1"), read("out/13-primer-1.1.out"))
+  #repl(demo13raw("# primer 1.2"), read("out/13-primer-1.2.out"))
+  #repl(demo13raw("# primer 1.3"), read("out/13-primer-1.3.out"))
+]
+
+Kako vemo, kateri rezultat je boljši? Točnega rezultata ne znamo izračunati, saj integral
+@eq:13-sinx2 ni elementaren. Nekako moramo oceniti napako. Uveljavili sta se dve strategiji,
+kako ocenimo napako. Za sestavljene kvadraturne formule rezultat primerjamo z rezultatom iste
+kvadrature s polovičnim korakom. Za Gauss-Legendrove kvadrature pa uporabimo kvadraturo višjega
+reda.
+
+#code_box[
+  #repl(demo13raw("# primer 1.4"), read("out/13-primer-1.4.out"))
+  #repl(demo13raw("# primer 1.5"), read("out/13-primer-1.5.out"))
+  #repl(demo13raw("# primer 1.6"), read("out/13-primer-1.6.out"))
+]
+Vidimo, da se je najbolje odrezala Gauss-Legendreova kvadratura. Oglejmo si na grafu, kako pada
+napaka s številom izračunanih funkcijskih vrednosti za vse tri metode.
+
+#demo13("# graf napake sin x2")
+
+#figure(caption: [Absolutna vrednost napake pri izračunu $integral_0^3 sin(x^2) d x$ z različnimi
+  kvadraturami. Naklon premice pri trapenem in Simpsonovem pravilu je enak redu metode.],
+  image("img/13-napaka-sin.svg", width: 60%))
+
+#opomba(naslov: [Richardsonova ekstrapolacija])[
+Če imamo kvadraturo reda $n$ za dani integral
+$
+  integral_a^b f(x) d x = K(h) + C h^n + cal(O)(h^(n+1)), quad h=(b-a)/N
+$
+
+lahko z #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo extrapolacijo]
+izpeljemo kvadraturo višjega reda:
+
+$
+  I = K(h) + C h^n + cal(O)(h^(n+1))\
+  I = K(h/2) + C h^n/2^n + cal(0)(h^(n+1))\
+  2^n I - I = 2^n K(h/2) - K(h) + cal(O)(h^(n+1))\
+  I = (2^n K(h/2) - K(h))/(2^n - 1) + cal(O)(h^(n+1)).
+$<eq:13-rich>
+
+Napako lahko ocenimo tako, da rezultat dobljen s kvadraturo $K(h)$ primerjamo z Richardonovo
+extrapolacijo @eq:13-rich:
+
+$
+  I - K(h) approx  2^n/(2^(n)-1)(K(h/2) - K(h))\
+  I - K(h/2) approx  1/(2^(n)-1)(K(h/2) - K(h)).
+$
+]
+
+Poglejmo si še en primer
+$
+  integral_(-1)^2 |2 - x^2| d x.
+$<eq:13-abs>
+
+Narišimo graf funkcije $g(x)=|2 - x^2|$ na intervalu $[-1, 2]$.
+
+#demo13("# primer 2.0")
+
+
+#figure(caption: [Graf funkcije $g(x)=|2 - x^2|$ na intervalu $[-1, 2]$],
+  image("img/13-abs.svg", width: 60%))
+
+Podobno kot prej bomo na grafu predstavili, kako je napaka odvisna od števila izračunanih vrednosti
+funkcije. V tem primeru lahko vrednost integral izračunamo:
+
+$
+ integral_(-1)^2 |2 - x^2| d x = integral_(-1)^sqrt(2)(2 - x^2) d x +
+  integral_sqrt(2)^2 -(2 - x^2) d x =\
+  F(sqrt(2)) - F(-1) - (F(2) - F(sqrt(2)) = 2F(sqrt(2)) - F(1) - F(2),
+$
+
+kjer je $F(x) = integral (2-x^2) d x = 2x -x^3/3$.
+
+#code_box[
+  #repl(demo13raw("# primer 2.1"), none)
+  #repl(demo13raw("# primer 2.2"), read("out/13-primer-2.2.out"))
+]
+
+Narišimo graf napake
+
+#demo13("# primer 2.3")
+
+#figure(caption: [Absolutna vrednost napake pri izračunu integrala @eq:13-abs z različnimi
+  kvadraturami], image("img/13-napaka-abs.svg", width: 60%))
+
+Vidimo, da pri integralu @eq:13-abs visok red kvadratur ne pomaga kaj dosti. Vse tri metode se
+obnašajo približno enako. Vzrok je v tem, da funkcije $g(x)$ ni mogoče dobro aproksimirati s
+polinomi. V takih primerih se bolje obnesejo
+#link("https://en.wikipedia.org/wiki/Adaptive_quadrature")[adaptivne kvadraturne formule].
 
 #opomba(naslov: [Kaj smo se naučili?])[
   - Kvadraturne formule se večinoma prevedejo na uteženo vsoto funkcijskih vrednostih v
     vozliščih kvadrature.
-  - Gauss-Legendrove kvadrature so najbolj primerne za integrale funkcij, ki jih lahko dobro
+  - Gauss-Legendreove kvadrature so najbolj primerne za integrale funkcij, ki jih lahko dobro
     aproksimiramo s polinomi.
   - Za splošno rabo so najbolj primerne adaptivne kvadrature.
-  - V prisotnosti šuma, kvadrature visokega reda niso veliko boljše kot trapezno pravilo.
 ]
 
 == Rešitve
@@ -358,16 +423,13 @@ povsem zadoščajo metode nizkega reda, kot je trapezna metoda.
 
 #vaja13("# Interval")[Podatkovni tip za zaprti interval $[a, b]$]<pr:13-Interval>
 #vaja13("# Integral")[Podatkovni tip za določeni integral $integral_a^b f(x) d x$]<pr:13-Integral>
-#vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno formulo z $n$ eankomernimi koraki]<pr:13-Trapezna>
-#vaja13("# integriraj trapez")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-trapez>
-#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo formulo z $2n$ eankomernimi koraki]<pr:13-simpson>
-#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-simpson>
+#vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno pravilo z $n$ eankomernimi koraki]<pr:13-Trapez>
+#vaja13("# integriraj trapez")[Funkcija, ki izračuna integral s sestavljenim trapeznim pravilom]<pr:13-int-trapez>
+#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ eankomernimi koraki]<pr:13-simpson>
+#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavlenim Simpsonovim pravilom]<pr:13-int-simpson>
 #vaja13("# Kvadratura")[Podatkovni tip za splošno kvadraturno formulo]<pr:13-Kvadratura>
 #vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-gl>
-#vaja13("# glkvad")[Izračunaj uteži in vozlišča za Gauss-Legendrovo kvadraturo z $n$ vozlišči.]<pr:13-glkvad>
-
-== Testi
-
+#vaja13("# glkvad")[Funkcija, ki izračuna uteži in vozlišča za Gauss-Legendreovo kvadraturo z $n$ vozlišči]<pr:13-glkvad>
 
 == Izpeljava Simpsonovega pravila<sec:13-izpeljava>
 

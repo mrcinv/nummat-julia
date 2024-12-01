@@ -1,12 +1,12 @@
 using Vaja13
 using Test
 
-# trapezna
+# Trapez
 @testset "Sestavljeno trapezno pravilo" begin
   i = Integral(x -> 2x + 1, Interval(1.0, 3.0))
-  @test integriraj(i, Trapezna(4)) ≈ 10
+  @test integriraj(i, Trapez(4)) ≈ 10
 end
-# trapezna
+# Trapez
 
 # simpson
 @testset "Sestavljeno Simpsonovo pravilo" begin
@@ -19,14 +19,27 @@ end
 # simpson
 
 # kvadratura
-@testset "Kvadratura" begin
-  # Simpsonova kvadratura
-  k = Kvadratura([0.0, 1.5, 3.0], [1.0, 4.0, 1.0] * (1.5 / 3), Interval(0.0, 3.0))
-  # Simpsonovo pravilo je točno za polinome stopnje 2
-  i = Integral(x -> x^2, Interval(-1.0, 3.0))
-  @test integriraj(i, k) ≈ 28 / 3
+@testset "Splošna kvadratura" begin
+  # Gauss-Legendreova kvadratura na dveh točkah
+  k = Kvadratura(1 / sqrt(3) * [-1, 1], [1.0, 1.0], Interval(-1.0, 1.0))
+  # formula je točna za kubične polinome
+  integral = Integral(x -> x^3 - x^2, Interval(-1.0, 3.0))
+  I(x) = x^4 / 4 - x^3 / 3
+  @test integriraj(integral, k) ≈ I(3) - I(-1)
 end
 # kvadratura
+
+# gl
+@testset "Gauss-Legendreove kvadrature" begin
+  k = glkvad(3)
+  @test length(k.x) == 3
+  # formula je točna za polinome do vključno stopnje 5
+  for n=1:5
+    integral = Integral(x -> x^n, Interval(0., 1.))
+    @test integriraj(integral, k) ≈ 1/(n+1)
+  end
+end
+# gl
 
 @testset "Čebiševe točke" begin
   x = Vaja13.cebiseve_tocke(5)
