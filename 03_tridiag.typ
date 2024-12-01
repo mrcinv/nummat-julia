@@ -8,13 +8,13 @@
 <naloga>
 
 - Ustvari podatkovni tip za tridiagonalno matriko ter implementiraj operacije množenja `*` z
-  vektorjem in reševanja sistema  $A x=b$ z operatorjem `\`.
+  vektorjem in reševanja sistema  $A bold(x)=bold(b)$ z operatorjem `\`.
 - Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da
   se od izhodišča oddaljimo za $k$ korakov.
   - Zapiši fundamentalno matriko za #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo], ki modelira slučajni sprehod, ki se lahko oddalji od izhodišča le za $k$ korakov.
   - Reši sistem s fundamentalno matriko in vektorjem enic.
   - Povprečno število korakov oceni še z vzorčenjem velikega števila simulacij slučajnega sprehoda.
-  Primerjaj oceno z rešitvijo sistema.
+  - Primerjaj oceno z rešitvijo sistema.
 
 == Tridiagonalne matrike
 
@@ -114,22 +114,22 @@ Podobno definiramo teste še za druge funkcije. Primeri testov so v poglavju
 
 == Reševanje tridiagonalnega sistema
 
-Poiskali bomo rešitev sistema linearnih enačb $T x = b$, kjer je matrika sistema $T$
-tridiagonalna. Sistem lahko rešimo z Gaussovo eliminacijo in obratnim vstavljanjem
-(glej učbenik @Orel_2004). Ker je v tridiagonalni matriki bistveno manj elementov, se število potrebnih
+Poiskali bomo rešitev sistema linearnih enačb $T bold(x) = bold(b)$, kjer je matrika sistema $T$
+tridiagonalna. Sistem lahko rešimo z Gaussovo eliminacijo in obratnim vstavljanjem @Orel_2004. Ker je v tridiagonalni matriki bistveno manj elementov, se število potrebnih
 operacij tako za Gaussovo eliminacijo kot za obratno vstavljanje bistveno zmanjša. Dodatno
-predpostavimo, da je matrika $T$ takšna, da med eliminacijo ni treba delati delnega pivotiranja.
+predpostavimo, da je matrika $T$ takšna, da med eliminacijo ni treba delati delnega pivotiranja
+(glej poglavje 2.5 v @Orel_2004).
 V nasprotnem primeru se tridiagonalna oblika matrike med Gaussovo eliminacijo podre in se algoritem
-nekoliko zakomplicira. Za diagonalno dominantne matrike po stolpcih pri Gaussovi eliminaciji
-pivotiranje ni potrebno.
-
-Časovna zahtevnost Gaussove eliminacije brez pivotiranja je za tridiagonalni sistem $T x = b$ linearna $cal(O)(n)$ namesto kubična $cal(O)(n^3)$. Za obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša na linearno $cal(O)(n)$.
+nekoliko zakomplicira. Časovna zahtevnost Gaussove eliminacije brez pivotiranja je za
+tridiagonalni sistem $T bold(x) = bold(b)$ linearna $cal(O)(n)$ namesto kubična $cal(O)(n^3)$. Za
+obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša na linearno
+$cal(O)(n)$.
 
 Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napišimo funkcijo `\`:
 
-#code_box[ #jl("function \(T::Tridiagonal, b::Vector)")]
+#code_box[ #jl("function \(T::Tridiagonal, b::Vector),")]
 
-ki poišče rešitev sistema $T x = b$ (rešitev je @pr:03-backslash). V datoteko
+ki poišče rešitev sistema $T bold(x) = bold(b)$ (rešitev je @pr:03-backslash). V datoteko
 `Vaja03/test/runtests.jl` dodajte test, ki na primeru preveri pravilnost funkcije `\`.
 
 == Slučajni sprehod
@@ -145,8 +145,8 @@ v stanju $n$, se lahko v naslednjem koraku z verjetnostjo $p in [0, 1]$ premakne
 ali z verjetnostjo $q = 1 - p$ v stanje $n + 1$. Prehodne verjetnosti slučajnega sprehoda so enake:
 
 $
-  P(X_(i+1) = n + 1 | X_i = n) &= q\
-  P(X_(i+1) = n - 1 | X_i = n) &= p.
+  P(X_(i+1) = n - 1 | X_i = n) &= p\
+  P(X_(i+1) = n + 1 | X_i = n) &= q.
 $
 
 #opomba(naslov: [Definicija Markovske verige])[
@@ -180,17 +180,25 @@ Simulirajmo prvih 100 korakov slučajnega sprehoda
 )
 
 #opomba(naslov: [Prehodna matrika Markovske verige])[
-Za Markovsko verigo s končno množico stanj ${x_1, x_2, dots x_n}$, lahko prehodne verjetnosti zložimo v matriko. Brez škode lahko stanja ${x_1, x_2, dots x_n}$ nadomestimo z naravnimi števili ${1, 2, dots n}$. Matriko $P$, katere elementi so prehodne verjetnosti prehodov med stanji Markovske verige
+Za Markovsko verigo s končno množico stanj ${x_1, x_2, dots x_n}$, lahko prehodne verjetnosti
+zložimo v matriko. Brez škode lahko stanja ${x_1, x_2, dots x_n}$ nadomestimo z naravnimi
+števili ${1, 2, dots n}$. Matriko $P$, katere elementi so prehodne verjetnosti prehodov med
+stanji Markovske verige
+
 $
 p_(i j) = P(X_n = j| X_(n-1) = i),
 $
+
 imenujemo #link("https://sl.wikipedia.org/wiki/Stohasti%C4%8Dna_matrika")[prehodna matrika]
 Markovske verige. Za prehodno matriko velja, da vsi elementi ležijo na $[0,1]$
-in da je vsota elementov po vrsticah enaka 1
+in da je vsota elementov po vrsticah enaka $1$
+
 $
 sum_(j=1)^n p_(i j) = 1.
 $
-Posledično je vektor samih enic $bold(1)=[1, 1, dots, 1]^T$ lastni vektor matrike $P$ za lastno vrednost $1$:
+
+Posledično je vektor samih enic $bold(1)=[1, 1, dots, 1]^T$ lastni vektor matrike $P$ za lastno
+vrednost $1$:
 
 $
 P bold(1) = bold(1).
@@ -204,15 +212,20 @@ $
 ]
 
 == Pričakovano število korakov
-Poiskati želimo pričakovano število korakov, ko se slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Zato bomo privzeli, da se sprehod v stanjih $-k$ in $k$ ustavi in se ne premakne več.
+Poiskati želimo pričakovano število korakov, ko se slučajni sprehod prvič pojavi v stanju $k$ ali
+$-k$. Zato bomo privzeli, da se sprehod v stanjih $-k$ in $k$ ustavi in se ne premakne več.
 
-Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za  absorbirajoče stanje $k$ je diagonalni element prehodne matrike enak $1$, vsi ostali elementi v vrstici pa $0$:
+Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za
+absorbirajoče stanje $k$ je diagonalni element prehodne matrike enak $1$, vsi ostali elementi v
+vrstici pa $0$:
+
 $
 p_(k k) & = P(X_(i+1)=k | X_i = k) = 1\
 p_(k l) & = P(X_(i+1)=l | X_i = k) = 0.
 $
 
-Stanje, ki ni absorbirajoče, imenujemo #emph[prehodno stanje]. Markovske verige, ki vsebujejo vsaj eno absorbirajoče stanje, imenujemo
+Stanje, ki ni absorbirajoče, imenujemo #emph[prehodno stanje]. Markovsko verigo, ki vsebujejo vsaj
+eno absorbirajoče stanje, imenujemo
 #link("https://en.wikipedia.org/wiki/Absorbing_Markov_chain")[absorbirajoča Markovska veriga].
 
 Predpostavimo lahko, da je začetno stanje enako $0$. Iščemo pričakovano število korakov, ko se
@@ -260,7 +273,7 @@ $ (I - Q) bold(m) = bold(1). $
 
 
 Če nas zanima, kdaj bo sprehod prvič za $k$ oddaljen od izhodišča, lahko
-začnemo v $0$ in stanji $k$ in $-k$ proglasimo za absorpcijska
+začnemo v $0$ in stanji $k$ in $-k$ proglasimo za absorbirajoča
 stanja. Prehodna matrika, ki jo dobimo, je tridiagonalna z $0$ na
 diagonali. Matrika $I - Q$ je prav tako tridiagonalna z $1$ na
 diagonali in z negativnimi verjetnostmi $-p$ na prvi poddiagonali
@@ -268,7 +281,13 @@ in $-q = p - 1$ na prvi naddiagonali:
 
 $ I - Q = mat(delim: "(", 1, - q, 0, dots.h, 0; - p, 1, - q, dots.h, 0; dots.v, dots.down, dots.down, dots.down, dots.v; 0, dots.h, - p, 1, - q; 0, dots.h, 0, - p, 1). $
 
-Matrika $I - Q$ je tridiagonalna in po stolpcih diagonalno dominantna, zato lahko
+Matrika $I - Q$ je tridiagonalna. Poleg tega je po stolpcih diagonalno dominantna in v prvem in
+zadnjem stolpcu strogo diagonalno dominatna#footnote[
+Matrika je po stolpcih _diagonalno dominantna_, če za vsak stolpec velja, da je
+absolutna vrednost diagonalnega elementa večja ali enaka vsoti absolutnih vrednosti vseh ostalih
+elementov v stolpcu: $|a_(i i)|>=sum_(i eq.not j) |a_(j i)|$. Če je matrika strogo diagonalno
+dominantna vsaj v enem stolpcu, potem je Gaussova eleminacija brez pivotiranja numerično
+stabilna @plestenjak2015.], zato lahko
 uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi
 matriko $I - Q$:
 
@@ -277,7 +296,7 @@ code_box(
   jlfb("scripts/03_tridiag.jl", "# matrika_sprehod")
 ),
 caption: [Sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod, ki se konča,
-ko se prvič oddalji za $k$ korakov od izhodišča]
+ko se prvič oddalji za $k$ korakov od izhodišča.]
 )<pr:03-matrika-sprehod>
 
 Pričakovano število korakov izračunamo kot rešitev sistema $(I-Q) bold(k) = bold(1)$.
@@ -298,7 +317,8 @@ V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanj
 
 #figure(
   image("img/03a_koraki.svg", width:60%),
-  caption: [Pričakovano število korakov, ko slučajni sprehod prvič doseže stanji $-10$ ali $10$, v odvisnosti od začetnega stanja $i in {-9, -8 dots -1, 0, 1 dots 8, 9}$.]
+  caption: [Pričakovano število korakov, ko slučajni sprehod prvič doseže stanji $-10$ ali $10$,
+    v odvisnosti od začetnega stanja $i in {-9, -8 dots -1, 0, 1 dots 8, 9}$.]
 )
 
 Za konec se prepričajmo še s
@@ -337,18 +357,18 @@ povprečjem po velikem številu sprehodov.
 code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# size")
 ),
-caption: [Metoda `size` vrne dimenzije matrike]
+caption: [Metoda `size` vrne dimenzije matrike.]
 )<pr:03-size>
 
 #figure(code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# getindex")
 ),
-caption: [Metoda `getindex` se pokliče, ko uporabimo izraz `T[i,j]`]
+caption: [Metoda `getindex` se pokliče, ko uporabimo izraz `T[i,j]`.]
 )<pr:03-getindex>
 
 #figure(
   code_box(jlfb("Vaja03/src/Vaja03.jl", "# setindex")),
-  caption:[Metoda `setindex!` se pokliče, ko uporabimo izraz `T[i,j]=x`]
+  caption:[Metoda `setindex!` se pokliče, ko uporabimo izraz `T[i,j]=x`.]
 )<pr:03-setindex>
 
 #figure(

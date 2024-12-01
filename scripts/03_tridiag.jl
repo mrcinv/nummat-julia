@@ -3,8 +3,10 @@ using Random
 begin
   Random.seed!(2)
   # sprehod
-  """ Simuliraj `n` korakov slučajnega sprehoda s prehodno verjetnostima `p`
-      in `1-p`."""
+  """
+  Simuliraj `n` korakov slučajnega sprehoda s prehodnima verjetnostima `p`
+  in `1-p`.
+  """
   function sprehod(p, n)
     x = zeros(n)
     for i = 1:n-1
@@ -37,9 +39,9 @@ matrika_sprehod(k, p) = Tridiag(-p * ones(2k - 2), ones(2k - 1), -(1 - p) * ones
 """
     Em = koraki(k, p)
 
-Izračunaj pričakovano število korakov `Em`, ki jih potrebuje slučajni sprehod, 
+Izračunaj pričakovano število korakov `Em`, ki jih potrebuje slučajni sprehod,
 da doseže stanje `0` ali `2k`. Komponente vektorja `Em` vsebujejo pričakovano
-število korakov, da sprehod pride v stanje `0` ali `2k`, če začne v stanju med 
+število korakov, da sprehod pride v stanje `0` ali `2k`, če začne v stanju med
 `1` in `2k - 1`.
 """
 koraki(k, p) = matrika_sprehod(k, p) \ ones(2k - 1)
@@ -57,7 +59,7 @@ savefig("img/03a_koraki.svg")
     korak(k, p)
 
 Izračunaj pričakovano število korakov, ki jih potrebuje slučajni sprehod, da se za `k`
-korakov oddalji od izhodišča. Vrednost `p` je prehodna verjetnost, da se sprehod premakne 
+korakov oddalji od izhodišča. Vrednost `p` je prehodna verjetnost, da se sprehod premakne
 v levo.
 """
 korak(k, p) = koraki(k - 1, p)[k]
@@ -77,7 +79,7 @@ naslednje_stanje(p, x0) = x0 + (rand() < p ? -1 : 1)
 
 Simuliraj slučajni sprehod s prehodnima verjetnostima `p` in `1-p`.
 Vrni število korakov, ki jih slučajni sprehod potrebuje, da se prvič
-oddalji za `k` korakov od izhodišča. 
+oddalji za `k` korakov od izhodišča.
 """
 function simuliraj_sprehod(k, p, x0=0)
   koraki = 0
