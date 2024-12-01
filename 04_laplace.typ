@@ -49,35 +49,39 @@ naloge:
 
 Ploskev v trirazsežnem prostoru lahko predstavimo eksplicitno s funkcijo dveh spremenljivk
 $z = u (x, y)$, ki predstavlja višino ploskve nad točko $(x, y)$. Naša naloga je poiskati približek
-za funkcijo $u(x, y)$ na danem pravokotnem območju, ki opisuje obliko milne opne napete na žični
+za funkcijo $u$ na danem pravokotnem območju, ki opisuje obliko milne opne, napete na žični
 zanki s pravokotnim tlorisom.
 
-Funkcija $u(x, y)$, ki opisuje milno opno, zadošča matematična enačbi:
-
+Funkcija $u$, ki opisuje milno opno, zadošča
+#link("https://en.wikipedia.org/wiki/Young%E2%80%93Laplace_equation")[Young-Laplaceovi enačbi]:
 $
-  Delta u(x,y) = (partial ^2 u)/(partial x^2) + (partial ^2 u)/(partial y^2) = rho(x, y),
-$ <eq:Poisson>
+  (1+u_(x)^2) u_(y y) -u_(x) u_(y) u_(x y) + (1 + u_(y)^2)u_(x x) = rho(x, y),
+$ <eq:4-young-laplace>
 
-znani pod imenom
-#link("https://sl.wikipedia.org/wiki/Poissonova_ena%C4%8Dba")[Poissonova enačba]. Diferencialni
-operator
-$
-Delta u(x, y) = (partial ^2 u)/(partial x^2) + (partial ^2 u)/(partial y^2)
-$<eq:operator>
-imenujemo #link("https://sl.wikipedia.org/wiki/Laplaceov_operator")[Laplaceov operator].
+kjer so $u_x=(partial u)/(partial x)$, $u_y=(partial u)/(partial y)$,
+$u_(x x) = (partial^2 u)/(partial x^2)$, $u_(x y) = (partial^2 u)/(partial x partial y)$
+in $u_(y y) = (partial^2 u)/(partial y^2)$ parcialni odvodi funkcije $u$.
+Funkcija $rho$ je sorazmerna tlačni razliki med zgornjo in spodnjo površino milne opne in je posledica teže milnice.
+Enačba @eq:4-young-laplace vsebuje parcialne odvode in jo zato uvrščamo med
+#link("https://sl.wikipedia.org/wiki/Parcialna_diferencialna_ena%C4%8Dba")[parcialne diferencialne
+enačbe] ali s kratico PDE. Parcialni odvodi nastopajo nelinearno, zato enačbo @eq:4-young-laplace
+uvrščamo med nelinearne PDE.
 
-Funkcija $rho(x, y)$ je sorazmerna tlačni razliki med zgornjo in spodnjo
-površino milne opne in je posledica teže milnice. Če tlačno razliko zanemarimo, dobimo
+Če zanemarimo tlačno razliko $rho$ in višje potence odvodov $u_x^2$, $u_y^2$ in $u_x u_y$, dobimo
 #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo]:
 
 $
-  Delta u(x, y) = 0.
+  Delta u(x, y) = u_(x x) + u_(y y)= 0.
 $<eq:Laplace>
 
-Enačbo, ki vsebuje parcialne odvode, imenujemo
-#link("https://sl.wikipedia.org/wiki/Parcialna_diferencialna_ena%C4%8Dba")[parcialna diferencialna
-enačba] ali s kratico PDE. Rešitev PDE je funkcija več spremenljivk, ki zadošča dani enačbi.
-Vrednosti $u(x, y)$ na robu območja so določene z obliko zanke, medtem ko za vrednosti v notranjosti
+Diferencialni operator
+
+$
+Delta u(x, y) = u_(x x) + u_(y y)
+$<eq:operator>
+imenujemo #link("https://sl.wikipedia.org/wiki/Laplaceov_operator")[Laplaceov operator].
+
+Vrednosti $u$ na robu območja so določene z obliko zanke, medtem ko za vrednosti v notranjosti
 velja enačba @eq:Laplace.  Problem za
 diferencialno enačbo, pri katerem so podane vrednosti na robu, imenujemo
 #link("https://en.wikipedia.org/wiki/Boundary_value_problem")[robni problem]. Ker je oblika milnice
@@ -85,31 +89,32 @@ določena na robu, lahko iskanje oblike milnice prevedemo na robni problem za La
 območju, omejenem s tlorisom žične zanke.
 
 V nadaljevanju predpostavimo, da je območje pravokotnik $[a, b] times [c, d]$.
-Poleg Laplaceove enačbe @eq:Laplace veljajo za vrednosti funkcije $u(x, y)$
+Poleg Laplaceove enačbe @eq:Laplace veljajo za vrednosti funkcije $u$
 tudi #emph[robni pogoji]:
 
 $
-  u(x, c) &= f_s (x), \
-  u(x, d) &= f_z (x), \
-  u(a, y) &= f_l (y)text(" in") \
-  u(b, y) &= f_d (y),
+  u(x, c) &= f_s (x),\
+  u(x, d) &= f_z (x),\
+  u(a, y) &= f_l (y),\
+  u(b, y) &= f_d (y).
 $<eq:robni-pogoji>
 
-kjer so $f_s, f_z, f_l$ in $f_d$ dane funkcije. Rešitev robnega
+Pri tem so $f_s, f_z, f_l$ in $f_d$ dane funkcije. Rešitev robnega
 problema je tako odvisna od izbire območja, kot tudi od robnih pogojev.
 
-== Diskretizacija in linearni sistem enačb
+== Diskretizacija in sistem linearnih enačb
 <diskretizacija-in-linearni-sistem-enačb>
-Problema se bomo lotili numerično, zato bomo vrednosti
-$u(x, y)$ poiskali le v končno mnogo točkah: problem bomo
-#link("https://en.wikipedia.org/wiki/Discretization")[diskretizirali].
+Problema se lotimo numerično, zato vrednosti
+$u(x, y)$ poiščemo le v končno mnogo točkah: problem
+#link("https://en.wikipedia.org/wiki/Discretization")[diskretiziramo].
 Za diskretizacijo je najpreprosteje uporabiti enakomerno razporejeno pravokotno mrežo točk na
 pravokotniku. Točke na mreži imenujemo #emph[vozlišča]. Zaradi enostavnosti se omejimo na mreže z
 enakim razmikom v obeh koordinatnih smereh. Interval $[a, b]$
-razdelimo na $n + 1$ delov, interval $[c, d]$ pa na $m + 1$ delov. Dobimo zaporedje koordinat, ki definirajo pravokotno mrežo točk $(x_j, y_i)$:
+razdelimo na $n + 1$ delov, interval $[c, d]$ pa na $m + 1$ delov tako, da sta razmika v obeh
+smereh približno enaka. Dobimo zaporedje koordinat, ki definirajo pravokotno mrežo točk $(x_j, y_i)$:
 $
-  a = & x_0, & x_1 & med dots med & x_(n+1)&=b #text[ in ]\
-  c = & y_0, & y_1 & med dots med & y_(m+1)&=d.
+  a = & x_0, & x_1, med dots, med & x_(n+1)&=b & #text[ in ]\
+  c = & y_0, & y_1, med dots, med & y_(m+1)&=d.
 $
 
 Namesto funkcije $u: [a, b] times [c, d] arrow.r bb(R)$
@@ -268,9 +273,9 @@ V splošnem je formulo za vektor desnih strani lažje sprogramirati, zato bomo z
 #let vecop = math.op("vec", limits: true)
 
 #opomba(naslov: [Razvrstitev po stolpcih in operator $vecop$])[
-Eden od načinov, kako lahko elemente matrike razvrstimo v vektor, je tako, da stolpce
-matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$ lahko
-izrazimo z indeksi $i,j$ v matriki s formulo
+Elemente matrike lahko razvrstimo v vektor tako, da stolpce
+matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$
+izrazimo z indeksi v matriki $i,j$ s formulo
 
 $ k = i+(j-1)m. $
 
@@ -314,7 +319,7 @@ $
   &= u_(i - 1 j) -2u_(i j) + u_(i +1 j) + u_(i j-1) -2u_(i j) + u_(i j+1),
 $
 
-kar je enako desni strani enačbe @eq:ravnovesje.
+kar je enako levi strani enačbe @eq:ravnovesje.
 
 Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s
 #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kroneckerjevim produktom $times.circle$],
@@ -379,7 +384,7 @@ Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z rob
 $
 u(x, 0) = u(x, pi) &= sin(x) #text[ in ]\
 u(0, y) = u(pi, y) &= sin(y)
-$
+$<eq:4-rp-sin-0>
 lahko predstavimo z objektom:
 
 #code_box[
@@ -388,7 +393,7 @@ lahko predstavimo z objektom:
 
 Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale
 rešitev za dan robni problem. Kot smo videli v @diskretizacija-in-linearni-sistem-enačb[poglavju],
-lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega sistema enačb
+lahko približek za rešitev robnega problema poiščemo kot rešitev sistema linearnih enačb
 @eq:ravnovesje. Najprej napišemo funkcijo, ki generira matriko sistema:
 
 #code_box[
@@ -398,19 +403,20 @@ lahko približek za rešitev robnega problema poiščemo kot rešitev linearnega
 za dane dimenzije notranje mreže $n times m$ (za rešitev glej @pr:matrika). Nato na robu mreže
 izračunamo robne pogoje in sestavimo vektor desnih strani sistema @eq:ravnovesje. Ker je
 preslikovanje dvojnega indeksa v enojni in nazaj precej sitno, bomo večino operacij
-naredili na matriki vrednosti $U = [u_(i j)]$ dimenzij $(m+2) times (n+2)$, ki vsebuje tudi
-vrednosti na robu. Napisali bomo funkcijo
+naredili na matriki $U = [u_(i j)]$ dimenzij $(m+2) times (n+2)$, ki vsebuje tudi
+vrednosti na robu. Napišimo funkcijo
+
 #code_box[
   #jl("U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, h),")
 ]
-ki poišče pravokotno mrežo z razmikom med vozlišči približno `h` in
-izračuna vrednosti na robu. Rezultati funkcije `diskretiziraj` so matrika `U0`, vektor`x` in
-vektor `y`. Rezultat `U0` je matrika, ki ima notranje elemente
-enake $0$, robni elementi pa so določeni z robnimi pogoji. Vektorja `x` in `y` pa vsebujeta delilne
+ki poišče pravokotno mrežo z razmikom med vozlišči približno enakim `h` in
+izračuna vrednosti na robu. Rezultati funkcije `diskretiziraj` so matrika `U0`, vektor `x` in
+vektor `y`. Matrika `U0` ima notranje elemente
+enake $0$, robni elementi pa so določeni z robnimi pogoji. Vektorja `x` in `y` vsebujeta delilne
 točke na intervalih $[a, b]$ in $[c, d]$.
 
-Iz matrike `U0` lahko sedaj dokaj preprosto sestavimo desne strani enačb. Notranje indekse
-zaporedoma zamaknemo v levo, desno, gor in dol in seštejemo ustrezne podmatrike.
+Iz matrike `U0` preprosto sestavimo desne strani enačb. Notranje indekse
+zaporedoma zamaknemo v levo, desno, gor in dol ter seštejemo ustrezne podmatrike.
 Rezultat nato spremenimo v vektor s funkcijo #jl("vec") (za rešitev glej @pr:desne-strani).
 
 Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo:
@@ -420,15 +426,15 @@ Ko imamo pripravljeno matriko in desne strani, vse skupaj zložimo v funkcijo:
 )
 
 ki za dani robni problem `rp` in razmik med vozlišči `h` sestavi matriko sistema, izračuna desne
-strani na podlagi robnih pogojev in reši sistem. Rezultat nato vrne v obliki matrike vrednosti `U`
-in vektorjev delilnih točk `x` in `y` (za rešitev glej @pr:resi).
+strani na podlagi robnih pogojev in reši sistem. Funkcija vrne matriko vrednosti `U`
+in vektorja delilnih točk `x` in `y` (za rešitev glej @pr:resi).
 
-Napisane programe uporabimo za rešitev robnega problema za pravokotnik $[0, pi]times[0, pi]$ z
-robnimi pogoji
+Napisane programe uporabimo za rešitev robnega problema na pravokotniku $[0, pi]times[0, pi]$ z
+robnimi pogoji:
 $
-  u(0, y) &= 0\
-  u(pi, y) &= 0\
-  u(x, 0) &= sin(x)\
+  u(0, y) &= 0,\
+  u(pi, y) &= 0,\
+  u(x, 0) &= sin(x),\
   u(x, pi) &= sin(x).
 $
 Definiramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s funkcijo
@@ -439,7 +445,7 @@ Definiramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s 
 )
 
 #figure(image("img/04_sedlo.svg", width: 60%),
- caption: [Rešitev robnega problema za Laplaceovo enačbo]
+  caption: [Rešitev robnega problema @eq:4-rp-sin-0>]
  )
 
 == Napolnitev matrike ob eliminaciji
@@ -471,16 +477,21 @@ matrike pogosto poveča. Poglejmo, kako se odreže matrika za Laplaceov operator
 
 #opomba(naslov: [Podatkovni tipi za matrične razcepe v Julii])[
 V knjižnici #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra")[LinearAlgebra]
-so implementacije standardnih matričnih razcepov,
-kot so LU razcep, razcep Choleskega, QR razcep in drugi. Rezultat, ki ga Julia vrne, ko
-naredimo matrični razcep je poseben podatkovni tip.
-Tako metoda #jl("lu") vrne rezultat tipa #jl("LU").
-Podatkovni tip #jl("LU") je poseben tip, ki hrani rezultate LU razcepa na učinkovit način.
-Poleg tega so za tip #jl("LU") definirane
-posebne metode za generične funkcije kot na primer #jl("\\"), ki uporabi matrični razcep za učinkovito reševanje linearnega sistema.
-Poglejmo si, kako LU razcep uporabimo za rešitev sistema enačb:
+najdemo implementacije standardnih matričnih razcepov,
+kot so LU razcep, razcep Choleskega, QR razcep in drugi.
+Rezultat matričnega razcepa v Julii je poseben podatkovni tip, ki učinkovito
+hrani rezultate razcepa. Poleg tega so za različne razcepe definirane specializirane metode
+splošnih funkcij. Posebej uporabna je funkcija #jl("\\"), ki z izbranim
+matričnim razcepom učinkovito reši sistem linearnih enačb.
+
+Poglejmo si, kako z LU razcepom rešimo sistem linearnih enačb.
+Uporabimo funkcijo #jl("lu"), ki vrne rezultat tipa #jl("LU"), s katerim
+nadomestimo matriko $A$ v izrazu #jl("A\\b"):
+
 #demo4("# lu")
-Funkcija #jl("factorize") vrne najbolj primeren razcep za dano matriko. Na primer za simetrično pozitivno definitno matriko, funkcija #jl("facotrize") vrne razcep Choleskega.
+
+Funkcija #jl("factorize") vrne najprimernejši razcep za dano matriko. Tako za simetrično
+pozitivno definitno matriko vrne razcep Choleskega.
 ]
 == Iteracijske metode
 <iteracijske-metode>

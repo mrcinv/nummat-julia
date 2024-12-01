@@ -364,3 +364,10 @@ Poglejmo kako se obnaša napaka pri računanju integrala z različnimi kvadratur
     image("img/13-napaka-sum-2.svg"),
   )
 )
+
+== Surface reconstruction
+
+https://en.wikipedia.org/wiki/Poisson%27s_equation#Surface_reconstruction
+
+== Stretch grid approximation
+https://en.wikipedia.org/wiki/Stretched_grid_method
