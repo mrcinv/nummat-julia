@@ -5,7 +5,8 @@ Pkg.test("Vaja01"; coverage=true)
 
 using Plots
 # 01plot
-plot(x -> x - x^2, -1, 2, title="Graf y(x) = x - x^2 na [-1,2]")
+plot(x -> x - x^2, -1, 2, color=:blue, 
+  linestyle=:dash, title="Graf y(x) = x - x^2 na [-1,2]")
 # 01plot
 savefig("img/01_graf.svg")
 include("../Vaja01/doc/01uvod.jl")

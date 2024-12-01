@@ -1,15 +1,15 @@
 #heading(outlined: false, numbering: none)[Predgovor]
 
 Knjige o numerični matematiki se pogosto posvečajo predvsem matematičnim vprašanjem. Pričujoča
-knjiga poskuša nasloviti bolj praktične vidike numerične matematike, zato so primeri, če je le
+poskuša nasloviti bolj praktične vidike numerične matematike, zato so primeri, če je le
 mogoče, povezani s problemom praktične narave s področja fizike, matematičnega modeliranja ali
 računalništva. Za podrobnejši matematični opis uporabljenih metod in izpeljav bralcu priporočam
 učbenika Osnove numerične matematike Bojana Orla @orel in Razširjen uvod v numerične metode
 Bora Plestenjaka @plestenjak2015.
 
-Pričujoča knjiga je prvenstveno namenjena študentom Fakultete za računalništvo in informatiko
+Knjiga je prvenstveno namenjena študentom Fakultete za računalništvo in informatiko
 Univerze v Ljubljani kot gradivo za izvedbo laboratorijskih vaj pri predmetu Numerična matematika.
-Kljub temu je primerna za vse, ki bi želeli bolje spoznati algoritme numerične matematike, uporabo
+Kljub temu je primerna za vse, ki želijo bolje spoznati algoritme numerične matematike, uporabo
 numeričnih metod ali se naučiti uporabljati programski jezik #link("https://julialang.org/")[Julia].
 Pri sem se od bralca pričakuje osnovno znanje programiranja v kakšnem drugem programskem jeziku.
 
@@ -20,15 +20,15 @@ podrobnejša navodila, kako se naloge lotiti, na koncu pa je rešitev z razlago 
 Rešitev vključuje matematične izpeljave, programsko kodo in rezultate, ki jih dobimo, če programsko
 kodo uporabimo.
 
-Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da rešitve niso vključene, je
-namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere
+Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da niso
+vključene, je namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere
 nima dostopa do rešitev.
 
 Vsekakor bralcu svetujem, da vso kodo napiše in preskusi sam. Še bolje je, če kodo razširi, jo
-spreminja in se z njo igra. Koda, ki je navedena v tej knjigi, je najosnovnejša različica kode,
+spreminja in se z njo igra. Koda, ki je navedena v tej knjigi, je najosnovnejša različica,
 ki reši določen problem in še ustreza minimalnim standardom pisanja kvalitetne kode. Pogosto
 je izpuščeno preverjanje ali implementacija robnih primerov, včasih tudi obravnava pričakovanih
-napak. Da je bralcu lažje razumeti, kaj koda počne, sem dal prednost berljivosti pred kompletnostjo.
+napak. Da je bralcu lažje razumeti, kaj koda počne, sem dal prednost berljivosti pred celovitostjo.
 
 Na tem mestu bi se rad zahvalil Bojanu Orlu, Emilu Žagarju, Petru Kinku in Aljažu Zalarju, s
 katerimi sem sodeloval ali še sodelujem pri numeričnih predmetih na FRI. Veliko idej za naloge,

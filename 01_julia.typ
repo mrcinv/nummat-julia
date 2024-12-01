@@ -6,7 +6,7 @@
 V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @bezanson_julia_2017. Zavoljo
 učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov] in
-#link("https://docs.julialang.org/en/v1/manual/methods/")[funkcij, specializiranih glede na signaturo],
+#link("https://docs.julialang.org/en/v1/manual/methods/")[metod, specializiranih glede na signaturo],
 ter dobre podpore za interaktivno uporabo, je Julia zelo primerna za programiranje numeričnih metod
 in ilustracijo njihove uporabe. V nadaljevanju sledijo kratka navodila, kako začeti z Julio.
 
@@ -24,7 +24,7 @@ poročilo v formatu PDF.
 
 == Namestitev in prvi koraki
 
-Namestite programski jezik Julia, tako da sledite #link("https://julialang.org/downloads/")[navodilom],
+Programski jezik Julia namestite tako, da sledite #link("https://julialang.org/downloads/")[navodilom],
 in v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
 (angl. _Read Eval Print Loop_ ali s kratico REPL) in v terminalu se pojavi ukazni pozivnik
 #text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato
@@ -69,7 +69,7 @@ end",
 
 Funkcije lahko uporabljamo kot vsako drugo spremenljivko. Lahko jih podamo kot
 argumente drugim funkcijam in jih združujemo v podatkovne strukture, kot so seznami,
-vektorji ali matrike. Funkcije lahko definiramo tudi kot anonimne funkcije. To
+vektorji ali matrike. Definiramo jih lahko tudi kot anonimne funkcije. To
 so funkcije, ki jih vpeljemo brez imena in jih kasneje ne moremo poklicati po imenu.
 
 #code_box[
@@ -88,7 +88,7 @@ element vektorja `v`:
 ]
 
 Vsaka funkcija v programskem jeziku Julia ima lahko več različnih definicij, glede na kombinacijo tipov argumentov, ki jih podamo. Posamezno
-definicijo funkcije imenujemo
+definicijo imenujemo
 #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[metoda]. Ob klicu funkcije Julia izbere najprimernejšo metodo.
 
 #code_box[
@@ -108,7 +108,7 @@ Vektorje vnesemo z oglatimi oklepaji ```jl []```:
   2
   3")
   #repl("v[1] # vrne prvo komponento vektorja", "1")
-  #repl("v[2:end] # vrne od 2. do zadnje komponente vektorja", "2-element Vector{Int64}:
+  #repl("v[2:end] # vrne komponente vektorja od druge do zadnje", "2-element Vector{Int64}:
   2
   3")
   #repl(
@@ -351,7 +351,7 @@ paketni način vnosa v ukazni zanki. Do paketnega načina pridemo, če za pozivn
 #opomba(
   naslov: [Različni načini ukazne zanke],
 )[
-Julia ukazna zanka (REPL) pozna več načinov, ki so namenjeni različnim
+Ukazna zanka (REPL) v Julii pozna več načinov, ki so namenjeni različnim
 opravilom.
 - Osnovni način s pozivom #text(green.darken(20%))[`julia>`] je namenjen vnosu
   kode v Julii.
@@ -364,7 +364,9 @@ opravilom.
 - Iz posebnih načinov pridemo nazaj v osnovni način s pritiskom na vračalko(⌫).
 ]
 
-Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov #link("https://docs.juliaplots.org/latest/")[Plots.jl]. Najprej aktiviramo paketni način z vnosom znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`.
+Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov
+#link("https://docs.juliaplots.org/latest/")[Plots.jl]. Najprej aktiviramo paketni način z vnosom
+znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`:
 
 #code_box[
   #pkg("add Plots", "...")
@@ -381,9 +383,9 @@ Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov #l
 
 === Datoteke s kodo
 
-Kodo lahko zapišemo tudi v datoteke. Vnašanje ukazov v interaktivni zanki je
-uporabno za preproste ukaze, na primer namesto kalkulatorja, za resnejše delo pa je bolje kodo shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku Julia končnico
-`.jl`.
+Vnašanje ukazov v interaktivni zanki je uporabno za preproste ukaze, na primer namesto kalkulatorja,
+za resnejše delo pa je bolje kodo shraniti v datoteke. Praviloma imajo datoteke s kodo v jeziku
+Julia končnico `.jl`.
 
 Napišimo preprost program. Ukaze, ki smo jih vnesli doslej  , shranimo v datoteko z
 imenom `01uvod.jl`. Ukaze iz datoteke poženemo z ukazom ```jl include``` v ukazni zanki:
@@ -398,19 +400,16 @@ ali pa v lupini operacijskega sistema:
   #raw("$ julia 01uvod.jl")
 ]
 
-#opomba(
-  naslov: [Urejevalniki in programska okolja za Julio],
-  [
+#opomba(naslov: [Urejevalniki in programska okolja za Julio])[
   Za lažje delo z datotekami s kodo potrebujemo dober urejevalnik besedila,
   ki je namenjen programiranju. Če še nimate priljubljenega urejevalnika,
   priporočam #link("https://code.visualstudio.com/")[VS Code] in #link("https://www.julia-vscode.org/")[razširitev za Julio].
 
-  Če odprete datoteko s kodo v urejevalniku VS Code, lahko s kombinacijo tipk
-  `Ctrl + Enter` posamezno vrstico kode
-  pošljemo v ukazno zanko za Julio, da se izvede. Na ta način združimo prednosti
+  Če odpremo datoteko s kodo v urejevalniku VS Code, lahko s kombinacijo tipk
+  `Ctrl + Enter` posamezno vrstico kode pošljemo v ukazno zanko za Julio,
+  da se izvede. Na ta način združimo prednosti
   interaktivnega dela in zapisovanja kode v datoteke `.jl`.
-  ],
-)
+  ]
 
 Priporočam, da večino kode napišete v datoteke. V nadaljevanju bomo spoznali,
 kako organizirati datoteke v projekte in pakete tako, da lahko kodo uporabimo na več
@@ -422,9 +421,10 @@ Ko uporabimo kodo iz datoteke v interaktivni zanki, je treba ob vsaki spremembi
 datoteko ponovno naložiti z ukazom `include`.
 Paket #link("https://timholy.github.io/Revise.jl")[Revise.jl] poskrbi za to, da se
 nalaganje zgodi avtomatično vsakič, ko se datoteke spremenijo. Zato najprej namestimo
-paket Revise in poskrbimo, da se zažene ob vsakem zagonu interaktivne zanke.
+paket Revise in poskrbimo, da se zažene ob vsakem zagonu Julie.
 
-Naslednji ukazi namestijo paket Revise, ustvarijo mapo `$HOME/.julia/config` in datoteko `startup,jl`, ki naloži paket Revise in se izvede ob vsakem zagonu programa `julia`:
+Naslednji ukazi namestijo paket Revise, ustvarijo mapo `$HOME/.julia/config` in datoteko
+`startup,jl`, ki naloži modul Revise ob vsakem zagonu programa `julia`:
 
 #code_box[
   #repl("# pritisnemo ], da pridemo v paketni način", none)
@@ -485,7 +485,7 @@ Uporaba projektnega okolja delno rešuje problem #link(
 Projektna okolja v Julii so podobna #link("https://docs.python.org/3/library/venv.html")[virtualnim okoljem v Pythonu].
 ]
 
-Projektnemu okolju dodamo pakete, ki jih bomo rabili v nadaljevanju. Zaenkrat je to le
+Projektnemu okolju dodamo pakete, ki jih bomo uporabili v nadaljevanju. Zaenkrat je to le
 paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki ga uporabljamo za risanje grafov:
 
 #code_box[
@@ -501,17 +501,19 @@ Datoteka `Project.toml` vsebuje le ime paketa `Plots` in identifikacijski niz:
   ```
 ]
 
-Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje,  so zabeleženi  v datoteki `Manifest.toml`.
+Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje, so zabeleženi  v datoteki `Manifest.toml`.
 
 == Vodenje različic s programom Git
 
-Za vodenje različic priporočam uporabo programa #link("https://git-scm.com/")[Git]. V nadaljevanju bomo opisali, kako v korenski mapi `nummat` pripraviti Git repozitorij in vpisati datoteke, ki smo jih do sedaj ustvarili.
+Za vodenje različic priporočam uporabo programa #link("https://git-scm.com/")[Git].
+V nadaljevanju bomo opisali, kako v korenski mapi `nummat` pripraviti Git repozitorij in vpisati
+datoteke, ki smo jih do sedaj ustvarili.
 
 #opomba(naslov: [Sistem za vodenje različic Git])[
   #link("https://git-scm.com/")[Git] je sistem za vodenje različic, ki je postal _de facto_
 standard v razvoju programske opreme in tudi drugod, kjer se dela z besedilnimi
 datotekami. Priporočam, da si bralec ustvari svoj Git repozitorij, kjer si uredi
-kodo in zapiske, ki jo bo napisal pri spremljanju te knjige.
+kodo in zapiske, ki jih bo napisal pri spremljanju te knjige.
 
 Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, lahko pa ga repliciramo na lastnem strežniku ali na enem od javnih spletnih skladišč
 programske kode, na primer #link("https://github.com/")[Github] ali
@@ -598,13 +600,11 @@ Osnovna struktura paketa je pripravljena. Paketu bomo v nadaljevanju dodali še:
 == Koda <sec:01koda>
 
 Ko je mapa s paketom `Vaja01` pripravljena, lahko začnemo. Napisali bomo funkcije, ki izračunajo koordinate
-#link(
-  "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
-)[Geronove lemniskate]:
+Geronove lemniskate:
 
 $
-  x(t) = (t^2 - 1) / (t^2 + 1) #h(2em)
-  y(t) = 2t(t^2 - 1) / (t^2 + 1)^2.
+  x(t) = (t^2 - 1) / (t^2 + 1), quad
+  y(t) = (2t(t^2 - 1)) / (t^2 + 1)^2.
 $
 
 V urejevalniku odpremo datoteko `Vaja01/src/Vaja01.jl` in vanjo shranimo definiciji:
@@ -624,9 +624,7 @@ programih. V interaktivni zanki lahko sedaj pokličemo novo definirani funkciji:
 
 V datoteko `Vaja01/doc/01uvod.jl` bomo zapisali preprost program, ki uporabi kodo iz paketa `Vaja01` in nariše lemniskato:
 
-#figure(
-  code_box(jlf("Vaja01/doc/01uvod.jl", 4, 11)),
-)
+#code_box(jlf("Vaja01/doc/01uvod.jl", 4, 11))
 
 Program `01uvod.jl` poženemo z ukazom:
 
@@ -653,7 +651,7 @@ Rezultat je slika lemniskate.
 == Testi <sec:01testi>
 
 Naslednji korak je, da dodamo avtomatske teste, s katerimi preizkusimo pravilnost kode, ki
-smo je napisali v prejšnjem poglavju. Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri rezultat.
+smo jo napisali v prejšnjem poglavju. Avtomatski test je preprost program, ki pokliče določeno funkcijo in preveri rezultat.
 
 #opomba(
   naslov: [Avtomatsko testiranje programov],
@@ -695,9 +693,9 @@ V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki prime
   decimalkah. Na primer izraz ```jl asin(sin(pi/4)) - pi/4 ```
   ne vrne točne ničle ampak vrednost `-1.1102230246251565e-16`, ki pa je zelo
   majhno število. Za približno primerjavo dveh vrednosti `a` in `b` zato uporabimo izraz
-  $
+  #math.equation(block: true, numbering: none)[$
     |a - b| < epsilon,
-  $
+  $]
   kjer je $epsilon$ večji od pričakovane zaokrožitvene napake. V Julii lahko za približno primerjavo števil in vektorjev uporabimo operator `≈`, ki je alias za funkcijo #link("https://docs.julialang.org/en/v1/base/math/#Base.isapprox")[isapprox].],
 )
 
