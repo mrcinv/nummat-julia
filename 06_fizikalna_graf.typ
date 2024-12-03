@@ -108,13 +108,13 @@ $
  a_(m 1)x_1 - a_(m 2)x_2 + dots  - st(m)x_m = - a_(m m+1)x_(m+1) - dots - a_(m n)x_(n)\
 $<eq:06sistem-x>
 
-kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer
+kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer:
 
 $
   a_(i j) = cases(1";"& quad (i, j) in E(G)",", 0";"& quad (i, j) in.not E(G).)
 $
 
- Matrika sistema @eq:06sistem-x je
+Matrika sistema @eq:06sistem-x je
 odvisna le od povezav v grafu in izbire točk, ki niso pritrjene, medtem ko
 so desne stani odvisne od koordinat pritrjenih točk:
 
@@ -138,9 +138,12 @@ $
   |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(j eq.not i) |a_(i j)|.
 $
 
-Za sosede fiksnih vozlišč je neenakost stroga. Ker so vsi elementi na diagonali negativni, je
-matrika $A$ negativno definitna. Za večino grafov, za katere uporabimo zgornji postopek, bo matrika
-sistema $A$ redka. Zato lahko za reševanje sistema $-A x = -b$ uporabimo
+Za sosede fiksnih vozlišč je neenakost stroga, zato je matrika diagonalno dominantna in vsaj za
+eno vrstico je neenakost stroga. Ker so vsi elementi na diagonali negativni in je matrika diagonalno
+dominantna (z vsaj eno vrstico, ki je strogo diagonalno dominantna), je
+matrika $A$ negativno definitna in matrika $-A$ pozitivno definitna. Za večino grafov, za katere
+uporabimo zgornji postopek, bo matrika sistema $A$ redka.
+Zato lahko za reševanje sistema $-A bold(x) = -bold(b)$ uporabimo
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
 Metoda konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike.
 Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
@@ -157,7 +160,7 @@ Napišimo naslednje funkcije:
   dani graf `G` in seznam vozlišč, ki niso pritrjena `sprem` (rešitev @pr:06-matrika),
 - #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za
   sistem @eq:06sistem-x (rešitev @pr:06-desne-strani),
-- #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A x = b$ z metodo konjugiranih gradientov
+- #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A bold(x) = bold(b)$ z metodo konjugiranih gradientov
   (rešitev @pr:06-cg) in
 - #jl("vlozi!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
   metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
@@ -196,7 +199,9 @@ po krožnici.
 
 == Dvodimenzionalna mreža
 
-Preizkusimo algoritem na dvodiemzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo, če v ravnini pravokotnik razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje, ki ustrezajo ogliščem pravokotnika.
+Preizkusimo algoritem na dvodiemzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo,
+če v ravnini pravokotnik razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje,
+ki ustrezajo ogliščem pravokotnika.
 
 #code_box(
   svaja06("# mreža")
@@ -256,8 +261,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   code_box(
     vaja06("# cg")
   ),
-  caption: [Funkcija, ki reši sistem linearnih enačb $A x=b$ s pozitivno definitno matriko $A$
-    z metodo konjugiranih gradientov.]
+  caption: [Funkcija, ki reši sistem linearnih enačb $A bold(x)=bold(b)$ z metodo konjugiranih gradientov.]
 )<pr:06-cg>
 
 #figure(

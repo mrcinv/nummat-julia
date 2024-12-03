@@ -167,7 +167,7 @@ For element-wise addition, use broadcasting with dot syntax: array .+ scalar",)
 ]
 
 Posebej uporaben je operator `\`, ki poišče rešitev sistema linearnih enačb.
-Izraz ```jl A\b``` vrne rešitev matričnega sistema $A x = b$:
+Izraz ```jl A\b``` vrne rešitev matričnega sistema $A bold(x) = bold(b)$:
 
 #code_box[
   #repl("A = [1 2; 3 4]; # podpičje prepreči izpis rezultata", "")
