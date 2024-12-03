@@ -100,7 +100,7 @@ zahtev hranimo kot #emph[sparse] matriko. Poglejte si dokumentacijo za
 
 Napišite funkcijo `L = nep_chol(A)`, ki izračuna nepopolni razcep
 Choleskega za matriko tipa `AbstractSparseMatrix`. Napišite še funkcijo
-`x, i = conj_grad(A, b, L)`, ki reši linearni sistem
+`x, i = conj_grad(A, b, L)`, ki reši sistem linernih enačb
 
 $
 A x = b

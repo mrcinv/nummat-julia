@@ -18,8 +18,7 @@ zakon vpelje še koeficient vzmeti $k$. Koeficientu $k$ pravimo
 #strong[parameter modela] in ga lahko določimo za vsako vzmet posebej z
 meritvami sile in raztezka.
 
-V tej vaji bomo poiskali podatke o koncentraciji $co2$ v zadnjih desetletjih
-opisali z linearnim modelom.
+V tej vaji bomo podatke o koncentraciji $co2$ v zadnjih desetletjih opisali z linearnim modelom.
 
 == Naloga
 
@@ -74,7 +73,7 @@ $
 $<eq:11-minkvad>
 
 Sistem @eq:11-sistem lahko zapišemo v matrični obliki
-$ A upright(bold(p)) = upright(bold(y)) , $ kjer so stolpci matrike
+$A bold(p) = bold(y)$, kjer so stolpci matrike
 sistema $A$ enaki vrednostim baznih funkcij:
 
 $ A = mat(

@@ -31,7 +31,7 @@ using SparseArrays
 """
     A = matrika(G::AbstractGraph, sprem)
 
-Poišči matriko linearnega sistema za vložitev grafa `G` s fizikalno metodo.
+Poišči matriko sistema linearnih enačb za vložitev grafa `G` s fizikalno metodo.
 Argument `sprem` je vektor vozlišč grafa, ki nimajo določenih koordinat.
 Indeksi v matriki `A` ustrezajo vozliščem v istem vrstnem redu,
 kot nastopajo v argumentu `sprem`.
@@ -60,7 +60,7 @@ end
 """
     b = desne_strani(G::AbstractGraph, sprem, koordinate)
 
-Poišči desne strani linearnega sistema za eno koordinato vložitve grafa `G`
+Poišči desne strani sistema linearnih enačb za eno koordinato vložitve grafa `G`
 s fizikalno metodo. Argument `sprem` je vektor vozlišč grafa, ki nimajo
 določenih koordinat. Argument `koordinate` vsebuje eno koordinato za vsa
 vozlišča grafa. Metoda uporabi le koordinato vozlišč, ki so pritrjena.

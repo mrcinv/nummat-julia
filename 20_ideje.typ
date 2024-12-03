@@ -179,7 +179,7 @@ interpolacijskih točkah @trefethen19.
 ]
 
 Če želimo aproksimirati funkcijo $f:[a, b]->RR$, moramo argument preslikati na interval $[-1, 1]$ z
-linearno preslikavo. V splošnem sta linearni preslikavi med $x in [a, b]$ in $t in [c, d]$ podani
+linearno funkcijo. V splošnem sta linearni funkciji med $x in [a, b]$ in $t in [c, d]$ podani
 kot:
 
 $
@@ -283,7 +283,7 @@ $
   integral_(a)^(b) f(x) d x
 $<eq:13-int-a-b>
 
-lahko s preprosto linearno preslikavo premaknemo na drug interval $[c, d]$. V integral @eq:13-int-a-b
+lahko s preprosto linearno funkcijo premaknemo na drug interval $[c, d]$. V integral @eq:13-int-a-b
 vpeljemo novo spremenljivko $t = t(x) = k x + n$, ki preslika interval $[a, b]$ na interval $[c, d]$.
 Formulo za $t$ določimo tako, da najprej preslikamo $[a, b]$ s preslikavo $s = (x - a)/(b-a)$ na
 $[0, 1]$ in nato $s$ preslikamo $t = (d - c)s + c$ z intervala $[0, 1]$ na interval $[c, d]$.

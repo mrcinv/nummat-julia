@@ -219,7 +219,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 )
 
 #opomba(naslov:[Kaj smo se naučili?])[
-- Kako zapisati linearni sistem za spremenljivke, ki ustrezajo vozliščem grafa.
+- Kako zapisati sistem linernih enačb za spremenljivke, ki ustrezajo vozliščem grafa.
 - Spoznali smo še eno iterativno metodo, ki deluje za pozitivno definitne matrike.
 ]
 

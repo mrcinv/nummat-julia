@@ -160,7 +160,7 @@ Zaporedje približkov $bold(x^((k)))$ konvergira k lastnemu vektorju za najmanj�
 lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka $bold(x)^((0))$.
 
 #opomba(naslov:
-[Namesto inverza uporabite LU razcep ali drugo metodo za reševanje linearnega sistema])[
+[Namesto inverza uporabite LU razcep ali drugo metodo za reševanje sistema linearnih enačb])[
 V inverzni iteraciji moramo večkrat zaporedoma izračunati vrednost
 $ A^(-1) bold(x^((k))). $
 

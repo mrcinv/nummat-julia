@@ -6,8 +6,8 @@
 
 Za razliko od sistemov linearnih enačb, ki imajo preproste množice rešitev, so
 množice rešitev za sisteme nelinearnih enačb zapletene in nepredvidljive.
-Zato tudi reševanje nelinearnih sistemov z numeričnimi metodami ni tako preprosto
-kot pri linearnih sistemih. Numerične metode lahko
+Zato tudi reševanje sistemov nelinearnih enačb z numeričnimi metodami ni tako preprosto
+kot pri sistemih linearnih enačb. Numerične metode lahko
 konvergenco k določeni rešitvi zagotovijo le ob dodatnih predpostavkah,
 ki jih je težko v naprej izpolniti. V tej vaji si bomo na preprostem
 primeru ogledali, kako se obnaša Newtonova metoda, ko izbiramo različne
@@ -77,7 +77,8 @@ $
   ).
 $
 
-Naslednji približek $bx^((k+1))$ v Newtonovi iteraciji dobimo kot rešitev linearnega sistema:
+Naslednji približek $bx^((k+1))$ v Newtonovi iteraciji dobimo kot rešitev
+sistema linearnih enačb:
 
 $
   bF(bx^((k))) + JF(bx^((k)))(bx^((k+1)) - bx^((k))) = bold(0)\
@@ -93,7 +94,7 @@ $
 pri čemer formule ne smemo jemati dobesedno, saj inverzne matrike $JF(bx^((k)))^(-1)$ dejansko ne
 izračunamo. Izraz $JF(bx^((k)))^(-1)bF(bx^((k)))$ poiščemo tako, da rešimo sistem
 $JF(bx^((k)))bx = bF(bx^((k)))$ (npr. z LU razcepom ali s kakšno drugo metodo za reševanje
-linearnih sistemov).
+sistemov linearnih enačb).
 
 Napišimo funkcijo #jl("newton(f, jf, x0)"), ki poišče rešitev sistema nelinearnih enačb z Newtonovo
 metodo (@pr:09-newton).

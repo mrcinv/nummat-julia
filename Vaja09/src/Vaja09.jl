@@ -5,7 +5,7 @@ using LinearAlgebra
 """
     x, it = newton(f, jf, x0)
 
-Poišči rešitev nelinearnega sistema enačb `f(x) = 0` z Newtonovo metodo.
+Poišči rešitev sistema nelinearnih enačb `f(x) = 0` z Newtonovo metodo.
 Argument `jf` je funkcija, ki vrne Jacobiijovo matriko funkcije`f`.
 Argument `x0`je začetni približek za Newtonovo metodo.
 """

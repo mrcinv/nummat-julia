@@ -346,8 +346,8 @@ povprečjem po velikem številu sprehodov.
 ]
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Z upoštevanjem lastnosti linearnih sistemov lahko prihranimo veliko prostora in časa.
-- Linearni sistemi se pogosto pojavijo, ko rešujemo matematične probleme, čeprav na
+- Z upoštevanjem lastnosti sistemov linearnih enačb lahko prihranimo veliko prostora in časa.
+- Sistemi linearnih enačb se pogosto pojavijo, ko rešujemo matematične probleme, čeprav na
   prvi pogled nimajo nobene zveze z linearno algebro.
 ]
 

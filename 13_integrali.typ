@@ -280,7 +280,7 @@ $
   integral_a^b f(x) = sum_(i=1)^n u_i f(x_i).
 $
 
-Zakaj je tako? Integral lahko obravnavamo kot funkcijo na prostoru integrabilnih  funkcij
+Zakaj je tako? Integral lahko obravnavamo kot preslikavo na prostoru integrabilnih  funkcij
 
 $
   I_([a, b]): f |-> integral_a^b f(x) d x.

@@ -24,7 +24,7 @@ eksperimentiral z milnimi mehurčki in elastičnimi tkaninami, s katerimi je ust
   caption: [Streha olimpijskega stadiona v Münchnu (vir #link(
       "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG")[wikipedia])],
 )
-Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje linearnih sistemov enačb.
+Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje sistemov linearnih enačb.
 Prav tako se bomo naučili, kako zgradimo matriko sistema in desne strani enačb za spremenljivke,
 ki niso podane z vektorjem, temveč kot elementi matrike. V okviru te vaje zato opravi naslednje
 naloge:
@@ -71,13 +71,13 @@ uvrščamo med nelinearne PDE.
 #link("https://en.wikipedia.org/wiki/Laplace%27s_equation")[Laplaceovo enačbo]:
 
 $
-  Delta u(x, y) = u_(x x) + u_(y y)= 0.
+  Delta u(x, y) = u_(x x)(x, y) + u_(y y)(x, y)= 0.
 $<eq:Laplace>
 
 Diferencialni operator
 
 $
-Delta u(x, y) = u_(x x) + u_(y y)
+Delta u = u_(x x) + u_(y y)
 $<eq:operator>
 imenujemo #link("https://sl.wikipedia.org/wiki/Laplaceov_operator")[Laplaceov operator].
 
@@ -445,7 +445,7 @@ Definiramo robni problem in uporabimo funkcijo #jl("resi"). Ploskev narišemo s 
 )
 
 #figure(image("img/04_sedlo.svg", width: 60%),
-  caption: [Rešitev robnega problema @eq:4-rp-sin-0>]
+  caption: [Rešitev robnega problema za Laplaceovo enačbo z robnimi pogoji @eq:4-rp-sin-0>]
  )
 
 == Napolnitev matrike ob eliminaciji
@@ -495,8 +495,8 @@ pozitivno definitno matriko vrne razcep Choleskega.
 ]
 == Iteracijske metode
 <iteracijske-metode>
-V prejšnjih podpoglavjih smo poiskali približno obliko minimalne ploskve, tako da smo linearni sistem
-@eq:ravnovesje rešili z LU razcepom.
+V prejšnjih podpoglavjih smo poiskali približno obliko minimalne ploskve, tako da smo
+sistem linearnih enačb @eq:ravnovesje rešili z LU razcepom.
 Največ težav smo imeli z zapisom matrike sistema in desnih strani. Poleg tega je matrika sistema
  redka, ko izvedemo LU razcep pa se matrika deloma napolni. Pri razpršenih
 matrikah tako pogosto uporabimo
@@ -508,10 +508,10 @@ prihranimo veliko na prostorski in časovni zahtevnosti.
 
 Ideja iteracijskih metod je preprosta. Enačbe preuredimo tako, da ostane na eni strani le en element
 s koeficientom 1. Tako dobimo iteracijsko formulo za zaporedje približkov $u_(i j)^((k))$.
-Če zaporedje konvergira, je limita ena od rešitev rekurzivne enačbe. V primeru linearnih sistemov je
-rešitev enolična.
+Če zaporedje konvergira, je limita ena od rešitev rekurzivne enačbe. V primeru sistemov linearnih
+enačb je rešitev enolična.
 
-V našem primeru enačb za minimalne ploskve @eq:ravnovesje, izpostavimo element $u_(i j)$ in dobimo
+V našem primeru enačb za minimalne ploskve @eq:ravnovesje izpostavimo element $u_(i j)$ in dobimo
 rekurzivne enačbe:
 
 $
@@ -559,8 +559,7 @@ en korak Gauss-Seidlove iteracije podan s preprosto zanko.
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# gs")
   ),
-  caption: [Poišči naslednji približek Gauss-Seidlove iteracije za
-  diskretizacijo Laplaceove enačbe.]
+  caption: [Funkcija, ki poišče naslednji približek Gauss-Seidlove iteracije za diskretizacijo Laplaceove enačbe.]
 )<pr:gs>
 
 Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
@@ -590,7 +589,7 @@ Poglejmo si, kako zaporedje približkov Gauss-Seidlove iteracije konvergira k re
   table(columns: 2, stroke: none,
     image("img/04-konv-0.svg"), image("img/04-konv-10.svg"),
     image("img/04-konv-50.svg"), image("img/04-konv-oo.svg")
-  ), caption: [Približki Gauss-Seidlove iteracije za $k=0, 10, 50$ in končni približek.]
+  ), caption: [Približki Gauss-Seidlove iteracije za $k=0, 10, 50$ in končni približek]
 )
 
 
@@ -607,8 +606,8 @@ od parametra $omega$])
 
 #opomba(naslov: [Kaj smo se naučili?])[
 - Kako rešiti sistem linearnih enačb s spremenljivkami, ki so postavljene v matriko.
-- Diskretizacija diferencialnih enačb privede do linearnegih sistemov.
-- Iterativne metode so posebej uporabne za reševanje linearnih sistemov
+- Diskretizacija diferencialnih enačb privede do sistemov linearnih enačb.
+- Iterativne metode so posebej uporabne za reševanje sistemov
   velikih dimenzij z redkimi matrikami.
 ]
 
@@ -647,30 +646,28 @@ od parametra $omega$])
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# desne strani")
   ),
-  caption: [Izračunaj robne pogoje in desne strani sistema za diskretizacijo
-  Laplaceove enačbe.]
+  caption: [Funkcija, ki izračuna robne pogoje in desne strani sistema za diskretizacijo Laplaceove enačbe.]
 )<pr:desne-strani>
 
 #figure(
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# resi")
   ),
-  caption: [Poišči približno rešitev robnega problema za Laplaceovo enačbo.]
+  caption: [Funkcija, ki poišče približno rešitev robnega problema za Laplaceovo enačbo.]
 )<pr:resi>
 
 #figure(
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# jacobi")
   ),
-  caption: [Poišči naslednji približek Jacobijeve iteracije za
-  diskretizacijo Laplaceove enačbe.]
+  caption: [Funkcija, ki poišče naslednji približek Jacobijeve iteracije za diskretizacijo Laplaceove enačbe.]
 )<pr:jacobi>
 
 #figure(
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# sor")
   ),
-  caption: [Poišči naslednji približek SOR iteracije za
+  caption: [Funkcija, ki poišče naslednji približek SOR iteracije za
   diskretizacijo Laplaceove enačbe.]
 )<pr:sor>
 
@@ -678,7 +675,7 @@ od parametra $omega$])
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# iteracija")
   ),
-  caption: [Poišči približek za limito rekurzivnega zaporedja.]
+  caption: [Funkcija, ki poišče približek za limito rekurzivnega zaporedja.]
 )<pr:iteracija>
 
 // TODO: dodaj teste
