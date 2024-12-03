@@ -147,14 +147,14 @@ vrednosti in algoritem gručenja avtomatsko bolj upošteva dimenzije, v katerih 
 najbolj razčlenjene.
 
 
-== Inverzna potenčna metoda
+== Inverzna iteracija
 <inverzna-potenčna-metoda>
 Ker nas zanima le nekaj najmanjših lastnih vrednosti, lahko za izračun uporabimo
-#link("https://en.wikipedia.org/wiki/Inverse_iteration")[inverzno potenčno metodo].
-Pri inverzni potenčni metodi zgradimo zaporedje približkov z rekurzivno
+#link("https://en.wikipedia.org/wiki/Inverse_iteration")[inverzno iteracijo].
+Pri tej metodi zgradimo zaporedje približkov z rekurzivno
 formulo:
 
-$ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((k)))/norm(A^(- 1) bold(x)^((k))). $<eq:9-inviter>
+$ bold(x)^((k + 1)) = (A^(- 1) bold(x)^((k)))/norm(A^(- 1) bold(x)^((k))), quad k=0, 1, dots $<eq:9-inviter>
 
 Zaporedje približkov $bold(x^((k)))$ konvergira k lastnemu vektorju za najmanjšo
 lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka $bold(x)^((0))$.
@@ -166,9 +166,8 @@ $ A^(-1) bold(x^((k))). $
 
 Za izračun te vrednosti pa v resnici ne potrebujemo inverzne matrike $A^(-1)$.
 Računanje inverzne matrike je namreč časovno zelo zahtevna operacija, zato se ji, razen v nizkih
-dimenzijah, če je le mogoče, izognemo. Produkt $bold(x) = A^(-1)bold(b)$ je rešitev linearnega
-sistema $A bold(x) = bold(b)$ in metode za reševanje sistema so bolj učinkovite kot
-računanje inverza $A^(-1)$.
+dimenzijah, če je le mogoče, izognemo. Produkt $bold(x) = A^(-1)bold(b)$ je rešitev sistema linearnih enačb $A bold(x) = bold(b)$ in metode za reševanje sistema so bolj učinkovite, kot če izračunamo
+inverz $A^(-1)$ in ga pomnožimo z vektorjem $bold(x)$.
 
 Inverz $A^(-1)$ matrike $A$ lahko nadomestimo tudi z razcepom matrike $A$.
 Če na primer uporabimo LU razcep $A=L U$, lahko $A^(-1) bold(b)$ izračunamo tako, da rešimo
@@ -193,7 +192,7 @@ Inverz $A^(-1)$ matrike $A$ lahko nadomestimo tudi z razcepom matrike $A$.
 
 Napišimo funkcijo #jl("inviter(resi, x0)"), ki poišče lastni par za najmanjšo lastno vrednost matrike
 (rešitev je @pr:9-inviter). Matrika ni podana eksplicitno, ampak je podana le funkcija `resi`, ki
-reši sistem $A x = b$ za dani vektor $b$.
+reši sistem $A bold(x) = bold(b)$ za dani vektor $bold(b)$.
 
 == Inverzna iteracija s QR razcepom
 

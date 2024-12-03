@@ -1,7 +1,7 @@
 #import "admonitions.typ": opomba
 #import "julia.typ": jl, code_box, jlfb, repl, blk
 
-= Konvergenčna območja nelinearnih enačb
+= Konvergenčna območja sistemov nelinearnih enačb
 <9-poglavje>
 
 Za razliko od sistemov linearnih enačb, ki imajo preproste množice rešitev, so
@@ -29,7 +29,7 @@ začetne približke.
 
 == Newtonova metoda za sisteme enačb
 
-#let JF=math.op("JF")
+#let JF=math.op($J_F$)
 #let bx = math.bold("x")
 #let bF = math.bold("F")
 
@@ -64,9 +64,9 @@ $
   bF(bx) = bF(bx^((k))) + JF(bx^((k)))(bx - bx^((k))) + cal(O)((bx - bx^((k)))^2),
 $
 
-kjer je $JF(bx)$
+kjer je $JF$
 #link("https://sl.wikipedia.org/wiki/Jacobijeva_matrika_in_determinanta")[Jacobijeva matrika]
-parcialnih odvodov komponent $f_(i)(x_1, x_2, dots)$ po koordinatah $x_j$
+parcialnih odvodov komponent $f_(i)$ po koordinatah $x_j$:
 
 $
   JF(bx) = mat(
@@ -101,7 +101,7 @@ metodo (@pr:09-newton).
 
 
 Poglejmo si, kako uporabimo Newtonovo metodo za enačbe @eq:09primer. Spremenljivke $x, y$ postavimo
-v vektor $bx=[x, y]$ in za lažje pisanje programa vpeljemo komponente $x_1=x$ in $x_2=y$.
+v vektor $bx=[x, y]^T$ in za lažje pisanje programa vpeljemo komponente $x_1=x$ in $x_2=y$.
 Sistem enačb @eq:09primer preuredimo tako, da je na desni strani $0$:
 $
 x_1^3 - 3x_1x_2^2 - 1 &= 0,\
@@ -118,8 +118,8 @@ Jacobijeva matrika $JF(bx)$ pa
 
 $
   JF(bx) = mat(
-    3x_1^2 - 3x_2^2, -6x_1 x_2;
-    6x_1 x_2, 3x_1^2 - 3x_2^2
+    3x_1^2 - 3x_2^2, quad -6x_1 x_2;
+    6x_1 x_2, quad 3x_1^2 - 3x_2^2
   ).
 $
 

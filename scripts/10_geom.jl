@@ -12,12 +12,12 @@ savefig("img/10-lissajous.svg")
 # samopres
 using Vaja09: newton
 using Printf
-f(ts) = l(ts[1]) - l(ts[2])
+f(tt) = l(tt[1]) - l(tt[2])
 dl(t) = [2cos(2t), -3sin(3t)]
-df(ts) = hcat(dl(ts[1]), -dl(ts[2]))
-ts, it = newton(f, df, [0.0, pi / 2])
-scatter!(Tuple.(l.(ts)),
-  label=@sprintf "samopresečišče: \$t=%.3f\$, \$s=%.3f\$" ts...)
+df(tt) = hcat(dl(tt[1]), -dl(tt[2]))
+tt, it = newton(f, df, [0.0, pi / 2])
+scatter!(Tuple.(l.(tt)),
+  label=@sprintf "samopresečišče: \$t_1=%.3f\$, \$t_2=%.3f\$" tt...)
 # samopres
 
 savefig("img/10-samopres.svg")
@@ -26,19 +26,19 @@ savefig("img/10-samopres.svg")
 using Vaja10: samopres
 mod2pi(x) = rem(x, 2pi)
 """ Poišči samopresečišče Lissajousove krivulje. Upoštevaj periodičnost."""
-function splissajous(ts0)
-  ts, it = samopres(l, dl, ts0)
-  ts = mod2pi.(ts)
-  if abs(ts[1] - ts[2]) < 1e-12
+function splissajous(tt0)
+  tt, it = samopres(l, dl, tt0)
+  tt = mod2pi.(tt)
+  if abs(tt[1] - tt[2]) < 1e-12
     throw("Isti vrednosti parametra ne pomenita samopresečišča.")
   end
-  return sort(ts), it
+  return sort(tt), it
 end
 
 using Vaja09: konvergenca, Box2d, Interval
 x, y, Z, nicle, koraki = konvergenca(Box2d(Interval(0, 2pi), Interval(0, 2pi)),
   splissajous, 200, 200)
-heatmap(x, y, Z, xlabel="\$t\$", ylabel="\$s\$")
+heatmap(x, y, Z, xlabel="\$t_1\$", ylabel="\$t_2\$")
 scatter!(Tuple.(nicle), label="samopresečišča", legend=:bottomleft)
 # obmocje samopres
 
@@ -46,8 +46,8 @@ savefig("img/10-obmocje-samopres.svg")
 
 # vsa samopres
 p = plot(Tuple.(l.(t)), label="krivulja", legend=:bottom) # narišemo zopet krivuljo
-for ts in nicle
-  scatter!(p, Tuple.(l.(ts)), label=@sprintf "\$t=%.2f\$, \$s=%.2f\$" ts...)
+for tt in nicle
+  scatter!(p, Tuple.(l.(tt)), label=@sprintf "\$t_1=%.2f\$, \$t_2=%.2f\$" tt...)
 end
 display(p)
 # vsa samopres

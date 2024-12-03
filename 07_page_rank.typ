@@ -7,8 +7,8 @@
 #let Pm = (math.cal[P])
 Z #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovskimi verigami] smo se že srečali v
 poglavju o tridiagonalnih sistemih (@tridiagonalni-sistemi). Spomnimo se, da je Markovska veriga
-zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množici stanj. Stanja Markovske verige bomo označili kar z zaporednimi naravnimi števili $1, 2, med dots med n$. Na vsakem koraku je
-Markovska veriga v določenem stanju $X_(k) in {1, 2, med dots med n}$. Porazdelitev na naslednjem koraku $X_(k+1)$
+zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množici stanj. Stanja Markovske verige bomo označili kar z zaporednimi naravnimi števili $1, 2, med dots, med n$. Na vsakem koraku je
+Markovska veriga v določenem stanju $X_(k) in {1, 2, med dots, med n}$. Porazdelitev na naslednjem koraku $X_(k+1)$
 je odvisna zgolj od porazdelitve na prejšnjem koraku $X_(k)$ in prehodnih verjetnosti za prehod iz stanja $i$ v stanje $j$:
 $
 p_(i j) = P(X_(k+1) = j | X_k = i).
@@ -44,7 +44,7 @@ Povedano drugače: invariatna porazdelitev za Markovsko verigo s prehodno matrik
 
 == Naloga
 
-- Implementiraj potenčno metodo za iskanje največje lastne vrednosti in lastnega vektorja dane matrike.
+- Implementiraj potenčno metodo za iskanje največje lastne vrednosti in pripadajočega lastnega vektorja dane matrike.
 - Uporabi potenčno metodo in poišči invariantno porazdelitev Markovske verige z
   dano prehodno matriko $Pm$. Poišči invariantne porazdelitve za naslednja primera:
     - veriga, ki opisuje skakanje skakača (skakača) po šahovnici,
@@ -76,10 +76,10 @@ vrednostjo. Izberemo neničelen začetni vektor $bold(p)^((0))eq.not 0$ in
 sestavimo zaporedje približkov:
 
 $
-bold(x)^((k+1)) = (A bold(x)^((k)))/norm(A bold(x)^((k))).
+bold(x)^((k+1)) = (A bold(x)^((k)))/norm(A bold(x)^((k))), quad k=0, 1, med dots
 $<eq:potencna>
 
-Zaporedje $bold(x)^k$ konvergira k lastnemu vektorju matrike $A$ z lastno vrednostjo, ki je po
+Zaporedje $bold(x)^((k))$ konvergira k lastnemu vektorju matrike $A$ z lastno vrednostjo, ki je po
 absolutni vrednosti največja. Če je takih lastnih vrednosti več (npr. $1$ in $-1$), se lahko zgodi, da
 potenčna metoda ne konvergira. Za normo, s katero delimo produkt
 $A bold(x)^((k))$, lahko izberemo katerokoli vektorsko normo. Navadno je to neskončna norma
