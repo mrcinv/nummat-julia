@@ -254,13 +254,13 @@ vzorčenje.
 
 #let vaja14(koda, caption) = figure(code_box(jlfb("Vaja14/src/Vaja14.jl", koda)), caption: caption)
 
-#vaja14("# VeckratniIntegral")[Podakovni tip, ki opiše večkratni integral]<pr:14-veckratni-integral>
-#vaja14("# preslikaj")[Preslikaj kvadraturo na drug interval]<pr:14-preslikaj>
-#vaja14("# integriraj")[Izračunaj večkratni integral s produktno kvadraturo]<pr:14-integriraj>
-#vaja14("# naslednji!")[Izračunaj naslednji multiindeks
-$(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$ ]<pr:14-naslednji>
-#vaja14("# simpson")[Izračunaj vozlišča in uteži za sestavljeno Simpsonovo pravilo]<pr:14-simpson>
-#vaja14("# mc")[Izračunaj večkratni integral z metodo Monte Carlo]<pr:14-mc>
+#vaja14("# VeckratniIntegral")[Podakovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
+#vaja14("# preslikaj")[Funkcija, ki preslika kvadraturo na drug interval.]<pr:14-preslikaj>
+#vaja14("# integriraj")[Funkcija, ki izračuna večkratni integral s produktno kvadraturo.]<pr:14-integriraj>
+#vaja14("# naslednji!")[Funkcija, ki izračuna naslednji multiindeks
+$(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$. ]<pr:14-naslednji>
+#vaja14("# simpson")[Funkcija, ki izračuna vozlišča in uteži za sestavljeno Simpsonovo pravilo.]<pr:14-simpson>
+#vaja14("# mc")[Funkcija, ki izračuna večkratni integral z metodo Monte Carlo.]<pr:14-mc>
 
 == Testi
 

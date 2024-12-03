@@ -295,8 +295,8 @@ matriko $I - Q$:
 code_box(
   jlfb("scripts/03_tridiag.jl", "# matrika_sprehod")
 ),
-caption: [Sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod, ki se konča,
-ko se prvič oddalji za $k$ korakov od izhodišča.]
+caption: [Funkcija, ki sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod.
+  Slučajni sprehod se konča, ko se prvič oddalji za $k$ korakov od izhodišča.]
 )<pr:03-matrika-sprehod>
 
 Pričakovano število korakov izračunamo kot rešitev sistema $(I-Q) bold(k) = bold(1)$.
@@ -306,7 +306,7 @@ Uporabimo operator `\` za tridiagonalno matriko:
 code_box[
   #jlfb("scripts/03_tridiag.jl", "# koraki")
 ],
-caption: [Izračunaj vektor pričakovanih števil korakov, ki jih potrebuje slučajni
+caption: [Funkcija, ki izračuna vektor pričakovanih števil korakov, ki jih potrebuje slučajni
 sprehod, da se iz začetnega stanja med $1$ in $2k-1$ premakne v stanje $0$ ali $2k$.]
 )
 V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots med 0 med dots k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots 0, 1, med dots med k-1}$.
@@ -357,13 +357,13 @@ povprečjem po velikem številu sprehodov.
 code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# size")
 ),
-caption: [Metoda `size` vrne dimenzije matrike.]
+caption: [Metoda `size` za tridiagonalno matriko, ki vrne dimenzije matrike.]
 )<pr:03-size>
 
 #figure(code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# getindex")
 ),
-caption: [Metoda `getindex` se pokliče, ko uporabimo izraz `T[i,j]`.]
+caption: [Metoda `getindex` za tridiagonalno matriko, ki se pokliče, ko uporabimo izraz `T[i,j]`.]
 )<pr:03-getindex>
 
 #figure(
@@ -373,14 +373,14 @@ caption: [Metoda `getindex` se pokliče, ko uporabimo izraz `T[i,j]`.]
 
 #figure(
   code_box(jlfb("Vaja03/src/Vaja03.jl", "# množenje")),
-  caption: [Množenje tridiagonalne matrike z vektorjem]
+  caption: [Metoda `*` za množenje tridiagonalne matrike z vektorjem]
 )<pr:03-produkt>
 
 #figure(
 code_box(
   jlfb("Vaja03/src/Vaja03.jl", "# deljenje")
 ),
-caption: [Reševanje tridiagonalnega sistema linearnih enačb]
+caption: [Metoda `\` za reševanje tridiagonalnega sistema linearnih enačb]
 )<pr:03-backslash>
 
 === Testi<sec:03-testi>

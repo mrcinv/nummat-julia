@@ -189,4 +189,4 @@ Program #jl("konvergencno_obmocje") uporabimo na našem primeru @eq:09primer:
 #vaja9("# box2d")[Pomožne funkcije za delo s pravokotnimi območji]<pr:09-box>
 
 #vaja9("# konvergenca")[
-  Funkcija, ki razišče konvergenco izbrane metode na danem pravokotniku]<pr:09-konvergenca>
+  Funkcija, ki razišče konvergenco izbrane metode na danem pravokotniku.]<pr:09-konvergenca>

@@ -175,7 +175,7 @@ funkcijo, ki sama določi število korakov iteracije:
 
 #figure(
     jlfb("Vaja02/src/koren.jl", "# koren2"),
-    caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije]
+    caption: [Metoda `koren(x, y0)`, ki avtomatsko določi število korakov iteracije.]
 ) <code:02-koren-x-y0>
 
 == Izbira začetnega približka
@@ -243,7 +243,7 @@ Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1
     code_box(
         jlfb("Vaja02/src/koren.jl", "# zacetni")
     ),
-    caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek]
+    caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
 )
 
 Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.

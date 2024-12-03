@@ -176,7 +176,7 @@ verjetna.
 
 #figure(
   image("img/07poteze_konja.png", width: 40%),
-  caption: [Možne poteze, ki jih lahko naredita beli in črni skakač na $5 times 5$ šahovnici]
+  caption: [Možne poteze, ki jih lahko naredita beli in črni skakač na $5 times 5$ šahovnici.]
 )
 Stanja označimo s pari
 indeksov $(i, j)$, ki označujejo posamezno polje. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je skakač na polju $(i, j)$.
@@ -263,7 +263,7 @@ vrednost $1$.
   code_box(
     jlfb("Vaja07/src/Vaja07.jl", "# potencna")
   ),
-  caption: [Potenčna metoda poišče lastni vektor za po absolutni vrednosti
+  caption: [Funkcija, ki s potenčno metodo poišče lastni vektor za po absolutni vrednosti
   največjo lastno vrednost dane matrike.]
 )<pr:07potencna>
 
@@ -272,7 +272,7 @@ vrednost $1$.
     jlfb("Vaja07/src/Vaja07.jl", "# indeksi")
   ),
   caption: [Preslikave med indeksi v matriki in indeksi v vektorju, ki je sestavljen iz
-  stolpcev matrike]
+  stolpcev matrike.]
 )<pr:07indeksi>
 
 #figure(
@@ -280,7 +280,7 @@ vrednost $1$.
     jlfb("Vaja07/src/Vaja07.jl", "# skakač")
   ),
   caption: [Podatkovni tip, ki predstavlja  Markovsko verigo za skakača na
-  šahovnici]
+  šahovnici.]
 )<pr:07skakač>
 
 #figure(
@@ -288,5 +288,5 @@ vrednost $1$.
     jlfb("Vaja07/src/Vaja07.jl", "# prehodna_matrika")
   ),
   caption: [Funkcija, ki ustvari prehodno matriko za Markovsko verigo za skakača na
-  šahovnici]
+  šahovnici.]
 )<pr:07prehodna>

@@ -268,22 +268,24 @@ in #emph[metoda konjugiranih gradientov].
 
 #figure(
   vaja8("# inviter"),
-  caption: [Inverzna iteracija]
+  caption: [Funkcija, ki z inverzno iteracijo poišče lastni par za po absolutni vrednosti
+    najmanjšo lastno vrednost matrike.]
   )<pr:9-inviter>
 
 #figure(
   vaja8("# inviterqr"),
-  caption: [Inverzna iteracija s QR razcepom]
+  caption: [Funkcija, ki z inverzno iteracijo in QR razcepom poišče $k$ lastnih parov za
+    $k$ po absolutni vrednosti najmanjših lastnih vrednosti matrike.]
   )<pr:9-inviterqr>
 
 #figure(
   vaja8("# graf_eps"),
-  caption: [Graf podobnosti z $epsilon$ okolicami]
+  caption: [Funkcija, ki ustvari graf podobnosti z $epsilon$ okolicami za dane podatke.]
   )
 
 #figure(
   vaja8("# laplace"),
-  caption: [Laplaceova matrika grafa]
+  caption: [Funkcija, ki izračuna Laplaceovo matriko grafa.]
   )
 
 == Testi

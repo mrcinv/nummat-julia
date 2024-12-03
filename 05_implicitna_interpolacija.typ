@@ -193,7 +193,7 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
 
 #figure(
   image("img/05-2tocki.svg", width: 60%),
-  caption: [Linearna kombinacija dveh RBF v s središčema v točkah $(1, 0)$ in $(2, 1)$ s funkcijo oblike $phi(r) = exp(-r^2 slash 0.7^2)$]
+  caption: [Linearna kombinacija dveh RBF s središčema v točkah $(1, 0)$ in $(2, 1)$ ter funkcijo oblike $phi(r) = exp(-r^2 slash 0.7^2)$]
 )
 
 Rešimo sedaj problem interpolacije. Zapišimo funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija). Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
@@ -214,7 +214,9 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se 
     image("img/05-krivulja.svg", width: 100%),
     image("img/05-contours.svg", width: 100%)
   ),
-  caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolirajo dane točke. Iskana krivulja, ki interpolira dane točke, je nivojska krivulja za vrednost $-1$.]
+  caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolira dane
+    vrednosti v danih točkah. Iskana krivulja, ki interpolira dane točke, je nivojska krivulja
+    za vrednost $-1$.]
 )
 
 #opomba(naslov: [Kaj smo se naučili?])[
@@ -228,14 +230,14 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se 
   code_box(
     vaja05("# rbf vrednost")
   ),
-  caption: [Izračunaj vrednost linearne kombinacije RBF v dani točki]
+  caption: [Funkcija, ki izračuna vrednost linearne kombinacije RBF v dani točki.]
 )<pr:05vrednost>
 
 #figure(
   code_box(
     vaja05("# interpolacija")
   ),
-  caption: [Interpoliraj vrednosti funkcij z linearno kombinacijo RBF]
+  caption: [Funkcija, ki interpolira dane vrednosti z linearno kombinacijo RBF.]
 )<pr:05interpolacija>
 
 #let test05(koda) = ljfb(

@@ -63,7 +63,7 @@ omenjenima pogojema.
 
 #figure(
   image("img/13-obmocja.png", width: 60%),
-  caption: [Razdelitev intervala $(-oo, oo)$ na tri dele, na katerih uporabimo različne metode]
+  caption: [Razdelitev intervala $(-oo, oo)$ na tri dele, na katerih uporabimo različne metode.]
 )
 
 === Izračun na $[-c, oo)$
@@ -98,7 +98,7 @@ $
 
 #figure(image("img/13-preslikan-integrand.svg", width:60%), caption: [Integrand
 $1/u^2 exp(-1/(2u^2))$, če integral $integral_(x)^(oo) exp(-t^2/2) d t$ preslikamo s
-preslikavo $t = 1/x$])
+preslikavo $t = 1/x$.])
 
 Funkcija $1/(u^2)exp(-1/u^2)$ ni podobna polinomom, saj pri nič zelo hitro konvergira k $0$. Zato
 metode visokega reda ne bodo dale dobrih rezultatov in bomo raje uporabili adaptivno kvadraturo.

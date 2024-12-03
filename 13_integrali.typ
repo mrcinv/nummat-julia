@@ -311,7 +311,7 @@ $
 $<eq:13-sinx2>
 
 #demo13("# sin x2")
-#figure(caption: [Graf funkcije, ki jo integriramo], image("img/13-sinx2.svg", width: 60%))
+#figure(caption: [Graf funkcije, ki jo integriramo.], image("img/13-sinx2.svg", width: 60%))
 
 Izračunajmo integral @eq:13-sinx2 z metodami, ki smo jih implementirali. Za vse metode
 uporabimo enako število vozlišč.
@@ -424,12 +424,12 @@ polinomi. V takih primerih se bolje obnesejo
 #vaja13("# Interval")[Podatkovni tip za zaprti interval $[a, b]$]<pr:13-Interval>
 #vaja13("# Integral")[Podatkovni tip za določeni integral $integral_a^b f(x) d x$]<pr:13-Integral>
 #vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno pravilo z $n$ eankomernimi koraki]<pr:13-Trapez>
-#vaja13("# integriraj trapez")[Funkcija, ki izračuna integral s sestavljenim trapeznim pravilom]<pr:13-int-trapez>
+#vaja13("# integriraj trapez")[Funkcija, ki izračuna integral s sestavljenim trapeznim pravilom.]<pr:13-int-trapez>
 #vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ eankomernimi koraki]<pr:13-simpson>
-#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavlenim Simpsonovim pravilom]<pr:13-int-simpson>
+#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavlenim Simpsonovim pravilom.]<pr:13-int-simpson>
 #vaja13("# Kvadratura")[Podatkovni tip za splošno kvadraturno formulo]<pr:13-Kvadratura>
-#vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo]<pr:13-int-gl>
-#vaja13("# glkvad")[Funkcija, ki izračuna uteži in vozlišča za Gauss-Legendreovo kvadraturo z $n$ vozlišči]<pr:13-glkvad>
+#vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo.]<pr:13-int-gl>
+#vaja13("# glkvad")[Funkcija, ki izračuna uteži in vozlišča za Gauss-Legendreovo kvadraturo z $n$ vozlišči.]<pr:13-glkvad>
 
 == Izpeljava Simpsonovega pravila<sec:13-izpeljava>
 

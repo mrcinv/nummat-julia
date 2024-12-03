@@ -416,10 +416,11 @@ Dualni del rezultata je gradient funkcije.
 
 #figure(caption: [Osnovne operacije med dualnimi števili], vaja15("# operacije"))
 #figure(caption: [Elementarne funkcije za dualna števila], vaja15("# funkcije"))
-#figure(caption: [Izračunaj odvod funkcije ene spremenljivke], vaja15("# odvod"))
+#figure(caption: [Funkcija, ki izračuna odvod funkcije ene spremenljivke.], vaja15("# odvod"))
 #figure(caption: [Podatkovni tip za mešanico dualnih števil], vaja15("# vektor dual"))<pr:15-dual>
 #figure(
   caption: [Osnovne operacije med vektorskimi dualnimi števili],
   vaja15("# operacije dual"))<pr:15-dual-op>
 #figure(caption: [Elementarne funkcije za vektorska dualna števila], vaja15("# funkcije dual"))
-#figure(caption: [Funkcija izračuna gradiant funkcije vektorske spremenljivke v dani točki], vaja15("# gradient"))
+#figure(caption: [Funkcija, ki izračuna gradiant funkcije vektorske spremenljivke v dani točki.],
+  vaja15("# gradient"))

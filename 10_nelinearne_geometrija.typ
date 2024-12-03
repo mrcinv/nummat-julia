@@ -243,9 +243,9 @@ in Newtonovo metodo:
 
 
 
-#figure(kind: image, caption: [Levo: točki na krivuljama, h katerima konvergira gradientna metoda
-sta lokalni minimum, ki pa ni globalni. Desno: Newtonova metoda konvergira k sedlu.
-Točka na $k_1$ je lokalni minimum, točka na $k_2$ pa lokalni maksimum.],
+#figure(kind: image, caption: [Točki na krivuljama, h katerima konvergira gradientna metoda
+sta lokalni minimum, ki pa ni globalni (levo). Newtonova metoda konvergira k sedlu.
+Točka na $k_1$ je lokalni minimum, točka na $k_2$ pa lokalni maksimum (desno).],
 table(stroke: none, columns: 2, image("img/10_minimum.svg"), image("img/10_sedlo.svg"))
 )
 
@@ -272,6 +272,6 @@ Problem iskanja minimuma funkcije, ki smo ga reševali, spada med optimizacijske
 #let vaja10(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja10/src/Vaja10.jl", koda)))
 
 
-#vaja10("# samopres")[Funkcija poišče samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
-#vaja10("# razdalja2")[Funkcija kvadrata razdalje med dvema krivuljama]<pr:10-razdalja2>
+#vaja10("# samopres")[Funkcija, ki poišče samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
+#vaja10("# razdalja2")[Funkcija, ki izračuna kvadrata razdalje med dvema krivuljama.]<pr:10-razdalja2>
 #vaja10("# grad")[Gradientni spust]<pr:10-spust>

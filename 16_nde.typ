@@ -83,11 +83,11 @@ Narišimo še nekaj začetnih pogojev in rešitev, ki gredo skoznje.
   image("img/16-polje.svg"),
   image("img/16-resitve.svg")
   ),
-  caption: [Levo: Smerno polje za enačbo $u'(t) = -2t u(t)$. V vsaki točki ravnine $(t, u)$ enačba
-  definira odvod $u'(t) = f(t, u)$ in s tem tudi tangento na rešitev enačbe $u(t)$.
-  Desno: Vsaka točka $(t_0, u_0)$ v ravnini $t, u$ določa začetni pogoj. Za različne začetne pogoje
+  caption: [ Smerno polje za enačbo $u'(t) = -2t u(t)$. V vsaki točki ravnine $(t, u)$ enačba
+  definira odvod $u'(t) = f(t, u)$ in s tem tudi tangento na rešitev enačbe $u(t)$ (levo).
+  Vsaka točka $(t_0, u_0)$ v ravnini $t, u$ določa začetni pogoj. Za različne začetne pogoje
  dobimo različne rešitve. Rešitev NDE se v vsaki točki dotika tangente, določene z
- $u'(t) = f(t, u)$.]
+ $u'(t) = f(t, u)$ (desno).]
 )
 
 Diferencialna enačba @eq:16-nde1 ima neskončno rešitev. Čim pa določimo vrednost v neki
@@ -158,7 +158,7 @@ numerično rešitev.
 
 #figure(
   vaja16("# ZacetniProblem"),
-  caption: [Podatkovni tip, ki vsebuje vse podatke o začetnem problemu]
+  caption: [Podatkovni tip, ki vsebuje vse podatke o začetnem problemu.]
 )
 
 Približke, ki jih bomo izračunali z različnimi metodami, bomo shranili v poseben podatkovni tip
@@ -167,7 +167,7 @@ v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s sm
 
 #figure(
   vaja16("# ResitevNDE"),
-  caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema]
+  caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema.]
 )
 
 Definirajmo podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
@@ -352,8 +352,8 @@ $[t_0, t_k]$.
 
 #demo16("# napaka")
 
-#figure(image("img/16-primerjava.svg", width: 60%), caption: [Napaka za različne metode v logaritemski skali v
-odvisnosti od velikosti koraka])
+#figure(image("img/16-primerjava.svg", width: 60%), caption: [Napaka za različne metode skali v
+odvisnosti od velikosti koraka v logaritemski skali])
 
 #opomba(naslov: [Kako izbrati primerno metodo?])[
 V tej vaji smo spoznali 3 različne metode: Eulerjevo, Runge-Kutta reda 2 in reda 4. Poleg omenjenih
@@ -484,7 +484,7 @@ trajektorijo sistema, ki je podana s parametrično krivuljo $(x(t), y(t)) = (u_1
 
 #demo16("# nicla 3")
 #figure(image("img/16-nicla-3.svg", width: 60%),
-caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže tla])
+caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže tla.])
 
 #pagebreak()
 == Rešitve
@@ -513,7 +513,7 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže
 #figure(
   vaja16("# Euler"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
-  z enim korakom Eulerjeve metode]
+  z enim korakom Eulerjeve metode.]
 )<pr:16-euler-resi>
 
 #figure(
@@ -525,25 +525,25 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže
 #figure(
   vaja16("# RK2"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
-  z enim korakom metode Runge-Kutta reda 2]
+  z enim korakom metode Runge-Kutta drugega reda.]
 )<pr:16-rk2>
 
 
 #figure(
   vaja16("# RK4"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
-  z enim korakom metode Runge-Kutta reda 4]
+  z enim korakom metode Runge-Kutta četrtega reda.]
 )<pr:16-rk4>
 
 #figure(
   vaja16("# niclaint"),
   caption: [Funkcija, ki poišče interval $[t_(i), t_(i+1)]$, na katerem ima funkcija
-  $F(bold(u)(t))$ ničlo
+  $F(bold(u)(t))$ ničlo.
   ]
 )<pr:16-niclaint>
 
 
 #figure(
   vaja16("# nicla"),
-  caption: [Funkcija, ki poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$]
+  caption: [Funkcija, ki poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$.]
 )<pr:16-nicla>

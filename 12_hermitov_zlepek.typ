@@ -20,7 +20,7 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     table.hline(),
     $f(x)$, $y_1$, $y_2$, $dots$, $y_n$,
     $f'(x)$, $d y_1$, $d y_2$, $dots$, $d y_n$),
-    caption: [Podatki, ki jih potrebujemo za Hermitov kubični zlepek]
+    caption: [Podatki, ki jih potrebujemo za Hermitov kubični zlepek.]
   )<hermitovi-podatki>
 - Uporabi Hermitovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @hermitova-baza[Tabele] in
   jih z linearno preslikavo preslikaj z intervala $[0, 1]$ na interval $[x_i, x_(i+1)]$.
@@ -35,7 +35,7 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
       [$h_(10)$], [$0$], [$0$], [$1$], [$0$],
       [$h_(11)$], [$0$], [$0$], [$0$], [$1$]
     ),
-caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$.]
+caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$]
 )<hermitova-baza>
 - Definirajte podatkovni tip `HermitovZlepek` za Hermitov kubični zlepek, ki vsebuje podatke iz
   @hermitovi-podatki[Tabele].
@@ -224,7 +224,7 @@ Peverimo še numerično, ali izračunana formula deluje:
 #demo12("# predpisana napaka")
 
 #figure(image("img/12-napaka-eps.svg", width: 60%), caption: [Napaka interpolacije, pri čemer smo
-število interpolacijskih točk izbrali tako, da je napaka mnjša od $10^(-6)$])
+število interpolacijskih točk izbrali tako, da je napaka mnjša od $10^(-6)$.])
 
 #opomba(naslov:[Teoretične ocene za napako niso vedno uporabne])[
 Za določitev napake smo uporabili oceno @eq:12-ocena-hermite. Pri tem smo meje za četrti odvod, ki
@@ -283,8 +283,8 @@ naraščati.
 #figure(kind: image, table(stroke: none, columns: 2,
   image("img/12-runge.svg"), image("img/12-runge-napaka.svg")),
   caption: [Interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
-  na robu območja močno niha. Levo: Interpolacija funkcije $f(x)=cos(2x) + sin(3x)$ s polinomom
-  stopnje $65$. Desno: Razlika med funkcijo in interpolacijskim polinomom.]
+  na robu območja močno niha. Interpolacija funkcije $f(x)=cos(2x) + sin(3x)$ s polinomom
+  stopnje $65$ (levo). Razlika med funkcijo in interpolacijskim polinomom (desno).]
   )
 
 Opazimo, da se napaka na robu znatno poveča. Povečanje je posledica velikih
@@ -306,13 +306,13 @@ Problemu se izognemo, če namesto ekvidistančnih točk uporabimo
 
 #let vaja12(koda, caption) = figure(code_box(jlfb("Vaja12/src/Vaja12.jl", koda)), caption: caption)
 
-#vaja12("# hermiteint")[Interpoliraj podatke iz @hermitovi-podatki[tabele] s
-  Hermitovim kubičnim polinomom]
+#vaja12("# hermiteint")[Funkcija, ki interpolira podatke iz @hermitovi-podatki[tabele] s
+  Hermitovim kubičnim polinomom.]
 #vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]<pr:12-hermite>
-#vaja12("# vrednost")[Izračunaj vrednost Hermitovega kubičnega zlepka]<pr:12-vrednost-hermite>
+#vaja12("# vrednost")[Funkcija, ki izračuna vrednost Hermitovega kubičnega zlepka.]<pr:12-vrednost-hermite>
 
 #vaja12("# NewtonovPolinom")[Podatkovni tip za polinom v Newtonovi obliki]<pr:12-newton>
-#vaja12("# np vrednost")[Izračunaj vrednost Newtonovega polinoma]<pr:12-vrednost-newton>
+#vaja12("# np vrednost")[Funkcija, ki izračuna vrednost Newtonovega polinoma.]<pr:12-vrednost-newton>
 #vaja12("# interpoliraj")[Izračun koeficientov Newtonovega polinoma z deljenimi diferencami]<pr:12-interpoliraj>
 
 == Testi

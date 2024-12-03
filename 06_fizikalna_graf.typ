@@ -215,7 +215,8 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 
 #figure(
   image("img/06-mreza-krog.svg", width: 60%),
-  caption: [Dvodimenzionalna mreža vložena s fizikalno metodo. Rob mreže je enakomerno razporejen po krožnici.]
+  caption: [Dvodimenzionalna mreža, vložena s fizikalno metodo. Rob mreže je enakomerno razporejen
+    po krožnici.]
 )
 
 #opomba(naslov:[Kaj smo se naučili?])[
@@ -232,14 +233,14 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   code_box(
     vaja06("# lestev")
   ),
-  caption: [Ustvari graf krožna lestev]
+  caption: [Funkcija, ki ustvari graf krožna lestev.]
 )<pr:06-lestev>
 
 #figure(
   code_box(
     vaja06("# matrika")
   ),
-  caption: [Ustvari matriko sistema za ravnovesje sil v grafu]
+  caption: [Funkcija, ki ustvari matriko sistema za ravnovesje sil v grafu.]
 )<pr:06-matrika>
 
 
@@ -247,21 +248,21 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   code_box(
     vaja06("# desne strani")
   ),
-  caption: [Izračunaj desne strani sistema za ravnovesje sil v grafu na
-  podlagi koordinat pritrjenih vozlišč]
+  caption: [Funkcija, ki izračuna desne strani sistema za ravnovesje sil v grafu na
+  podlagi koordinat pritrjenih vozlišč.]
 )<pr:06-desne-strani>
 
 #figure(
   code_box(
     vaja06("# cg")
   ),
-  caption: [Metoda konjugiranih gradientov za reševanje sistema $A x=b$
-  za pozitivno definitno matriko $A$]
+  caption: [Funkcija, ki reši sistem linearnih enačb $A x=b$ s pozitivno definitno matriko $A$
+    z metodo konjugiranih gradientov.]
 )<pr:06-cg>
 
 #figure(
   code_box(
     vaja06("# vlozitev")
   ),
-  caption: [Poišči koordinate vložitve grafa v $RR^d$ s fizikalno metodo]
+  caption: [Funkcija, ki poišče koordinate vložitve grafa v $RR^d$ s fizikalno metodo.]
 )<pr:06-vlozitev>

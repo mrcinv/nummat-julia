@@ -559,7 +559,8 @@ en korak Gauss-Seidlove iteracije podan s preprosto zanko.
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# gs")
   ),
-  caption: [Funkcija, ki poišče naslednji približek Gauss-Seidlove iteracije za diskretizacijo Laplaceove enačbe.]
+  caption: [Funkcija, ki poišče naslednji približek Gauss-Seidlove iteracije za diskretizacijo
+    Laplaceove enačbe.]
 )<pr:gs>
 
 Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
@@ -639,7 +640,7 @@ od parametra $omega$])
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# matrika")
   ),
-  caption: [Generiraj matriko za diskretizacijo Laplaceovega operatorja.]
+  caption: [Funkcija, ki zgradi matriko za diskretizacijo Laplaceovega operatorja.]
 )<pr:matrika>
 
 #figure(

@@ -681,7 +681,7 @@ V datoteko `test/runtests.jl` dodamo teste za obe koordinatni funkciji, ki prime
 #figure(
   code_box(
   raw(read("Vaja01/test/runtests.jl"), lang: "jl")),
-  caption: [Rezultat funkcij primerjamo s pravilno vrednostjo],
+  caption: [Test funkcij #jl("lemniskata_x") in #jl("lemniskata_y")],
 )
 
 #opomba(
@@ -771,7 +771,7 @@ Dokument README (preberi me) je namenjen najbolj osnovnim informacijam o paketu.
 code_box(
   raw(lang:"md", read("Vaja01/README.md"))
 ),
-caption: [README.md vsebuje osnove informacije o projektu]
+caption: [Vsebina datoteke README.md, ki vsebuje osnove informacije o projektu.]
 )
 
 
@@ -803,7 +803,9 @@ V datoteko dodamo besedilo v obliki komentarjev. Če želimo, da se komentarji u
   code_box[
   #raw(lang: "jl", block:true, readlines("Vaja01/doc/01uvod.jl", 1, 13))
   ],
-  caption: [Vrstice, ki se začnejo z znakoma `#'`, so v formatu Markdown],
+  caption: [Vsebina datoteke `01uvod.jl`, iz katere generiramo poročilo.
+    Vrstice, ki se začnejo z znakoma `#'`, so v formatu Markdown in bodo v poročilo vključene kot
+    oblikovano besedilo.],
 )
 
 Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo program
