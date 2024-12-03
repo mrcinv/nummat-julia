@@ -138,7 +138,8 @@ $lr([a , b])$ izračuna polinomski interpolant, v Čebiševih točkah.
 Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangevo interpolacijo,] po
 formuli
 
-$ l(x) = cases(delim: "{", frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j)) & quad x eq.not x_j, f lr((x_j)) & quad "sicer") $
+$ l(x) = cases(frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j))";" & quad x eq.not x_j",",
+  f lr((x_j))";"& quad "sicer.") $
 
 Čebiševe točke so podane na intervalu $lr([- 1 , 1])$ s formulo
 
@@ -146,7 +147,8 @@ $ x_k = cos((2k -1)/(2n) pi), quad k = 0,1, med dots, med n-1, $
 
 vrednosti uteži $lambda_k$ pa so enake
 
-$ lambda_k = (- 1)^k cases(delim: "{", 1 & quad 0 lt i lt n, 1 / 2 & quad i = 0 , n & quad "sicer".) $
+$ lambda_k = (- 1)^k cases(1";"& quad 0 lt i lt n",", 1 / 2";"& quad i = 0",",
+  n";" & quad "sicer".) $
 
 Za interpolacijo na splošnem intervalu $lr([a , b])$ si pomagaj z
 linearno preslikavo na interval $lr([- 1 , 1])$. Program uporabi

@@ -5,12 +5,13 @@
 
 = Fizikalna metoda za vložitev grafov
 
-#let Fvec = $arrow(F)$
+#let Fvec = $bold(F)$
 
-Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G)^2$.
+Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G) times V(G)$.
 Brez škode predpostavimo, da so vozlišča grafa $G$ kar zaporedna naravna števila
 $V(G) = {1, 2, dots n}$. Vložitev grafa $G$ v $RR^d$ je preslikava
-$V(G) -> RR^d$, ki je podana z zaporedjem koordinat. Vložitev v $RR^3$ je podana z zaporedjem točk v $RR^3$
+$V(G) -> RR^d$, ki je podana z zaporedjem koordinat. Vložitev v $RR^3$ je podana z zaporedjem točk v
+$RR^3$
 
 $
 (x_1, y_1, z_1), (x_2, y_2, z_2), dots, (x_n, y_n, z_n).
@@ -42,7 +43,7 @@ sosednja vozlišča s silo, ki je sorazmerna razdalji med vozlišči.
 
 - Izpelji sistem enačb za koordinate vozlišč grafa, tako da so vozlišča v ravnovesju.
 - Pokaži, da je matrika sistema diagonalno dominantna in negativno definitna.
-- Napiši funkcijo, ki za dani graf in koordinate fiksiranih vozlišč poišče koordinate vseh vozlišč, tako da reši sistem enačb z metodo konjugiranih gradientov.
+- Napiši funkcijo, ki za dani graf in koordinate fiksiranih vozlišč poišče koordinate vseh vozlišč tako, da reši sistem enačb z metodo konjugiranih gradientov.
 - V ravnini nariši #link("https://en.wikipedia.org/wiki/Ladder_graph#Circular_ladder_graph")[graf krožno lestev], tako da polovico vozlišč razporediš enakomerno po enotski krožnici.
 -  V ravnini nariši pravokotno mrežo. Fiksiraj vogale, nato točke na robu enakomerno razporedi po krožnici.
 
@@ -58,20 +59,19 @@ $
 
 kjer je $k$ koeficient vzmeti.
 
-Koordinate vozlišč določimo tako, da poiščemo koordinate, pri katerih je sistem
-v ravnovesju. To pomeni, da so v vsakem vozlišču $j$ v ravnovesju sile, s katerimi
-sosednja vozlišča delujejo na dano vozlišče:
+Koordinate vozlišč določimo tako, da poiščemo ravnovesje sistema. To pomeni, da so v vsakem vozlišču $j$ v ravnovesju sile, s katerimi
+sosednja vozlišča delujejo nanj:
 
 $
-  sum_(i in N(j)) Fvec_(i j) = 0,
+  sum_(i in N(j)) Fvec_(i j) = bold(0),
 $<eq:06-ravnovesje>
 
-kjer je $N(j) = {i; quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
+kjer je $N(j) = {i: quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
 sila, s katero vozlišče $i$ deluje na vozlišče $j$. Iz enačbe @eq:06-ravnovesje lahko izpeljemo
 sistem enačb za koordinate $x_j, y_j$ in $z_j$. Iz vektorske enačbe za vozlišče $j$:
 
 $
-  sum_(i in N(j)) Fvec_(i j) = sum_(i in N(j)) k vec(x_i - x_j, y_i - y_j, z_i - z_j) = 0,
+  sum_(i in N(j)) Fvec_(i j) = sum_(i in N(j)) k vec(x_i - x_j, y_i - y_j, z_i - z_j) = bold(0),
 $
 
 dobimo 3 enačbe za posamezne koordinate:
@@ -94,12 +94,12 @@ $
 $<eq:06-trojni-sistem>
 
 
-Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem le ničelno rešitev. Če želimo
+Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem  le ničelno rešitev#footnote[Rešitev je enolična le, če je matrika sistema @eq:06-trojni-sistem polnega ranga. To velja, če graf nima izoliranih točk]. Če želimo
 netrivialno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
 škode lahko predpostavimo, da so vozlišča, ki jih pritrdimo, na koncu. Označimo z
-$F = {m+1, dots, n} subset V(G)$ množico vozlišč, ki imajo določene koordinate. Koordinate za
+$F = {m+1, dots, n} subset V(G); quad m<n$ množico vozlišč, ki imajo določene koordinate. Koordinate za
 vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo stran enačbe.
-Sistem enačb @eq:06-trojni-sistem postane nehomogen sistem:
+Sistem enačb @eq:06-trojni-sistem postane nehomogen:
 
 $
  -st(1) x_1 + a_(1 2) x_2 + dots + a_(1 m) x_m = - a_(1 m+1)x_(m+1) - dots - a_(1 n)x_(n)\
@@ -111,7 +111,7 @@ $<eq:06sistem-x>
 kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer
 
 $
-  a_(i j) = cases(1 quad (i, j) in E(G), 0 quad (i, j) in.not E(G)).
+  a_(i j) = cases(1";"& quad (i, j) in E(G)",", 0";"& quad (i, j) in.not E(G).)
 $
 
  Matrika sistema @eq:06sistem-x je
