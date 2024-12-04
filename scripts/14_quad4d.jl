@@ -75,7 +75,7 @@ dgl = povprecna_razdalja(kvadrat, glkvvad(60))
 dgl - d1
 """
 Izračunaj sestavljeno Gauss-Legendreovo formulo s osnovnim pravilom s `k`
-vozlišči in delitvijo na `n` podintervalov.
+vozli in delitvijo na `n` podintervalov.
 """
 function glsest(k, n)
   x0, u0 = gausslegendre(k)

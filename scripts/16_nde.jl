@@ -125,7 +125,7 @@ using Plots
 fun(t, u, p) = p * t * u
 upravi(t) = exp(-t^2) / exp(-0.5^2)
 zp = ZacetniProblem(fun, upravi(-0.5), (-0.5, 0.5), -2.0)
-res = resi(zp, RK2(0.5))
+res = resi(zp, RK2(0.2))
 scatter(res.t, res.u, label="približki RK2")
 plot!(t -> res(t), res.t[1], res.t[end], label="Hermitova interpolacija")
 plot!(upravi, res.t[1], res.t[end], label="prava rešitev", legend=:bottom)
@@ -152,16 +152,16 @@ end
 # primer 1
 x0 = [0.0, 1.0]
 v0 = [10.0, 20.0]
-tint = (0.0, 3.0)
+tint = (0.0, 5.0)
 g = 9.8
 c = 0.1
 zp = ZacetniProblem(f_posevni, vcat(x0, v0), tint, (g, c))
-res = resi(zp, Euler(0.1))
+res = resi(zp, RK4(0.1))
 using Plots
-plot(t -> res(t)[1], 0, 3, label="\$x(t)\$")
-plot!(t -> res(t)[2], 0, 3, label="\$y(t)\$")
-plot!(t -> res(t)[3], 0, 3, label="\$v_x(t)\$")
-plot!(t -> res(t)[4], 0, 3, label="\$v_y(t)\$")
+plot(t -> res(t)[1], tint..., label="\$x(t)\$")
+plot!(t -> res(t)[2], tint..., label="\$y(t)\$")
+plot!(t -> res(t)[3], tint..., label="\$v_x(t)\$")
+plot!(t -> res(t)[4], tint..., label="\$v_y(t)\$")
 # primer 1
 savefig("img/16-komponente.svg")
 

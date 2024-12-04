@@ -4,7 +4,7 @@
 #import "@preview/fletcher:0.5.2" as fletcher: diagram, node, edge
 
 = Fizikalna metoda za vložitev grafov
-
+<sec:6-fizikalna-metoda>
 #let Fvec = $bold(F)$
 
 Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G) times V(G)$.

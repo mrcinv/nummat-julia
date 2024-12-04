@@ -151,7 +151,7 @@ $ lambda_k = (- 1)^k cases(1";"& quad 0 lt i lt n",", 1 / 2";"& quad i = 0",",
   n";" & quad "sicer".) $
 
 Za interpolacijo na splošnem intervalu $lr([a , b])$ si pomagaj z
-linearno preslikavo na interval $lr([- 1 , 1])$. Program uporabi
+linearno funkcijo na interval $lr([- 1 , 1])$. Program uporabi
 za tri različne funkcije $e^(- x^2)$ na $lr([- 1 , 1])$,
 $frac(sin x, x)$ na $lr([0 , 10])$ in $lr(|x^2 - 2 x|)$ na
 $lr([1 , 3])$. Za vsako funkcijo določi stopnjo polinoma, da napaka

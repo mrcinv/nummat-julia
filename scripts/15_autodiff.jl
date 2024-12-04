@@ -205,15 +205,25 @@ function ackley(x, a, b, c)
 end
 # ackley
 
+# ack 0
+x0 = [1.1, 1.2, 1.3]
+# ack 0
+
+
 # ack 1
 x0 = Vaja15.spremenljivka(x0)
 # ack 1
 
 # ack 2
-y = ackley(x0, 1, 2, 3)
+y = ackley(x0, 4, 5, 6)
 # ack 2
+
+# ack 3
+dy = odvod(y)
+# ack 3
 
 using BookUtils
 
 term("15-ackley-1", x0)
 term("15-ackley-2", y)
+term("15-ackley-3", dy)

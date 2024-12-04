@@ -5,7 +5,7 @@ import LinearAlgebra: eigen, eigvals, eigvecs, SymTridiagonal
 export VeckratniIntegral, integriraj, volumen, simpson, MonteCarlo
 
 # simpson
-"""Poišči vozlišča in uteži za sestavljeno Simpsonovo pravilo na intervalu
+"""Poišči vozle in uteži za sestavljeno Simpsonovo pravilo na intervalu
 `[a, b]` z delitvijo na `n` podintervalov."""
 simpson(a, b, n) = Kvadratura(collect(LinRange(a, b, 2n + 1)),
   (b - a) / (6 * n) * vcat([1.0], repeat([4, 2], n - 1), [4, 1]), Interval(a, b))
@@ -63,7 +63,7 @@ function integriraj(
   d = dim(int)
   index = ones(Int, d)
   n = length(kvad.x)
-  x = zeros(T, d) # alociramo vektorja vozlišč in uteži pred zanko
+  x = zeros(T, d) # alociramo vektorja vozlov in uteži pred zanko
   w = zeros(T, d)
   I = zero(TI)
   for _ in 1:n^d
@@ -133,7 +133,7 @@ end
 
 izračuna integral funkcije `f` na d-dimenzionalni kocki ``[a,b]^d``
 z večkratno uporabo enodimenzionalne kvadrature za integral na
-intervalu ``[a,b]``, ki je podana z utežmi `utezi` in vozlišči `x0`.
+intervalu ``[a,b]``, ki je podana z utežmi `utezi` in vozli `x0`.
 
 # Primer
 ```jldoctest
@@ -144,7 +144,7 @@ julia> ndquad(f, x0, utezi, 2)
 ```
 """
 function ndquad(f, x0, utezi, d)
-  # število vozlišč
+  # število vozlov
   n = length(x0)
   index = ones(Int, d)
   I = 0.0
@@ -161,7 +161,7 @@ end
 """
     x, w = gauss_quad_rule(a, b, c, mu, n)
 
-Izračuna uteži `w` in vozlišča `x` za
+Izračuna uteži `w` in vozle `x` za
 [Gaussove kvadraturne formule](https://en.wikipedia.org/wiki/Gaussian_quadrature)
 za integral
 
@@ -193,7 +193,7 @@ ki zadoščajo rekurzivni zvezi
 p_{n+1}(x) = \\frac{2n+1}{n+1}x p_n(x) -\\frac{n}{n+1} p_{n-1}
 ```
 
-Naslednji program izpiše vozlišča in uteži za n od 1 do 5
+Naslednji program izpiše vozle in uteži za n od 1 do 5
 
 ```julia
 a(n) = (2*n-1)/n; b(n) = 0.0; c(n) = (n-1)/n;
@@ -202,7 +202,7 @@ println("Gauss-Legendreove kvadrature")
 for n=1:5
   x0, w = gauss_quad_rule(a, b, c, μ, n);
   println("n=\$n")
-  println("vozlišča: ", x0)
+  println("vozli: ", x0)
   println("uteži: ", w)
 end
 ```
@@ -224,7 +224,7 @@ end
 """
   x0, w0 = gauss_legendre_rule(n)
 
-Izračunaj vozlišča in uteži za Gauss-Legendreove kvadrature z Golub-Welschovim
+Izračunaj vozle in uteži za Gauss-Legendreove kvadrature z Golub-Welschovim
 algoritmom.
 """
 function gauss_legendre_rule(n)

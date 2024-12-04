@@ -88,7 +88,7 @@ end
 """
     Kvadratura(x, u, interval)
 
-Podatkovna struktura za splošno kvadraturo z danimi vozlišči in utežmi.
+Podatkovna struktura za splošno kvadraturo z danimi vozli in utežmi.
 """
 struct Kvadratura{T} <: AbstraktnaKvadratura
   x::Vector{T}
@@ -110,7 +110,7 @@ integriraj(i, k)
 ```
 """
 function integriraj(i::Integral, k::Kvadratura)
-  # funkcija, ki vozlišča kvadrature preslika na interval integrala
+  # funkcija, ki vozle kvadrature preslika na interval integrala
   razteg = dolzina(i.interval) / dolzina(k.interval)
   preslikaj(x) = razteg * (x - k.interval.min) + i.interval.min
   # zaporedje parov (u(j), x(j)) ustvarimo s funkcijo `zip`
@@ -124,8 +124,8 @@ using FastGaussQuadrature
 """
     kvadratura = glkvad(n)
 
-Izračunaj vozlišča in uteži za Gauss-Legendreove kvadraturne formule z 
-`n` vozlišči. Funkcija vrne vrednost tipa `Kvadratura`, ki jo lahko uporabimo
+Izračunaj vozle in uteži za Gauss-Legendreove kvadraturne formule z
+`n` vozli. Funkcija vrne vrednost tipa `Kvadratura`, ki jo lahko uporabimo
 v funkcij `integriraj`.
 # Primer
 ```jl

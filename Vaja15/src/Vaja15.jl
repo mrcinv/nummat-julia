@@ -14,10 +14,14 @@ struct DualNumber <: Number
 end
 
 import Base: show, promote_rule, convert
+"""Lepo izpiši dualno število `DualNumber(a, b)` kot `a + bε`."""
 show(io::IO, a::DualNumber) = print(io, a.x, " + ", a.dx, "ε")
 
+"""Dualna enota."""
 ε = DualNumber(0, 1)
+"Spremeni realno število v vrednost tipa `DualNumber`."
 convert(::Type{DualNumber}, x::Real) = DualNumber(x, zero(x))
+"Navadna števila avtomatsko promoviraj v dualna števila."
 promote_rule(::Type{DualNumber}, ::Type{<:Number}) = DualNumber
 # dual number
 
