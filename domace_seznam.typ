@@ -14,6 +14,7 @@
 #show link: set text(blue)
 
 = Navodila za pripravo domačih nalog
+<sec:navodila-domace>
 
 Ta dokument vsebuje navodila za pripravo domačih nalog v programskem jeziku
 #link("https://julialang.org/")[Julia]. Navodila so uporabna tudi, če

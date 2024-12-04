@@ -2,6 +2,7 @@
 #import "julia.typ": jlfb, jlf, jl, repl, code_box, pkg, blk, readlines
 
 = Uvod v programski jezik Julia
+<sec:1-uvod-julia>
 
 V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @bezanson_julia_2017. Zavoljo
 učinkovitega izvajanja, uporabe
