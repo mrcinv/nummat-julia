@@ -1,15 +1,19 @@
 #import "julia.typ": code_box, jl, jlfb, repl, blk
 #import "admonitions.typ": opomba
 
-= Začetni problem za NDE
+= Začetni problem za navadne diferencialne enačbe
 
-Navadna diferencialna enačba (NDE) prvega reda
+Navadna diferencialna enačba (NDE) prvega reda je funkcijska enačba za neznano
+funkcijo $u$ v kateri nastopa prvi odvod $u'$. Obravnavali bomo le enačbe,
+pri katerih lahko odvod izrazimo in jih lahko zapišemo v obliki
 
 $
-u'(t) = f(t, u, p)
-$
+u'(t) = f(t, u(t), p),
+$<eq:16-nde-ex>
 
-ima enolično rešitev za vsak začetni pogoj $u(t_0) = u_0$. Iskanje rešitve NDE z danim začetnim
+kjer je $t$ neodvisna spremenljivka, $u$ odvisna spremenljivka, $p$ parametri
+enačbe in $f$ funkcija, ki izrazi odvod v odvisnosti od $t$, $u$ in $p$.
+Enačba @eq:16-nde-ex ima enolično rešitev za vsak začetni pogoj $u(t_0) = u_0$. Iskanje rešitve NDE z danim začetnim
 pogojem imenujemo #link("https://en.wikipedia.org/wiki/Initial_value_problem")[začetni problem].
 
 V tej vaji bomo napisali knjižnico za reševanje začetnega problema za NDE.
@@ -24,12 +28,12 @@ V tej vaji bomo napisali knjižnico za reševanje začetnega problema za NDE.
   - z metodo Runge-Kutta reda 2,
   - z metodo Runge-Kutta reda 4.
 4. Napiši funkcijo `vrednost`, ki za dano rešitev začetnega problema izračuna vrednost rešitve v vmesnih
-  točkah s Hermitovim kubičnim zlepkom (@sec:12-zlepki).
+  točkah s Hermiteovim kubičnim zlepkom (@sec:12-zlepki).
 Napisane funkcije uporabi za obravnavo poševnega meta z upoštevanjem zračnega upora.
 Iz Newtonovih zakonov gibanja in kvadratnega zakona upora zapiši sistem NDE.
 Kako daleč leti telo, preden pade na tla? Koliko časa leti?
 
-Za vse tri metode bomo oceni, kako se napaka spreminja v odvisnosti od dolžine koraka.
+Za vse tri metode oceni, kako se napaka spreminja v odvisnosti od dolžine koraka.
 Namesto točne rešitve uporabi približek, ki ga izračunaš s polovičnim korakom.
 
 == Reševanje enačbe z eno spremenljivko
@@ -42,11 +46,11 @@ $
 u'(t) = f(t, u(t)),
 $
 
-za neko funkcijo dveh spremenljivk $f(t, u)$. Funkcija $f(t, u)$ določa odvod $u'(t)$ in s tem
-tangento na rešitev $u(t)$ v točki $(t, u(t))$. Za vsako točko $(t, u)$ dobimo tangento oziroma
-smer v kateri se rešitev premakne. Funkcija $f(t, u)$ tako določa smerno polje v ravnini $(t, u)$.
+za neko funkcijo dveh spremenljivk $f(t, u)$. Funkcija $f$ določa odvod $u'$ in s tem
+tangento na rešitev $u$ v točki $(t, u(t))$. Za vsako točko $(t, u)$ dobimo tangento oziroma
+smer, v kateri se rešitev premakne. Funkcija $f$ tako določa smerno polje v ravnini $(t, u)$.
 
-Za primer vzemimo enačbo:
+Za primer vzemimo enačbo
 
 $
 u'(t) = -2 t u(t),
@@ -91,21 +95,21 @@ Narišimo še nekaj začetnih pogojev in rešitev, ki gredo skoznje.
 )
 
 Diferencialna enačba @eq:16-nde1 ima neskončno rešitev. Čim pa določimo vrednost v neki
-točki $u(t_0)=u_0$, ima enačba @eq:16-nde1 enolično rešitev $u(t)$. Pogoj $u(t_0)=u_0$ imenujemo
+točki $u(t_0)=u_0$, ima enačba @eq:16-nde1 enolično rešitev $u$. Pogoj $u(t_0)=u_0$ imenujemo
 #emph[začetni pogoj], diferencialno enačbo skupaj z začetnim pogojem
 
 $
-  u'(t) &= f(t, u)\
-  u(t_0) &= u_0
+  u'(t) &= f(t, u),\
+  u(t_0) &= u_0,
 $<eq:16-zacetni-problem>
 
 pa #emph[začetni problem].
 
-Rešitev začetnega problema @eq:16-zacetni-problem je funkcija $u(x)$. Funkcijo $u(x)$ lahko
+Rešitev začetnega problema @eq:16-zacetni-problem je funkcija $u$. Funkcijo $u$ lahko
 numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto uporabljata, sta:
-- z vektorjem vrednosti $[u_0, u_1, med dots med u_n]$ v danih točkah $t_0, t_1, med dots t_n$ ali
-- z vektorjem koeficientov $[a_0, a_1, med dots, med a_n]$ v razvoju $u(t) = sum a_k phi_k(t)$
-  po dani bazi $phi_k(t)$.
+- z vektorjem vrednosti $[u_0, u_1, med dots, med u_n]$ v danih točkah $t_0, t_1, med dots, t_n$ ali
+- z vektorjem koeficientov $[a_0, a_1, med dots, med a_n]$ v razvoju $u(t) = sum a_k phi_(k)(t)$
+  po dani bazi $phi_k$.
 
 Metode, ki poiščejo približek za vektor vrednosti, imenujemo
 #link("https://en.wikipedia.org/wiki/Collocation_method")[kolokacijske metode], metode, ki poiščejo
@@ -120,12 +124,12 @@ Najpreprostejša metoda za reševanje začetnega problema je
 Za dani začetni problem @eq:16-zacetni-problem bomo poiskali vrednosti $u_i = u(t_i)$ v
 točkah $t_0 < t_1 < med dots med < t_n=t_k$ na intervalu $[t_0, t_k]$. Vrednosti $u_i$ poiščemo tako,
 da najprej izračunamo približek $u_1$ za $t_1$ in nato z isto metodo rešimo začetni
-problem z začetnim pogojem $u(t_1) = u_1$. Pri Eulerjevi metodi naslednjo vrednost dobimo tako, da
-izračunamo vrednost na tangenti v točki $(t_k, u_k)$. Tako rekurzivno dobimo približke za vrednosti
-v točkah $t_1, t_2, med dots t_n$:
+problem z začetnim pogojem $u(t_1) approx u_1$. Pri Eulerjevi metodi naslednjo vrednost dobimo tako, da
+izračunamo vrednost tangente skozi $(t_k, u_k)$ pri $t=t_(k+1)$. Tako dobimo rekurzivno formulo za
+približke v točkah $t_1, t_2, med dots, t_n$:
 
 $
-  u_(k+1) = u_k + f(t_k, u_k)(t_(k+1) - t_k).
+  u_(k+1) = u_k + (t_(k+1) - t_k)f(t_k, u_k).
 $<eq:16-euler>
 
 Zapišimo sedaj funkcijo #jl("u, t = euler(fun, u0, (t0, tk), n)"), ki implementira Eulerjevo metodo
@@ -141,6 +145,56 @@ s konstantnim korakom.
   // Vsak približek definira nov začetni problem za isto enačbo z drugimi začetnimi pogoji. Na grafu so prikazane tudi rešitve začetnih problemov v izračunanih približkih.
   ]
 )
+
+== Sistemi NDE
+
+Podobno kot za eno enačbo, lahko tudi za sistem navadnih diferencialnih enačb
+definiramo začetni problem. Sistem NDE za $k$ spremenljivk $u_1, u_2, med dots, med u_k$
+lahko zapišemo v obliki
+
+$
+  u'_1 &= f_1(t, u_1, u_2, med dots, med u_k, p),\
+  u'_2 &= f_1(t, u_1, u_2, med dots, med u_k, p),\
+   dots.v\
+  u'_k &= f_(k)(t, u_1, u_2, med dots, med u_k, p),\
+$<eq:16-sistem>
+
+začetni pogoj pa
+
+$
+  u_1(t_0)=u_(0,1), u_2(t_0) = u_(0,2), med dots, med u_(k)(t_0) = u_(0,k).
+$<eq:16-zp-sistem>
+
+Sistem @eq:16-sistem lahko obravnavamo podobno kot eno samo enačbo, če ga zapišemo
+v vektorski obliki
+
+$
+  bold(u)' = bold(f)(t, bold(u), p),
+$<eq:16-sistem-v>
+
+kjer je $bold(u)=[u_1, u_2, med dots, med u_k]^T$ vektor posameznih
+odvisnih spremenljivk sistema. Začetni pogoj @eq:16-zp-sistem lahko zapišemo
+kot
+
+$
+  bold(u)(t_0) = bold(u)_0,
+$<eq:16-zp-v>
+kjer je začetna vrednost
+$bold(u)_0 = [u_(0,1),u_(0,2), med dots, med u_(0,k)]^T$ prav tako vektor.
+Vektorska enačba @eq:16-sistem-v in začetni pogoj @eq:16-zp-v imata povsem enako
+obliko kot pri enačbi z eno spremenljivko. Edina razlika je ta, da je
+$bold(u)$ vektorska spremenljivka, $bold(f)$ vektorska funkcija in $bold(u)_0$ vektor.
+
+Začetni problem za sistem NDE @eq:16-sistem z začetnim pogojem @eq:16-zp-sistem
+ima tudi enolično rešitev in ga lahko enako obravnavamo povsem enako
+kot začetni problem za enačbo z eno spremenljivko. Tudi Eulerjeva metoda in vse metode, ki jih
+bomo spoznali v nadaljevanju, delujejo
+povsem enako za posamezne enačbe in sisteme, le da številske vrednosti za $u$ in $u'$ nadomestimo z vektorskimi
+vrednostmi $bold(u)$ in $bold(u)'$.
+
+V nadaljevanju bomo predstavili ogrodje za numerično reševanje začetnih
+problemov za NDE, ki deluje tako za enačbe z eno spremenljivko,
+kot tudi za sisteme.
 
 == Ogrodje za reševanje NDE
 
@@ -162,8 +216,9 @@ numerično rešitev.
 )
 
 Približke, ki jih bomo izračunali z različnimi metodami, bomo shranili v poseben podatkovni tip
-#jl("ResitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunane približke rešitve bomo
-v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE. Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermitovim zlepkom.
+#jl("ResitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunanih približkov rešitve, bomo
+v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE.
+Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermiteovim zlepkom.
 
 #figure(
   vaja16("# ResitevNDE"),
@@ -193,7 +248,7 @@ Faktor $-2$ v enačbi $u'(t) = - 2 t u$ lahko obravnavamo kot parameter enačbe.
 Uporaba specifičnih tipov omogoča definicijo specifičnih metod, ki so posebej napisane za posamezen
 primer. Taka organizacija kode omogoča večjo abstrakcijo in definicijo
 #link("https://en.wikipedia.org/wiki/Domain-specific_language")[domenskega jezika], ki je
-prilagojen posameznemu področju. Tako lahko obravnavamo o #jl("ZacetniProblemNDE") namesto funkcije in vektorja, ki vsebujejo dejanske podatke. Vrednost tipa #jl("ResitevNDE") se
+prilagojen posameznemu področju. Tako lahko obravnavamo #jl("ZacetniProblemNDE") namesto funkcije in vektorja, ki vsebujejo dejanske podatke. Vrednost tipa #jl("ResitevNDE") se
 razlikuje od vektorjev in matrik, ki jih vsebuje, predvsem v tem, da Julia ve, da gre za podatke,
 ki so numerični približek za rešitev začetnega problema. To prevajalniku omogoča, da za dane podatke
 avtomatično uporabi metode glede na vlogo, ki jo imajo v danem kontekstu. Takšna organizacija je zelo
@@ -203,27 +258,7 @@ formulacij problema samega.
 
 == Metode Runge - Kutta
 
-Implementirajmo še metodi Runge - Kutta drugega in četrtega reda podani z Butcherjevima tabelama
-
-$
-#table(columns: 2, stroke: none, align: bottom,
-  table(columns:3, stroke: none,
-    table.vline(x: 1, stroke: 0.5pt),
-    $0$, none, none,
-    $1$, $1$, none,
-    table.hline(stroke: 0.5pt),
-    none, $1/2$, $1/2$),
-  table(columns:5, stroke: none,
-    table.vline(x:1, stroke: 0.5pt),
-    $0$, none, none, none, none,
-    $1/2$, $1/2$, none, none, none,
-    $1/2$, $0$, $1/2$, none, none,
-    $1$, $0$, $0$, $1$, none,
-    table.hline(stroke: 0.5pt),
-    none, $1/6$, $1/3$, $1/3$, $1/6$)
-)
-$
-
+Implementirajmo še metodi Runge - Kutta drugega in četrtega reda.
 Naslednji približek za $u_(n+1) = u(t_(n)+h)$ za metodo drugega reda lahko zapišemo kot:
 
 $
@@ -252,7 +287,7 @@ Definirajmo:
 
 == Hermitova interpolacija
 
-Približne metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
+Numerične metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
 spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s
 #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom], ki smo ga
 že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermitov
@@ -277,14 +312,14 @@ met, izpeljemo iz #link("https://sl.wikipedia.org/wiki/Newtonovi_zakoni_gibanja"
 gibanja]. Položaj telesa v vsakem trenutku opišemo z vektorjem položaja $bold(x) = [x, y, z]^T in RR^3$. Trajektorija
 opisuje položaj v odvisnoti od časa in je podana kot krivulja $bold(x)(t)$. Označimo vektor hitrosti z
 $
-bold(v)(t)=dot(bold(x))(t) = (d bold(x))/(d t)
+bold(v)(t)=dot(bold(x))(t) = (d bold(x))/(d t)(t)
 $
 in vektor pospeška z
 $
-bold(a)(t) = dot.double(bold(x))(t) = (d bold(v)(t))/(d t) = (d^2 bold(x)(t))/(d t^2).
+bold(a)(t) = dot.double(bold(x))(t) = (d bold(v))/(d t)(t) = (d^2 bold(x))/(d t^2)(t).
 $
 Gibanje točkastega telesa z maso $m$ pod vplivom vsote vseh sil $bold(F)$, ki delujejo na
-dano telo, opiše 2. Newtonov zakon:
+dano telo, opiše drugi Newtonov zakon:
 
 $
 bold(F) = m bold(a)(t).
@@ -310,8 +345,8 @@ $
 bold(F) = -m bold(g) - C' bold(v)norm(bold(v)).
 $<eq:16-vsota-sil>
 
-Ko vstavimo @eq:16-vsota-sil v drugi Newtonov zakon @eq:16-2-newtonov-zakon, dobimo sistem enačb 2.
-reda:
+Ko vstavimo @eq:16-vsota-sil v drugi Newtonov zakon @eq:16-2-newtonov-zakon, dobimo sistem enačb
+drugega reda:
 
 $
 dot.double(bold(x))(t) = bold(a)(t) = bold(F)/m = bold(g) -
@@ -319,13 +354,13 @@ dot.double(bold(x))(t) = bold(a)(t) = bold(F)/m = bold(g) -
 $<eq:16-sistem-2-reda>
 
 kjer je $C = C'/m$. Če želimo uporabiti metode za numerično reševanje diferencialnih enačb, moramo sistem
-@eq:16-sistem-2-reda prevesti na sistem enačb 1. reda. To naredimo tako, da vpeljemo nove
-spremenljivke za komponente odvoda $dot(bold(x))(t)$. Oznake za nove spremenljivke se ponujajo kar
-same $bold(v)(t) = dot(bold(x))(t)$. Sistem enačb 2. reda @eq:16-sistem-2-reda je ekvivalenten
-sistemu enačb 1. reda:
+@eq:16-sistem-2-reda prevesti na sistem enačb prvega reda. To naredimo tako, da vpeljemo nove
+spremenljivke za komponente odvoda $dot(bold(x))$. Oznake za nove spremenljivke se ponujajo kar
+same $bold(v)(t) = dot(bold(x))(t)$. Sistem enačb drugega reda @eq:16-sistem-2-reda je ekvivalenten
+sistemu enačb prvega reda:
 
 $
-dot(bold(x))(t) &= bold(v)(t)\
+dot(bold(x))(t) &= bold(v)(t),\
 dot(bold(v))(t) &= bold(g) - C dot(bold(x))(t)norm(dot(bold(x))(t)).
 $<eq:16-sistem-1-reda>
 
@@ -333,20 +368,43 @@ V enačbah @eq:16-sistem-1-reda se v resnici skriva 6 enačb, po ena za vsako ko
 $bold(x)$ in $bold(v)$.
 
 Zapišimo vrednost tipa #jl("ZacetniProblem"), ki opiše začetni problem za enačbe
-@eq:16-sistem-1-reda. Vektorja $bold(x)$ in $bold(v)$ združimo v en vektor s 6 komponentami:
+@eq:16-sistem-1-reda. Vektorja $bold(x)$ in $bold(v)$ združimo v en vektor s 6 komponentami takole:
 
 $
-bold(u)(t)=vec(x, y, z, v_x, v_y, v_z)
+bold(u)(t)=vec(x, y, z, v_x, v_y, v_z).
 $
 
-in napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stani enačb
+Nato napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stani enačb
 @eq:16-sistem-1-reda:
 
 #demo16("# posevni")
 
+Poiščimo približno rešitev za prvih $5"s"$ leta z začetnimi pogoji
+$x_0 = 0"m"$, $y_0 = 1"m"$, $bold(v)_0=[10"m"/"s", 20"m"/"s"]^T$ in
+parametri $g = 9.8 "m"/"s"^2$ in $c=0.1 1/"m"$.
+
+#demo16("# primer 1")
+
+#figure(
+  image("img/16-komponente.svg", width: 60%),
+  caption: [Komponente rešitve začetnega problema za poševni met. Graf prikazuje,
+    kako se položaj (koordinati $x$ in $y$) ter hitrost (komponenti $v_x$ in $v_y$)
+    spreminjajo v odvisnosti od časa.]
+)
+Iz grafa lahko razberemo, da se hitrost približuje limitni vrednosti. V vodoravni
+smeri gre hitrost proti $0"m"/"s"$, v vertikalni smeri pa se približuje
+vrednosti, ko sta sila teže in sila upora v ravnovesju
+$
+  |bold(F)_u| = |bold(F)_g| => C v^2 = g => v = sqrt(g/C).
+$
+Hitrost, ko se to
+zgodi imenujemo #emph[terminalna hitrost] prostega pada. v našem primeru je
+terminalna hitrost enaka $v = sqrt(9.8/0.1)"m"/"s" approx 9.9"m"/"s"$.
+
+Poglejmo, kako se obnesejo različne metode.
 Primerjali bomo vse tri metode, ki smo jih spoznali. Za različne vrednosti koraka bomo
 izračunali približek in ga primerjali s pravo rešitvijo. Ker prave rešitve ne poznamo, bomo namesto nje
-uporabili približek, ki ga dobimo z metodo Runge-Kutta 4. reda s polovičnim korakom. Napako bomo
+uporabili približek, ki ga dobimo z metodo Runge-Kutta reda 4 s polovičnim korakom. Napako bomo
 ocenili tako, da bomo poiskali največno napako med različnimi vrednostimi $t$ na danem intervalu
 $[t_0, t_k]$.
 
@@ -391,7 +449,7 @@ $
 h(t) = F(bold(u)(t)) = 0,
 $<eq:16-pogoj>
 
-kjer je $u(t)$ rešitev začetnega problema @eq:16-sistem-1-reda, funkcija $F(bold(u))$ pa vrne tretjo
+kjer je $bold(u)$ rešitev začetnega problema @eq:16-sistem-1-reda, funkcija $F(bold(u))$ pa vrne tretjo
 komponento vektorja $bold(u)$:
 
 $
@@ -450,7 +508,7 @@ Napišimo naslednje funkcije:
 #let sekunda = $upright(s)$
 Funkcijo #jl("nicla") uporabimo za poševni met. Uporabili bomo relativno velik
 korak, da bo postopek iskanja ničle bolj nazoren. Rešimo začetni problem za poševni
-met @eq:16-sistem-1-reda s parametri $g=9.8 meter slash sekunda^2$, $c=0.1$, z začetnim
+met @eq:16-sistem-1-reda s parametri $g=9.8 meter slash sekunda^2$, $c=0.1 1/"m"$, z začetnim
 položajem $x = 0meter, y = 1meter$ in začetno hitrostjo
 $v_(x) = 10 meter slash sekunda, v_(y) = 20 meter slash sekunda$. Enote so v
  v numeričnem izračunu izpuščene.
@@ -467,8 +525,8 @@ spremeni predznak. Nato z Newtonovo metodo rešimo nelinearno enačbo $u_2(t) = 
 #figure(image("img/16-nicla-2.svg", width: 60%),
 caption: [Slika ilustrira postopek, s katerim poiščemo, koliko časa
 izstrelek leti, preden pade na tla. Najprej poiščemo približke za rešitev z metodo Runge-Kutta reda 4.
-Nato poiščemo interval med približki, na katerem višina $y = u_2$ spremeni predznak. Z Newtonovo
-metodo rešimo enačbo $u_2(t)=0$.])
+Nato poiščemo interval med približki, na katerem višina $y = u_2$ spremeni predznak. Enačbo $u_2(t)=0$
+rešimo z Newtonovo metodo.])
 
 #pagebreak()
 Vrednost #jl("t0") predstavlja čas leta, medtem ko dolžino leta zaberemo iz
@@ -486,7 +544,9 @@ trajektorijo sistema, ki je podana s parametrično krivuljo $(x(t), y(t)) = (u_1
 #figure(image("img/16-nicla-3.svg", width: 60%),
 caption: [Trajektorija poševnega meta od začetka do trenutka, ko le ta doseže tla.])
 
-#pagebreak()
+Oglejmo si še, kako se hitrost spreminja s časom.
+
+
 == Rešitve
 #figure(
   demo16("# polje smeri"),

@@ -18,7 +18,8 @@ vrednost `2.0`, to je za števila s plavajočo vejico.]
 
 == Naloga
 
-Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren števila `x`. Poskrbi, da bo rezultat pravilen na 10 decimalnih mest in da bo časovna zahtevnost neodvisna od argumenta `x`.
+Napiši funkcijo `y = koren(x)`, ki bo izračunala približek za kvadratni koren števila `x`. Poskrbi,
+da bo rezultat pravilen na 10 decimalnih mest in da bo časovna zahtevnost neodvisna od argumenta `x`.
 
 - Zapiši enačbo, ki ji zadošča kvadratni koren.
 - Uporabi #link("https://en.wikipedia.org/wiki/Newton%27s_method")[Newtonovo metodo] in izpelji #link("https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Heron's_method")[Heronovo rekurzivno formulo] za računanje kvadratnega korena.

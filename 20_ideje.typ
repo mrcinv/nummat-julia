@@ -68,7 +68,7 @@ omenjenima pogojema.
 
 === Izračun na $[-c, oo)$
 Izračunamo $Phi(-c)$ in $Phi(x) = Phi(-c) + integral_(-c)^x e^(-x^2/2)d x$. Integral izračunamo z
-Gauss-Legendreovimi kvadraturami s fiksnim številom vozlišč, tako da je absolutna napaka enakomerno
+Gauss-Legendreovimi kvadraturami s fiksnim številom vozlov, tako da je absolutna napaka enakomerno
 omejena. Na $[b, oo)$ za dovolj velik $b$ je vrednost enaka $1$.
 
 === Izračun na $(-oo, -c]$
@@ -153,8 +153,8 @@ $
 
 koeficiente $a_n$ pa bomo poiskali numerično z Gauss-Čebiševimi kvadraturami @dlmf3.
 
-Vozlišča za Gauss-Čebiševa kvadraturo v $n$ vozliščih so v
-#link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševih vozliščih]
+Vozli za Gauss-Čebiševa kvadraturo v $n$ vozlih so v
+#link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševih vozlih]
 
 $
   x_k = cos((2k +1)/(2n)pi), quad k=0, med dots, med n-1,
@@ -315,7 +315,7 @@ $
   (b - a)/(d - c) sum_(i=1)^n u_i f(x_i),
 $
 
-kjer so nova vozlišča $x_i$ enaka:
+kjer so novi vozli $x_i$ enaka:
 
 $
   x_i = (b - a)/(d - c)(t_i - c) + a.
@@ -324,19 +324,19 @@ $
 == Adaptivne metode
 
 #opomba(naslov:[Ponovna uporaba že izračunanih funkcijskih vrdnosti])[
-V naši implementaciji adaptivne metode smo vrednosti funkcije v nekatirh vozliščih večkrat
+V naši implementaciji adaptivne metode smo vrednosti funkcije v nekatirh vozlih večkrat
 izračunali. Hitrost smo žrtvovali v prid enostavnosti in preglednosti. V praksi se adaptivne
-metode implementira na način, da se funkcijske vrednosti v vsakem vozlišču izračuna samo enkrat
+metode implementira na način, da se funkcijske vrednosti v vsakem vozlu izračuna samo enkrat
 in se nato te vrednosti uporabi v nadalnjih izračunih.
 
 To dobro deluje za kvadrature kot so Simpsonova in trapezna formula, ki spadajo med
 #link("https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas")[Newton-Cotesove] kvadrature.
-Za Gaussove kvadrature je več težav, saj se vozlišča kvadratur višjega reda ne prekrivajo z vozlišči
+Za Gaussove kvadrature je več težav, saj se vozli kvadratur višjega reda ne prekrivajo z vozli
 kvadratur nižjega reda. Rešitev ponujajo
 #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula")[Gauss-Kronrodove kvadrature],
-ki so podane kot pari kvadratur, pri katerem kvadratura višjega reda vsebuje vsa vozlišča
-kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendreova kvadratura z $n$ vozlišči.
-Nato se izbere dodatnih $n+1$ vozlišč in na novo določi uteži, tako da je druga kvadratura čim
+ki so podane kot pari kvadratur, pri katerem kvadratura višjega reda vsebuje vse vozle
+kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendreova kvadratura z $n$ vozli.
+Nato se izbere dodatnih $n+1$ vozlov in na novo določi uteži, tako da je druga kvadratura čim
 višjega reda.
 ]
 

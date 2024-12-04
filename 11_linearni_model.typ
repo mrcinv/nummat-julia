@@ -9,7 +9,7 @@
 V znanosti pogosto želimo opisati odvisnost ene količine od druge.
 Matematičnemu opisu povezave med dvema ali več spremenljivkami pravimo
 #strong[matematični model]. Primer modela je Hookov zakon za vzmet, ki
-pravi, da je sila vzmeti $F$ sorazmerna z raztezkom $x$:
+pravi, da je sila vzmeti $F$ sorazmerna z raztezkom $x$, torej
 
 $ F = k x. $
 
@@ -23,7 +23,7 @@ V tej vaji bomo podatke o koncentraciji $co2$ v zadnjih desetletjih opisali z li
 == Naloga
 
 - Podatke o koncentraciji #co2 v ozračju aproksimiraj s kombinacijo kvadratnega polinoma
-  in sinusnega nihanja s periodo 1 leto.
+  in nihanja s periodo 1 leto.
 - Parametre modela poišči z normalnim sistemom in QR razcepom.
 - Model uporabi za napoved obnašanja koncentracije #co2 za naslednjih 20 let.
 
@@ -32,12 +32,12 @@ V tej vaji bomo podatke o koncentraciji $co2$ v zadnjih desetletjih opisali z li
 Najpreporstejši matematični model je
 #link("https://en.wikipedia.org/wiki/Linear_model")[linearni model],
 pri katerem odvisno količino $y$ zapišemo kot linearno kombinacijo
-baznih funkcij $phi_j (x)$ neodvisne spremenljivke $x$:
+baznih funkcij $phi_j, quad j=1, 2, med dots, med k$ neodvisne spremenljivke $x$:
 
 $ y (x, p) = p_1 phi_1 (x) + p_2 phi_2 (x) + dots.h + p_k phi_k (x). $
 
 Koeficientom $p_j$ pravimo parametri modela in jih določimo na podlagi
-meritev. Znanstveniki iščejo model, pri katerem imajo parametri $p_i$
+meritev. Znanstveniki iščejo model, pri katerem imajo parametri $p_j$
 preprosto interpretacijo in pomagajo pri razumevanju pojava, ki ga
 opisujejo. Bazne funkcije so zato pogosto elementarne funkcije iz
 katerih je jasno razvidna narava odvisnosti.
@@ -166,8 +166,8 @@ najmanjša.
 == Normalni sistem<normalni-sistem>
 
 Vektor parametrov modela $bold(p)$ izberemo tako, da je napoved modela $A bold(p)$
-enaka pravokotni projekciji $bold(y)$ na stolpčni
-prostor matrike $A$. Tako lahko izpeljemo #emph[normalni sistem] za dani predoločen sistem
+enaka pravokotni projekciji $bold(y)$ na prostor, ki ga razpenjajo stoplci matrike $A$. Tako lahko
+izpeljemo #emph[normalni sistem] za dani predoločen sistem
 $A bold(p) = bold(y)$:
 
 $
@@ -232,8 +232,8 @@ prejšnje podatke.
 <qr-razcep>
 
 Normalni sistem se redko uporablja v praksi. Standardni postopek za
-iskanje rešitve predoločenega sistema z metodo najmanjših kvadratov je s
-QR razcepom. Pri QR razcepu $Q R = A$ so stolpci matrike
+iskanje rešitve predoločenega sistema z metodo najmanjših kvadratov je
+QR razcep. Pri QR razcepu $Q R = A$ so stolpci matrike
 $Q$ ortonormirana baza stolpčnega prostora matrike $A$, matrika $R$ pa
 vsebuje koeficiente v razvoju stolpcev matrike $A$ po ortonormirani bazi,
 določeni s $Q$. Projekcijo na stolpčni prostor ortogonalne matrike še

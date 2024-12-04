@@ -122,7 +122,7 @@ Preverimo, če naša funkcija deluje. Odvod korenske funkcije je enak $(sqrt(x))
 
 #link("https://en.wikipedia.org/wiki/Dual_number")[Dualna števila] so števila
 oblike $a + b epsilon$, kjer sta $a, b in RR$, medtem ko je dualna enota
-$epsilon$ neničelno število katerega kvadrat je nič $epsilon eq.not 0$ in $epsilon^2 = 0$.
+$epsilon$ neničelno število katerega kvadrat je nič: $epsilon eq.not 0$ in $epsilon^2 = 0$.
 Podobno kot dobimo kompleksna števila, če realna števila razširimo z imaginarno enoto
 $i=sqrt(-1)$,
 dobimo dualna števila, če realna števila razširimo z dualno enoto $epsilon$.
@@ -132,8 +132,8 @@ $epsilon^2=0$. Pri vsoti dveh dualnih števil se realna in dualna komponenta se�
 $
 (a + b epsilon)(c + d epsilon) = (a+b) + (c+d)epsilon.
 $
-Pri izpeljavi pravila za produkt moramo upoštevati lastnost $epsilon^2=0$ in da
-da je produkt komutativen:
+Pri izpeljavi pravila za produkt moramo upoštevati lastnost $epsilon^2=0$ in
+komutativnost produkta z $epsilon$:
 $
 (a + b epsilon)(c + d epsilon) = a c + a d epsilon + b c epsilon + b d epsilon^2 =
 a c + (a d + b c)epsilon.
@@ -171,8 +171,8 @@ kjer je $d x = x - x_0$ diferencial neodvisne spremenljivke. Poglejmo si
 primer 1-toka za produkt dveh funkcij $f$ in $g$:
 
 $
-(f(x_0) + f'(x)d x)(g(x_0) + g'(x_0)d x) =\
-f(x_0) g(x_0) + (f(x_0)g'(x_0) + f'(x_0)g(x_0))d x + cal(O)(d x^2).
+(f(x_0) + f'(x)d x)(g(x_0) + g'(x_0)d x)\
+= f(x_0) g(x_0) + (f(x_0)g'(x_0) + f'(x_0)g(x_0))d x + cal(O)(d x^2).
 $
 
 Vse potence $d x^k$ za $k>=2$ potisnemo v ostanek $cal(O)(d x^2)$ in
@@ -181,8 +181,8 @@ enaka. Pri računanju z differenciali ravno tako upoštevamo, da je
 $d x^2 approx 0$ in vse potence $d x^k$ za $k>=2$ zanemarimo. Vrednosti odvoda v
 neki točki lahko izračunamo z dualnimi števili. Če poznamo vrednost funkcije
 in vrednost odvoda funkcije v neki točki, lahko z dualnimi števili
-izračunamo izračunamo vrednosti odvodov različnih operacij. 1-tokove lahko
-predstavimo z dualnimi števili. Če sta $f$ in $g$ funkciji, potem dualni
+izračunamo izračunamo vrednosti odvodov različnih operacij. Z dualnimi števili lahko
+predstavimo 1-tokove. Če sta $f$ in $g$ funkciji, potem dualni
 števili
 
 $
@@ -208,7 +208,8 @@ Vstavimo zdaj dualni števili v izraz $x^2y$ in upoštevamo $epsilon^2=0$:
 $
 (1 + 2epsilon)^2(1 - epsilon) =
 (1 + 4epsilon + 4epsilon^2)(1-epsilon) =
-(1 + 4epsilon)(1-epsilon) =\ 1 + 4epsilon - epsilon -4epsilon^2=1 + 3 epsilon.
+(1 + 4epsilon)(1-epsilon)\
+= 1 + 4epsilon - epsilon -4epsilon^2=1 + 3 epsilon.
 $
 Od tod lahko razberemo, da je 1-tok za $(f^2g)$ v točki $1$ enak
 $
@@ -246,7 +247,7 @@ x(t)& = a(cos(E(t)) -   e)\
 y(t)& = b sin(E(t)),
 $
 
-kjer so $a$ in $b$ polosi elipse. Elipsa je premaknjena tako, da je en od fokusov v točki $(0, 0)$.
+kjer sta $a$ in $b$ polosi elipse ($a<=b$). Elipsa je premaknjena tako, da je eno od gorišč v točki $(0, 0)$.
 Ekscentričnost $e$ je odvisna od razmerja polosi
 
 $
@@ -254,7 +255,7 @@ e = sqrt(1-b^2/a^2) in [0, 1].
 $
 
 Vrednost $E(t)$ izračunamo iz Keplerjeve enačbe, saj velja
-2. Keplerjev zakon, ki pravi, da se povprečna anomalija $M(t)$ spreminja enakomerno:
+drugi Keplerjev zakon, ki pravi, da se povprečna anomalija $M(t)$ spreminja enakomerno:
 
 $
 M(t) = n(t - t_0).
@@ -269,8 +270,9 @@ enačbo @eq:15-kepler predstavimo grafično:
 #figure(image("img/15-enacba.svg", width: 60%),
   caption: [Leva in desna stran Keplerjeve enačbe za $M=5$ in $e=0.5$])
 
-Vidimo, da je rešitev Keplerjeve enačbe blizu vrednosti $M$, in vrednost $M$ lahko izberemo za
-začetni približek. Rešitev tako lahko hitro poiščemo z Newtonovo metodo za funkcijo:
+Vidimo, da je rešitev Keplerjeve enačbe blizu vrednosti $M$, saj je $e sin(E)$ relativno
+majhen v primerjavi z $M$. ZAto je vrednost $M$ dober začetni približek za rešitev enačbe
+@eq:15-kepler. Rešitev lahko hitro poiščemo z Newtonovo metodo za funkcijo:
 
 $
 g(E) = M - E + e sin(E).
@@ -283,7 +285,7 @@ masnemu središču.
 
 #figure(image("img/15-orbita.svg", width: 60%), caption: [Položaji telesa na orbiti v enakomernih
 časovnih razmikih. Drugi Keplerjev zakon pravi, da zveznica med telesom
-in masnim središčem, v enakem času pokrije enako ploščino.])
+in masnim središčem v enakem času pokrije enako ploščino.])
 
 Hitrost telesa v določenem trenutku lahko izračunamo z avtomatskim odvodom. Najprej definiramo
 dualno število $t + epsilon$ za vrednost $t$ v kateri bi radi izračunali hitrost. Nato v funkcijo
@@ -298,6 +300,38 @@ Dualni del koordinat je enak vektorju hitrosti:
 
 #code_box(repl(demo15raw("# hitrost 1"),read("out/15-hitrost.out")))
 
+
+#opomba(naslov:[Avtomatsko odvajnaje kontrolnih struktur])[
+  Kontrolne strukture kot na primer #jl("if") stavek lahko
+ povzročijo razvejitve v programu in funkcija, ki jo program izračuna ni
+ nujno zvezno odvedljiva. Če avtomatsko odvajamo tak program, dobimo odvod
+ tiste veje, ki se za dane vhodne vrednosti izvede. Za večino vhodnih vrednosti
+ se ta ujema z dejanskim odvodom. Za mejne vrednosti, pri katerih se program
+ razveji, pa dobimo bodisi levi bodisi desni odvod. Odvisno od tega, katera
+ veja se izvede. Poglejmo si primer implementacije funkcije $f(x) = |x|$:
+
+ #code_box[
+   ```jl
+function f(x)
+  if x>=0
+    return x
+  else
+    return -x
+  end
+end
+   ```
+ ]
+
+Funkcija je zvezno odvedljiva povsod razen v točki $0$. Če v funkcijo vstavimo $x=0$ oziroma
+dualno število $0 + epsilon$, se izvede prva veja in izračuni odvod je enak $1$. Kar je enako
+desnemu odvodu funkcije $|x|$ v točki $0$.
+]
+
+#opomba(naslov: [Tabeliranih funkcij ne moremo avtomatsko odvajati])[
+Avtomatsko odvajanje deluje le za funkcije, ki so implementirane s programom.
+Če je funkcija podana s tabelo funkcijskih vrednosti,
+avotmatsko odvajanje ni mogoče. V tem primeru uporabimo končne diference.
+]
 == Računajne gradientov
 
 Parcialne odvode funkcije več spremenljivk lahko ravno tako izračunamo z
@@ -306,36 +340,36 @@ uporabimo neodvisne dualne enote. Poglejmo si primer funkcije dveh spremenljivk
 $
   f(x, y) = x^2y + y^3sin(x).
 $
-Ker imamo dva parcialna odvoda $partial / (partial x)$ in $partial / (partial y)$,
-potrebujemo dve dualni enoti $epsilon_x$ in $epsilon_y$, ki sta neodvisni in zadoščata
+Ker imamo dva neodvisna parcialna odvoda $partial / (partial x)$ in $partial / (partial y)$,
+potrebujemo dve neodvisni dualni enoti $epsilon_x$ in $epsilon_y$, ki zadoščata
 pogojem:
 $
   epsilon_x^2=0, quad epsilon_y^2 = 0 quad #text[ in ] epsilon_x epsilon_y = 0.
 $
-V funkcijo $f(x, y)$ vstavimo $x + epsilon_x$ in $y + epsilon_y$ in dobimo
+V funkcijo $f$ vstavimo $x + epsilon_x$ in $y + epsilon_y$ in dobimo
 v 1-tok funkcije $f(x, y)$:
 $
-  f(x + epsilon_x, y + epsilon_y) = (x + epsilon_x)^2(y + epsilon_y) +
-  (y + epsilon_y)^3sin(x + epsilon_x) =\
-  (x^2 + 2x epsilon_x)(y + epsilon_y) + (y^3 + 3y^2 epsilon_y)(sin(x) + cos(x)epsilon_x) =\
-  x^2y + y^3sin(x) + 2x y epsilon_x + x^2 epsilon_y + 3y^2sin(x)epsilon_y +y^3cos(x)epsilon_x =\
-  f(x, y) + (2x y + y^3cos(x))epsilon_x + (x^2 + 3y^2sin(x))epsilon_y.
+  f(x + epsilon_x, y + epsilon_y)& = (x + epsilon_x)^2(y + epsilon_y) +
+  (y + epsilon_y)^3sin(x + epsilon_x)\
+  =&(x^2 + 2x epsilon_x)(y + epsilon_y) + (y^3 + 3y^2 epsilon_y)(sin(x) + cos(x)epsilon_x)\
+  =&x^2y + y^3sin(x) + 2x y epsilon_x + x^2 epsilon_y + 3y^2sin(x)epsilon_y +y^3cos(x)epsilon_x\
+  =&f(x, y) + (2x y + y^3cos(x))epsilon_x + (x^2 + 3y^2sin(x))epsilon_y.
 $
 Vidimo, da sta koeficienta pri $epsilon_x$ in $epsilon_y$ ravno parcialna odvoda
 
 $
-  (partial f)/(partial x) &= 2x y + y^3cos(x)\
-  (partial f)/(partial y) &= x^2 + 3y^2sin(x).
+  (partial f)/(partial x)(x, y) &= 2x y + y^3cos(x)\
+  (partial f)/(partial y)(x, y) &= x^2 + 3y^2sin(x).
 $
 
-Za lažjo implementacijo, koeficiente pri $epsilon_x$ in $epsilon_y$ postavimo v
+Za lažjo implementacijo koeficiente pri $epsilon_x$ in $epsilon_y$ postavimo v
 vektor in zapišemo
 
 $
   epsilon_x = vec(1, 0)epsilon, quad epsilon_y = vec(0, 1)epsilon.
 $
 
-Za funkcijo $n$ spremenljivk $f(x_1, x_2, med dots med x_n)$ dobimo:
+Za funkcijo $n$ spremenljivk $f(x_1, x_2, med dots, med x_n)$ dobimo:
 
 $
   epsilon_1 = vec(1, 0, dots.v, 0)epsilon, quad
@@ -351,7 +385,7 @@ $
 V Julii definirajmo vektorska dualna števila tipa #jl("Dual"), ki opisujejo
 elemente oblike
 $
-  a + vec(b_1, b_2, dots.v, b_(n))epsilon.
+  a + vec(b_1, b_2, dots.v, b_(n))epsilon, quad a, b_1, b_2, dots, b_n in RR.
 $
 
 Podobno kot pri navadnih dualnih številih nato definiramo osnovne računske
@@ -359,10 +393,11 @@ operacije in nekatere elementarne funkcije (@pr:15-dual, @pr:15-dual-op).
 
 #opomba(naslov: [Odvajanje naprej, odvajanje nazaj]
 )[
-Z dualnimi števili lahko učinkovito računamo odvode in gradiente funkcij.
+Z dualnimi števili lahko učinkovito računamo odvode in gradiente funkcij, ki so
+implementirane s programom.
 To metodo lahko posplošimo tudi na računaje Jacobijevih matrik in višjih odvodov.
-V osnovi metoda temleji na verižnem pravilu in zapisu programa kot kompozituma posameznih
-korakov. Formula za odvod <eq:15-verizno>, ki jo tako dobimo, odvod predstavlja kot produkt
+V osnovi metoda temelji na verižnem pravilu in zapisu programa kot kompozituma posameznih
+korakov. Formula @eq:15-verizno predstavlja odvod kot produkt
 matrik
 $
   D P(bold(x)) = D k_(n)(bold(x)_(n-1)) dot.c D k_(n-1)(bold(x)_(n-2)) med dots.c med D k_1(bold(x)).
@@ -378,10 +413,13 @@ lahko računamo sproti, tako da zmnožimo matrike takoj, ko so na voljo. To pome
 
 Drug razred metod, ki ga imenujemo #emph[način odvajanja nazaj] (angl.
 #emph[bacward mode]),
-množi matrike v produktu @eq:15-produkt-odvodov z leve. To pa pomeni, da odvodov ne mora računati
-sproti, ampak lahko z računanjem odvodov začne šele, ko je izračun vrednosti funkcije končan.
+množi matrike v produktu @eq:15-produkt-odvodov z leve. To pa pomeni, da odvodov
+ni mogoče izračunati dokler izračun vrednosti funkcije ni končan. Pri odvajanju nazaj
+si mora program zapomniti vmesne vrednosti $bold(x)_k$ do konca izračuna.
+
 Metode računanja nazaj so navadno implementirane kot transformacija izvorne kode, medtem ko
-metode računanja naprej navadno implementiramo z definicijo novih podatkovnih tipov ali razdredov.
+metode računanja naprej navadno implementiramo z definicijo novih podatkovnih tipov
+ali razredov.
 
 Računanje z dualnimi števili uporablja način odvajanja naprej.
 ]
@@ -392,22 +430,27 @@ $
 f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
 $<eq:15-ackley>
 ki se uporablja za testiranje optimizacijskih algoritmov. Najprej napišimo funkcijo v Julii, ki
-izračuna Ackleyevo funkcijo:
+izračuna vrednost Ackleyeve funkcije:
 
 #figure(caption: [Funkcija za izračun Ackleyeve funkcije], demo15("# ackley"))
 
-Gradient izračunamo tako, da najprej ustvarimo vektor dualnih števil in ga vstavimo v funkcijo:
+Gradient izračunamo tako, da za vhodni vektor $bold(x)_0$ ustvarimo
+vektor dualnih vektorskih števil in ga vstavimo v funkcijo.
+Dimenzija dualnega dela (vektorja ob $epsilon$) je enaka dimenziji
+vhodnega vektorja $bold(x)_0$.
 
 #code_box[
+  #repl(demo15raw("# ack 0"), none)
   #repl(demo15raw("# ack 1"), read("out/15-ackley-1.out"))
   #repl(demo15raw("# ack 2"), read("out/15-ackley-2.out"))
+  #repl(demo15raw("# ack 3"), read("out/15-ackley-3.out"))
 ]
 
-Dualni del rezultata je gradient funkcije.
+Dualni del rezultata je enak gradientu funkcije.
 
 #opomba(naslov: [Kaj smo se naučili?])[
   - Odvode programov učinkovito računamo z avtomatskim odvajanjem.
-  - Obstajata dva načina avtomatskega odvajanja #emph[način odvajanja naprej] in
+  - Obstajata dva načina avtomatskega odvajanja: #emph[način odvajanja naprej] in
     #emph[način odvajanja nazaj].
   - Odvajanje naprej lahko implementiramo z dualnimi števili.
 ]

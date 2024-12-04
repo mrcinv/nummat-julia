@@ -4,7 +4,7 @@
 = Interpolacija z zlepki<sec:12-zlepki>
 
 Pri interpolaciji iščemo #emph[interpolacijsko funkcijo], ki se v danih točkah ujema z danimi
-vrednostmi. Najbolj znana je interpolacija s polininomi. Če je danih točk veliko, je pogosto bolje
+vrednostmi. Najbolj znana je interpolacija s polinomi. Če je danih točk veliko, je pogosto bolje
 namesto ene interpolacijske funkcije z veliko parametri interval razdeliti na več podintervalov in
 na vsakem uporabiti različne interpolacijske funkcije z malo parametri.
 Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pravimo zlepki.
@@ -23,7 +23,7 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     caption: [Podatki, ki jih potrebujemo za Hermitov kubični zlepek.]
   )<hermitovi-podatki>
 - Uporabi Hermitovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @hermitova-baza[Tabele] in
-  jih z linearno preslikavo preslikaj z intervala $[0, 1]$ na interval $[x_i, x_(i+1)]$.
+  jih z linearno funkcijo preslikaj z intervala $[0, 1]$ na interval $[x_i, x_(i+1)]$.
 
 #figure(
     table(
@@ -37,37 +37,37 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     ),
 caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$]
 )<hermitova-baza>
-- Definirajte podatkovni tip `HermitovZlepek` za Hermitov kubični zlepek, ki vsebuje podatke iz
+- Definiraj podatkovni tip `HermitovZlepek` za Hermitov kubični zlepek, ki vsebuje podatke iz
   @hermitovi-podatki[Tabele].
-- Napišite funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermitovega kubičnega zlepka za dano
-  vrednost argumenta $x$. Omogočite,  da se vrednosti tipa #jl("HermitovZlepek")
+- Napiši funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermitovega kubičnega zlepka za dano
+  vrednost argumenta $x$. Omogoči, da se vrednosti tipa #jl("HermitovZlepek")
   #link("https://docs.julialang.org/en/v1/manual/methods/#Function-like-objects")[kliče kot funkcije].
-- S Hermitovim zlepkom interpolirajte funkcijo $f(x) = cos(2x) + sin(3x)$ na intervalu $[0, 6]$ v
-  $10$ točkah. Napako ocenite s formulo za napako polinomske interpolacije
+- S Hermitovim zlepkom interpoliraj funkcijo $f(x) = cos(2x) + sin(3x)$ na intervalu $[0, 6]$ v
+  $10$ točkah. Napako oceni s formulo za napako polinomske interpolacije
   $
     f(x) - p_3(x) = (f^((4))(xi))/(4!)(x - x_1)(x - x_2)(x - x_3)(x - x_4)
   $<eq:12-ocena>
-  in oceno primerjajte z dejansko napako. Upoštevajte, da je pri Hermitovi interpolaciji $x_1=x_2$
-  in $x_3=x_4$. Narišite graf napake.
-- Z oceno za napako @eq:12-ocena določite število interpolacijskih točk, pri katerem
+  in oceno primerjaj z dejansko napako. Upoštevaj, da je pri Hermitovi interpolaciji $x_1=x_2$
+  in $x_3=x_4$. Nariši graf napake.
+- Z oceno za napako @eq:12-ocena določi število interpolacijskih točk, pri katerem
   bo napaka Hermitovega zlepka manjša od $10^(-7)$.
-- Funkcijo $f(x)$ interpolirajte tudi z Newtonovim polinomom in primerjajte napako z napako
+- Funkcijo $f$ interpoliraj tudi z Newtonovim polinomom in primerjaj napako z napako
   Hermitovega zlepka.
 
 == Hermitov kubični zlepek<sec:12-hermitov-zlepek>
 
 Hermitov kubični zlepek, ki interpolira podatke iz @hermitovi-podatki[Tabele], je sestavljen
-iz kubičnih polinomov $p_(k)(x)$ na intervalih $[x_(k), x_(k+1)]$. Kubični polinom je podan s
+iz kubičnih polinomov $p_(k)$ na intervalih $[x_(k), x_(k+1)]$. Kubični polinom je podan s
 štirimi parametri, ravno toliko kot je podatkov v krajiščih intervala $[x_(k), x_(x+1)]$.
-Zato lahko vsak polinom $p_(k)(x)$ določimo le na podlagi podatkov v točkah $x_k$ in $x_(k+1)$.
-Polinom $p_(k)(x)$ poiščemo tako, da interval $[x_k, x_(k+1)]$ preslikamo z linearno preslikavo
-na $[0, 1]$ in uporabimo Lagrangeevo bazo $h_(00)(t)$, $h_(01)(t)$, $h_(10)(t)$ in $h_(11)(t)$
+Zato lahko vsak polinom $p_(k)$ določimo le na podlagi podatkov v točkah $x_k$ in $x_(k+1)$.
+Polinom $p_(k)$ poiščemo tako, da interval $[x_k, x_(k+1)]$ preslikamo z linearno funkcijo
+na $[0, 1]$ in uporabimo Lagrangeevo bazo $h_(00)$, $h_(01)$, $h_(10)$ in $h_(11)$
 za podatke iz @hermitova-baza[tabele]. Polinome poiščemo v standardni bazi
 $
 h_(i j)(t) = a_0 + a_1 t + a_2 t^2 + a_3t^3.
 $
 Če izračunamo še odvod $h'_(i j)(t) = a_1 + 2a_2 t + 3a_3 t^2$, dobimo naslednji sistem enačb za
-koeficiente baznega polinoma $h_(00)(t)$:
+koeficiente baznega polinoma $h_(00)$:
 
 $
 h_(00)(0) &= a_0 = 1,\
@@ -79,7 +79,7 @@ $<eq:12-sistem-baza>
 Za ostale polinome dobimo podobne sisteme, ki imajo isto matriko sistema, razlikujejo pa se v
 desnih straneh. Če desne strani postavimo v matriko, dobimo ravno identično matriko.
 Inverzna matrika sistema @eq:12-sistem-baza ima v stolpcih ravno koeficiente baznih polinomov
-$h_(i j)(t)$. Inverz izračunamo z Julio.
+$h_(i j)$. Inverz izračunamo z Julio.
 
 #let demo12(koda) = code_box(jlfb("scripts/12_zlepki.jl", koda))
 
@@ -108,8 +108,8 @@ $
 x(t) = x_k + t(x_(k+1)-x_(k))
 $
 
-preslikava med $t$ in $x$. Želimo uporabiti bazo $h_(i j)(t)$ in tako interpoliramo polinoma
-$p_(k)(x(t))$ na intervalu $[0, 1]$. Vidimo, da je
+preslikava med $t$ in $x$. Želimo uporabiti bazo $h_(i j)$,
+zato podatke interpolitramo s polinomom $p_(k)(x(t))$ na intervalu $[0, 1]$. Vidimo, da je
 
 $
 p_(k)(x(0)) = p_(k)(x_k) = y_(k),\
@@ -156,7 +156,7 @@ ekvidistančnih točkah na intervalu $[0, 6]$:
 
 #demo12("# zlepek")
 
-Na eno sliko naričemo graf funkcije in zlepka, na drugo pa napako interpolacije (razliko
+Na eno sliko narišemo graf funkcije in zlepka, na drugo pa napako interpolacije (razliko
 med funkcijo in zlepkom):
 
 #demo12("# zl int")
@@ -165,7 +165,7 @@ med funkcijo in zlepkom):
 #figure(kind: image, table(stroke: none, columns: 2,
 image("img/12-interpolacija.svg"), image("img/12-napaka.svg")),
   caption:[Levo: Graf funkcije $f(x)=cos(2x) + sin(3x)$ in Hermitovega zlepka, ki interpolira
-  funkcijo $f(x)$ na 10 točkah (levo). Graf napake interpolacije (desno). Zlepek interpolira tudi vrednosti
+  funkcijo $f$ na 10 točkah (levo). Graf napake interpolacije (desno). Zlepek interpolira tudi vrednosti
   odvodov, zato ima napaka v interpolacijskih točkah stacionarne točke.])
 
 == Ocena za napako
@@ -192,7 +192,7 @@ p'(x) &= 2(x-x_1)(x-x_2)^2 + 2(x-x_1)^2(x-x_2)\
 &= 2(x-x_1)(x-x_2)(x-x_2 + x-x_1) \
 &= 4(x-x_1)(x-x_2)(x - (x_1 + x_2)/2).
 $
-Polinom $p(x)$ ima tri stacionarne točke: dve v krajiščih intervala in eno v njegovem
+Polinom $p$ ima tri stacionarne točke: dve v krajiščih intervala in eno v njegovem
 središču $(x_1+x_2)/2$. Vrednost polinoma v središču je tudi največja vrednost, dosežena
 na $[x_1, x_2]$:
 
@@ -224,7 +224,7 @@ Peverimo še numerično, ali izračunana formula deluje:
 #demo12("# predpisana napaka")
 
 #figure(image("img/12-napaka-eps.svg", width: 60%), caption: [Napaka interpolacije, pri čemer smo
-število interpolacijskih točk izbrali tako, da je napaka mnjša od $10^(-6)$.])
+število interpolacijskih točk izbrali tako, da je napaka manjša od $10^(-6)$.])
 
 #opomba(naslov:[Teoretične ocene za napako niso vedno uporabne])[
 Za določitev napake smo uporabili oceno @eq:12-ocena-hermite. Pri tem smo meje za četrti odvod, ki
@@ -236,8 +236,8 @@ povsem zanesljiva.
 
 == Newtonov interpolacijski polinom
 
-Naj bodo $x_1, x_2, med dots med x_n$ vrednosti neodvisne spremenljivke in $y_1, y_2, med dots med y_n$
-vrednosti neznane funkcije. Interpolacijski polinom, ki interpolira podatke $x_i, y_i$, je polinom $p(x)$,
+Naj bodo $x_1, x_2, med dots, med x_n$ vrednosti neodvisne spremenljivke in $y_1, y_2, med dots, med y_n$
+vrednosti neznane funkcije. Interpolacijski polinom, ki interpolira podatke $x_i, y_i$, je polinom $p$,
 za katerega velja:
 $
 p(x_1) &= y_1,\
@@ -291,14 +291,15 @@ Opazimo, da se napaka na robu znatno poveča. Povečanje je posledica velikih
 oscilacij, ki se pojavijo na robu, če interpoliramo s polinomom visoke stopnje na
 ekvidistančnih točkah. To je znan pojav pod imenom
 #link("https://en.wikipedia.org/wiki/Runge's_phenomenon")[Rungejev pojav].
-Problemu se izognemo, če namesto ekvidistančnih točk uporabimo
+Problemu se pogosto izognemo, če namesto ekvidistančnih točk uporabimo
 #link("https://en.wikipedia.org/wiki/Chebyshev_nodes")[Čebiševe točke].
 
 #opomba(naslov: [Kaj smo se naučili?])[
 - Metodo deljenih diferenc in Newtonov polinom lahko uporabimo tudi, če so poleg vrednosti podani
   tudi odvodi.
 - Zaradi Rungejevega pojava interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
-  ni najboljša izbira. Interpolacija na Čebiševih točkah deluje tudi za visoke stopnje polinoma.
+  ni najboljša izbira. Interpolacija na Čebiševih točkah pogosto deluje tudi za visoke stopnje
+  polinoma.
 - Zlepki so enostavni za uporabo, učinkoviti (malo operacij za izračun) in imajo v določenih
   primerih boljše lastnosti od polinomov visokih stopenj.
 ]

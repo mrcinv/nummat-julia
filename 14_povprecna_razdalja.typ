@@ -8,7 +8,7 @@ formul preprosta utežena vsota
 
 $ integral_a^b f (x) d x approx sum w_k f (x_k), $
 
-kjer so uteži $w_k$ in vozlišča $x_k$ primerno izbrana, da se formula čim bolj približa pravi
+kjer so uteži $w_k$ in vozli $x_k$ primerno izbrana, da se formula čim bolj približa pravi
 vrednosti.
 
 Izračun večkratnih integralov je zapletenejši, a v principu enak. Kvadrature so tudi za večkratne
@@ -46,8 +46,8 @@ vsakega od gnezdenih enojnih integralov uporabimo isto kvadraturno formulo:
 
 $ integral_a^b f (x) d x approx sum_(k = 1)^n w_k f (x_k) $<eq:14-kvad>
 
-z danimi utežmi $w_1 , w_2 , dots.h w_n$ in vozlišči
-$x_1 , x_2 , dots.h x_n$. Če za zunanji integral uporabimo kvadrature
+z danimi utežmi $w_1 , w_2, med dots, med w_n$ in vozli
+$x_1 , x_2 ,med dots, med x_n$. Če za zunanji integral uporabimo kvadrature
 @eq:14-kvad, dobimo:
 
 $
@@ -72,25 +72,25 @@ Formulo @eq:14-prodkvad2 posplošimo za integrale v več dimenzijah:
 
 $
 integral_([a, b]^d) f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx
-sum_(i_1, i_2, med dots, med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2), med dots, med x_(i_d)),
+sum_(i_1, i_2, med dots, med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2), dots, med x_(i_d)),
 $<eq:14-prodkvad>
 kjer seštevamo po vseh možnih multi indeksih $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$.
-S preprosto linearno preslikavo formulo @eq:14-prodkvad razširimo na poljuben
+S preprosto linearno funkcijo formulo @eq:14-prodkvad razširimo na poljuben
 $d$-dimenzionalen kvader $[a_1, b_1] times [a_2, b_2] times med dots med times [a_d, b_d]$:
 
 $
 integral_(a_1)^(b_1) integral_(a_2)^(b_2)dots integral_(a_n)^(b_n)
-  f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx\
-  product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2, med dots, med i_d)
+  f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d\
+  approx product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2, med dots, med i_d)
   product_(j=1)^d w_(i_j) f(t_(1 i_1), t_(1 i_2), med dots, med t_(d i_d)),
 $<eq:14-prodkvadkvad>
-kjer je $t_(i j)$ vozlišče $x_(j)$ preslikano na interval $[a_i, b_i]$.
+kjer je $t_(i j)$ vozle $x_(j)$ preslikano na interval $[a_i, b_i]$.
 Kvadraturnim formulam @eq:14-prodkvad2, @eq:14-prodkvad in @eq:14-prodkvadkvad
 pravimo #emph[produktne formule].
 
 #opomba(naslov:[Produktne formule trpijo za prekletstvom dimenzionalnosti])[
 
-Število vozlišč, ki jih dobimo v produktni formuli, narašča eksponentno z
+Število vozlov, ki jih dobimo v produktni formuli, narašča eksponentno z
 dimenzijo prostora. Zato produktne kvadrature postanejo hitro
 (že v dimenzijah nad 6 ali 7) časovno tako zahtevne, da celo počasneje konvergirajo kot metoda
 Monte Carlo (@sec:14-monte-carlo).
@@ -101,7 +101,7 @@ se pojavi tudi pri drugih problemih, ko dimenzija prostora narašča.
 Z dimenzijo narašča delež volumna, ki je „na robu“. Oglejmo si $d$-dimenzionalno
 enotsko kocko $[-1,1]^d$. Če interval $[-1,1]$  razdelimo
 na točke v notranjosti $[-1/2, 1/2]$ in točke na robu $[-1,1]-[-1/2, 1/2]$, sta v eni dimenziji
-oba dela enako dolga. V višjih dimenzijah pa delež točk v kocki, ki so na robu, v primerjavi s
+oba dela enako dolga. V višjih dimenzijah pa delež točk v kocki, ki so blizu robu, v primerjavi s
 točkami v notranjosti narašča. Delež točk v notranjosti lahko preprosto izračunamo:
 $
 P([-1/2,1/2]^d) = 1/(2^d)
@@ -188,7 +188,7 @@ Za izračun uporabimo sestavljeno Simpsonovo formulo:
 #code_box(raw(read("out/14-dp.out")))
 
 Napako ocenimo tako, da izračun ponovimo z natančnejšo kvadraturno formulo. Na primer tako, da
-podvojimo število vozlišč v osnovni kvadraturi:
+podvojimo število vozlov v osnovni kvadraturi:
 
 #demo14("# ocena napake")
 #code_box(raw(read("out/14-napaka.out")))
@@ -259,7 +259,7 @@ vzorčenje.
 #vaja14("# integriraj")[Funkcija, ki izračuna večkratni integral s produktno kvadraturo.]<pr:14-integriraj>
 #vaja14("# naslednji!")[Funkcija, ki izračuna naslednji multiindeks
 $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$. ]<pr:14-naslednji>
-#vaja14("# simpson")[Funkcija, ki izračuna vozlišča in uteži za sestavljeno Simpsonovo pravilo.]<pr:14-simpson>
+#vaja14("# simpson")[Funkcija, ki izračuna vozle in uteži za sestavljeno Simpsonovo pravilo.]<pr:14-simpson>
 #vaja14("# mc")[Funkcija, ki izračuna večkratni integral z metodo Monte Carlo.]<pr:14-mc>
 
 == Testi

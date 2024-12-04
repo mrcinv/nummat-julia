@@ -5,8 +5,7 @@
 
 = Minimalne ploskve
 <minimalne-ploskve>
-== Naloga
-<naloga>
+
 Žično zanko s pravokotnim tlorisom potopimo v milnico, tako da se nanjo napne
 milna opna. Naša naloga bo poiskati obliko milne opne. Malo brskanja po
 fizikalnih knjigah in internetu hitro razkrije, da ploskve, ki tako nastanejo,
@@ -24,6 +23,9 @@ eksperimentiral z milnimi mehurčki in elastičnimi tkaninami, s katerimi je ust
   caption: [Streha olimpijskega stadiona v Münchnu (vir #link(
       "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG")[wikipedia])],
 )
+
+== Naloga
+<naloga>
 Namen te vaje je primerjava eksplicitnih in iterativnih metod za reševanje sistemov linearnih enačb.
 Prav tako se bomo naučili, kako zgradimo matriko sistema in desne strani enačb za spremenljivke,
 ki niso podane z vektorjem, temveč kot elementi matrike. V okviru te vaje zato opravi naslednje
