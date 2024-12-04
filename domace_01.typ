@@ -2,9 +2,6 @@
 
 = Prva domača naloga
 <1-domača-naloga>
-Izberi eno izmed spodnjih nalog. Predlagam, da nalogo implementiraš kot
-paket za Julio z vsem kar sodi zraven (glej @sec:1-uvod-julia in
-@sec:navodila-domace).
 
 == SOR iteracija za razpršene matrike
 <sor-iteracija-za-razpršene-matrike>

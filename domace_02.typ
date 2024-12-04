@@ -8,16 +8,6 @@ Uporabiš lahko le osnovne operacije, vgrajene osnovne matematične
 funkcije `exp`, `sin`, `cos`, …, osnovne operacije z matrikami in
 razcepe matrik. Vse ostale algoritme implementiraj sam.
 
-Namen nalog ni, da na internetu poiščeš optimalen algoritem in ga
-implementiraš, ampak da uporabiš lastno znanje, čeprav na koncu rešitev
-morda ne bo optimalna. Uporabiš lahko
-interpolacijo ali aproksimacijo s polinomi, integracijske formule,
-Taylorjevo vrsto, zamenjave spremenljivk, itd. Kljub temu pazi na
-#strong[časovno in prostorsko zahtevnost] in zahtevano natančnost.
-
-Podobno kot pri prvi nalogi predlagam, da rešitev izdelate v obliki paketa
-za Julio z vsem, kar sodi zraven.
-
 == Naloge s funkcijami
 <naloge-s-funkcijami>
 

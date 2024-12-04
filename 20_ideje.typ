@@ -371,3 +371,17 @@ https://en.wikipedia.org/wiki/Poisson%27s_equation#Surface_reconstruction
 
 == Stretch grid approximation
 https://en.wikipedia.org/wiki/Stretched_grid_method
+
+== Perioda geostacionarne orbite
+
+Oblika planeta Zemlja ni čisto pravilna krogla. Zato tudi gravitacijsko polje ne deluje v vseh
+smereh enako. Gravitacijsko polje lahko zapišemo kot odvod gravitacijskega
+potenciala
+
+$
+  bold(F)_(g)(bold(r)) = m dot gradient V(bold(r)),
+$
+
+kjer je $V(bold(r))$ skalarna funkcija položaja $bold(r)$.
+#link("https://en.wikipedia.org/wiki/Gravity_of_Earth")[Zemljina gravitacija]
+#link("https://en.wikipedia.org/wiki/Geopotential_model")[Zemljin gravitacijski potencial].

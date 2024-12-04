@@ -66,8 +66,8 @@ izpustimo.
 
 == Opis rešitve naj bo okviren
 
-Opis rešitve naj bo zgolj okviren. Izogibajte se uporabi programerskih izrazov
-temveč raje uporabljajte matematične. Na primer izraz #text(slababarva)[uporabimo "for" zanko],
+Opis rešitve naj bo zgolj okviren. Izogibajte se uporabi programerskih izrazov.
+Raje uporabite matematične. Na primer izraz #text(slababarva)[uporabimo "for" zanko],
 lahko nadomestimo s #text(dobrabarva)[postopek ponavljamo]. Od bralca zahteva
 splošen opis manj napora in mu da širšo sliko. Če želite dodati izpeljave, jih
 napišite z matematičnimi formulami, ne v programskem jeziku. Koda sodi zgolj v
@@ -101,7 +101,7 @@ mislite, da so potrebne za razumevanje.
   [Algoritem opišemo okvirno, podrobnosti razložimo kasneje],
 )[
   V matriki želimo eleminirati spodnji trikotnik. To dosežemo tako, da stolpce
-  enega za drugim preslikamo s Hausholderjevimi zrcaljenji. Za vsak stolpec
+  enega za drugim preslikamo s Housholderjevimi zrcaljenji. Za vsak stolpec
   poiščemo vektor, preko katerega zrcalimo. Vektor poiščemo tako, da ima
   zrcalna slika ničle pod diagonalnim elementom.
 ]
@@ -174,8 +174,8 @@ Nekaj nasvetov, kako lahko testiramo kodo.
 - Ustvarite testne podatke, za katere je znana rešitev. Na primer za testiranje
   kode, ki reši sistem `Ax=b`, izberete `A` in `x` in izračunate desne strani
   `b=A*x`.
-- Preverite lastnost rešitve. Za enačbe `f(x)=0`, lahko rešitev, ki jo izračuna
-  program preprosto vstavite nazaj v enačbo in preverite, ali je enačba izpolnjena.
+- Preverite lastnost rešitve. Za enačbe `f(x)=0` lahko rešitev, ki jo izračuna
+  program, preprosto vstavite nazaj v enačbo in preverite, ali je enačba izpolnjena.
 - Red metode lahko preverite tako, da naredite simulacijo in primerjate red
   metode z redom programa, ki ga eksperimentalno določite.
 - Če je le mogoče, v testih ne uporabljamo rezultatov, ki jih proizvede koda sama.
@@ -208,7 +208,7 @@ Za pripravo povzetka o pokritosti kode lahko uporabite paket
 ]
 
 
-== Priprava zahteve za združitev na Github
+== Priprava zahteve za združitev na Gitlab
 
 Za lažjo komunikacijo predlagam, da rešitev domače naloge postavite v
 svojo vejo in ustvarite zahtevo za združitev (_Pull request_ na Githubu

@@ -1,133 +1,125 @@
 = Tretja domača naloga
 
-== Navodila
-<navodila>
-
 Zahtevana števila izračunajte na #strong[10 decimalk] \(z relativno
-natančnostjo $bold(10^(minus 10))$) Uporabite lahko le osnovne
+natančnostjo $10^(-10)$) Uporabite lahko le osnovne
 operacije, vgrajene osnovne matematične funkcije `exp`, `sin`, `cos`, …,
 osnovne operacije z matrikami in razcepe matrik. Vse ostale algoritme
 morate implementirati sami.
 
-Namen te naloge ni, da na internetu poiščete optimalen algoritem in ga
-implementirate, ampak da uporabite znanje, ki smo ga pridobili pri tem
-predmetu, čeprav na koncu rešitev morda ne bo optimalna. Kljub temu
-pazite na #strong[časovno in prostorsko zahtevnost], saj bo od tega
-odvisna tudi ocena.
-
-Če uporabljate drug programski jezik, ravno tako kodi dodajte osnovno
-dokumentacijo in teste.
-
 == Ničle Airijeve funkcije
 <ničle-airijeve-funkcije>
+
 Airyjeva funkcija je dana kot rešitev začetnega problema
 
-$ A i prime.double lr((x)) minus x thin A i lr((x)) eq 0 comma quad A i lr((0)) eq frac(1, 3^(2 / 3) Gamma lr((2 / 3))) thin A i prime lr((0)) eq minus frac(1, 3^(1 / 3) Gamma lr((1 / 3))) dot.basic $
+$ A i prime.double lr((x)) - x thin A i lr((x)) = 0 , quad A i lr((0)) = frac(1, 3^(2 / 3) Gamma lr((2 / 3))) thin A i prime lr((0)) = - frac(1, 3^(1 / 3) Gamma lr((1 / 3))) dot.basic $
 Poiščite čim več ničel funkcije $A i$ na 10 decimalnih mest natančno. Ni
 dovoljeno uporabiti vgrajene funkcijo za reševanje diferencialnih enačb.
 Lahko pa uporabite Airyjevo funkcijo `airyai` iz paketa
 `SpecialFunctions.jl`, da preverite ali ste res dobili pravo ničlo.
 
-#emph[Namig]: Za računanje vrednosti $y lr((x))$ lahko uporabite Magnusovo metodo reda
-4 za reševanje enačb oblike
+#emph[Namig]: Za računanje vrednosti lahko uporabite Magnusovo metodo reda
+4 za reševanje enačb oblike:
 
-$ y prime lr((x)) eq A lr((x)) y comma $ pri kateri nov približek
-$bold(Y)_(k plus 1)$ dobimo takole:
+$
+  y'(x) = A(x) y(x),
+$
 
-$ A_1 & eq & A lr((x_k plus lr((1 / 2 minus sqrt(3) / 6)) h))\
-A_2 & eq & A lr((x_k plus lr((1 / 2 plus sqrt(3) / 6)) h))\
-sigma_(k plus 1) & eq & h / 2 lr((A_1 plus A_2)) minus sqrt(3) / 12 h^2 lr([A_1 comma A_2])\
-bold(Y)_(k plus 1) & eq & exp lr((sigma_(k plus 1))) bold(Y)_k dot.basic $
+pri kateri nov približek $y_(k + 1)$ dobimo takole:
 
-Izraz $lr([A comma B])$ je komutator dveh matrik in ga izračunamo kot
-$lr([A comma B]) eq A B minus B A$. Eksponentno funkcijo na matriki
-\($exp lr((sigma_(k plus 1)))$) pa v programskem jeziku julia dobite z
+$
+  A_1  = & A(x_k + (1 / 2 - sqrt(3) / 6) h)\
+  A_2  = & A(x_k + (1 / 2 + sqrt(3) / 6) h)\
+sigma_(k + 1)  = & h/2 (A_1 + A_2) - sqrt(3) / 12 h^2 [A_1, A_2]\
+ y_(k + 1)  = & exp(sigma_(k + 1)) y_k. $
+
+Izraz $[A, B]$ je komutator dveh matrik in ga izračunamo kot
+$[A, B] = A B - B A$. Eksponentno funkcijo na matriki
+$exp(sigma_(k + 1))$ pa v programskem jeziku julia dobite z
 ukazom `exp`.
 
 == Dolžina implicinto podane krivulje
 <dolžina-implicinto-podane-krivulje>
 Poiščite približek za dolžino krivulje, ki je dana implicitno z enačbama
 
-$ F_1 lr((x comma y comma z)) & eq x^4 plus y^2 slash 2 plus z^2 eq 12\
-F_2 lr((x comma y comma z)) & eq x^2 plus y^2 minus 4 z^2 eq 8 dot.basic $
+$ F_1 lr((x , y , z)) & = x^4 + y^2 slash 2 + z^2 = 12,\
+F_2 lr((x , y , z)) & = x^2 + y^2 - 4 z^2 = 8 dot.basic $
 
 Krivuljo lahko poiščete kot rešitev diferencialne enačbe
 
-$ dot(bold(x)) lr((t)) eq nabla F_1 times nabla F_2 dot.basic $
+$ dot(bold(x)) lr((t)) = nabla F_1 times nabla F_2 dot.basic $
 
 == Perioda limitnega cikla
 <perioda-limitnega-cikla>
-Poiščite periodo limitnega cikla za diferencialno enačbo
+Poiščite periodo
+#link("https://en.wikipedia.org/wiki/Limit_cycle")[limitnega cikla] za diferencialno enačbo
 
-$ x prime.double lr((t)) minus 4 lr((1 minus x^2)) x prime lr((t)) plus x eq 0 $
+$ x prime.double (t) - 4(1 - x^2) x'(t) + x = 0 $
+
 na 10 decimalk natančno.
 
 == Obhod lune
 <obhod-lune>
-Sondo Appolo pošljite iz Zemljine orbite na tir z vrnitvijo brez potiska
-\(free-return trajectory), ki obkroži Luno in se vrne nazaj v Zemljino
-orbito. Rešujte sistem diferencialnih enačb, ki ga dobimo v koordinatnem
-sistemu, v katerem Zemlja in Luna mirujeta \(omejen krožni problem treh
-teles). Naloge ni potrebno reševati na 10 decimalk.
+Sondo Appolo pošljite iz Zemljine orbite na
+#link("https://en.wikipedia.org/wiki/Free-return_trajectory")[tir z vrnitvijo brez potiska],
+ki obkroži Luno in se vrne nazaj v Zemljino orbito. Rešujte sistem diferencialnih enačb, ki ga dobimo v koordinatnem
+sistemu, v katerem Zemlja in Luna mirujeta
+\(#link("https://en.wikipedia.org/wiki/Three-body_problem#Restricted_three-body_problem")[omejen
+  krožni problem treh teles]). Naloge ni potrebno reševati na 10 decimalk.
 
-=== Omejen krožni problem treh teles
+#heading(numbering: none, depth: 3)[Omejen krožni problem treh teles]
+
 <omejen-krožni-problem-treh-teles>
 Označimo z $M$ maso Zemlje in z $m$ maso Lune. Ker je masa sonde
 zanemarljiva, Zemlja in Luna krožita okrog skupnega masnega središča.
 Enačbe gibanja zapišemo v vrtečem koordinatnem sistemu, kjer masi $M$ in
 $m$ mirujeta. Označimo
-
-$ mu eq frac(m, M plus m) quad upright(" ter ") quad mu^(‾) eq 1 minus mu eq frac(M, M plus m) upright(". ") $
+#let barmu = $overline(mu)$
+$
+  mu = frac(m, M + m) quad " in " quad barmu = 1 - mu = frac(M, M + m).
+$
 
 V brezdimenzijskih koordinatah \(dolžinska enota je kar razdalja med
 masama $M$ in $m$) postavimo maso $M$ v točko
-$lr((minus mu comma 0 comma 0))$, maso $m$ pa v točko
-$lr((mu^(‾) comma 0 comma 0))$. Označimo z $R$ in $r$ oddaljenost
-satelita s položajem $lr((x comma y comma z))$ od mas $M$ in $m$, tj.
+$(- mu , 0 , 0)$, maso $m$ pa v točko
+$(barmu , 0 , 0)$. Označimo z $R$ in $r$ oddaljenost
+satelita s položajem $(x , y , z)$ od mas $M$ in $m$, tj.
 
-$ R & eq R lr((x comma y comma z)) eq sqrt(lr((x plus mu))^2 plus y^2 plus z^2) comma\
-r & eq r lr((x comma y comma z)) eq sqrt(lr((x minus mu^(‾)))^2 plus y^2 plus z^2) dot.basic $
+$
+  R & = R(x , y , z) = sqrt((x + mu))^2 + y^2 + z^2),\
+  r & = r(x , y , z)) = sqrt((x - barmu)^2 + y^2 + z^2).
+$
 
 Enačbe gibanja sonde so potem:
 
-$ x^(̈) & eq x plus 2 dot(y) minus mu^(‾) / R^3 lr((x plus mu)) minus mu / r^3 lr((x minus mu^(‾))) comma\
-y^(̈) & eq y minus 2 dot(x) minus mu^(‾) / R^3 y minus mu / r^3 y comma\
-z^(̈) & eq minus mu^(‾) / R^3 z minus mu / r^3 z dot.basic $
-
-== Perioda geostacionarne orbite
-
-Oblika planeta Zemlja ni čisto pravilna krogla. Zato tudi gravitacijsko polje ne deluje v vseh smereh enako. Gravitacijsko polje lahko zapišemo kot odvod gravitacijskega potenciala
-
 $
-F_g(bold(r)) = m dot gradient V(bold(r)),
+  dot.double(x) & = x + 2 dot(y) - barmu / R^3 lr((x + mu)) - mu / r^3 (x - barmu),\
+  dot.double(y) & = y - 2 dot(x) - barmu / R^3 y - mu / r^3 y ,\
+  dot.double(z) & = - barmu / R^3 z - mu / r^3 z.
 $
 
-kjer je $V(bold(r))$ skalarna funkcija položaja $bold(r)$.
-#link("https://en.wikipedia.org/wiki/Gravity_of_Earth")[Zemljina gravitacija]
-#link("https://en.wikipedia.org/wiki/Geopotential_model")[Zemljin gravitacijski potencial].
 
-
-== Matematično nihalo \(ocena največ 9)
+== Matematično nihalo (lažja)
 <matematično-nihalo>
 
 Kotni odmik $theta(t)$ \(v radianih) pri nedušenem nihanju uteži obešene na vrvici
 opišemo z diferencialno enačbo
 
 $
-g / l sin(theta(t)) + theta^(prime prime)(t) = 0,
-  quad theta(0) = theta_0, med theta^prime(0) = theta_0^prime,
+  g / l sin(theta(t)) + dot.double(theta)(t) = 0,
+  quad theta(0) = theta_0, med dot(theta)(0) = dot(theta)_0,
 $
-kjer je $g eq 9.80665 m slash s^2$ težni pospešek in $l$ dolžina nihala.
-Napišite funkcijo, ki izračuna odmik nihala ob določenem času.
-Enačbo drugega reda prevedite na sistem prvega reda in računajte z
+
+kjer je $g = 9.80665 m slash s^2$ težni pospešek in $l$ dolžina nihala.
+Napiši funkcijo, ki izračuna odmik nihala ob določenem času.
+Enačbo drugega reda prevedi na sistem prvega reda in računajte z
 metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5]
 @Orel_2004.
 
-Za različne začetne pogoje primerjajte rešitev z
+Za različne začetne pogoje primerjaj rešitev z
 nihanjem harmoničnega nihala, ki je dano z enačbo
 $
-g/l theta(t) + dot.double(theta(t)) = 0.
+g/l theta(t) + dot.double(theta)(t) = 0.
 $
 Pri harmoničnem nihalu je nihajni čas neodvisen od začetnih pogojev, medtem ko
-je pri matematičnem nihalu nihajni čas narašča, ko se veča energija nihala.
-Narišite graf odvisnosti nihajnega časa matematičnega nihala od energije nihala.
+je pri matematičnem nihalu nihajni čas narašča, ko se veča energija nihala (začetni odmik).
+Nariši graf odvisnosti nihajnega časa matematičnega nihala od energije nihala.
