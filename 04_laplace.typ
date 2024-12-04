@@ -396,7 +396,7 @@ lahko predstavimo z objektom:
 Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale
 rešitev za dan robni problem. Kot smo videli v @diskretizacija-in-linearni-sistem-enačb[poglavju],
 lahko približek za rešitev robnega problema poiščemo kot rešitev sistema linearnih enačb
-@eq:ravnovesje. Najprej napišemo funkcijo, ki generira matriko sistema:
+@eq:ravnovesje. Najprej napišemo funkcijo, ki vrne matriko sistema:
 
 #code_box[
   #jl("function matrika(_::Laplace, n, m)")
@@ -524,7 +524,7 @@ ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi ite
 za rešitev dobimo tako, da zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
 
 #opomba(naslov: [Pogoji konvergence])[
-Rekli boste, da je preveč enostavno enačbe le prurediti in se potem rešitev kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak "hakelc". Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jacobijeva, Gauss-Seidlova in SOR iteracija
+Rekli boste, da je preveč enostavno enačbe le preurediti in se potem rešitev kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak "hakelc". Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jacobijeva, Gauss-Seidlova in SOR iteracija
 *ne konvergirajo vedno*, zagotovo pa konvergirajo, če je matrika #link("https://sl.wikipedia.org/wiki/Diagonalno_dominantna_matrika")[diagonalno dominantna po vrsticah].
 ]
 
@@ -596,7 +596,7 @@ Poglejmo si, kako zaporedje približkov Gauss-Seidlove iteracije konvergira k re
 )
 
 
-Za metodo SOR je hitrost konvergence odvisna od izbire parametra $omega$. Odvisnot od parametra
+Za metodo SOR je hitrost konvergence odvisna od izbire parametra $omega$. Odvisnost od parametra
 $omega$ je različna za različne matrike in začetne približke. Oglejmo si odvisnost za
 primer sistema, ki ga dobimo z diskretizacijo Laplaceove enačbe.
 

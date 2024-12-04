@@ -134,13 +134,13 @@ funkcijo koncentracije v odvisnosti od časa:
 $ y = #co2 (t) . $
 
 Model, ki dobro opisuje spremembe #co2, lahko sestavimo iz
-kvadratne funcije, ki opisuje naraščanje letnih povprečij, in
+kvadratne funkcije, ki opisuje naraščanje letnih povprečij, in
 periodičnega dela, ki opiše nihanja med letom:
 
 $ co2(bold(p), t) =
 p_1 + p_2 t + p_3 t^2 + p_4 sin (2 pi t) + p_5 cos (2 pi t) , $
 
-pri čemer je čas $t$ podan v letih. Predoločeni sistem @eq:11-sistem, ki
+pri čemer je čas $t$ podan v letih. Predoločen sistem @eq:11-sistem, ki
 ga dobimo za naš model, ima $n times 5$ matriko sistema:
 
 $ A = mat(
@@ -166,7 +166,7 @@ najmanjša.
 == Normalni sistem<normalni-sistem>
 
 Vektor parametrov modela $bold(p)$ izberemo tako, da je napoved modela $A bold(p)$
-enaka pravokotni projekciji $bold(y)$ na prostor, ki ga razpenjajo stoplci matrike $A$. Tako lahko
+enaka pravokotni projekciji $bold(y)$ na prostor, ki ga razpenjajo stolpci matrike $A$. Tako lahko
 izpeljemo #emph[normalni sistem] za dani predoločen sistem
 $A bold(p) = bold(y)$:
 
@@ -238,7 +238,7 @@ $Q$ ortonormirana baza stolpčnega prostora matrike $A$, matrika $R$ pa
 vsebuje koeficiente v razvoju stolpcev matrike $A$ po ortonormirani bazi,
 določeni s $Q$. Projekcijo na stolpčni prostor ortogonalne matrike še
 lažje izračunamo, saj lahko koeficiente izračunamo s skalarnim produktom
-s stolpci $Q$. Če predoločeni sistem $A bold(p) = bold(y)$ pomnožimo z
+s stolpci $Q$. Če predoločen sistem $A bold(p) = bold(y)$ pomnožimo z
 desne s $Q^T$ in upoštevamo, da je $Q^T Q = I$, dobimo zopet kvadratni sistem za vektor parametrov
 $bold(p)$:
 
@@ -276,7 +276,7 @@ povedo parametri modela, ki smo jih izračunali na podlagi izmerjenih podatkov.
 Koeficient $p_1$ pove povprečno koncentracijo na sredini merilnega
 obdobja, $p_2$ in $p_3$ pa sta koeficienta pri linearnem in kvadratnem členu.
 Amplituda letnih nihanj je enaka velikosti vektorja $[p_4, p_5]$.
-Kot je razvidno iz parametrov modela, je naraščanje kvadratično in ne linearno. Ne le,
+Kot je razvidno iz parametrov modela, je naraščanje kvadratno in ne linearno. Ne le,
 da se vsako leto poveča koncentracija, vsako leto se poveča za večjo
 vrednost. Če odmislimo nihanja zaradi letnih
 časov, dobimo trend naraščanja:

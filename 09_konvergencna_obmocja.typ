@@ -33,7 +33,7 @@ začetne približke.
 #let bx = math.bold("x")
 #let bF = math.bold("F")
 
-Išečmo rešitev sistem $n$ nelinearnih enačb z $n$ neznankami:
+Iščemo rešitev sistem $n$ nelinearnih enačb z $n$ neznankami:
 
 $
 f_1(x_1, x_2, med dots, med x_n)&=0,\
@@ -41,7 +41,7 @@ f_2(x_1, x_2, med dots, med x_n)&=0,\
 dots.v\
 f_(n)(x_1, x_2, med dots, med x_n)&=0,
 $<eq:9-nelin-sistem>
-kjer so $f_1, f_2, med dots, med f_n$ nelinearne funkcije več spremenljik.
+kjer so $f_1, f_2, med dots, med f_n$ nelinearne funkcije več spremenljivk.
 Sistem @eq:9-nelin-sistem lahko zapišemo v vektorski obliki:
 
 $
@@ -133,7 +133,7 @@ $
 #opomba(naslov: [Avtomatsko odvajanje])[
 V našem primeru smo Jacobijevo matriko izračunali na roke, saj je bila funkcija
 desnih strani preprosta.
-Če je funkija $bF$ bolj kompleksna ali je ne poznamo v naprej, lahko Jacobijevo matriko odvodov
+Če je funkcija $bF$ bolj kompleksna ali je ne poznamo v naprej, lahko Jacobijevo matriko odvodov
 učinkovito izračunamo z
 #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatskim odvajanjem]. V Julii
 uporabimo funkcijo #jl("jacobian") iz paketa

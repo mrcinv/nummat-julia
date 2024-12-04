@@ -21,7 +21,7 @@ opisan v @von_luxburg_tutorial_2007.
   $RR^d$. V podobnostnem grafu je vsaka točka v oblaku vozlišče, povezani pa so vsi pari
   točk $i$ in $j$, ki so za manj kot $epsilon$ oddaljeni za primerno izbrani $epsilon$.
 - Napiši funkcijo, ki za dano simetrično matriko poišče $k$ po absolutni vrednosti najmanjših
-  lastnih vrednosti in pripradajoče lastne vektorje.
+  lastnih vrednosti in pripadajoče lastne vektorje.
   Uporabi inverzno iteracijo za $k$ vektorjev in na vsakem koraku s QR razcepom poskrbi, da so
   paroma ortogonalni. Faktor $Q$ v QR razcepu konvergira k lastnim vektorjem,
   diagonala faktorja $R$ pa h $k$ po absolutni vrednosti najmanjšim lastnim vrednostim matrike.
@@ -245,14 +245,14 @@ vrednosti. Ti lastni vektorji pa izboljšajo proces gručenja.
 
 #opomba(naslov: [Velike količine podatkov zahtevajo učinkovite algoritme])[
 V našem primeru je bila količina podatkov majhna. Vendar bi z inverzno
-iteracijo s QR razcepom in metodo konjigiranih gradientov lahko obdelali tudi bistveno
+iteracijo s QR razcepom in metodo konjugiranih gradientov lahko obdelali tudi bistveno
 večje količine podatkov, pri katerih bi splošne metode, kot
 na primer QR iteracija za iskanje lastnih parov ali LU razcep za reševanje
 sistema, odpovedale.
 
 Z naraščanjem količine podatkov je nujno
-izbrati učinkovite metode. V praksi se količine podatkov merijo v miljonih in
-miljardah. Metode s kvadratno ali višjo časovno ali prostorsko zahtevnostjo so
+izbrati učinkovite metode. V praksi se količine podatkov merijo v milijonih in
+milijardah. Metode s kvadratno ali višjo časovno ali prostorsko zahtevnostjo so
 pri tako velikih količinah podatkov neuporabne. V tem primeru
 je mogoče izvesti spektralno gručenje le, če
 uporabimo učinkovite metode, kot sta #emph[inverzna iteracija s

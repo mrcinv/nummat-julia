@@ -133,7 +133,7 @@ Funkcija $d_m$ ni prava razdalja v smislu
 #link("https://sl.wikipedia.org/wiki/Metri%C4%8Dni_prostor")[metričnih prostorov].
 
 #opomba(naslov: [Hausdorffova razdalja])[
-Alternativna definicije razdalje med dvema množicama je #emph[Hausdorfova razdalja].
+Alternativna definicije razdalje med dvema množicama je #emph[Hausdorffova razdalja].
 Hausdorffova razdalja pove, koliko je lahko točka na eni krivulji največ oddaljena od druge
 krivulje in je definirana kot
 

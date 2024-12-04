@@ -516,7 +516,7 @@ standard v razvoju programske opreme in tudi drugod, kjer se dela z besedilnimi
 datotekami. Priporočam, da si bralec ustvari svoj Git repozitorij, kjer si uredi
 kodo in zapiske, ki jih bo napisal pri spremljanju te knjige.
 
-Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, lahko pa ga repliciramo na lastnem strežniku ali na enem od javnih spletnih skladišč
+Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, lahko pa ga kloniramo na lastni strežnik ali na enega od javnih spletnih skladišč
 programske kode, na primer #link("https://github.com/")[Github] ali
 #link("https://gitlab.com/")[Gitlab].]
 
@@ -749,7 +749,7 @@ V tej knjigi bomo pisali tri vrste dokumentacije:
 )[
   Izbira formata PDF je mogoče presenetljiva za pisanje dokumentacije programske
   kode. V praksi so precej uporabnejše HTML strani. Dokumentacija v obliki HTML
-  strani, ki se generira avtomatično v procesu #link(
+  strani, ki se avtomatično ustvari v procesu #link(
     "https://en.wikipedia.org/wiki/Continuous_integration",
   )[nenehne integracije], je postala _de facto_ standard. V kontekstu popravljanja domačih nalog in poročil za vaje pa ima format PDF še vedno prednosti, saj ga je lažje pregledovati in popravljati.
 ]
@@ -781,7 +781,7 @@ caption: [Vsebina datoteke README.md, ki vsebuje osnove informacije o projektu.]
 V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@knuth84).
 Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot komentarje v kodi.
 
-Za generiranje PDF dokumentov je potrebno namestiti
+Za ustvarjanje PDF dokumentov je potrebno namestiti
 #link("https://tug.org/")[TeX/LaTeX]. Priporočam namestitev
 #link("https://yihui.org/tinytex/")[TinyTeX] ali #link("https://tug.org/texlive/")[TeX Live], ki pa zasede več prostora na disku.
 Po #link("https://yihui.org/tinytex/#installation")[namestitvi] programa
@@ -804,7 +804,7 @@ V datoteko dodamo besedilo v obliki komentarjev. Če želimo, da se komentarji u
   code_box[
   #raw(lang: "jl", block:true, readlines("Vaja01/doc/01uvod.jl", 1, 13))
   ],
-  caption: [Vsebina datoteke `01uvod.jl`, iz katere generiramo poročilo.
+  caption: [Vsebina datoteke `01uvod.jl`, iz katere ustvarimo poročilo.
     Vrstice, ki se začnejo z znakoma `#'`, so v formatu Markdown in bodo v poročilo vključene kot
     oblikovano besedilo.],
 )

@@ -282,11 +282,11 @@ in $-q = p - 1$ na prvi naddiagonali:
 $ I - Q = mat(delim: "(", 1, - q, 0, dots.h, 0; - p, 1, - q, dots.h, 0; dots.v, dots.down, dots.down, dots.down, dots.v; 0, dots.h, - p, 1, - q; 0, dots.h, 0, - p, 1). $
 
 Matrika $I - Q$ je tridiagonalna. Poleg tega je po stolpcih diagonalno dominantna in v prvem in
-zadnjem stolpcu strogo diagonalno dominatna#footnote[
+zadnjem stolpcu strogo diagonalno dominantna#footnote[
 Matrika je po stolpcih _diagonalno dominantna_, če za vsak stolpec velja, da je
 absolutna vrednost diagonalnega elementa večja ali enaka vsoti absolutnih vrednosti vseh ostalih
 elementov v stolpcu: $|a_(i i)|>=sum_(i eq.not j) |a_(j i)|$. Če je matrika strogo diagonalno
-dominantna vsaj v enem stolpcu, potem je Gaussova eleminacija brez pivotiranja numerično
+dominantna vsaj v enem stolpcu, potem je Gaussova eliminacija brez pivotiranja numerično
 stabilna @plestenjak2015.], zato lahko
 uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi
 matriko $I - Q$:

@@ -14,7 +14,7 @@ $
 p_(i j) = P(X_(k+1) = j | X_k = i).
 $
 
-Matrika $Pm = [p_(i j)]$, katere elementi so prehodne verjetnosti za prehod iz stanja $i$ v stanje $j$, imenujemo #emph[prehodna matrika Markovkse verige].
+Matrika $Pm = [p_(i j)]$, katere elementi so prehodne verjetnosti za prehod iz stanja $i$ v stanje $j$, imenujemo #emph[prehodna matrika Markovske verige].
 
 Naj bo $X_k$ Markovska veriga z $n$ stanji in naj bo
 $bold(p)^((k)) = [p_1^((k)), p_2^((k)), dots p_n^((k))]$ porazdelitev po stanjih na $k$-tem koraku
@@ -40,7 +40,7 @@ $
 bold(p) = Pm^T bold(p).
 $
 
-Povedano drugače: invariatna porazdelitev za Markovsko verigo s prehodno matriko $Pm$ je lastni vektor matrike $Pm$ z lastno vrednostjo $1$.
+Povedano drugače: invariantna porazdelitev za Markovsko verigo s prehodno matriko $Pm$ je lastni vektor matrike $Pm$ z lastno vrednostjo $1$.
 
 == Naloga
 

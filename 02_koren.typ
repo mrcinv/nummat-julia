@@ -299,14 +299,14 @@ Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanj
 
 #opomba(naslov: [Kaj smo se naučili?])[
 - Tudi za izračun preprostih funkcij potrebujemo numeričen algoritem.
-- Pri iterativnih metodah je pomembna izbira dobraga začetnega približka.
+- Pri iterativnih metodah je pomembna izbira dobrega začetnega približka.
 - Numerični algoritmi so pogosto preprosti, vendar moramo paziti, da
   je napaka omejena.
 ]
 
 // #figure(
 //   table(columns: 1, align: left,
-//   [ #jl("exponent") - vrni eksponenet števila s plavajočo vejico],
+//   [ #jl("exponent") - vrni eksponent števila s plavajočo vejico],
 //   [ #jl("significand") - vrni mantiso števila s plavajočo vejico],
 //     [
 //      #jl("surface") - nariši ploskev v prostoru],

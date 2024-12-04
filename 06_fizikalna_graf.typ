@@ -95,7 +95,7 @@ $<eq:06-trojni-sistem>
 
 
 Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem  le ničelno rešitev#footnote[Rešitev je enolična le, če je matrika sistema @eq:06-trojni-sistem polnega ranga. To velja, če graf nima izoliranih točk]. Če želimo
-netrivialno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
+netrivijalno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
 škode lahko predpostavimo, da so vozlišča, ki jih pritrdimo, na koncu. Označimo z
 $F = {m+1, dots, n} subset V(G); quad m<n$ množico vozlišč, ki imajo določene koordinate. Koordinate za
 vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo stran enačbe.
@@ -199,7 +199,7 @@ po krožnici.
 
 == Dvodimenzionalna mreža
 
-Preizkusimo algoritem na dvodiemzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo,
+Preizkusimo algoritem na dvodimenzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo,
 če v ravnini pravokotnik razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje,
 ki ustrezajo ogliščem pravokotnika.
 
@@ -225,7 +225,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 )
 
 #opomba(naslov:[Kaj smo se naučili?])[
-- Kako zapisati sistem linernih enačb za spremenljivke, ki ustrezajo vozliščem grafa.
+- Kako zapisati sistem linearnih enačb za spremenljivke, ki ustrezajo vozliščem grafa.
 - Spoznali smo še eno iterativno metodo, ki deluje za pozitivno definitne matrike.
 ]
 
