@@ -31,6 +31,10 @@ in v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
 #text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato
 Julia prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
 
+#let demo01raw(koda) = blk("scripts/01_julia.jl", koda)
+
+#let repl01(koda) = repl(demo01raw("# "+koda), read("out/"+koda+".out"))
+
 #code_box[
   #repl("1 + 1", "2")
   #repl("sin(pi)", "0.0")
@@ -44,28 +48,22 @@ Funkcije, ki so v programskem jeziku Julia osnovne enote kode, definiramo na ve�
 enovrstične funkcije definiramo z izrazom ```jl ime(x) = ...```.
 
 #code_box[
-  #repl("f(x) = x^2 + sin(x)", "f (generic function with 1 method)")
-  #repl("f(pi/2)", "3.4674011002723395")
+  #repl(demo01raw("# fx"), read("out/01_fx.out"))
+  #repl(demo01raw("# fpi2"), read("out/01_fpi2.out"))
 ]
 #pagebreak()
 Funkcije z več argumenti definiramo podobno:
 
 #code_box[
-  #repl("g(x, y) = x + y^2", "g (generic function with 1 method)")
-  #repl("g(1, 2)", "5")
+  #repl(demo01raw("# gxy"), read("out/01_gxy.out"))
+  #repl(demo01raw("# g12"), read("out/01_g12.out"))
 ]
 
 Za funkcije, ki zahtevajo več kode, uporabimo ključno besedo ```jl function```:
 
 #code_box[
-  #repl(
-    "function h(x, y)
-  z = x + y
-  return z^2
-end",
-    "h (generic function with 1 method)",
-  )
-  #repl("h(3, 4)", "49")
+  #repl01("01_hxy")
+  #repl01("01_h34")
 ]
 
 Funkcije lahko uporabljamo kot vsako drugo spremenljivko. Lahko jih podamo kot
@@ -82,10 +80,7 @@ Anonimne funkcije uporabljamo predvsem kot argumente v drugih funkcijah. Funkcij
 element vektorja `v`:
 
 #code_box[
-  #repl("map(x -> x^2, [1, 2, 3])", "3-element Vector{Int64}:
-  1
-  4
-  9")
+  #repl01("01_map")
 ]
 
 Vsaka funkcija v programskem jeziku Julia ima lahko več različnih definicij, glede na kombinacijo tipov argumentov, ki jih podamo. Posamezno
@@ -93,10 +88,10 @@ definicijo imenujemo
 #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[metoda]. Ob klicu funkcije Julia izbere najprimernejšo metodo.
 
 #code_box[
-  #repl("k(x::Number) = x^2", "k (generic function with 1 method)")
-  #repl("k(x::Vector) = x[1]^2 - x[2]^2", "k (generic function with 2 methods)")
-  #repl("k(2)","4")
-  #repl("k([1, 2, 3])", "-3")
+  #repl01("01_k1")
+  #repl01("01_k2")
+  #repl01("01_k3")
+  #repl01("01_k4")
 ]
 
 === Vektorji in matrike
@@ -104,21 +99,10 @@ definicijo imenujemo
 Vektorje vnesemo z oglatimi oklepaji ```jl []```:
 
 #code_box[
-  #repl("v = [1, 2, 3]", "3-element Vector{Int64}:
-  1
-  2
-  3")
-  #repl("v[1] # vrne prvo komponento vektorja", "1")
-  #repl("v[2:end] # vrne komponente vektorja od druge do zadnje", "2-element Vector{Int64}:
-  2
-  3")
-  #repl(
-    "sin.(v) # funkcijo uporabimo na komponentah vektorja, če imenu dodamo .",
-    "3-element Vector{Float64}:
-  0.8414709848078965
-  0.9092974268256817
-  0.1411200080598672",
-  )
+  #repl01("01_v1")
+  #repl01("01_v2")
+  #repl01("01_v3")
+  #repl01("01_v4")
 ]
 
 Matrike vnesemo tako, da elemente v vrstici ločimo s presledki, vrstice pa s
@@ -226,22 +210,11 @@ na tri različne načine, kako iz danega vektorja #jl("v = [1, 2, 3]") sestavimo
 funkcijskih vrednosti #jl("[f(1), f(2), f(3)]") za dano funkcijo $f$.
 
 #code_box[
-  #repl("v = [1, 2, 3]", none)
-  #repl("f(x) = x^2", none)
-  #repl("[f(xi) for xi in x] # podobno kot v Pythonu","3-element Vector{Int64}:
-  1
-  4
-  9")
-  #repl("f.(v) # operator . je alias za funkcijo broadcast, ki funkcijo aplicira na komponente",
-   "3-element Vector{Int64}:
-  1
-  4
-  9"
-    )
-  #repl("map(f, v)","3-element Vector{Int64}:
-  1
-  4
-  9")
+  #repl(demo01raw("# 01_for1"), none)
+  #repl(demo01raw("# 01_for2"), none)
+  #repl01("01_for3")
+  #repl01("01_for4")
+  #repl01("01_for5")
 ]
 
 Zanko lahko izvedemo tudi z ukazom #jl("while"), ki deluje podobno kot v drugih

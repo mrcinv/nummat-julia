@@ -19,7 +19,7 @@ eksperimentiral z milnimi mehurčki in elastičnimi tkaninami, s katerimi je ust
 
 
 #figure(
-  image("img/1024px-Olympic_Stadium_Munich_Dachbegehung.JPG"),
+  image("img/1024px-Olympic_Stadium_Munich_Dachbegehung.JPG", width: 90%),
   caption: [Streha olimpijskega stadiona v Münchnu (vir #link(
       "https://de.wikipedia.org/wiki/Olympiastadion_M%C3%BCnchen#/media/File:Olympic_Stadium_Munich_Dachbegehung.JPG")[wikipedia])],
 )
