@@ -124,6 +124,8 @@ tako iščemo le vrednosti
 
 $ u_(i j) = u(x_j, y_i), quad i=1, med dots, med n, quad j=1, med dots, med m. $
 
+Vrstni red indeksov $j$ in $i$ smo v matriki zamenjali, saj prvi indeks določa položaj
+elementa matrike v navpični smeri, drugi indeks pa položaj v vodoravni smeri.
 //#figure([#image("sosedi.png")], caption: [
 // sosednja vozlišča
 //])
@@ -149,7 +151,7 @@ predstavljamo kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih
     content((), $y$, anchor: "south")
     line((0, 0), (5, 0), stroke: 0.2pt, mark:(end: "stealth"))
     content((), $x$, anchor: "west")
-    content((2.5, 2.5), $u_(i j)$)
+    content((2.5, 2.5), $u_(i, j)$)
     // y ticks
     content((0, 2.5), $y_i$, anchor: "east")
     line((0, 2.5), (0.1, 2.5), stroke: 0.2pt)
@@ -165,10 +167,10 @@ predstavljamo kot elastično tkanino, ki je fina kvadratna mreža iz elastičnih
     content((1, 0), $x_(j-1)$, anchor: "north")
     line((1, 0), (1, 0.1), stroke: 0.2pt)
     // connections
-    content((1, 2.5), $u_(i j-1)$)
-    content((4, 2.5), $u_(i j+1)$)
-    content((2.5, 1), $u_(i-1 j)$)
-    content((2.5, 4), $u_(i+1 j)$)
+    content((1, 2.5), $u_(i, j-1)$)
+    content((4, 2.5), $u_(i, j+1)$)
+    content((2.5, 1), $u_(i-1, j)$)
+    content((2.5, 4), $u_(i+1, j)$)
     line((1.5, 2.5), (2, 2.5))
     line((3, 2.5), (3.5, 2.5))
     line((2.5, 1.5), (2.5, 2))
@@ -204,13 +206,13 @@ Vozlišče bo v ravnovesju, ko bo vsota vseh sil nanj enaka 0.
     circle((x, y), radius: 0.05, fill: white)
     circle((0, 0), radius: 0.05, fill: white)
     circle((2*x, 2.5*y), radius: 0.05, fill: white)
-    content((x + 0.1, 0.5*y), [$bold(F)_(1 z) prop u_(i j-1) - u_(i j)$], anchor: "west")
-    content((x - 0.1, 1.5*y), [$bold(F)_(2 z) prop u_(i j+1) - u_(i j)$], anchor: "east")
+    content((x + 0.1, 0.5*y), [$bold(F)_(1 z) prop u_(i, j-1) - u_(i, j)$], anchor: "west")
+    content((x - 0.1, 1.5*y), [$bold(F)_(2 z) prop u_(i, j+1) - u_(i, j)$], anchor: "east")
     content((x * 0.5 , 0.3*y), [$bold(F)_1$], anchor: "west")
         content((x * 1.5 , 1.9*y), [$bold(F)_2$], anchor: "east")
-    content((-0.2, 0), [$u_(i j-1)$], anchor: "east" )
-    content((x + 0.2, y), [$u_(i j)$], anchor: "west" )
-    content((2*x + 0.2, 2.5*y), [$u_(i j+1)$], anchor: "west" )
+    content((-0.2, 0), [$u_(i, j-1)$], anchor: "east" )
+    content((x + 0.2, y), [$u_(i, j)$], anchor: "west" )
+    content((2*x + 0.2, 2.5*y), [$u_(i, j+1)$], anchor: "west" )
   })
 ]
 
@@ -221,6 +223,7 @@ $(x_j, y_i, u_(i j))$ enačbo:
 $
   (u_(i-1 j) - u_(i j)) + (u_(i j-1) - u_(i j))
     + (u_(i+1 j) - u_(i j)) + (u_(i j+1) - u_(i j)) &= 0\
+    arrow.r.double
   u_(i-1 j) + u_(i j-1) - 4u_(i j) + u_(i+1 j) + u_(i j+1) &= 0.
 $<eq:ravnovesje>
 
@@ -237,7 +240,7 @@ $ A bold(x) = bold(b), $
 
 kjer je $A$ kvadratna matrika, $bold(x)$ in $bold(b)$ pa vektorja. V našem primeru je to nekoliko
 bolj zapleteno, saj so spremenljivke $u_(i j)$ elementi matrike. Zato
-jih moramo najprej razvrstiti v vektor $bold(x)=[x_1, x_2, dots]^T$.
+jih moramo najprej razvrstiti v vektor $bold(x)=[x_1, x_2, med dots, med x_N]^T,$ kjer je $N=m dot.c n$ število vseh elementov matrike.
 Najpogosteje elemente $u_(i j)$ razvrstimo v vektor $bold(x)$ po stolpcih, tako da je:
 
 $
@@ -303,9 +306,9 @@ in zgornji obdiagonali:
 $
 L = mat(
   -2, 1, 0, dots, 0;
-  1, -2, 1, dots, dots.v;
-  dots.v, dots.down, dots.down, dots.down, 0;
-  0, dots, 1, -2, 1;
+  1, -2, 1, dots.down, dots.v;
+  0, dots.down, dots.down, dots.down, 0;
+  dots.v, dots.down, 1, -2, 1;
   0, dots, 0,  1, -2;
 ).
 $
@@ -366,7 +369,7 @@ na pravokotniku:
   #jlfb("Vaja04/src/Vaja04.jl", "# RPP")
 ]
 
-Definiramo še abstraktni tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator
+Definiramo še abstrakten tip brez polj, ki predstavlja Laplaceov diferencialni operator @eq:operator
 in ga bomo lahko dodali v polje za operator v `RobniProblemPravokotnik`:
 
 #code_box[
@@ -381,7 +384,7 @@ Na ta način lahko kodo organiziramo tako, da odraža abstraktne matematične po
 primeru robni problem za PDE.
 ]
 
-Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z robnimi pogoji:
+Robni problem za Laplaceovo enačbo na pravokotniku $[0, pi]times [0, pi]$ z robnimi pogoji
 
 $
 u(x, 0) = u(x, pi) &= sin(x) #text[ in ]\
@@ -547,8 +550,8 @@ $u_(i j)^((k))$. Tako dobimo
 #link("https://en.wikipedia.org/wiki/Successive_over-relaxation")[metodo SOR]:
 
 $
-  u_(i,j)^((k+1)){G S} &= 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k)))\
-  u_(i, j)^((k+1)){S O R} &= omega u_(i, j)^((k+1)){G S} + (1 - omega) u_(i, j)^((k))
+  u_(i,j)^((k+1)){G S} &= 1/4(u_(i,j-1)^((k+1))+ u_(i-1,j)^((k+1))+u_(i+1,j)^((k))+u_(i,j+1)^((k))),\
+  u_(i, j)^((k+1)){S O R} &= omega u_(i, j)^((k+1)){G S} + (1 - omega) u_(i, j)^((k)).
 $
 
 Parameter $omega$ je lahko poljubno število na intervalu

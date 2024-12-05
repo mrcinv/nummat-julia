@@ -37,7 +37,7 @@ poiskali kot linearno kombinacijo
 == Naloga
 #let bx = math.bold[x]
 
-- Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij (RBF) v $RR^d$.
+- Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij v $RR^d$.
   Podatkovni tip naj vsebuje središča RBF $bx_i in RR^d$, funkcijo oblike $phi: RR -> RR$ in
   koeficiente $w_i in RR$ v linearni kombinaciji:
   $
@@ -46,14 +46,14 @@ poiskali kot linearno kombinacijo
 
 - Napiši sistem za koeficiente $w_i$ v linearni kombinaciji RBF, če so podane
   vrednosti $f_i=F(bx_i) in RR$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $f_i$,
-  funkcijo $phi$ in središča $bx_i$ poišče koeficiente $w_1, w_2 dots w_n$. Katero metodo za
+  funkcijo $phi$ in središča $bx_i$, poišče koeficiente $w_1, w_2 dots w_n$. Katero metodo za
   reševanja sistema lahko uporabimo?
 - Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F(bx)$ v dani točki $bx$.
 - Uporabi napisane metode in interpoliraj oblak točk v ravnini z implicitno podano krivuljo. Oblak
   točk ustvari na krivulji, podani s parametrično enačbo:
 
   $
-    x(phi) = 8cos(phi) - cos(4phi)\
+    x(phi) = 8cos(phi) - cos(4phi),\
     y(phi) = 8sin(phi) - sin(4phi).
   $<eq:05-cikloida>
 
@@ -61,7 +61,7 @@ poiskali kot linearno kombinacijo
 
 V ravnini#footnote[Postopek, ki ga bomo opisali,
 deluje ravno tako dobro tudi za točke v prostoru. Vendar se bomo zavoljo enostavnosti omejili na
-točke v ravnini.] je podan oblak točk ${ bx_1 , dots.h bx_n } subset RR^2$. Iščemo krivuljo, ki dobro
+točke v ravnini.] je podan oblak točk ${ bx_1 , bx_2, med dots, med bx_n } subset RR^2$. Iščemo krivuljo, ki dobro
 opiše dane točke. Če zahtevamo, da vse točke ležijo na krivulji, problemu rečemo #emph[interpolacija],
 če pa dovolimo, da je krivulja zgolj blizu danih točk in ne nujno vsebuje vseh točk, problem
 imenujemo #emph[aproksimacija]. Krivuljo bomo poiskali v implicitni obliki kot nivojsko krivuljo
@@ -76,14 +76,14 @@ dano točko v oblaku $bx_i$, podano tudi vrednost funkcije $f_i$. Iščemo zvezn
 $f(x, y)$, tako da so izpolnjene enačbe:
 
 $
-f(x_1, y_1) = f_1\
+f(x_1, y_1) = f_1,\
 dots.v\
 f(x_n, y_n) = f_n.
 $<eq:05enacbe>
 
 Zveznih funkcij, ki zadoščajo enačbam @eq:05enacbe, je neskončno. Zato se moramo omejiti na
 podmnožico funkcij, ki je dovolj raznolika, da je sistem rešljiv, hkrati pa dovolj majhna, da je
-rešitev ena sama. V tej vaji, se bomo omejili na $n$-parametrično družino funkcij oblike:
+rešitev ena sama. V tej vaji se bomo omejili na $n$-parametrično družino funkcij oblike:
 #let bw = math.bold[w]
 $
 F(bx, bw) = F(bx, w_1, w_2, dots, w_n) = sum_i w_i phi(norm( bx - bx_i)).
@@ -101,22 +101,22 @@ $ F(bx) = sum_i w_i phi(norm( bx - bx_i)), $
 
 npr. za rekonstrukcijo 2D in 3D oblik v računalniški grafiki. Funkcija
 $phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
-imenujemo funkcija oblike.
+imenujemo _funkcija oblike_.
 
 
-Problem @eq:05enacbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, dots w_n]^T$, tako da je
+Problem @eq:05enacbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, w_2, med dots, med w_n]^T$, tako da je
 izpolnjen sistem enačb:
 
 $
-F(bx_1, w_1, w_2, med dots, med w_n) = f_1\
+F(bx_1, w_1, w_2, med dots, med w_n) = f_1,\
 dots.v\
 F(bx_n, w_1, w_2, med dots, med w_n) =  f_n.
 $<eq:05int>
 
-Enačbe @eq:05int so linearne za koeficiente $w_1, dots w_n$:
+Enačbe @eq:05int so linearne za koeficiente $w_1, med dots, med w_n$:
 
 $
-w_1 phi_1(bx_1) + w_2 phi_2(bx_1) + med dots med + w_n phi_n(bx_1) = f_1\
+w_1 phi_1(bx_1) + w_2 phi_2(bx_1) + med dots med + w_n phi_n(bx_1) = f_1,\
 dots.v\
 w_1 phi_1(bx_n) + w_2 phi_2(bx_n) + med dots med + w_n phi_n(bx_n) = f_n.
 $<eq:05lin-sistem>
@@ -141,8 +141,8 @@ $
 je matrika sistema @eq:05-matrika simetrična. V literaturi @savchenko95 se pojavijo naslednje
 izbire za funkcijo oblike $phi$:
   - #link("https://en.wikipedia.org/wiki/Polyharmonic_spline")[poliharmonični zlepek] (_pločevina_):
-   $phi(r) = r^2 log (r)$ za 2D in $phi(r) =r^3$ za 3D @turk99
-  - Gaussova funkcija: $phi(r) = exp(-r^2 slash sigma^2)$
+   $phi(r) = r^2 log (r)$ za 2D in $phi(r) =r^3$ za 3D @turk99,
+  - Gaussova funkcija: $phi(r) = exp(-r^2 slash sigma^2)$,
   - racionalni približek za Gaussovo funkcijo:
     $ phi(r) = 1/(1 + (r/sigma)^(2p)). $
 

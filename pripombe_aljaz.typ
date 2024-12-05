@@ -1,110 +1,110 @@
-10 str., vrstica -5 pred 1.1.3: 'pre-določenega' -> 'predoločenega'
+//10 str., vrstica -5 pred 1.1.3: 'pre-določenega' -> 'predoločenega'
 
-10 str., vrstica -1: 'tipa LinRange lahko' -> 'tipa LinRange, lahko'
+//10 str., vrstica -1: 'tipa LinRange lahko' -> 'tipa LinRange, lahko'
 
-11 str., vrstica 7: 'Poglejmo si, kako lahko na tri različne načine, kako iz danega'. Ta poved je malo nenavadna.
+//11 str., vrstica 7: 'Poglejmo si, kako lahko na tri različne načine, kako iz danega'. Ta poved je malo nenavadna.
 
-11 str., vrstica 15: 'julia> [f(xi) for xi in x' -> 'julia> [f(xi) for xi in v'
+//11 str., vrstica 15: 'julia> [f(xi) for xi in x' -> 'julia> [f(xi) for xi in v'
 
-13 str., zelena opomna, vrstica 2: 'v Juliji'. Ali ni bolj pravilno 'v Julii'? Tudi kasneje uporabljaš sklanjanje imena Julija. Nisem sicer 100%, bi pa jaz 'Julii', 'Julie',... uporabljal.
+//13 str., zelena opomna, vrstica 2: 'v Juliji'. Ali ni bolj pravilno 'v Julii'? Tudi kasneje uporabljaš sklanjanje imena Julija. Nisem sicer 100%, bi pa jaz 'Julii', 'Julie',... uporabljal.
 
-26 str., vrstica 2 za (2.5): 'bodisi k sqrt(x) ali -sqrt(x)' -> 'bodisi k sqrt(x) bodisi -sqrt(x)'
+//26 str., vrstica 2 za (2.5): 'bodisi k sqrt(x) ali -sqrt(x)' -> 'bodisi k sqrt(x) bodisi -sqrt(x)'
 
-27 str., zelena opomba, vrstica 2: 'Obe metodi sta si' -> 'Obe metodi si'
+//27 str., zelena opomba, vrstica 2: 'Obe metodi sta si' -> 'Obe metodi si'
 
-29 str., vrstica -1: 'Taylorjevem razvojem' -> 'Taylorjevim razvojem'
+//29 str., vrstica -1: 'Taylorjevem razvojem' -> 'Taylorjevim razvojem'
 
-31 str., (2.16), (2.17): Poravnavi se mi zdita malo nenavadni. Jaz ponavadi uporabljam \left\{\begin{array}{rl}\end{array}\right., tako da sta vrednosti desno poravnani, pogoja pa levo. Pa za prvim pogojem manjkata vejici (tj. o=0,)
+//31 str., (2.16), (2.17): Poravnavi se mi zdita malo nenavadni. Jaz ponavadi uporabljam \left\{\begin{array}{rl}\end{array}\right., tako da sta vrednosti desno poravnani, pogoja pa levo. Pa za prvim pogojem manjkata vejici (tj. o=0,)
 
-31 str., Program 9: Manjka pika na koncu povedi.
+//31 str., Program 9: Manjka pika na koncu povedi.
 
-32 str., zelena opomba, vrstica 1: 'vrsto polimorfizma imenovano' -> 'vrsto polimorfizma, imenovano'
+//32 str., zelena opomba, vrstica 1: 'vrsto polimorfizma imenovano' -> 'vrsto polimorfizma, imenovano'
 
-36 str., 3.3, zadnja poved prvega odstavka: Diagonalna domantnost matrike ni definirana.
+//36 str., 3.3, zadnja poved prvega odstavka: Diagonalna domantnost matrike ni definirana.
 
-37 str., (3.3): Za prvo formulo manjka vejica, tj. P(...)=q,
+//37 str., (3.3): Za prvo formulo manjka vejica, tj. P(...)=q,
 
-37 str., vrstica 2 za zeleno opombo: 's prehodno verjetnostima' -> 's prehodnima verjetnostima'
+//37 str., vrstica 2 za zeleno opombo: 's prehodno verjetnostima' -> 's prehodnima verjetnostima'
 
-38 str., zelena opomba: Ponavadi vidim x_1,x_2,....,x_n in 1,2,...,n. Ti konstistentno uporabljaš brez zadnje vejice. To je samo slogovni komentar, tako da se sam odloči, ali ga upoštevaš. Pri (3.7) in (3.10) bi manjka razmak pred/za sredinsko črto |. Verjetno nisi uporabil \mid. Pred (3.8) manjka dvopičje, tj. po vrsticah enaka:
+//38 str., zelena opomba: Ponavadi vidim x_1,x_2,....,x_n in 1,2,...,n. Ti konstistentno uporabljaš brez zadnje vejice. To je samo slogovni komentar, tako da se sam odloči, ali ga upoštevaš. Pri (3.7) in (3.10) bi manjka razmak pred/za sredinsko črto |. Verjetno nisi uporabil \mid. Pred (3.8) manjka dvopičje, tj. po vrsticah enaka:
 
-38 str., (3.11): Na koncu prve vrstice manjka vejica, v drugi vrstici manjka pogoj ('če $l\neq k$').
+//38 str., (3.11): Na koncu prve vrstice manjka vejica, v drugi vrstici manjka pogoj ('če $l\neq k$').
 
-39 str., vrstica 2 za (3.15): 'absorpcijska stanja' -> 'absorpcijski stanji'
+//39 str., vrstica 2 za (3.15): 'absorpcijska stanja' -> 'absorpcijski stanji'
 
-18.Morda bi bilo dobro pojasniti, zakaj element n_{ij} predstavlja pirčakovano števila obiskov stanja j, če začnemo v i, v zeleni opombi.
+//18.Morda bi bilo dobro pojasniti, zakaj element n_{ij} predstavlja pirčakovano števila obiskov stanja j, če začnemo v i, v zeleni opombi.
 
-40 str., Program 11: Manjka pika na koncu povedi.
+//40 str., Program 11: Manjka pika na koncu povedi.
 
-40 str., vrstica 1 za programom 12. 'Zato stanja premaknemo za -k, dobimo stanja'. Tale poved je malo nepravilno formulirana.
+//40 str., vrstica 1 za programom 12. 'Zato stanja premaknemo za -k, dobimo stanja'. Tale poved je malo nepravilno formulirana.
 
-41 str., Slika 7: Kot v enem od komentarjev zgoraj, je pri naštevanju med ... ponavadi ,...,
+//41 str., Slika 7: Kot v enem od komentarjev zgoraj, je pri naštevanju med ... ponavadi ,...,
 
-42-43 str., Program 14,15,16: Manjkajo pike na koncu povedi.
+//42-43 str., Program 14,15,16: Manjkajo pike na koncu povedi.
 
-39 str., vrstica 2 za (3.15): Morda bi bilo dobro dodati krajšo razlago, zakaj je prehodna matrika tridiagonalna z 0 na diagonali.
+//39 str., vrstica 2 za (3.15): Morda bi bilo dobro dodati krajšo razlago, zakaj je prehodna matrika tridiagonalna z 0 na diagonali.
 
-46 str., vrstica -2: 'ploskvein' - > 'ploskve in'
+//46 str., vrstica -2: 'ploskvein' - > 'ploskve in'
 
-48 str., enačba (4.5): 'x_1....x_{n+1}=b in' -> 'x_1,...,x_{n+1}=b,'
+//48 str., enačba (4.5): 'x_1....x_{n+1}=b in' -> 'x_1,...,x_{n+1}=b,'
 
-48 str., enačba (4.5): 'y_1....y_{m+1}=d.' -> 'y_1,...,y_{m+1}=d.'
+//48 str., enačba (4.5): 'y_1....y_{m+1}=d.' -> 'y_1,...,y_{m+1}=d.'
 
-48 str., enačba (4.6). V (4.5) je i tekel od 0 do m+1 in j od 0 do n+1. Tu si zamenjal i in j. Pa robne indekse si spustil. Verjetno zaradi robnih pogojev. Do tu nikjer tega še nisi omenil.
+//48 str., enačba (4.6). V (4.5) je i tekel od 0 do m+1 in j od 0 do n+1. Tu si zamenjal i in j. Pa robne indekse si spustil. Verjetno zaradi robnih pogojev. Do tu nikjer tega še nisi omenil.
 
-48 str., slika 9, 10: Zdi se mi bolje, da bi med indekse i+1j dodal vejico i+1,j.
+//48 str., slika 9, 10: Zdi se mi bolje, da bi med indekse i+1j dodal vejico i+1,j.
 
-49 str., enačba (4.7): Manjka vejica na koncu prve enačbe.
+//49 str., enačba (4.7): Manjka vejica na koncu prve enačbe.
 
-49 str., vrstica 2 za (4.8): 'x=[x1,x2,...]^T' -> 'x=[x1,x2,...,x_n]'.
+//49 str., vrstica 2 za (4.8): 'x=[x1,x2,...]^T' -> 'x=[x1,x2,...,x_n]'.
 
-49 str., vrstica 1 za (4.9): matrika A bi morala biti $A$.
+//49 str., vrstica 1 za (4.9): matrika A bi morala biti $A$.
 
-50 str., enakost (4.16): V matriki L bi namesto \ldots na (2,4) bilo bolje \ddots. Na mestu (3,1) bi bilo dobro še 0 dodati, saj sedaj izgleda, da 1 propagirajo navzdol.
+// 50 str., enakost (4.16): V matriki L bi namesto \ldots na (2,4) bilo bolje \ddots. Na mestu (3,1) bi bilo dobro še 0 dodati, saj sedaj izgleda, da 1 propagirajo navzdol.
 
-51 str., vrstica -3: 'abstraktn' -> 'abstrakten'
+//51 str., vrstica -3: 'abstraktn' -> 'abstrakten'
 
-52 str., enačbi (4.20): Manjka vejica za drugo enačbo.
+// 52 str., enačbi (4.20): Manjka vejica za drugo enačbo.
 
-52 str., vrstica -13: 'vektorx' -> 'vektor x'
+// 52 str., vrstica -13: 'vektorx' -> 'vektor x'
 
-53 str., enačbe (4.21): Manjkajo vejice na koncu prvih treh vrstic.
+// 53 str., enačbe (4.21): Manjkajo vejice na koncu prvih treh vrstic.
 
-53 str., vrstica -2: 'elemnti' -> 'elementi'
+// 53 str., vrstica -2: 'elemnti' -> 'elementi'
 
-54 str., vrstica 2 v zelenem okvirju: 'matrični razcep je poseben' -> 'matrični razcep, je poseben'
+// 54 str., vrstica 2 v zelenem okvirju: 'matrični razcep je poseben' -> 'matrični razcep, je poseben'
 
-54 str., vrstica -1 v zelenem okvirju: 'facotrize' -> 'factorize
+//54 str., vrstica -1 v zelenem okvirju: 'facotrize' -> 'factorize
 
-54 str., vrstica -5: 'ploskve (4.7). izpostavimo' -> 'ploskve (4.7) izpostavimo'
+//54 str., vrstica -5: 'ploskve (4.7). izpostavimo' -> 'ploskve (4.7) izpostavimo'
 
-55 str., (4.24): Manjka vejica na koncu prve in pika na koncu druge vrstice.'
+//55 str., (4.24): Manjka vejica na koncu prve in pika na koncu druge vrstice.'
 
-60 str., vrstica 4: 'začentim' -> 'začetnim'
+//60 str., vrstica 4: 'začentim' -> 'začetnim'
 
-61 str., vrstica 1 v 5.1 Naloga: (RBF) je odveč, saj je bila že zgoraj definirana.
+//61 str., vrstica 1 v 5.1 Naloga: (RBF) je odveč, saj je bila že zgoraj definirana.
 
-61 str., vrstica 2 druge alineje v 5.1 Naloga: 'središča x_i poišče koeficiente' -> 'središča x_i, poišče koeficiente'
+//61 str., vrstica 2 druge alineje v 5.1 Naloga: 'središča x_i poišče koeficiente' -> 'središča x_i, poišče koeficiente'
 
-61 str., vrstica 1 v (5.2): Manjka vejica na koncu prve vrstice.
+//61 str., vrstica 1 v (5.2): Manjka vejica na koncu prve vrstice.
 
-61 str., vrstica 1 v razdelku 5.2: 'x_1,...x_n' ->'x_1,...,x_n'
+//61 str., vrstica 1 v razdelku 5.2: 'x_1,...x_n' ->'x_1,...,x_n'
 
-62 str., vrstica 1 v (5.4): Manjka vejica na koncu prve vrstice.
+//62 str., vrstica 1 v (5.4): Manjka vejica na koncu prve vrstice.
 
-62 str., vrstica -1 pred (5.5): 'tej vaji, se bomo' -> 'tej vaji se bomo'
+//62 str., vrstica -1 pred (5.5): 'tej vaji, se bomo' -> 'tej vaji se bomo'
 
-62 str., vrstica 2 za (5.7): funkcija oblike bi bilo bolje poševno.
+//62 str., vrstica 2 za (5.7): funkcija oblike bi bilo bolje poševno.
 
-62 str., vrstica 1 v (5.8) in (5.9): Manjka vejica na koncu prve vrstice.
+//62 str., vrstica 1 v (5.8) in (5.9): Manjka vejica na koncu prve vrstice.
 
-62 str., vrstica -2 pred (5.8) in vrstica 1 za (5.9): 'w_1,...w_n' ->'w_1,...,w_n' in 'f_1,f_2...f_n' ->'f_1,f_2,...,f_n',
+//62 str., vrstica -2 pred (5.8) in vrstica 1 za (5.9): 'w_1,...w_n' ->'w_1,...,w_n' in 'f_1,f_2...f_n' ->'f_1,f_2,...,f_n',
 
-63 str., vrstica 3,4: Manjkata vejici na koncu vrstic.
+//63 str., vrstica 3,4: Manjkata vejici na koncu vrstic.
 
-65 str., vrstica -1: Manjka pika na koncu Program 30:.....
+//65 str., vrstica -1: Manjka pika na koncu Program 30:.....
 
-66 str.: Manjka pika na koncu Program 31:.....
+//66 str.: Manjka pika na koncu Program 31:.....
 
 68 str., vrstica 1 za (6.3): 'N(j)={i;' -> 'N(j)={i\colon '
 

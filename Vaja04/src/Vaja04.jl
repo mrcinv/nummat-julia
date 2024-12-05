@@ -12,7 +12,7 @@ funkcija `fl` na levem robu `x = a` in funkcija `fd` robni pogoj na desnem robu
 `x = b`.
 """
 struct RobniProblemPravokotnik
-  op # abstraktni podatkovni tip, ki opiše diferencialni operator
+  op # abstrakten podatkovni tip, ki opiše diferencialni operator
   meje # meje pravokotnika [a, b] x [c, d] v obliki [(a, b), (c, d)]
   rp # funkcije na robu [fs, fz, fl, fd], f(a, y) = fl(y), f(x, c) = fs(x) ...
 end
@@ -22,7 +22,7 @@ end
 """
     L = Laplace()
 
-Ustvari abstraktn objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
+Ustvari abstrakten objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
 operator.
 """
 struct Laplace end
@@ -161,7 +161,7 @@ end
   x, it = iteracija(korak, x0; maxit=maxit, atol=atol)
 
 Poišči približek za limito rekurzivnega zaporedja podanega rekurzivno s
-funkcijo `korak` in začentim členom `x0`.
+funkcijo `korak` in začetnim členom `x0`.
 """
 function iteracija(korak, x0; maxit=1000, atol=1e-8)
   for i = 1:maxit
