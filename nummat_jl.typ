@@ -67,4 +67,4 @@ Copyright © 2024 Založba UL FRI. All rights reserved.
 
 #include "domace.typ"
 
-#bibliography("reference.yml")
+#bibliography(style: "springer-lecture-notes-in-computer-science","reference.yml")

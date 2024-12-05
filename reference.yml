@@ -1,7 +1,7 @@
 knuth84:
   type: article
   title: Literate programming
-  author: D. E. Knuth
+  author: Knuth, D. E.
   parent:
     type: periodical
     title: The Computer Journal
@@ -14,7 +14,7 @@ knuth84:
 isarles2004:
   type: article
   title: On quadrature methods for highly oscillatory integrals and their implementation
-  author: [A. Iserles, S. P. Nørsett]
+  author: ["Iserles, A.", "Nørsett, S. P."]
   parent:
     type: periodical
     title: BIT Numerical Mathematics
@@ -27,7 +27,7 @@ isarles2004:
 dlmf6:
   type: Web
   title: "Digital Library of Mathematical Functions: Chapter 6 Exponential, Logarithmic, Sine, and Cosine Integrals"
-  author: N. M. Temme
+  author: Temme, N. M.
   serial-number: version 1.2.1
   url:
     value: https://dlmf.nist.gov/6
@@ -35,7 +35,7 @@ dlmf6:
 dlmf7:
   type: Web
   title: "Digital Library of Mathematical Functions: Chapter 7 Error Functions, Dawson’s and Fresnel Integrals"
-  author: N. M. Temme
+  author: Temme, N. M.
   serial-number: version 1.2.1
   url:
     value: https://dlmf.nist.gov/7
@@ -43,7 +43,7 @@ dlmf7:
 dlmf3:
   type: Web
   title: "Digital Library of Mathematical Functions: Chapter 3 Numerical Methods"
-  author: N. M. Temme
+  author: Temme, N. M.
   serial-number: version 1.2.1
   url:
     value: https://dlmf.nist.gov/3
@@ -65,7 +65,7 @@ savchenko95:
 turk99:
   type: conference
   title: Variational Implicit Surfaces
-  author: [Turk G., O'Brien J.]
+  author: ["Turk, G.", "O'Brien, J."]
   date: 1999
   url:
     value: https://www.semanticscholar.org/paper/Variational-Implicit-Surfaces-Turk-O'Brien/50dbc9f86af75dad7be6b2e92601e4ded7bee2d6
@@ -284,3 +284,60 @@ Orel_2004:
   serial-number:
     isbn: 961-6209-19-1
   note: 350 izv.
+DifferentialEquations.jl-2017:
+  type: article
+  title: DifferentialEquations.jl – A Performant and Feature-Rich Ecosystem for Solving Differential Equations in Julia
+  author:
+  - Rackauckas, Christopher
+  - Nie, Qing
+  date: 2017
+  url: https://app.dimensions.ai/details/publication/pub.1085583166%20and%20http://openresearchsoftware.metajnl.com/articles/10.5334/jors.151/galley/245/download/
+  serial-number:
+    doi: 10.5334/jors.151
+  parent:
+    type: periodical
+    title: The Journal of Open Research Software
+    issue: 1
+    volume: 5
+Graphs2021:
+  type: misc
+  title: 'JuliaGraphs/Graphs.jl: an optimized graphs package for the Julia programming language'
+  author:
+  - Fairbanks, James
+  - Besançon, Mathieu
+  - Simon, Schölly
+  - Hoffiman, Júlio
+  - Eubank, Nick
+  - Karpinski, Stefan
+  date: 2021
+  url: https://github.com/JuliaGraphs/Graphs.jl/
+PlotsJL:
+  type: article
+  title: Plots.jl – a user extendable plotting API for the julia programming language
+  author:
+  - Christ, Simon
+  - Schwabeneder, Daniel
+  - Rackauckas, Christopher
+  - Borregaard, Michael Krabbe
+  - Breloff, Thomas
+  date: 2023
+  url: https://openresearchsoftware.metajnl.com/articles/10.5334/jors.431/
+  serial-number:
+    doi: https://doi.org/10.5334/jors.431
+  parent:
+    type: periodical
+    publisher: Journal of Open Research Software
+
+RevelsLubinPapamarkou2016:
+  type: article
+  title: Forward-Mode Automatic Differentiation in {J}ulia
+  author:
+  - Revels, J.
+  - Lubin, M.
+  - Papamarkou, T.
+  date: 2016
+  url: https://arxiv.org/abs/1607.07892
+  parent:
+    type: periodical
+    title: arXiv:1607.07892 [cs.MS]
+

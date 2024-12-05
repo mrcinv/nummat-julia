@@ -198,7 +198,7 @@ z metodo gradientnega spusta (rešitev @pr:10-spust).
 Gradient funkcije $D$ bi lahko izračunali na roke, vendar je to zamudno in se pri tem lahko
 hitro zmotimo. Uporabili bomo knjižnico za
 #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje]
-#link("https://juliadiff.org/ForwardDiff.jl/stable/")[`ForwardDiff.jl`], ki učinkovito izračuna
+#link("https://juliadiff.org/ForwardDiff.jl/stable/")[`ForwardDiff.jl`]@RevelsLubinPapamarkou2016, ki učinkovito izračuna
 vrednosti parcialnih odvodov funkcije v posameznih točkah.
 Knjižnica #jl("ForwardDiff") zna odvajati le funkcije vektorske spremenljivke, zato funkcijo
 dveh spremenljivk #jl("d2(t, s)") spremenimo v funkcijo vektorske spremenljivke

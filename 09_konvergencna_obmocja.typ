@@ -137,7 +137,7 @@ desnih strani preprosta.
 učinkovito izračunamo z
 #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatskim odvajanjem]. V Julii
 uporabimo funkcijo #jl("jacobian") iz paketa
-#link("https://juliadiff.org/ForwardDiff.jl/stable/")[ForwardDiff].
+#link("https://juliadiff.org/ForwardDiff.jl/stable/")[ForwardDiff]@RevelsLubinPapamarkou2016.
 ]
 
 Sistem @eq:09primer izhaja iz kompleksne enačbe $z^3 = 1$ in ima tako

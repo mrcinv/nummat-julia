@@ -113,7 +113,7 @@ Na observatoriju
 #link("http://www.esrl.noaa.gov/gmd/obop/mlo/")[Mauna Loa] na Havajih že
 vrsto let spremljajo koncentracijo #co2 v ozračju in podatke objavljajo
 na svoji spletni strani v različnih oblikah. Oglejmo si
-tedenska povprečja koncentracije od začetka meritev leta 1974:
+tedenska povprečja koncentracije od začetka meritev leta 1974. Za prenos podatkov bomo uporabili knjižnico #link("https://github.com/invenia/FTPClient.jl")[FTPClient.jl].
 
 #let demo11(koda) = code_box(jlfb("scripts/11_co2.jl", koda))
 #let demo11raw(koda) = blk("scripts/11_co2.jl", koda)

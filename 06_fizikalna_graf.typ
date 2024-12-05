@@ -151,7 +151,7 @@ ki bi dodale neničelne elemente.
 
 == Rešitev v Julii
 
-Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl],
+Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl]@Graphs2021,
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
 Napišimo naslednje funkcije:

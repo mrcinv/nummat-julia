@@ -366,7 +366,7 @@ opravilom.
 ]
 
 Za primer si oglejmo, kako namestiti knjižnico za ustvarjanje slik in grafov
-#link("https://docs.juliaplots.org/latest/")[Plots.jl]. Najprej aktiviramo paketni način z vnosom
+#link("https://docs.juliaplots.org/latest/")[Plots.jl]@PlotsJL. Najprej aktiviramo paketni način z vnosom
 znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`:
 
 #code_box[
