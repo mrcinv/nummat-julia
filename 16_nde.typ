@@ -517,7 +517,7 @@ $v_(x) = 10 meter slash sekunda, v_(y) = 20 meter slash sekunda$. Enote so v
 
 Približki za rešitev so precej narazen, saj smo za izračun uporabili
 relativno velik korak $h=0.3$. Kljub temu je zaradi visokega reda metode Runge-Kutta
-izračun dokaj natančen. V naslednjem koraku v tabeli približkov, ki smo jo dobili
+izračun dokaj natančen. V tabeli približkov, ki smo jo dobili
 z metodo Runge-Kutta, poiščemo interval, na katerem druga komponenta $u_2$
 spremeni predznak. Nato z Newtonovo metodo rešimo nelinearno enačbo $u_2(t) = 0$.
 
@@ -551,7 +551,7 @@ Oglejmo si še, kako se hitrost spreminja s časom.
 #figure(
   demo16("# polje smeri"),
   caption:[Funkcija izračuna polje smeri za NDE prvega reda v vozliščih
-  pravokotni mreže na danem pravokotniku.]
+  pravokotne mreže na danem pravokotniku.]
 )<pr:16-polje-smeri>
 
 #figure(

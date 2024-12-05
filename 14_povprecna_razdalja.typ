@@ -100,7 +100,7 @@ se pojavi tudi pri drugih problemih, ko dimenzija prostora narašča.
 
 Z dimenzijo narašča delež volumna, ki je „na robu“. Oglejmo si $d$-dimenzionalno
 enotsko kocko $[-1,1]^d$. Če interval $[-1,1]$  razdelimo
-na točke v notranjosti $[-1/2, 1/2]$ in točke na robu $[-1,1]-[-1/2, 1/2]$, sta v eni dimenziji
+na točke v notranjosti $[-1/2, 1/2]$ in točke na robu #linebreak()$[-1,-1/2]union[1/2, 1]$, sta v eni dimenziji
 oba dela enako dolga. V višjih dimenzijah pa delež točk v kocki, ki so blizu robu, v primerjavi s
 točkami v notranjosti narašča. Delež točk v notranjosti lahko preprosto izračunamo:
 $
@@ -214,7 +214,7 @@ $
 Tako dobimo $k times 1$ predoločen sistem za parameter $r$:
 
 $
-mat(log(n_1); log(n_2); dots.v; log(n_k)) dot.c vec(r) =
+mat(log(n_1); log(n_2); dots.v; log(n_k)) dot.c r =
  - vec(log(|delta_1|), log(|delta_2|), dots.v, log(|delta_k|)),
 $<eq:14-red>
 kjer so $delta_i$ izračunane napake za $n_i$ funkcijskih izračunov. Sistem <eq:14-red> rešimo po

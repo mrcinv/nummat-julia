@@ -4,7 +4,7 @@
 <spektralno-razvrščanje-v-gruče>
 
 #link("https://en.wikipedia.org/wiki/Cluster_analysis")[Razvrščanje v gruče ali gručenje] je
-postopek pri katerem množico objektov razdelimo v nekaj skupin ali gruč, v katerih
+postopek, pri katerem množico objektov razdelimo v nekaj skupin ali gruč, v katerih
 so objekti, ki so si v nekem smisli podobni.
 Ogledali si bomo metodo, ki s
 #link("https://sl.wikipedia.org/wiki/Spektralna_teorija_grafov")[spektralno analizo
@@ -44,7 +44,7 @@ načinov:
   zato ponavadi upoštevamo povezavo v obe smeri.
 - #strong[poln utežen graf]: povežemo vse točke, vendar povezave utežimo
   glede na razdaljo. Pogosto uporabljena utež je nam znana
-  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialna bazna funkcija]:
+  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialna bazna funkcija]
 
   $ w(x_i , x_k) = exp (-(norm(x_i - x_k)^2)/(2 sigma^2)), $
 
@@ -75,7 +75,7 @@ vektorjev za lastno vrednost $0$, kot ima graf komponent za povezanost. Na
 prvi pogled se zdi, da bi lahko bile gruče kar komponente grafa, a se
 izkaže, da to ni najbolje. Namesto tega bomo gruče poiskali s standardnimi metodami gručenja
 v drugem koordinatnem sistemu, ki ga določajo lastni podprostori Laplaceove matrike podobnostnega
-grafa. Postopek je sledeči:
+grafa. Postopek je naslednji:
 
 - Poiščemo $k$ najmanjših lastnih vrednosti za Laplaceovo matriko
   in izračunamo njihove lastne vektorje.

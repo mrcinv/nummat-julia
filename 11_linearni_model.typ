@@ -39,7 +39,7 @@ $ y (x, p) = p_1 phi_1 (x) + p_2 phi_2 (x) + dots.h + p_k phi_k (x). $
 Koeficientom $p_j$ pravimo parametri modela in jih določimo na podlagi
 meritev. Znanstveniki iščejo model, pri katerem imajo parametri $p_j$
 preprosto interpretacijo in pomagajo pri razumevanju pojava, ki ga
-opisujejo. Bazne funkcije so zato pogosto elementarne funkcije iz
+opisujejo. Bazne funkcije so zato pogosto elementarne funkcije, iz
 katerih je jasno razvidna narava odvisnosti.
 
 === Metoda najmanjših kvadratov
@@ -52,8 +52,8 @@ natanko enaka vrednosti, ki jo predvidi model $M (p , x_i)$. To
 predpostavko zapišemo s sistemom enačb:
 
 $
-y_1 &= M (p , x_1) = p_1 phi_1 (x_1) + dots + p_k phi_k (x_1)\
-y_2 &= M (p , x_2) = p_1 phi_1 (x_2) + dots + p_k phi_k (x_2)\
+y_1 &= M (p , x_1) = p_1 phi_1 (x_1) + dots + p_k phi_k (x_1),\
+y_2 &= M (p , x_2) = p_1 phi_1 (x_2) + dots + p_k phi_k (x_2),\
 dots.v\
 y_n &= M (p , x_n) = p_1 phi_1 (x_n) + dots + p_k phi_k (x_n).
 $<eq:11-sistem>
@@ -99,7 +99,7 @@ $ bold(p)_(o p t) = argmin_(bold(p)) norm(A bold(p) - bold(y))_2^2 . $
 Če linearni model obravnavamo kot
 #link("https://en.wikipedia.org/wiki/Statistical_model")[statistični model],
 so vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov,
-v določenem smislu najboljša cenilka za parametre modela.
+v določenem smislu najboljše cenilke za parametre modela.
 Bolj natančno:
 #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem")[Gauss-Markov izrek]
 pravi, da so cenilke za parametre linearnega modela z najmanjšo varianco

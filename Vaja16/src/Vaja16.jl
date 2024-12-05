@@ -186,7 +186,7 @@ function vrednost(r::ResitevNDE, t)
   return Vaja12.vrednost(t, z)
 end
 
-# Omogočimo, da rešitev NDE kličemo kot funkcijo
+# Omogočimo, da rešitev NDE kličemo kot funkcijo.
 (res::ResitevNDE)(t) = vrednost(res, t)
 # interpolacija
 

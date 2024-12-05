@@ -29,7 +29,7 @@ začetne približke.
 
 == Newtonova metoda za sisteme enačb
 
-#let JF=math.op($J_F$)
+#let JF=math.op($J_bold(F)$)
 #let bx = math.bold("x")
 #let bF = math.bold("F")
 
@@ -48,7 +48,7 @@ $
   bold(F)(bold(x)) = bold(0),
 $<eq:09enacba>
 
-kjer sta $bold(0) = [0, 0, dots]^T$ in $bx = [x_1, x_2, dots]^T in RR^n$ $n$-dimenzionalna
+kjer sta $bold(0) = [0, 0, dots, 0]^T$ in $bx = [x_1, x_2, dots, x_n]^T in RR^n$ $n$-dimenzionalna
 vektorja, $bF: RR^n -> RR^n$ pa vektorska funkcija z vektorskim argumentom.
 Komponente vektorske funkcije $F(bold(x))$ so leve strani nelinearnih enačb @eq:9-nelin-sistem:
 
@@ -81,8 +81,8 @@ Naslednji približek $bx^((k+1))$ v Newtonovi iteraciji dobimo kot rešitev
 sistema linearnih enačb:
 
 $
-  bF(bx^((k))) + JF(bx^((k)))(bx^((k+1)) - bx^((k))) = bold(0)\
-  JF(bx^((k)))bx^((k+1)) = JF(bx^((k))) bx^((k)) - bF(bx^((k))).
+  bF(bx^((k))) + JF(bx^((k)))(bx^((k+1)) - bx^((k))) = bold(0).
+  //=> JF(bx^((k)))bx^((k+1)) = JF(bx^((k))) bx^((k)) - bF(bx^((k))).
 $
 
 Formulo za naslednji približek $bx^((k+1))$ lahko formalno zapišemo kot:
@@ -177,7 +177,7 @@ Program #jl("konvergencno_obmocje") uporabimo na našem primeru @eq:09primer:
 #figure(
   image("img/09-fraktal.svg", width: 60%),
   caption:[Newtonova metoda konvergira k različnim rešitvam odvisno od začetnega
-   približka]
+   približka.]
 )
 
 == Rešitve

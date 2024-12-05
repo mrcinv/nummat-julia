@@ -11,13 +11,13 @@ zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množ
 Markovska veriga v določenem stanju $X_(k) in {1, 2, med dots, med n}$. Porazdelitev na naslednjem koraku $X_(k+1)$
 je odvisna zgolj od porazdelitve na prejšnjem koraku $X_(k)$ in prehodnih verjetnosti za prehod iz stanja $i$ v stanje $j$:
 $
-p_(i j) = P(X_(k+1) = j | X_k = i).
+p_(i j) = P(X_(k+1) = j bar.v X_k = i).
 $
 
 Matrika $Pm = [p_(i j)]$, katere elementi so prehodne verjetnosti za prehod iz stanja $i$ v stanje $j$, imenujemo #emph[prehodna matrika Markovske verige].
 
 Naj bo $X_k$ Markovska veriga z $n$ stanji in naj bo
-$bold(p)^((k)) = [p_1^((k)), p_2^((k)), dots p_n^((k))]$ porazdelitev po stanjih na $k$-tem koraku
+$bold(p)^((k)) = [p_1^((k)), p_2^((k)), med dots, med  p_n^((k))]$ porazdelitev po stanjih na $k$-tem koraku
  ($p_i^((k)) = P(X_k = i)$).
 
  Porazdelitev $bold(p)^(k)$ Markovske verige je #emph[invariantna], če je za vse $k$ enaka:
@@ -30,7 +30,7 @@ seštejemo verjetnosti po vseh možnih stanjih na prejšnjem koraku, pomnožene 
 da iz enega stanja preidemo v drugega:
 
 $
- p_i^((k+1)) = sum_(j=1)^n P(X_(k+1)=i| X_k = j) P(X_k = j) = sum_(j=1)^n p_(j i) p_j^((k))\
+ p_i^((k+1)) = sum_(j=1)^n P(X_(k+1)=i bar.v X_k = j) P(X_k = j) = sum_(j=1)^n p_(j i) p_j^((k))\
  bold(p)^((k+1)) = Pm^T bold(p)^((k)).
 $
 
@@ -65,14 +65,13 @@ Ker so vsote elementov po vrsticah za prehodno matriko $Pm$ enake $1$, je $1$ la
 matrike $Pm$ in zato tudi lastna vrednost matrike $Pm^T$. Posledično limitna porazdelitev $bold(p)^(oo)$
 vedno obstaja, ni pa nujno enolična.
 
-Da se pokazati, da je $1$ po absolutni vrednosti največja lastna vrednost matrike $Pm$ in $Pm^T$, zato
+Da se pokazati, da je $1$ po absolutni vrednosti največja lastna vrednost matrik $Pm$ in $Pm^T$, zato
 lahko invariantno porazdelitev poiščemo s
 #link("https://en.wikipedia.org/wiki/Power_iteration")[potenčno metodo].
 
 == Potenčna metoda
 
-S potenčno metodo poiščemo lastni vektor matrike $A$ s po absolutni vrednosti največjo lastno
-vrednostjo. Izberemo neničelen začetni vektor $bold(p)^((0))eq.not 0$ in
+S potenčno metodo poiščemo lastni vektor matrike $A$, ki pripada lastni vrednosti z največjo absolutno vrednostjo. Izberemo neničelen začetni vektor $bold(p)^((0))eq.not 0$ in
 sestavimo zaporedje približkov:
 
 $
@@ -179,7 +178,7 @@ verjetna.
   caption: [Možne poteze, ki jih lahko naredita beli in črni skakač na $5 times 5$ šahovnici.]
 )
 Stanja označimo s pari
-indeksov $(i, j)$, ki označujejo posamezno polje. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je skakač na polju $(i, j)$.
+indeksov $(i, j)$, ki označujejo posamezno polje. Prvi indeks označuje vrstice, drugi pa stolpce. Indeks $(1, 1)$ označuje polje levo zgoraj. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je skakač na polju $(i, j)$.
 Ponovno se srečamo s problemom iz prejšnjega poglavja (@minimalne-ploskve), kako elemente matrike
 postaviti v vektor. Elemente matrike zložimo v vektor po stolpcih. Preslikava med indeksi $i, j$ v
 matriki in indeksom $k$ v vektorju je podana s formulami
@@ -229,7 +228,7 @@ Težavo rešimo s preprostim premikom. Če matriki prištejemo večkratnik ident
 ne spremenijo, le lastne vrednosti se premaknejo. Če so
 $(lambda_1, bold(v)_1), (lambda_2, bold(v)_2), dots$ lastni pari matrike $A$, so:
 
-$ (lambda_1 + delta, bold(v)_1), (lambda_2 + delta, bold(v)_2) med dots $
+$ (lambda_1 + delta, bold(v)_1), (lambda_2 + delta, bold(v)_2), med dots $
 
 lastni pari matrike
 

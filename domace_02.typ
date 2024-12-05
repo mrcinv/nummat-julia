@@ -89,12 +89,11 @@ polinomom v Čebiševih točkah (@ineterpolacija-z-baricentrično-formulo).
 == Interpolacija z baricentrično formulo
 <ineterpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
-$lr([a , b])$ izračuna polinomski interpolant, v Čebiševih točkah.
-Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangevo interpolacijo,] po
-formuli
+$[a , b]$ izračuna polinomski interpolant v Čebiševih točkah.
+Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangevo interpolacijo] po formuli
 
-$ l(x) = cases(frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j))";" & quad x eq.not x_j",",
-  f lr((x_j))";"& quad "sicer.") $
+$ l(x) = cases(frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j))"," & quad x eq.not x_j",",
+  f lr((x_j))","& quad "sicer.") $
 
 Čebiševe točke so podane na intervalu $lr([- 1 , 1])$ s formulo
 
@@ -102,8 +101,8 @@ $ x_k = cos((2k -1)/(2n) pi), quad k = 0,1, med dots, med n-1, $
 
 vrednosti uteži $lambda_k$ pa so enake
 
-$ lambda_k = (- 1)^k cases(1";"& quad 0 lt i lt n",", 1 / 2";"& quad i = 0",",
-  n";" & quad "sicer".) $
+$ lambda_k = (- 1)^k cases(1","& quad 0 lt i lt n",", 1 / 2","& quad i = 0",",
+  n"," & quad "sicer".) $
 
 Za interpolacijo na splošnem intervalu $lr([a , b])$ si pomagaj z
 linearno funkcijo na interval $lr([- 1 , 1])$. Program uporabi
@@ -125,7 +124,7 @@ enotskima homogenima kockama na razdalji 1. Predpostavite, da so vse
 fizikalne konstante, ki nastopajo v problemu, enake 1. Sila med dvema
 telesoma $T_1 , T_2 subset bb(R)^3$ je enaka
 
-$ bold(F) = integral_(T_1) integral_(T_2) (bold(r)_1 - bold(r)_2)/(||bold(r)_1 - bold(r)_2||_2^2) d bold(r)_1 d bold(r)_2 dot.basic $
+$ bold(F) = integral_(T_1) integral_(T_2) (bold(r)_1 - bold(r)_2)/norm(bold(r)_1 - bold(r)_2)_2^2 d bold(r)_1 d bold(r)_2 dot.basic $
 
 == Ploščina hipotrohoide
 <ploščina-hipotrohoide>
@@ -147,13 +146,13 @@ $ P = 1 / 2 integral_(t_1)^(t_2) lr((x lr((t)) dot(y) lr((t)) - dot(x) lr((t)) y
 <povprečna-razdalja-težja>
 Izračunajte povprečno razdaljo med dvema točkama znotraj telesa $T$, ki je enako razliki dveh kock:
 
-$ T = ([- 1 , 1])^3 - ([0 , 1])^3. $
+$ T = [- 1 , 1]^3 - [0 , 1]^3. $
 
 Integral na produktu razlike dveh množic
 $(A - B) times (A - B)$ lahko izrazimo kot vsoto integralov:
 
 $ integral_(A - B) integral_(A - B) & f(x, y) d x d y = integral_A integral_A f(x, y) d x d y \
-& - 2 integral_A integral_B f(x, y) d x d y + integral_B integral_B f(x, y) d x d y $
+& - 2 integral_A integral_B f(x, y) d x d y + integral_B integral_B f(x, y) d x d y. $
 
 == Ploščina zanke Bézierjeve krivulje
 <ploščina-bézierove-krivulje>
@@ -178,7 +177,7 @@ $ integral_0^h f(x) d x = A f(x_1) + B f(x_2) + R_f $
 vključno s formulo za napako $R_f$. Izpelji sestavljeno pravilo za
 $integral_a^b f lr((x)) d x$ in napiši program, ki to pravilo uporabi za
 približno računanje integrala. Oceni, koliko izračunov funkcijske
-vrednosti je potrebnih, za izračun približka za
+vrednosti je potrebnih za izračun približka za
 
 $ integral_0^5 frac(sin x, x) d x $
 

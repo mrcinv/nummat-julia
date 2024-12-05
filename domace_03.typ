@@ -11,7 +11,7 @@ morate implementirati sami.
 
 Airyjeva funkcija je dana kot rešitev začetnega problema
 
-$ A i prime.double lr((x)) - x thin A i lr((x)) = 0 , quad A i lr((0)) = frac(1, 3^(2 / 3) Gamma lr((2 / 3))) thin A i prime lr((0)) = - frac(1, 3^(1 / 3) Gamma lr((1 / 3))) dot.basic $
+$ A i prime.double lr((x)) - x thin A i lr((x)) = 0 , quad A i(0) = frac(1, 3^(2 / 3) Gamma lr((2 / 3))), thick A i prime (0) = - frac(1, 3^(1 / 3) Gamma lr((1 / 3))) dot.basic $
 Poiščite čim več ničel funkcije $A i$ na 10 decimalnih mest natančno. Ni
 dovoljeno uporabiti vgrajene funkcijo za reševanje diferencialnih enačb.
 Lahko pa uporabite Airyjevo funkcijo `airyai` iz paketa
@@ -27,9 +27,9 @@ $
 pri kateri nov približek $y_(k + 1)$ dobimo takole:
 
 $
-  A_1  = & A(x_k + (1 / 2 - sqrt(3) / 6) h)\
-  A_2  = & A(x_k + (1 / 2 + sqrt(3) / 6) h)\
-sigma_(k + 1)  = & h/2 (A_1 + A_2) - sqrt(3) / 12 h^2 [A_1, A_2]\
+  A_1  = & A(x_k + (1 / 2 - sqrt(3) / 6) h),\
+  A_2  = & A(x_k + (1 / 2 + sqrt(3) / 6) h),\
+sigma_(k + 1)  = & h/2 (A_1 + A_2) - sqrt(3) / 12 h^2 [A_1, A_2],\
  y_(k + 1)  = & exp(sigma_(k + 1)) y_k. $
 
 Izraz $[A, B]$ je komutator dveh matrik in ga izračunamo kot
@@ -109,11 +109,10 @@ $
   quad theta(0) = theta_0, med dot(theta)(0) = dot(theta)_0,
 $
 
-kjer je $g = 9.80665 m slash s^2$ težni pospešek in $l$ dolžina nihala.
+kjer je $g = 9.80665 "m" slash "s"^2$ težni pospešek in $l$ dolžina nihala.
 Napiši funkcijo, ki izračuna odmik nihala ob določenem času.
 Enačbo drugega reda prevedi na sistem prvega reda in računajte z
-metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5]
-@Orel_2004.
+metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5].
 
 Za različne začetne pogoje primerjaj rešitev z
 nihanjem harmoničnega nihala, ki je dano z enačbo

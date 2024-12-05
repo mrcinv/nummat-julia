@@ -66,7 +66,7 @@ $
   sum_(i in N(j)) Fvec_(i j) = bold(0),
 $<eq:06-ravnovesje>
 
-kjer je $N(j) = {i: quad (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
+kjer je $N(j) = {i: thick (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
 sila, s katero vozlišče $i$ deluje na vozlišče $j$. Iz enačbe @eq:06-ravnovesje lahko izpeljemo
 sistem enačb za koordinate $x_j, y_j$ in $z_j$. Iz vektorske enačbe za vozlišče $j$:
 
@@ -79,16 +79,16 @@ dobimo 3 enačbe za posamezne koordinate:
 #let st = math.op("st")
 
 $
-   -st(j)x_j + x_(i_1) + x_(i_2) + dots + x_(i_(st(i))) &= 0\
-   -st(j)y_j + y_(i_1) + y_(i_2) + dots + y_(i_(st(i))) &= 0\
+   -st(j)x_j + x_(i_1) + x_(i_2) + dots + x_(i_(st(i))) &= 0,\
+   -st(j)y_j + y_(i_1) + y_(i_2) + dots + y_(i_(st(i))) &= 0,\
    -st(j)z_j + z_(i_1) + z_(i_2) + dots + z_(i_(st(i))) &= 0,
 $
 
 kjer je $st(j)=|N(j)|$ stopnja vozlišča $j$ in $i_1, i_2, med dots, med i_(st(j)) in N(j)$. Ker so koordinate $x$, $y$ in $z$ med seboj neodvisne, dobimo za vsako koordinato en sistem enačb.
 Za koordinato $x$ dobimo naslednji sistem:
 $
-  -st(1)x_1 + sum_(i in N(1)) x_(i) &= 0\
-  -st(2)x_2 + sum_(i in N(2)) x_(i) &= 0\
+  -st(1)x_1 + sum_(i in N(1)) x_(i) &= 0,\
+  -st(2)x_2 + sum_(i in N(2)) x_(i) &= 0,\
   dots.v  \
   -st(n)x_n + sum_(i in N(n)) x_(i) &= 0.
 $<eq:06-trojni-sistem>
@@ -102,16 +102,16 @@ vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo 
 Sistem enačb @eq:06-trojni-sistem postane nehomogen:
 
 $
- -st(1) x_1 + a_(1 2) x_2 + dots + a_(1 m) x_m = - a_(1 m+1)x_(m+1) - dots - a_(1 n)x_(n)\
- a_(2 1)x_1 - st(2)x_2 + dots + a_(2 m) x_m = - a_(2 m+1)x_(m+1) - dots - a_(2 n)x_(n)\
+ -st(1) x_1 + a_(1 2) x_2 + dots + a_(1 m) x_m = - a_(1 m+1)x_(m+1) - dots - a_(1 n)x_(n),\
+ a_(2 1)x_1 - st(2)x_2 + dots + a_(2 m) x_m = - a_(2 m+1)x_(m+1) - dots - a_(2 n)x_(n),\
  dots.v\
- a_(m 1)x_1 - a_(m 2)x_2 + dots  - st(m)x_m = - a_(m m+1)x_(m+1) - dots - a_(m n)x_(n)\
+ a_(m 1)x_1 - a_(m 2)x_2 + dots  - st(m)x_m = - a_(m m+1)x_(m+1) - dots - a_(m n)x_(n),\
 $<eq:06sistem-x>
 
 kjer je vrednost $a_(i j)$ enaka $1$, če sta $i$ in $j$ soseda, in $0$ sicer:
 
 $
-  a_(i j) = cases(1";"& quad (i, j) in E(G)",", 0";"& quad (i, j) in.not E(G).)
+  a_(i j) = cases(1","& quad (i, j) in E(G)",", 0","& quad (i, j) in.not E(G).)
 $
 
 Matrika sistema @eq:06sistem-x je
@@ -128,7 +128,7 @@ A = mat(
 bold(b) = -vec(sum_(i=m+1)^n a_(1 i)x_i, sum_(i=m+1)^n a_(2 i)x_i, dots.v,
 sum_(i=m+1)^n a_(n i)x_i).
 $<eq:06-matrika>
-Sistema za $y$ in $z$ imata iste koeficiente, kot sistem @eq:06-trojni-sistem, razlikujeta se le v
+Sistema za $y$ in $z$ imata iste koeficiente kot sistem @eq:06-trojni-sistem, razlikujeta se le v
 desnih straneh, ki so odvisne od koordinat pritrjenih točk.
 
 Kakšne posebnosti ima matrika sistema @eq:06-matrika?  Matrika je simetrična in diagonalno dominantna.
@@ -144,7 +144,7 @@ dominantna (z vsaj eno vrstico, ki je strogo diagonalno dominantna), je
 matrika $A$ negativno definitna in matrika $-A$ pozitivno definitna. Za večino grafov, za katere
 uporabimo zgornji postopek, bo matrika sistema $A$ redka.
 Zato lahko za reševanje sistema $-A bold(x) = -bold(b)$ uporabimo
-#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
+#link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov], ki deluje za sisteme s pozitivno definitno matriko.
 Metoda konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike.
 Za razliko od eliminacijskih metod, iterativne metode ne izvedejo sprememb na matriki,
 ki bi dodale neničelne elemente.
@@ -247,7 +247,6 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   ),
   caption: [Funkcija, ki ustvari matriko sistema za ravnovesje sil v grafu.]
 )<pr:06-matrika>
-
 
 #figure(
   code_box(

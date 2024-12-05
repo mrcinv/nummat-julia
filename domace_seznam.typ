@@ -31,7 +31,7 @@ Spodaj je seznam delov, ki jih mora vsebovati vsaka domača naloga.
 - demo skripta, s katero ustvarite rezultate za poročilo,
 - poročilo v formatu PDF.
 
-Preden oddate domačo nalogo, uporabite naslednji _kontrolni seznam_:
+Preden končate domačo nalogo, uporabite naslednji _kontrolni seznam_:
 
 - vse funkcije imajo dokumentacijo
 - testi pokrivajo večino kode
@@ -136,7 +136,7 @@ dobro, saj bralec težko razloči, kaj je zares pomembno in kaj ne.
   $
 ]
 
-Če implementacija vsebuje posebnosti, kot na primer uporaba posebne podatkovne
+Če implementacija vsebuje posebnosti, kot na primer uporabo posebne podatkovne
 strukture ali algoritma, jih lahko opišemo v poročilu. Vendar tudi tu
 pazimo, da bralca ne obremenjujemo s podrobnostmi.
 
@@ -168,7 +168,7 @@ zanki izračunamo naslednje:
 
 == Kako pisati avtomatske teste
 
-Nekaj nasvetov, kako lahko testiramo kodo.
+Nekaj nasvetov, kako lahko testiramo kodo:
 - Na roke izračunajte rešitev za preprost primer in jo primerjajte z rezultati
   funkcije.
 - Ustvarite testne podatke, za katere je znana rešitev. Na primer za testiranje

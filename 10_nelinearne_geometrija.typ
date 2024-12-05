@@ -255,7 +255,7 @@ in Newtonovo metodo:
 
 
 
-#figure(kind: image, caption: [Točki na krivuljama, h katerima konvergira gradientna metoda
+#figure(kind: image, caption: [Točki na krivuljama, h katerima konvergira gradientna metoda,
 sta lokalni minimum, ki pa ni globalni (levo). Newtonova metoda konvergira k sedlu.
 Točka na $k_1$ je lokalni minimum, točka na $k_2$ pa lokalni maksimum (desno).],
 table(stroke: none, columns: 2, image("img/10_minimum.svg"), image("img/10_sedlo.svg"))

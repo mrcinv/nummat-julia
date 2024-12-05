@@ -55,8 +55,8 @@ $
 === Razdelitev definicijskega območja
 
 Pri implementaciji neke funkcije sta pomembni dve stvari. Da je na celem defnicijskem območju
-relativna napaka omejena in da je časnovna zahtevnost izračuna omejena s konstanto, ki ni odvisna
-od argumenta funkcije. Za funkcijo kot je porazdelitvena funkcija normalne spremenljivke je
+relativna napaka omejena in da je časovna zahtevnost izračuna omejena s konstanto, ki ni odvisna
+od argumenta funkcije. Za funkcijo, kot je porazdelitvena funkcija normalne spremenljivke je
 oba pogoja zelo težko doseči z enim algoritmom. Zato je definicijsko območje bolje razdeliti na
 več delov in na vsakem delu izbrati numerično metodo, ki je najbolj primerna in zadosti
 omenjenima pogojema.
@@ -69,7 +69,7 @@ omenjenima pogojema.
 === Izračun na $[-c, oo)$
 Izračunamo $Phi(-c)$ in $Phi(x) = Phi(-c) + integral_(-c)^x e^(-x^2/2)d x$. Integral izračunamo z
 Gauss-Legendreovimi kvadraturami s fiksnim številom vozlov, tako da je absolutna napaka enakomerno
-omejena. Na $[b, oo)$ za dovolj velik $b$ je vrednost enaka $1$.
+omejena. Na $[b, oo)$, za dovolj velik $b$, je vrednost enaka $1$.
 
 === Izračun na $(-oo, -c]$
 
@@ -78,7 +78,7 @@ Sledili bomo ideji iz @shepherd1981. Izračunali bomo komplementarno funkcijo na
 $
 erfc(x) = integral_(x)^(oo) e^(-t^2) d t,
 $<eq:13-integral>
-za $x in [0, oo)$. Funkcija $Phi(x)$ lahko za negativne vrednosti $x$ izrazimo s funkcijo $erfc$ kot
+za $x in [0, oo)$. Funkcijo $Phi(x)$ lahko za negativne vrednosti $x$ izrazimo s funkcijo $erfc$ kot
 
 $
 Phi(x) = 1/sqrt(pi) erfc(-x/sqrt(2)).
@@ -107,10 +107,10 @@ metode visokega reda ne bodo dale dobrih rezultatov in bomo raje uporabili adapt
 
 #link("https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem#Weierstrass_approximation_theorem")[Weierstrassov izrek]
 pravi, da lahko poljubno zvezno funkcijo na končnem intervalu enakomerno na vsem intervalu
-aproksimiramo s polinomi. Polinom dane stopnje, ki neko funkcijo najbolje aproksimira je težko
+aproksimiramo s polinomi. Polinom dane stopnje, ki neko funkcijo najbolje aproksimira, je težko
 poiskati. Z razvojem funkcije po ortogonalnih polinomih Čebiševa, pa se optimalni aproksimaciji
 zelo približamo. Naj bo $f:[−1,1]->RR$ zvezna funkcija. Potem lahko $f$ zapišemo z neskončno
-Furierovo vrsto
+Fourierovo vrsto
 
 $
 f(t)=sum_(n=0)^oo a_n T_n(t),
@@ -119,7 +119,7 @@ $<eq:13-vrsta>
 kjer so $T_n$ polinomi Čebiševa, $a_n$ pa koeficienti. Koeficienti $a_n$ so dani z integralom
 
 $
-a_0 = 1/pi integral_(-1)^(1) f(x)/sqrt(1-x^2) d x\
+a_0 = 1/pi integral_(-1)^(1) f(x)/sqrt(1-x^2) d x,\
 a_n = 2/pi integral_(-1)^(1) (f(x)T_(n)(x))/sqrt(1-x^2) d x.
 $
 
@@ -138,10 +138,10 @@ $
 Prvih nekaj polinomov $T_(n)(x)$ je enakih:
 
 $
-T_0(x) &= 1\
-T_1(x) &= x\
-T_2(x) &= 2x^2 - 1\
-T_3(x) &= 2x(2x^2 - 1) - x = 4x^3 - 3x
+T_0(x) &= 1,\
+T_1(x) &= x,\
+T_2(x) &= 2x^2 - 1,\
+T_3(x) &= 2x(2x^2 - 1) - x = 4x^3 - 3x.
 $
 
 Namesto cele vrste @eq:13-vrsta, lahko obdržimo le prvih nekaj členov in funkcijo aproksimiramo
@@ -172,7 +172,7 @@ $
 $
 
 #opomba(naslov:[Koeficiente Čebiševe vrste natančneje in hitreje računamo s FFT])[
-Na vajah bomo koeficiente an računali približno z Gauss-Čebiševimi kvadraturnimi formulami. V praksi
+Na vajah bomo koeficiente izračunali približno z Gauss-Čebiševimi kvadraturnimi formulami. V praksi
 je mogoče koeficiente $a_n$ izračunati bolj natančno in hitreje ($cal(O)(n log(n))$ namesto
 $cal(O)(n^2)$) z diskretno Fourierovo kosinusno transformacijo funkcijskih vrednosti v Čebiševih
 interpolacijskih točkah @trefethen19.
@@ -183,7 +183,7 @@ linearno funkcijo. V splošnem sta linearni funkciji med $x in [a, b]$ in $t in 
 kot:
 
 $
-  t(x) = (d - c)/(b - a)(x - a) + c\
+  t(x) = (d - c)/(b - a)(x - a) + c,\
   x(t) = (b - a)/(d - c)(t - c) + b.
 $
 
@@ -200,7 +200,7 @@ $
   |f(x) - C_N(x)| = |sum_(n=N+1)^oo a_n T_(n)(x)| <= sum_(n=N+1)^oo |a_n|
 $
 
-Kako vemo, kdaj je členov vrste dovolj, da je dosežena zahtevana natančnost. Izberemo $N$ tako, da
+Kako vemo, kdaj je členov vrste dovolj, da je dosežena zahtevana natančnost? Izberemo $N$ tako, da
 je nekaj zaporednih čelnov $a_(N+1), a_(N+2), a_(N+3)$ manjših od
 Ker neskončne vrste $sum_(n=N+1)^oo |a_n|$ ne moremo sešteti, za približno oceno napake vzamemo kar
 zadnji koeficient $a_N$ v končni vsoti $C_N(x)$.

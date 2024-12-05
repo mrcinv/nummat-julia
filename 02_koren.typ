@@ -229,13 +229,13 @@ $
 Če eksponent delimo z $2$ in upoštevamo ostanek $e = 2d + o$, vrednost $sqrt(2^e)$ zapišemo kot
 
 $
-  sqrt(2^e) approx 2^d dot cases(1";"& quad  o = 0",", sqrt(2)";"& quad o=1.)
+  sqrt(2^e) approx 2^d dot cases(1","& quad  o = 0",", sqrt(2)","& quad o=1.)
 $
 
 Formula za približek je enaka:
 
 $
-  sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1";"& quad o = 0",", sqrt(2)";"& quad o=1.)
+  sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1","& quad o = 0",", sqrt(2)","& quad o=1.)
 $
 
 Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:

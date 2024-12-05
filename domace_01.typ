@@ -10,7 +10,7 @@ večina elementov je ničelnih, $a_(i j) = 0$).
 
 Definiraj nov podatkovni tip `RazprsenaMatrika`, ki matriko zaradi
 prostorskih zahtev hrani v dveh matrikah $V$ in $I$, kjer sta $V$ in $I$
-matriki $n times m$, tako da velja
+$n times m$ matriki, tako da velja
 
 $
 V(i,j)=A(i,I(i,j)).
@@ -144,8 +144,7 @@ trikotna tridiagonalna matrika tipa `ZgornjeTridiagonalna`, v `Q` pa naj
 bo matrika tipa `Givens`.
 
 Definiraj podatkovna tipa `ZgornjeTridiagonalna` in `Givens`
-(glejte tudi nalogo
-#ref(<qr-razcep-zgornje-hessenbergove-matrike>). Poleg tega
+(glej @qr-razcep-zgornje-hessenbergove-matrike[nalogo]). Poleg tega
 implementiraj množenje `Base.*` matrik tipa `Givens` in
 `ZgornjeTridiagonalna`.
 
@@ -204,7 +203,7 @@ koraku rešite sistem $L lr((U bold(x)^(n + 1))) = bold(x)^n$.
 Metodo preskusi za izračun ničel polinoma. Polinomu
 
 $
-x^n + a_{n-1}x^{n-2} + ... a_1x + a_0
+x^n + a_(n-1)x^(n-2) + ... a_1 x + a_0
 $
 
 lahko priredimo matriko
@@ -228,7 +227,7 @@ metodo]. Naj bo $A_lambda = A - lambda I$. Če je $lambda$ približek
 za lastno vrednost, potem zaporedje vektorjev
 
 $
-bold(x)^{(n+1)}=(A_lambda^(-1)x^((n)))/(||A_lambda^(-1)bold(x)^((n))||_oo),
+bold(x)^((n+1))=(A_lambda^(-1)x^((n)))/(||A_lambda^(-1)bold(x)^((n))||_oo),
 $
 
 konvergira k lastnemu vektorju za lastno vrednost, ki je po absolutni
