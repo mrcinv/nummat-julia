@@ -43,7 +43,7 @@ Sestavljeno trapezno pravilo izpeljemo tako, da interval $[a, b]$ razdelimo na m
 podintervalu uporabimo trapezno formulo. Interval $[a, b]$ razdelimo na $n$ podintervalov in označimo z
 $x_0=a < x_1 < x_2 < med dots med < x_(n-1) < x_(n)=b$ krajišča podintervalov. Integral na $[a, b]$
 lahko razbijemo na vsoto integralov po intervalih $[x_(i), x_(i+1)]$ in na vsakem podintervalu
-uporabimom trapezno formulo
+uporabimo trapezno formulo
 $
   integral_a^b f(x) d x = integral_a^x_1 f(x) d x + integral_(x_1)^(x_2) f(x) d x + med dots med +
   integral_(x_(n-1))^b f(x) d x\
@@ -98,7 +98,7 @@ nov podatkovni tip #jl("Interval"), ki vsebuje dve polji #jl("min") in #jl("max"
 Na prvi pogled se zdi, da vpeljava novega tipa nima smisla, saj par števil #jl("(1.0, 2.0)") in
 vrednost #jl("Interval(1.0, 2.0)") vsebujeta iste podatke. Vendar pa nosi vrednost
 tipa #jl("Interval") dodatno informacijo o vlogi, ki jo ima v programu. Ločevanje po vlogi in
-ne le po obliki podatkov je priporčljivo, saj lahko prepreči napake, ki jih je sicer težko odkriti
+ne le po obliki podatkov je priporočljivo, saj lahko prepreči napake, ki jih je sicer težko odkriti
 in so posledica zamenjave podatkov iste oblike, ki pa nastopajo v različnih vlogah.
 
 Ko smo določili zapis integrala, moramo razmisliti, kako v programu predstaviti sestavljeno trapezno
@@ -122,7 +122,7 @@ Definirajmo naslednje tipe in funkcije in poskrbimo, da bo test uspešen:
 - tip #jl("Trapez(n::Int)"), ki predstavlja sestavljeno trapezno formulo z $n$ enakomernimi koraki
   (@pr:13-Trapez) in
 - metodo #jl("integriraj(i::Integral, k::Trapez)"), ki izračuna približek za integral #jl("i")
-  s sestavljno trapezno formulo #jl("k") (@pr:13-int-trapez).
+  s sestavljeno trapezno formulo #jl("k") (@pr:13-int-trapez).
 
 == Simpsonovo pravilo
 
@@ -210,7 +210,7 @@ $
   t(x) = 2(x - a)/(b - a) - 1 quad #text[ in ] quad x(t) = (b - a) / 2 t + (a + b) / 2.
 $
 
-Intergral na $[a, b]$ lahko zapišemo
+Integral na $[a, b]$ lahko zapišemo
 
 $
   integral_(a)^(b) f(x) d x = integral_(-1)^1 f(x(t)) x'(t) d t =
@@ -339,7 +339,7 @@ napaka s številom izračunanih funkcijskih vrednosti za vse tri metode.
 #demo13("# graf napake sin x2")
 
 #figure(caption: [Absolutna vrednost napake pri izračunu $integral_0^3 sin(x^2) d x$ z različnimi
-  kvadraturami. Naklon premice pri trapenem in Simpsonovem pravilu je enak redu metode.],
+  kvadraturami. Naklon premice pri trapeznem in Simpsonovem pravilu je enak redu metode.],
   image("img/13-napaka-sin.svg", width: 60%))
 
 #opomba(naslov: [Richardsonova ekstrapolacija])[
@@ -348,7 +348,7 @@ $
   integral_a^b f(x) d x = K(h) + C h^n + cal(O)(h^(n+1)), quad h=(b-a)/N
 $
 
-lahko z #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo extrapolacijo]
+lahko z #link("https://en.wikipedia.org/wiki/Richardson_extrapolation")[Richardsonovo ekstrapolacijo]
 izpeljemo kvadraturo višjega reda:
 
 $
@@ -358,8 +358,8 @@ $
   I = (2^n K(h/2) - K(h))/(2^n - 1) + cal(O)(h^(n+1)).
 $<eq:13-rich>
 
-Napako lahko ocenimo tako, da rezultat dobljen s kvadraturo $K(h)$ primerjamo z Richardonovo
-extrapolacijo @eq:13-rich:
+Napako lahko ocenimo tako, da rezultat dobljen s kvadraturo $K(h)$ primerjamo z Richardsonovo
+ekstrapolacijo @eq:13-rich:
 
 $
   I - K(h) approx  2^n/(2^(n)-1)(K(h/2) - K(h))\
@@ -422,10 +422,10 @@ polinomi. V takih primerih se bolje obnesejo
 
 #vaja13("# Interval")[Podatkovni tip za zaprti interval $[a, b]$]<pr:13-Interval>
 #vaja13("# Integral")[Podatkovni tip za določeni integral $integral_a^b f(x) d x$]<pr:13-Integral>
-#vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno pravilo z $n$ eankomernimi koraki]<pr:13-Trapez>
+#vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno pravilo z $n$ enakomernimi koraki]<pr:13-Trapez>
 #vaja13("# integriraj trapez")[Funkcija, ki izračuna integral s sestavljenim trapeznim pravilom.]<pr:13-int-trapez>
-#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ eankomernimi koraki]<pr:13-simpson>
-#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavlenim Simpsonovim pravilom.]<pr:13-int-simpson>
+#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ enakomernimi koraki]<pr:13-simpson>
+#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavljenim Simpsonovim pravilom.]<pr:13-int-simpson>
 #vaja13("# Kvadratura")[Podatkovni tip za splošno kvadraturno formulo]<pr:13-Kvadratura>
 #vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo.]<pr:13-int-gl>
 #vaja13("# glkvad")[Funkcija, ki vrne Gauss-Legendreovo kvadraturo z $n$ vozli.]<pr:13-glkvad>

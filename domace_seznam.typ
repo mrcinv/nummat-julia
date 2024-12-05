@@ -100,8 +100,8 @@ mislite, da so potrebne za razumevanje.
 #dobro(
   [Algoritem opišemo okvirno, podrobnosti razložimo kasneje],
 )[
-  V matriki želimo eleminirati spodnji trikotnik. To dosežemo tako, da stolpce
-  enega za drugim preslikamo s Housholderjevimi zrcaljenji. Za vsak stolpec
+  V matriki želimo eliminirati spodnji trikotnik. To dosežemo tako, da stolpce
+  enega za drugim preslikamo s Householderjevimi zrcaljenji. Za vsak stolpec
   poiščemo vektor, preko katerega zrcalimo. Vektor poiščemo tako, da ima
   zrcalna slika ničle pod diagonalnim elementom.
 ]
@@ -118,7 +118,7 @@ okvirno idejo.
   odštejemo matriko
   $ 2u (u^T A(k:n, k+1:n))/(u^T u). $
   Na $k$-tem koraku prezrcalimo le podmatriko $k:n times k:n$, ostali deli matrike
-  pa ostanjejo nespremenjeni.
+  pa ostanejo nespremenjeni.
 ]
 
 Takojšnje razlaganje podrobnosti, brez predhodnega opisa osnovne ideje, ni
@@ -208,16 +208,16 @@ Za pripravo povzetka o pokritosti kode lahko uporabite paket
 ]
 
 
-== Priprava zahteve za združitev na Gitlab
+== Priprava zahteve za združitev na GitLab
 
 Za lažjo komunikacijo predlagam, da rešitev domače naloge postavite v
-svojo vejo in ustvarite zahtevo za združitev (_Pull request_ na Githubu
-oziroma _Merge request_ na Gitlabu). V nadaljevanju bomo opisali, kako to
-storiti, če repozitorij z domačimi nalogami gostite na Gitlabu.
-Postopek za Github in druge platforme je podoben.
+svojo vejo in ustvarite zahtevo za združitev (_Pull request_ na GitHub
+oziroma _Merge request_ na GitLabu). V nadaljevanju bomo opisali, kako to
+storiti, če repozitorij z domačimi nalogami gostite na GitLabu.
+Postopek za GitHub in druge platforme je podoben.
 
 Preden začnete z delom, ustvarite vejo na svoji delovni kopiji repozitorija in jo
-potisnete na Gitlab. Ime veje naj bo `domača-X`, se pravi `domaca-01` za 1.
+potisnete na GitLab. Ime veje naj bo `domača-X`, se pravi `domaca-01` za 1.
 domačo nalogo in tako naprej. To storite z ukazom
 
 ```sh
@@ -225,10 +225,10 @@ $ git checkout -b domaca-01
 $ git push -u origin domaca-01
 ```
 
-Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na Gitlabu.
+Stikalo `-u` pove git-u, da naj z domačo vejo sledi veji na GitLabu.
 
 Med delom sproti dodajate vnose z `git commit` in jih prenesete na splet z ukazom `git push`.
-Ko je domača naloga končana, na Gitlabu ustvarite zahtevo za združitev
+Ko je domača naloga končana, na GitLabu ustvarite zahtevo za združitev
 (angl. Merge request).
 - Kliknete na zavihek `Merge requests` in nato na gumb `New merge request`.
 - Na desni strani izberete vejo `domaca-01` in kliknete na gumb `Compare branches and continue`.

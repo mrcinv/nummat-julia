@@ -89,7 +89,7 @@ V zanki nato ponavljamo
 
 #code_box(jl("y = (y - x/y)/2"))
 
-Označimo z $y_i$ vrednost spremenlivke $y$ na $i$-tem koraku zanke.
+Označimo z $y_i$ vrednost spremenljivke $y$ na $i$-tem koraku zanke.
 Vrednost $y_i$ je odvisna od vrednosti $x$, za njen izračun potrebujemo tudi vrednost
 $y$ na prejšnjem koraku $y_(i-1)(x)$. Vrstico programa lahko zapišemo kot rekurzivno enačbo
 
@@ -177,7 +177,7 @@ $
 
 Vse potence $d x^k$ za $k>=2$ potisnemo v ostanek $cal(O)(d x^2)$ in
 v limiti zanemarimo. Pravila računanja 1-tokov in dualnih števil so povsem
-enaka. Pri računanju z differenciali ravno tako upoštevamo, da je
+enaka. Pri računanju z diferenciali ravno tako upoštevamo, da je
 $d x^2 approx 0$ in vse potence $d x^k$ za $k>=2$ zanemarimo. Vrednosti odvoda v
 neki točki lahko izračunamo z dualnimi števili. Če poznamo vrednost funkcije
 in vrednost odvoda funkcije v neki točki, lahko z dualnimi števili
@@ -236,8 +236,8 @@ M = E - e sin(E)
 $<eq:15-kepler>
 določa
 #link("https://sl.wikipedia.org/wiki/Ekscentri%C4%8Dna_anomalija")[ekscentrično anomalijo] za telo,
-ki se giblje po Keplerjevi orbiti v odvisnoti od
-#link("https://sl.wikipedia.org/wiki/Elipsa#Izsrednost_(ekscentri%C4%8Dnost)")[ekscentičnosti]
+ki se giblje po Keplerjevi orbiti v odvisnosti od
+#link("https://sl.wikipedia.org/wiki/Elipsa#Izsrednost_(ekscentri%C4%8Dnost)")[ekscentričnosti]
 orbite $e$ in #link("https://en.wikipedia.org/wiki/Mean_anomaly")[povprečne anomalije] $M$.
 
 Keplerjevo orbito lahko izračunamo, če poznamo $E(t)$
@@ -279,7 +279,7 @@ g(E) = M - E + e sin(E).
 $
 
 Napišimo funkcijo #jl("keplerE(M, e)"), ki izračuna vrednost ekscentrične anomalije za dane
-vrednosti ekscentičnosti $e$ in povprečne anomalije $M$. Nato napišimo funkcijo
+vrednosti ekscentričnosti $e$ in povprečne anomalije $M$. Nato napišimo funkcijo
 #jl("orbita(t, a, b, n)"), ki izračuna položaj orbite v času $t$, če je v času $t=0$ telo najbližje
 masnemu središču.
 
@@ -301,7 +301,7 @@ Dualni del koordinat je enak vektorju hitrosti:
 #code_box(repl(demo15raw("# hitrost 1"),read("out/15-hitrost.out")))
 
 
-#opomba(naslov:[Avtomatsko odvajnaje kontrolnih struktur])[
+#opomba(naslov:[Avtomatsko odvajanje kontrolnih struktur])[
   Kontrolne strukture kot na primer #jl("if") stavek lahko
  povzročijo razvejitve v programu in funkcija, ki jo program izračuna ni
  nujno zvezno odvedljiva. Če avtomatsko odvajamo tak program, dobimo odvod
@@ -330,7 +330,7 @@ desnemu odvodu funkcije $|x|$ v točki $0$.
 #opomba(naslov: [Tabeliranih funkcij ne moremo avtomatsko odvajati])[
 Avtomatsko odvajanje deluje le za funkcije, ki so implementirane s programom.
 Če je funkcija podana s tabelo funkcijskih vrednosti,
-avotmatsko odvajanje ni mogoče. V tem primeru uporabimo končne diference.
+avtomatsko odvajanje ni mogoče. V tem primeru uporabimo končne diference.
 ]
 == Računajne gradientov
 
@@ -412,7 +412,7 @@ lahko računamo sproti, tako da zmnožimo matrike takoj, ko so na voljo. To pome
 (angl. #emph[forward mode]).
 
 Drug razred metod, ki ga imenujemo #emph[način odvajanja nazaj] (angl.
-#emph[bacward mode]),
+#emph[backward mode]),
 množi matrike v produktu @eq:15-produkt-odvodov z leve. To pa pomeni, da odvodov
 ni mogoče izračunati dokler izračun vrednosti funkcije ni končan. Pri odvajanju nazaj
 si mora program zapomniti vmesne vrednosti $bold(x)_k$ do konca izračuna.
@@ -465,5 +465,5 @@ Dualni del rezultata je enak gradientu funkcije.
   caption: [Osnovne operacije med vektorskimi dualnimi števili],
   vaja15("# operacije dual"))<pr:15-dual-op>
 #figure(caption: [Elementarne funkcije za vektorska dualna števila], vaja15("# funkcije dual"))
-#figure(caption: [Funkcija, ki izračuna gradiant funkcije vektorske spremenljivke v dani točki.],
+#figure(caption: [Funkcija, ki izračuna gradient funkcije vektorske spremenljivke v dani točki.],
   vaja15("# gradient"))

@@ -107,7 +107,7 @@ $
 P([-1/2,1/2]^d) = 1/(2^d)
 $
 in vidimo, da pada eksponentno z dimenzijo $d$. Zato je smiselno na robu uporabiti gostejšo mrežo
-kot v notranjosti. Tako je Sergey A. Smolyak razvil
+kot v notranjosti. Tako so razvili
 #link("https://en.wikipedia.org/wiki/Sparse_grid")[razpršene mreže], ki vsaj delno
 omilijo prekletstvo dimenzionalnosti.
 ]
@@ -203,7 +203,7 @@ Poglejmo si, kako napaka pada, če povečamo število podintervalov v sestavljen
 
 #demo14("# napaka simpson")
 
-Iz rezultatov lahko ocenimo red metode. Zapišemo predoločeni sistem za logaritem absolutne vrednosti
+Iz rezultatov lahko ocenimo red metode. Zapišemo predoločen sistem za logaritem absolutne vrednosti
 napake v odvisnosti od logaritma števila funkcijskih izračunov:
 
 $
@@ -232,7 +232,7 @@ Poglejmo, kakšen je red metode Monte Carlo.
 #figure(image("img/14-napaka.svg", width: 60%), caption: [Napaka Simpsonove produktne kvadrature in
 metode Monte Carlo v odvisnosti od števila funkcijskih izračunov])
 
-Vidimo, da je napaka pri metodi Monte Carlo nepredvidljiva. To je posledica neprevidljivosti
+Vidimo, da je napaka pri metodi Monte Carlo nepredvidljiva. To je posledica nepredvidljivosti
 vzorčenja. Kljub temu je trend jasen. Podobno kot prej lahko ocenimo red metode Monte Carlo.
 Centralni limitni izrek pove, da bi moral biti red približno $1/2$.
 
@@ -254,7 +254,7 @@ vzorčenje.
 
 #let vaja14(koda, caption) = figure(code_box(jlfb("Vaja14/src/Vaja14.jl", koda)), caption: caption)
 
-#vaja14("# VeckratniIntegral")[Podakovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
+#vaja14("# VeckratniIntegral")[Podatkovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
 #vaja14("# preslikaj")[Funkcija, ki preslika kvadraturo na drug interval.]<pr:14-preslikaj>
 #vaja14("# integriraj")[Funkcija, ki izračuna večkratni integral s produktno kvadraturo.]<pr:14-integriraj>
 #vaja14("# naslednji!")[Funkcija, ki izračuna naslednji multiindeks

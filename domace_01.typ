@@ -80,7 +80,7 @@ zahtev hranimo kot #emph[razpršeno] matriko. Poglej si dokumentacijo za
 
 Napišite funkcijo `L = nep_chol(A)`, ki izračuna nepopolni razcep
 Choleskega za matriko tipa `AbstractSparseMatrix`. Napišite še funkcijo
-`x, i = conj_grad(A, b, L)`, ki reši sistem linernih enačb
+`x, i = conj_grad(A, b, L)`, ki reši sistem linearnih enačb
 
 $
 A bold(x) = bold(b)
@@ -115,7 +115,7 @@ kjer je $alpha$ kot rotacije na posameznem koraku (kota $alpha$ ni treba računa
 `Givens` definiraj še
 množenje `Base.*` z vektorji in matrikami.
 
-Uporabi QR razcep za QR iteracijo zgornje Hesenbergove matrike.
+Uporabi QR razcep za QR iteracijo zgornje Hessenbergove matrike.
 Napišite funkcijo `lastne_vrednosti, lastni_vektorji = eigen(H)`, ki
 poišče lastne vrednosti in lastne vektorje zgornje Hessenbergove
 matrike.
@@ -172,8 +172,8 @@ vrednosti najbližje vrednosti $lambda$.
 
 Da bi zmanjšali število operacij na eni iteraciji, lahko poljubno
 matriko $A$ prevedemo v zgornjo Hessenbergovo obliko \(velja
-$a_(i j) = 0$ za $j < i - 1$). S Hausholderjevimi zrcaljenji lahko
-poiščemo zgornje Hesenbergovo matriko $H$, ki je podobna matriki $A$:
+$a_(i j) = 0$ za $j < i - 1$). S Householderjevimi zrcaljenji lahko
+poiščemo zgornje Hessenbergovo matriko $H$, ki je podobna matriki $A$:
 
 $
 H=Q^T A Q.
@@ -182,18 +182,18 @@ $
 Če je $bold(v)$ lastni vektor matrike $H$, je $Q bold(v)$ lastni vektor matrike $A$,
 lastne vrednosti matrik $H$ in $A$ pa so enake.
 
-Napiši funkcijo `H, Q = hessenberg(A)`, ki s Hausholderjevimi
+Napiši funkcijo `H, Q = hessenberg(A)`, ki s Householderjevimi
 zrcaljenji poišče zgornje Hessenbergovo matriko `H` tipa
 `ZgornjiHessenberg`, ki je podobna matriki `A`.
 
 Definiraj tip `ZgornjiHessenberg`, kot je opisano v nalogi o QR
 razcepu zgornje Hessenbergove matrike. Poleg tega implementirajte metodo
 `L, U = lu(A)` za matrike tipa `ZgornjiHessenberg`, ki bo pri razcepu
-upoštevala lastnosti zgornje hessenbergovih matrik. Matrika `L` naj ne
+upoštevala lastnosti zgornje Hessenbergovih matrik. Matrika `L` naj ne
 bo polna, ampak tipa `SpodnjaTridiagonalna`. Tip `SpodnjaTridiagonalna`
 definirajte sami, tako da bo hranil le neničelne elemente in za ta tip
 matrike definirajte operator `Base.\`, tako da bo upošteval strukturo
-matrikw `L`.
+matrike `L`.
 
 Napišite funkcijo `lambda, vektor = inv_lastni(A, l)`, ki najprej naredi
 Hessenbergov razcep in nato izračuna lastni vektor in točno lastno
@@ -236,7 +236,7 @@ vrednosti najbližje vrednosti $lambda$.
 
 Naj bo $A$ #emph[simetrična matrika]. Da bi zmanjšali število operacij
 na eni iteraciji, lahko poljubno simetrično matriko $A$ prevedemo v
-tridiagonalno obliko. S Hausholderjevimi zrcaljenji lahko poiščemo
+tridiagonalno obliko. S Householderjevimi zrcaljenji lahko poiščemo
 tridiagonalno matriko $T$, ki je podobna matriki $A$:
 
 $
@@ -246,7 +246,7 @@ $
 Če je $v$ lastni vektor matrike $T$, je $Q v$ lastni vektor matrike $A$,
 lastne vrednosti matrik $T$ in $A$ pa so enake.
 
-Napiši funkcijo `T, Q = tridiag(A)`, ki s Hausholderjevimi zrcaljenji
+Napiši funkcijo `T, Q = tridiag(A)`, ki s Householderjevimi zrcaljenji
 poišče tridiagonalno matriko `H` tipa `Tridiagonalna`, ki je podobna
 matriki `A`.
 
@@ -303,11 +303,7 @@ S(x)=S_(i)(x)=a_i+b_i (x-x_i)+c_i (x-x_i)^2+d_i (x-x_i)^3, #h(1em)
   x in [x_i,x_(i+1)],
 $
 
-nato pa izpolnimo zahtevane pogoje #footnote[pomagajte si z: Bronštejn,
-Semendjajev, Musiol, Mühlig: #strong[Matematični priročnik], Tehniška
-založba Slovenije, 1997, str. 754 ali pa J. Petrišič:
-#strong[Interpolacija], Univerza v Ljubljani, Fakulteta za strojništvo,
-Ljubljana, 1999, str. 47].
+nato pa rešimo sistem linearnih enačb za koeficiente, ki jih izpeljemo iz zahtevanih pogojev (glej @plestenjak2015).
 
 Napiši funkcijo `Z = interpoliraj(x, y)`, ki izračuna koeficiente
 polinomov $S_i$ in vrne element tipa `Zlepek`.
@@ -346,5 +342,5 @@ tridiagonalne matrike izvedi z Givensovimi rotacijami in hrani le
 elemente, ki so nujno potrebni (glej nalogo
 #emph[QR razcep simetrične tridiagonalne matrike]).
 
-Funkcijo preiskusi na Laplaceovi matriki grafa podobnosti (glej
+Funkcijo preskusi na Laplaceovi matriki grafa podobnosti (glej
 #link("../vaje/3_lastne_vrednosti/06_spektralno_grucenje.md")[vajo o spektralnem gručenju]).

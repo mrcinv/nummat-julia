@@ -15,7 +15,7 @@ Implementacija funkcije naj zadošča naslednjim zahtevam:
 - relativna napaka je manjša od $5 dot 10^(-11)$ za vse argumente in
 - časovna zahtevnost je omejena s konstanto, ki je neodvisna od argumenta.
 
-== Fresnelov integral \(težja)
+== Fresnelov integral (težja)
 <fresnelov-integral-težja>
 Napiši učinkovito funkcijo, ki izračuna vrednosti Fresnelovega
 kosinusa
@@ -83,7 +83,7 @@ $
   (x(t), y(t)) = (t^3 - t, t^2 - 1).
 $
 
-#strong[Namig]: Za velike vrednosti argumenta $t$ interpolirajte funkcijo $1/s(1/t)$ s
+#strong[Namig]: Za velike vrednosti argumenta $t$ interpoliraj funkcijo $1/s(1/t)$ s
 polinomom v Čebiševih točkah (@ineterpolacija-z-baricentrično-formulo).
 
 == Interpolacija z baricentrično formulo
@@ -143,7 +143,7 @@ za parametra $a = 1$ in $b = - 11 / 7$.
 
 $ P = 1 / 2 integral_(t_1)^(t_2) lr((x lr((t)) dot(y) lr((t)) - dot(x) lr((t)) y lr((t)))) d t. $
 
-== Povprečna razdalja \(težja)
+== Povprečna razdalja (težja)
 <povprečna-razdalja-težja>
 Izračunajte povprečno razdaljo med dvema točkama znotraj telesa $T$, ki je enako razliki dveh kock:
 
@@ -168,7 +168,7 @@ $ (0 , 0) , (1 , 1) , (2 , 3) , (1 , 4) , (0 , 4) , (- 1 , 3) , (0 , 1) , (1 , 0
 
 $ P = 1 / 2 integral_(t_1)^(t_2) lr((x(t) dot(y)(t) - dot(x)(t) y(t))) d t. $
 
-== Gauss-Legendreove kvadrature
+== Gauss-Legendreove kvadrature (lažja)
 <gauss-Legendreove-kvadrature>
 Izpelji #link("https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreovo integracijsko pravilo]
 na dveh točkah

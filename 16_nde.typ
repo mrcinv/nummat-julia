@@ -285,24 +285,24 @@ Definirajmo:
   #jl("korak(m::RK4, fun, t0, u0, par, smer)"), ki izračuna približek na naslednjem koraku
   (@pr:16-rk4).
 
-== Hermitova interpolacija
+== Hermiteova interpolacija
 
 Numerične metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
 spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s
-#link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom], ki smo ga
-že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermitov
+#link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermiteovim zlepkom], ki smo ga
+že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermiteov
 zlepek je na intervalu $[t_i, t_(i+1)]$ določen z vrednostmi rešitve in odvodi v krajiščih
 intervala. Ti podatki so shranjeni v vrednosti tipa #jl("ResitevNDE").
 Napišimo sedaj funkcijo #jl("vrednost(res::ResitevNDE, t)"), ki vrne približek
 za rešitev NDE v dani točki (@pr:16-vrednost). Vrednosti rešitve lahko na ta način izračunamo tudi
 za argumente $t$, ki so med približki, ki jih izračuna Eulerjeva ali kakšna druga metoda.
-Prikažemo Hermitovo interpolacijo na grafu:
+Prikažemo Hermiteovo interpolacijo na grafu:
 
 #demo16("# plot hermite")
 
 #figure(
   image("img/16-hermite.svg", width: 60%),
-  caption: [Vmesne vrednosti med približki metode Runge - Kutta reda 2 interpoliramo s Hermitovim
+  caption: [Vmesne vrednosti med približki metode Runge - Kutta reda 2 interpoliramo s Hermiteovim
   zlepkom.]
 )
 == Poševni met z upoštevanja zračnega upora
@@ -310,7 +310,7 @@ Prikažemo Hermitovo interpolacijo na grafu:
 Poševni met opisuje gibanje točkastega telesa pod vplivom gravitacije. Enačbe, ki opisujejo poševni
 met, izpeljemo iz #link("https://sl.wikipedia.org/wiki/Newtonovi_zakoni_gibanja")[Newtonovih zakonov
 gibanja]. Položaj telesa v vsakem trenutku opišemo z vektorjem položaja $bold(x) = [x, y, z]^T in RR^3$. Trajektorija
-opisuje položaj v odvisnoti od časa in je podana kot krivulja $bold(x)(t)$. Označimo vektor hitrosti z
+opisuje položaj v odvisnosti od časa in je podana kot krivulja $bold(x)(t)$. Označimo vektor hitrosti z
 $
 bold(v)(t)=dot(bold(x))(t) = (d bold(x))/(d t)(t)
 $
@@ -405,7 +405,7 @@ Poglejmo, kako se obnesejo različne metode.
 Primerjali bomo vse tri metode, ki smo jih spoznali. Za različne vrednosti koraka bomo
 izračunali približek in ga primerjali s pravo rešitvijo. Ker prave rešitve ne poznamo, bomo namesto nje
 uporabili približek, ki ga dobimo z metodo Runge-Kutta reda 4 s polovičnim korakom. Napako bomo
-ocenili tako, da bomo poiskali največno napako med različnimi vrednostimi $t$ na danem intervalu
+ocenili tako, da bomo poiskali največjo napako med različnimi vrednostmi $t$ na danem intervalu
 $[t_0, t_k]$.
 
 #demo16("# napaka")
@@ -517,7 +517,7 @@ $v_(x) = 10 meter slash sekunda, v_(y) = 20 meter slash sekunda$. Enote so v
 
 Približki za rešitev so precej narazen, saj smo za izračun uporabili
 relativno velik korak $h=0.3$. Kljub temu je zaradi visokega reda metode Runge-Kutta
-izračun dokaj natančen. V naslednjem koraku v tabeli približko, ki smo jo dobili
+izračun dokaj natančen. V naslednjem koraku v tabeli približkov, ki smo jo dobili
 z metodo Runge-Kutta, poiščemo interval, na katerem druga komponenta $u_2$
 spremeni predznak. Nato z Newtonovo metodo rešimo nelinearno enačbo $u_2(t) = 0$.
 
@@ -529,7 +529,7 @@ Nato poiščemo interval med približki, na katerem višina $y = u_2$ spremeni p
 rešimo z Newtonovo metodo.])
 
 #pagebreak()
-Vrednost #jl("t0") predstavlja čas leta, medtem ko dolžino leta zaberemo iz
+Vrednost #jl("t0") predstavlja čas leta, medtem ko dolžino leta razberemo iz
 prve komponente rešitve.
 
 #code_box(
@@ -578,7 +578,7 @@ Oglejmo si še, kako se hitrost spreminja s časom.
 
 #figure(
   vaja16("# interpolacija"),
-  caption: [Vmesne vrednosti rešitve NDE izračunamo s Hermitovim kubičnim
+  caption: [Vmesne vrednosti rešitve NDE izračunamo s Hermiteovim kubičnim
   zlepkom.]
 )<pr:16-vrednost>
 

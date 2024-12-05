@@ -6,7 +6,7 @@ operacije, vgrajene osnovne matematične funkcije `exp`, `sin`, `cos`, …,
 osnovne operacije z matrikami in razcepe matrik. Vse ostale algoritme
 morate implementirati sami.
 
-== Ničle Airijeve funkcije
+== Ničle Airyjeve funkcije
 <ničle-airijeve-funkcije>
 
 Airyjeva funkcija je dana kot rešitev začetnega problema
@@ -34,7 +34,7 @@ sigma_(k + 1)  = & h/2 (A_1 + A_2) - sqrt(3) / 12 h^2 [A_1, A_2]\
 
 Izraz $[A, B]$ je komutator dveh matrik in ga izračunamo kot
 $[A, B] = A B - B A$. Eksponentno funkcijo na matriki
-$exp(sigma_(k + 1))$ pa v programskem jeziku julia dobite z
+$exp(sigma_(k + 1))$ pa v programskem jeziku Julia dobite z
 ukazom `exp`.
 
 == Dolžina implicinto podane krivulje
