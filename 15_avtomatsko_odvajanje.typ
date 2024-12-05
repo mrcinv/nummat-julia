@@ -448,6 +448,10 @@ vhodnega vektorja $bold(x)_0$.
 
 Dualni del rezultata je enak gradientu funkcije.
 
+#opomba(naslov: [Knjižnice za avtomatsko odvajanje])[
+  Knjižnice za avtomatsko odvajanje obstajajo za večino programskih jezikov, ki se uporabljajo za numerične izračune. V Julii so poleg #jl("ForwardDiff") na voljo še drugi paketi. Paketi so zbrani v neformalni organizaciji #link("https://juliadiff.org/")[JuliaDiff].  
+]
+
 #opomba(naslov: [Kaj smo se naučili?])[
   - Odvode programov učinkovito računamo z avtomatskim odvajanjem.
   - Obstajata dva načina avtomatskega odvajanja: #emph[način odvajanja naprej] in
