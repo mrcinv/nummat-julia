@@ -70,7 +70,14 @@
   v(1em)
   text(18pt, authors.join(", "))
   v(2fr)
-  text(18pt, datetime.today().display("[day]. [month]. [year]"))
+  text(14pt, [
+    #datetime.today().display("[year]")
+    #v(2em)
+    Univerza v Ljubljani
+
+    Fakulteta za računalništvo in informatiko
+  ]
+  )
   set align(left)
   set page(numbering: "1")
   doc

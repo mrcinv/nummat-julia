@@ -107,7 +107,7 @@ ravno vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov.
 Ob predpostavki, da so napake meritev nekorelirane slučajne spremenljivke z
 enakimi variancami in pričakovano vrednostjo $0$.]
 
-== Opis sprememb koncentracije CO2
+== Opis sprememb koncentracije #co2
 <opis-sprememb-koncentracije-co2>
 Na observatoriju
 #link("http://www.esrl.noaa.gov/gmd/obop/mlo/")[Mauna Loa] na Havajih že

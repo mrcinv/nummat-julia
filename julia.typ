@@ -15,7 +15,7 @@
   code
 )
 
-// print a part of a julia file as a code block 
+// print a part of a julia file as a code block
 #let jlf(file, start, end) = raw(
   readlines(file, start, end),
   block: true,
@@ -34,7 +34,7 @@
       dir: ltr,
       prompt,
       raw(lang: lang, block: block, command)
-    )  
+    )
 
 // write a single entry to Julia REPL
 #let repl(command, out, block: false) = stack(
@@ -42,7 +42,7 @@
     spacing: 0.6%,
     repl_line(command, block, prompt: prompt_jl),
     if out != none {
-      raw(out) 
+      raw(out)
     }
     else
     {
@@ -53,8 +53,8 @@
 // A single line of REPL in package mode
 #let pkg(command, out, env: "@v1.10") = stack(
     dir: ttb,
-    spacing: 0.6%,  
-    repl_line(command, false, prompt: prompt_pkg(env), lang: "jl"),
+    spacing: 0.6%,
+    repl_line(command, false, prompt: prompt_pkg(env), lang: none),
     if out != none{
       raw(out)
     }
@@ -68,7 +68,7 @@
   let content = read(file)
   let r = regex("(?s)" + start + "[\r\n]*(.*?)" + start)
   let match = content.match(r)
-  if match == none { 
+  if match == none {
     "No match for " + start + " in " + file
   }
   else {

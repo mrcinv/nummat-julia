@@ -1,3 +1,5 @@
 include("00_uvod.jl")
 include("02_koren.jl")
 include("03_tridiag.jl")
+include("../Vaja01/doc/makedocs.jl")
+run(`magick -density 300 Vaja01/pdf/01uvod.pdf img/01uvod.pdf.png`)
