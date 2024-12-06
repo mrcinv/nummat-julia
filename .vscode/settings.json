@@ -9,7 +9,7 @@
     "typst"
   ],
   "cSpell.language": "sl,en,sl-SI",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.tabSize": 2,
   "cSpell.words": [
     "Ackleyeve",

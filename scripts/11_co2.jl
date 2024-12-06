@@ -71,7 +71,7 @@ razlika = norm(p_norm - p_qr)
 BookUtils.p("11_razlika", razlika)
 
 capture("11_p_qr") do
-  p_qr
+p_qr
 end
 
 # trend

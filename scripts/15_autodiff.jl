@@ -158,8 +158,8 @@ term("15-napaka", napaka)
 dkoren(0)
 
 capture("15-koren-auto-err") do
-  y, dy = dkoren(2)
-  dy - 1 / (2y)
+y, dy = dkoren(2)
+dy - 1 / (2y)
 end
 
 struct Elipsa{T}

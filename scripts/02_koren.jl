@@ -1,35 +1,45 @@
 using BookUtils, Vaja02
 
 @capture("02_koren_1") do
-  # koren1
-  x = 1.5
-  for n = 1:5
-    x = (x + 2 / x) / 2
-    println(x)
-  end
-  # koren1
+# koren1
+y = 1.5
+x = 2
+for n = 1:5
+  y = (y + x / y) / 2
+  println(y)
+end
+# koren1
 end
 
 capture("02_koren_3") do
-  # koren3
-  x = koren_heron(3, 1.7, 5)
-  println("Koren 3 je $(x).")
-  # koren3
+# koren3
+x = koren_heron(3, 1.7, 5)
+println("Koren 3 je $(x).")
+# koren3
 end
 
 capture("02_koren_4") do
-  # koren4
-  x = 2
-  y = koren(x, 0.5 + x / 2)
-  # koren4
+# koren4
+x = 2
+y = koren(x, 0.5 + x / 2)
+# koren4
 end
 
-capture("02_koren_5") do
-  # koren5
-  tangenta(x) = 0.5 + x / 2
-  y = koren(10, tangenta(10))
-  y = koren(200, tangenta(200))
-  # koren5
+# koren5
+tangenta(x) = 0.5 + x / 2
+# koren5
+
+
+capture("02_koren5a") do
+# koren5a
+y = koren(10, tangenta(10))
+# koren5a
+end
+
+capture("02_koren5b") do
+# koren5b
+y = koren(200, tangenta(200))
+# koren5b
 end
 
 # koren6
@@ -46,7 +56,7 @@ plot!(Vaja02.zacetni, 0, 20, label="y = zacetni(x)")
 savefig("img/02_koren_zacetni.svg")
 
 capture("02_koren_8") do
-  # koren8
-  koren(10.0), koren(200.0), koren(2e10)
-  # koren8
+# koren8
+koren(10.0), koren(200.0), koren(2e10)
+# koren8
 end

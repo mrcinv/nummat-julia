@@ -1,10 +1,10 @@
 using Vaja12
 using BookUtils
 capture("12-baza") do
-  # baza
-  A = [1 0 0 0; 1 1 1 1; 0 1 0 0; 0 1 2 3]
-  inv(A)
-  # baza
+# baza
+A = [1 0 0 0; 1 1 1 1; 0 1 0 0; 0 1 2 3]
+inv(A)
+# baza
 end
 
 # zlepek

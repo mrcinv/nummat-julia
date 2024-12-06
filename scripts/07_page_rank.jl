@@ -29,14 +29,14 @@ x, it = potencna(P', rand(64))
 # skakač
 using LinearAlgebra
 capture("07_lastne") do
-  # lastne
-  # funkcija `eigen` iz modula LinearAlgebra izračuna lastni razcep matrike
-  lambda, v = eigen(Matrix(P'))
-  # lambda ima tudi imaginarne komponente, ki pa so zanemarljivo majhne
-  lambda = real.(lambda)
-  println("Največja in najmanjša lastna vrednost matrike P':")
-  println("$(maximum(lambda)),  $(minimum(lambda))")
-  # lastne
+# lastne
+# funkcija `eigen` iz modula LinearAlgebra izračuna lastni razcep matrike
+lambda, v = eigen(Matrix(P'))
+# lambda ima tudi imaginarne komponente, ki pa so zanemarljivo majhne
+lambda = real.(lambda)
+println("Največja in najmanjša lastna vrednost matrike P':")
+println("$(maximum(lambda)),  $(minimum(lambda))")
+# lastne
 end
 
 # premik
