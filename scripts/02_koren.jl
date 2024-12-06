@@ -57,6 +57,6 @@ savefig("img/02_koren_zacetni.svg")
 
 capture("02_koren_8") do
 # koren8
-koren(10.0), koren(200.0), koren(2e10)
+koren(2.0), koren(200.0), koren(2e10)
 # koren8
 end

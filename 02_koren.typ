@@ -208,7 +208,7 @@ Začetni približek $1/2 + x/2$ dobro deluje za števila blizu 1. Če isto formu
     caption: [Korenska funkcija in tangenta $1/2 + x/2$ v točki $x=1$]
 )
 
-Za boljši približek, si pomagamo z načinom predstavitve števil v računalniku. Realna števila
+Za boljši približek si pomagamo z načinom predstavitve števil v računalniku. Realna števila
 predstavimo s #link("https://sl.wikipedia.org/wiki/Plavajo%C4%8Da_vejica")[števili s plavajočo vejico]. Število je zapisano v obliki
 
 $
@@ -218,7 +218,7 @@ $
 kjer je $1 <= m < 2$ mantisa, $e$ pa eksponent. Za 64-bitna števila s plavajočo vejico se za
 zapis mantise uporabi 53 bitov (52 bitov za decimalke, en bit pa za predznak), 11 bitov pa za
 eksponent (glej #link("https://en.wikipedia.org/wiki/IEEE_754")[IEE 754 standard]). Koren števila
-$x$ potem izračunamo kot
+$x$ potem izračunamo kot:
 
 $
 sqrt(x) = sqrt(m) dot 2^(e/2).
@@ -230,7 +230,7 @@ $
 sqrt(m) = 1/2 + m/2.
 $
 
-Če eksponent delimo z $2$ in upoštevamo ostanek $e = 2d + o$, vrednost $sqrt(2^e)$ zapišemo kot
+Če eksponent delimo z $2$ in upoštevamo ostanek $o = e - 2d$, vrednost $sqrt(2^e)$ zapišemo kot:
 
 $
   sqrt(2^e) approx 2^d dot cases(1","& quad  o = 0",", sqrt(2)","& quad o=1.)
@@ -242,7 +242,7 @@ $
   sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1","& quad o = 0",", sqrt(2)","& quad o=1.)
 $
 
-Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
+Potenco števila $2^n$ izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
 #figure(
     code_box(
@@ -251,7 +251,7 @@ Potenco števila $2^n$ lahko izračunamo s premikom binarnega zapisa števila $1
     caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
 )
 
-Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.
+Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo:
 
 #code_box(
     jlfb("scripts/02_koren.jl", "# koren7")
@@ -264,7 +264,7 @@ Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo.
 
 == Zaključek
 
-Ko smo enkrat izbrali dober začetni približek, tudi Newtonova iteracija hitreje konvergira, ne glede na velikost argumenta. Tako
+Ko izberemo dober začetni približek, Newtonova iteracija hitreje konvergira, ne glede na velikost argumenta. Tako
 lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 
 #figure(
@@ -274,16 +274,16 @@ lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 
 #opomba(naslov: [Julia omogoča več definicij iste funkcije])[
     Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polmorfizma
-    v objektno orientiranih jezikih, kjer se metoda izbere le na podlagi razreda
+    v objektno usmerjenih jezikih, kjer se metoda izbere le na podlagi razreda
     objekta, ki to metodo kliče, se v Julii metodo izbere na podlagi tipov vseh vhodnih argumentov.
-    Ta lastnost omogoča pisanje generične kodo, ki deluje za zelo različne vhodne argumente.
+    Ta lastnost omogoča pisanje generične kode, ki deluje za zelo različne vhodne argumente.
 
-    Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na to, katere argumente podamo funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo #jl("koren(2.0, 1.0)"), se izvede različica @code:02-koren-x-y0, ko pa pokličemo #jl("koren(2.0)"), se izvede @code:02-koren-x.
+    Večlična razdelitev omogoča, da za isto funkcijo definiramo več različic, ki se uporabijo glede na argumente podane funkciji. Tako smo definirali dve metodi za funkcijo `koren`. Prva metoda sprejme 2 argumenta, druga pa en argument. Ko pokličemo #jl("koren(2.0, 1.0)"), se izvede različica @code:02-koren-x-y0, ko pa pokličemo #jl("koren(2.0)"), se izvede @code:02-koren-x.
 
-    Metode, ki so definirane za neko funkcijo #jl("fun"), lahko vidimo z ukazom #jl("methods(fun)"). Metodo, ki se uporabi za določen klic funkcije, lahko poiščemo z makrojem #jl("@which"), npr. #jl("@which koren(2.0, 1.0)").
+    Metode, ki so definirane za neko funkcijo #jl("fun"), lahko vidimo z ukazom #jl("methods(fun)"). Metodo, ki se uporabi za določen klic funkcije, poiščemo z makrojem #jl("@which"), npr. #jl("@which koren(2.0, 1.0)").
 ]
 
-Opazimo, da se število korakov ne spreminja več z naraščanjem argumenta, kar pomeni, da je časovna zahtevnost funkcije ```jl koren(x)``` neodvisna od izbire argumenta.
+Opazimo, da se število korakov z naraščanjem argumenta ne spreminja, kar pomeni, da je časovna zahtevnost funkcije ```jl koren(x)``` neodvisna od izbire argumenta.
 
 #code_box(
     repl(blk("scripts/02_koren.jl", "# koren8"), read("out/02_koren_8.out"))
@@ -291,9 +291,9 @@ Opazimo, da se število korakov ne spreminja več z naraščanjem argumenta, kar
 
 
 #opomba(naslov: [Hitro računanje obratne vrednosti kvadratnega korena])[
-Pri razvoju računalniških iger, ki poskušajo verno prikazati 3-dimenzionalni svet na zaslonu, se veliko uporablja normiranje
+Pri razvoju računalniških iger, ki poskušajo verodostojno prikazati 3-dimenzionalni svet na zaslonu, se veliko uporablja normiranje
 vektorjev. Pri normiranju je treba komponente vektorja deliti z normo vektorja, ki je enaka korenu vsote kvadratov komponent. Kot smo
-spoznali pri računanju kvadratnega korena s Heronovim obrazcem, je posebej problematično poiskati
+spoznali pri računanju kvadratnega korena s Heronovim obrazcem, je posebej problematično najti
 ustrezen začetni približek, ki je dovolj blizu pravi rešitvi. Tega problema so se zavedali tudi
 inženirji igre Quake, ki so razvili posebej zvit, skoraj magičen način za izračun funkcije $1/sqrt(x).$
 Metoda uporabi posebno vrednost `0x5f3759df`, da pride do dobrega začetnega
@@ -302,7 +302,7 @@ Več o #link("https://en.wikipedia.org/wiki/Fast_inverse_square_root")[računanj
 ]
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Tudi za izračun preprostih funkcij potrebujemo numeričen algoritem.
+- Tudi za izračun preprostih funkcij potrebujemo numerični algoritem.
 - Pri iterativnih metodah je pomembna izbira dobrega začetnega približka.
 - Numerični algoritmi so pogosto preprosti, vendar moramo paziti, da
   je napaka omejena.
