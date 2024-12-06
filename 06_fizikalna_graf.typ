@@ -9,7 +9,7 @@
 
 Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G) times V(G)$.
 Brez škode predpostavimo, da so vozlišča grafa $G$ kar zaporedna naravna števila
-$V(G) = {1, 2, dots n}$. Vložitev grafa $G$ v $RR^d$ je preslikava
+$V(G) = {1, 2, med dots, med n}$. Vložitev grafa $G$ v $RR^d$ je preslikava
 $V(G) -> RR^d$, ki je podana z zaporedjem koordinat. Vložitev v $RR^3$ je podana z zaporedjem točk v
 $RR^3$
 

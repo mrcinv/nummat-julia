@@ -18,7 +18,7 @@ using LinearAlgebra
 """
     y = vrednost(x, rbf::RBF)
 
-Izračunaj vrednost linearne kombinacije radialnih baznih funkcij podane z
+Izračunaj vrednost linearne kombinacije radialnih baznih funkcij
 `rbf` v točki `x`.
 """
 function vrednost(x, rbf::RBF)
@@ -43,7 +43,7 @@ točki `x`.
 """
     A = matrika(tocke, phi)
 
-Poišči matriko sistema enačb za interpolacijo točk, podanih v seznamu `tocke`,
+Poišči matriko sistema enačb za interpolacijo točk v seznamu `tocke`,
 z linearno kombinacijo radialnih baznih funkcij s funkcijo oblike
 `phi`.
 """
@@ -60,7 +60,7 @@ end
 """
     rbf = interpoliraj(tocke, vrednosti, phi)
 
-Interpoliraj `vrednosti` v danih točkah iz seznama `tocke` z linearno
+Interpoliraj `vrednosti` v danih točkah s seznama `tocke` z linearno
 kombinacijo radialnih baznih funkcij s funkcijo oblike `phi`.
 """
 function interpoliraj(tocke, vrednosti, phi)

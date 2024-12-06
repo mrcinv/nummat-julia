@@ -181,9 +181,9 @@ Simulirajmo prvih 100 korakov slučajnega sprehoda:
 )
 
 #opomba(naslov: [Prehodna matrika Markovske verige])[
-Za Markovsko verigo s končno množico stanj ${x_1, x_2, dots x_n}$, lahko prehodne verjetnosti
-zložimo v matriko. Brez škode lahko stanja ${x_1, x_2, dots x_n}$ nadomestimo z naravnimi
-števili ${1, 2, dots n}$. Matriko $Pm=[p_(i j)]$, katere elementi so prehodne verjetnosti prehodov med
+Za Markovsko verigo s končno množico stanj ${x_1, x_2, dots, x_n}$, lahko prehodne verjetnosti
+zložimo v matriko. Brez škode lahko stanja ${x_1, x_2, dots, x_n}$ nadomestimo z naravnimi
+števili ${1, 2, dots, n}$. Matriko $Pm=[p_(i j)]$, katere elementi so prehodne verjetnosti prehodov med
 stanji Markovske verige
 
 $

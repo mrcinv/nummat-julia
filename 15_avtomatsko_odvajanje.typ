@@ -378,8 +378,8 @@ $
 $
 in
 $
-f(x_1 + epsilon_1, x_2 + epsilon_2, med dots med x_(n) + epsilon_n) =
-  f(x_1, x_2,  med dots x_(n)) + nabla f(x_1, x_2, med dots x_(n))epsilon.
+f(x_1 + epsilon_1, x_2 + epsilon_2, med dots, med x_(n) + epsilon_n) =
+  f(x_1, x_2,  med dots, x_(n)) + nabla f(x_1, x_2, med dots, x_(n))epsilon.
 $
 
 V Julii definirajmo vektorska dualna števila tipa #jl("Dual"), ki opisujejo
@@ -449,7 +449,7 @@ vhodnega vektorja $bold(x)_0$.
 Dualni del rezultata je enak gradientu funkcije.
 
 #opomba(naslov: [Knjižnice za avtomatsko odvajanje])[
-  Knjižnice za avtomatsko odvajanje obstajajo za večino programskih jezikov, ki se uporabljajo za numerične izračune. V Julii so poleg #jl("ForwardDiff") na voljo še drugi paketi. Paketi so zbrani v neformalni organizaciji #link("https://juliadiff.org/")[JuliaDiff].  
+  Knjižnice za avtomatsko odvajanje obstajajo za večino programskih jezikov, ki se uporabljajo za numerične izračune. V Julii so poleg #jl("ForwardDiff") na voljo še drugi paketi. Paketi so zbrani v neformalni organizaciji #link("https://juliadiff.org/")[JuliaDiff].
 ]
 
 #opomba(naslov: [Kaj smo se naučili?])[

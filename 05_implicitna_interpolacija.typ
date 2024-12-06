@@ -1,5 +1,6 @@
 #import "julia.typ": jlfb, code_box, jl
 #import "admonitions.typ": opomba
+#import "simboli.typ": bx
 
 = Interpolacija z implicitnimi funkcijami
 <interpolacija-z-implicitnimi-funkcijami>
@@ -25,7 +26,7 @@ Hitri algoritmi za izračun nivojskih krivulj in ploskev kot sta
 #link("https://en.wikipedia.org/wiki/Marching_squares")[korakajoči kvadrati]
 in #link("https://en.wikipedia.org/wiki/Marching_cubes")[korakajoče kocke] omogočajo učinkovito generiranje
 poligonske mreže za implicitno podane krivulje in ploskve. Predstavitev
-s #link("https://en.wikipedia.org/wiki/Signed_distance_function")[predznačeno funkcijo razdalje] pa
+s #link("https://en.wikipedia.org/wiki/Signed_distance_function")[predznačeno funkcijo razdalje]
 je osnova za mnoge grafične programe, ki delajo s ploskvami v 3D prostoru.
 
 V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobro opiše dani oblak
@@ -35,7 +36,6 @@ poiskali kot linearno kombinacijo
 (@savchenko95, @turk99, @morse01).
 
 == Naloga
-#let bx = math.bold[x]
 
 - Definiraj podatkovni tip za linearno kombinacijo radialnih baznih funkcij v $RR^d$.
   Podatkovni tip naj vsebuje središča RBF $bx_i in RR^d$, funkcijo oblike $phi: RR -> RR$ in
@@ -46,11 +46,11 @@ poiskali kot linearno kombinacijo
 
 - Napiši sistem za koeficiente $w_i$ v linearni kombinaciji RBF, če so podane
   vrednosti $f_i=F(bx_i) in RR$ v središčih RBF. Napiši funkcijo, ki za dane vrednosti $f_i$,
-  funkcijo $phi$ in središča $bx_i$, poišče koeficiente $w_1, w_2 dots w_n$. Katero metodo za
+  funkcijo $phi$ in središča $bx_i$, poišče koeficiente $w_1, w_2, med dots, med w_n$. Katero metodo za
   reševanja sistema lahko uporabimo?
 - Napiši funkcijo `vrednost`, ki izračuna vrednost funkcije $F(bx)$ v dani točki $bx$.
 - Uporabi napisane metode in interpoliraj oblak točk v ravnini z implicitno podano krivuljo. Oblak
-  točk ustvari na krivulji, podani s parametrično enačbo:
+  točk ustvari na krivulji, podani v parametrični obliki:
 
   $
     x(phi) = 8cos(phi) - cos(4phi),\
@@ -60,7 +60,7 @@ poiskali kot linearno kombinacijo
 == Interpolacija z radialnimi baznimi funkcijami
 
 V ravnini#footnote[Postopek, ki ga bomo opisali,
-deluje ravno tako dobro tudi za točke v prostoru. Vendar se bomo zavoljo enostavnosti omejili na
+deluje ravno tako dobro tudi za točke v prostoru. Zavoljo enostavnosti se bomo omejili na
 točke v ravnini.] je podan oblak točk ${ bx_1 , bx_2, med dots, med bx_n } subset RR^2$. Iščemo krivuljo, ki dobro
 opiše dane točke. Če zahtevamo, da vse točke ležijo na krivulji, problemu rečemo #emph[interpolacija],
 če pa dovolimo, da je krivulja zgolj blizu danih točk in ne nujno vsebuje vseh točk, problem
@@ -72,7 +72,7 @@ f(x_i, y_i) = c
 $
 
 za vse točke $bx_i = (x_i, y_i)$ v danem oblaku točk. Problem bomo rešili malce bolj splošno. Denimo, da imamo za vsako
-dano točko v oblaku $bx_i$, podano tudi vrednost funkcije $f_i$. Iščemo zvezno funkcijo
+dano točko v oblaku $bx_i$, podano vrednost funkcije $f_i$. Iščemo zvezno funkcijo
 $f(x, y)$, tako da so izpolnjene enačbe:
 
 $
@@ -116,12 +116,12 @@ $<eq:05int>
 Enačbe @eq:05int so linearne za koeficiente $w_1, med dots, med w_n$:
 
 $
-w_1 phi_1(bx_1) + w_2 phi_2(bx_1) + med dots med + w_n phi_n(bx_1) = f_1,\
+w_1 phi_1(bx_1) + w_2 phi_2(bx_1) + med dots med + w_n phi_(n)(bx_1) = f_1,\
 dots.v\
-w_1 phi_1(bx_n) + w_2 phi_2(bx_n) + med dots med + w_n phi_n(bx_n) = f_n.
+w_1 phi_1(bx_n) + w_2 phi_2(bx_n) + med dots med + w_n phi_(n)(bx_n) = f_n.
 $<eq:05lin-sistem>
 
-Vektor desnih strani sistema @eq:05lin-sistem je kar vektor funkcijskih vrednosti $[f_1, f_2, med dots, med f_n]$, matrika sistema pa je enaka:
+Vektor desnih strani sistema @eq:05lin-sistem je vektor funkcijskih vrednosti $[f_1, f_2, med dots, med f_n]$, matrika sistema pa je enaka:
 
 $
 mat(
@@ -132,6 +132,7 @@ mat(
 ).
 $<eq:05-matrika>
 
+#pagebreak(weak: true)
 Ker je
 
 $
@@ -152,11 +153,11 @@ reševanje sistema uporabimo razcep Choleskega @Orel_2004. Za funkcijo oblike bo
 izbrali Gaussovo funkcijo
 
 $
-phi(r) = exp(-t^2 slash sigma^2),
+phi(r) = exp(-r^2 slash sigma^2),
 $<eq:05gauss>
 
 za katero je matrika sistema @eq:05lin-sistem pozitivno definitna, če so točke
-$bx_1, bx_2, dots bx_n$ različne @buhmann15.
+$bx_1, bx_2, med dots, med bx_n$ različne @buhmann15.
 
 == Program
 
@@ -171,7 +172,7 @@ Najprej definiramo podatkovni tip, ki opiše linearno kombinacijo RBF @eq:05-rbf
   vaja05("# rbf")
 )
 
-Za podatkovni tip napišimo funkcijo #jl("vrednost(x,rbf::RBF)"), ki izračuna vrednost linearne
+Za podatkovni tip napiši funkcijo #jl("vrednost(x,rbf::RBF)"), ki izračuna vrednost linearne
 kombinacije @eq:05-rbf v dani točki `x` (rešitev @pr:05vrednost). Za primer ustvarimo mešanico
 dveh Gaussovih RBF v točkah $(1, 0)$ in $(2, 1)$ in izračunamo vrednost v točki $(1.5, 1.5)$:
 
@@ -196,13 +197,13 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
   caption: [Linearna kombinacija dveh RBF s središčema v točkah $(1, 0)$ in $(2, 1)$ ter funkcijo oblike $phi(r) = exp(-r^2 slash 0.7^2)$]
 )
 
-Rešimo sedaj problem interpolacije. Zapišimo funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija). Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
+Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija). Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
 točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo, da ne dobimo trivialne rešitve.
 
 #code_box(
   s_vaja05("# oblak")
 )
-Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se razlikujejo od vrednosti v notranjosti.
+Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so med seboj enake, hkrati pa se razlikujejo od vrednosti v notranjosti.
 
 #code_box(
   s_vaja05("# interpolacija")
@@ -214,13 +215,13 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so enake in se 
     image("img/05-krivulja.svg", width: 100%),
     image("img/05-contours.svg", width: 100%)
   ),
-  caption: [Nivojske krivulje funkcije podane z linearno kombinacijo RBF, ki interpolira dane
-    vrednosti v danih točkah. Iskana krivulja, ki interpolira dane točke, je nivojska krivulja
+  caption: [Nivojske krivulje funkcije, podane z linearno kombinacijo RBF, ki interpolira dane
+    vrednosti v izbranih točkah. Iskana krivulja, ki interpolira dane točke, je nivojska krivulja
     za vrednost $-1$.]
 )
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Implicitna oblika krivulj in ploskev je lahko zelo uporabna.
+- Implicitna oblika krivulj ali ploskev je lahko zelo uporabna.
 - Pri interpolaciji potrebujemo toliko parametrov, kot je na voljo podatkov.
 ]
 

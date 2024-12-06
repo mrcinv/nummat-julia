@@ -1,1 +1,2 @@
-#let Pm = (math.cal[P])
+#let bx = math.bold[x]
+#let Pm = math.cal[P]
