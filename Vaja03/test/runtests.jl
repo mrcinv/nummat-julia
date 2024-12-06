@@ -46,7 +46,11 @@ end
 # množenje
 @testset "Množenje z vektorjem" begin
   T = Tridiag([1, 2], [3, 4, 5], [6, 7])
-  A = [3 6 0; 1 4 7; 0 2 5]
+  A = [
+    3 6 0; 
+    1 4 7; 
+    0 2 5
+  ]
   x = [1, 2, 3]
   @test T * x == A * x
 end

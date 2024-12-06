@@ -1,10 +1,10 @@
 #import "julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba
 #import "@preview/fletcher:0.5.2": diagram, node, edge
+#import "simboli.typ": Pm
 
 = Invariantna porazdelitev Markovske verige
 
-#let Pm = (math.cal[P])
 Z #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovskimi verigami] smo se že srečali v
 poglavju o tridiagonalnih sistemih (@tridiagonalni-sistemi). Spomnimo se, da je Markovska veriga
 zaporedje slučajnih spremenljivk $X_k$, ki opisujejo slučajni sprehod po množici stanj. Stanja Markovske verige bomo označili kar z zaporednimi naravnimi števili $1, 2, med dots, med n$. Na vsakem koraku je

@@ -7,7 +7,7 @@ Sestavi tridiagonalno matriko iz prve poddiagonale `sd`, glavne diagonale `d`
 in prve naddiagonale `zd`. Rezultat je tipa `Tridiag`, ki hrani le neničelne
 elemente matrike in omogoča učinkovito reševanje tridiagonalnega sistema
 linearnih enačb. Dolžina vektorjev `sd` in `zd` mora biti za ena manj od dolžine
-vektorja `d`. 
+vektorja `d`.
 """
 struct Tridiag
   sd::Vector # spodnja poddiagonala
@@ -24,7 +24,7 @@ export Tridiag
 # Tridiagonalna
 
 # size
-# Vgrajene funkcije moramo naložiti, če jim želimo dodati nove metode. 
+# Vgrajene funkcije moramo naložiti, če jim želimo dodati nove metode.
 import Base: size, getindex, setindex!, *, \
 """
     size(T::Tridiag)

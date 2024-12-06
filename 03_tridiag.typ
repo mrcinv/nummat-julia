@@ -1,5 +1,6 @@
 #import "admonitions.typ": opomba
 #import "julia.typ": jlfb, jl, pkg, code_box, repl, out
+#import "simboli.typ": Pm
 
 = Tridiagonalni sistemi
 <tridiagonalni-sistemi>
@@ -125,12 +126,12 @@ tridiagonalni sistem $T bold(x) = bold(b)$ linearna $cal(O)(n)$ namesto kubična
 obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša na linearno
 $cal(O)(n)$.
 
-Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napišimo funkcijo `\`:
+Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napiši funkcijo `\`:
 
 #code_box[ #jl("function \(T::Tridiagonal, b::Vector),")]
 
 ki poišče rešitev sistema $T bold(x) = bold(b)$ (rešitev je @pr:03-backslash). V datoteko
-`Vaja03/test/runtests.jl` dodajte test, ki na primeru preveri pravilnost funkcije `\`.
+`Vaja03/test/runtests.jl` dodaj test, ki na primeru preveri pravilnost funkcije `\`.
 
 == Slučajni sprehod
 <slučajni-sprehod>
@@ -140,9 +141,9 @@ v eni dimenziji. Slučajni sprehod je vrsta
 #link("https://en.wikipedia.org/wiki/Stochastic_process")[stohastičnega procesa],
 ki ga lahko opišemo z
 #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo] z
-množico stanj, ki je enako množici celih števil $ZZ$. Če se na nekem koraku slučajni sprehod nahaja
+množico stanj, ki je enaka množici celih števil $ZZ$. Če se na nekem koraku slučajni sprehod nahaja
 v stanju $n$, se lahko v naslednjem koraku z verjetnostjo $p in [0, 1]$ premakne v stanje $n - 1$
-ali z verjetnostjo $q = 1 - p$ v stanje $n + 1$. Prehodne verjetnosti slučajnega sprehoda so enake:
+ali z verjetnostjo $q = 1 - p$ v stanje $n + 1$. Prehodni verjetnosti slučajnega sprehoda sta enaki:
 
 $
   P(X_(i+1) = n - 1 | X_i = n) &= p\
@@ -152,7 +153,7 @@ $
 #opomba(naslov: [Definicija Markovske verige])[
 Markovska veriga je zaporedje slučajnih spremenljivk
 $ X_1, X_2, X_3, med dots $
-z vrednostmi v množici stanj ($ZZ$ za slučajni sprehod), za katere velja Markovska lastnost
+z vrednostmi v množici stanj ($ZZ$ za slučajni sprehod), za katere velja Markovska lastnost:
 
 $
  P(X_(i+1) = x | X_1 = x_1, X_2 = x_2, med dots, med X_i = x_i) = P(X_(i+1) = x | X_i = x_i).
@@ -167,7 +168,7 @@ $
 $
 ]
 
-Simulirajmo prvih 100 korakov slučajnega sprehoda
+Simulirajmo prvih 100 korakov slučajnega sprehoda:
 
 #jlfb(
   "scripts/03_tridiag.jl",
@@ -182,7 +183,7 @@ Simulirajmo prvih 100 korakov slučajnega sprehoda
 #opomba(naslov: [Prehodna matrika Markovske verige])[
 Za Markovsko verigo s končno množico stanj ${x_1, x_2, dots x_n}$, lahko prehodne verjetnosti
 zložimo v matriko. Brez škode lahko stanja ${x_1, x_2, dots x_n}$ nadomestimo z naravnimi
-števili ${1, 2, dots n}$. Matriko $P$, katere elementi so prehodne verjetnosti prehodov med
+števili ${1, 2, dots n}$. Matriko $Pm=[p_(i j)]$, katere elementi so prehodne verjetnosti prehodov med
 stanji Markovske verige
 
 $
@@ -191,28 +192,28 @@ $
 
 imenujemo #link("https://sl.wikipedia.org/wiki/Stohasti%C4%8Dna_matrika")[prehodna matrika]
 Markovske verige. Za prehodno matriko velja, da vsi elementi ležijo na $[0,1]$
-in da je vsota elementov po vrsticah enaka $1$
+in da je vsota elementov po vrsticah enaka $1$:
 
 $
 sum_(j=1)^n p_(i j) = 1.
 $
 
-Posledično je vektor samih enic $bold(1)=[1, 1, dots, 1]^T$ lastni vektor matrike $P$ za lastno
+Posledično je vektor samih enic $bold(1)=[1, 1, dots, 1]^T$ lastni vektor matrike $Pm$ za lastno
 vrednost $1$:
 
 $
-P bold(1) = bold(1).
+Pm bold(1) = bold(1).
 $
 
-Prehodna matrika povsem opiše porazdelitev Markovske verige. Potence prehodne matrike $P^m$
+Prehodna matrika povsem opiše porazdelitev Markovske verige. Potence prehodne matrike $Pm^m$
 na primer določajo prehodne verjetnosti po $m$ korakih:
 $
-P(X_m=j|X_1=i).
+[Pm^m]_(i j) = P(X_m=j|X_1=i).
 $
 ]
 
 == Pričakovano število korakov
-Poiskati želimo pričakovano število korakov, ko se slučajni sprehod prvič pojavi v stanju $k$ ali
+Poiskati želimo pričakovano število korakov, po katerem se slučajni sprehod prvič pojavi v stanju $k$ ali
 $-k$. Zato bomo privzeli, da se sprehod v stanjih $-k$ in $k$ ustavi in se ne premakne več.
 
 Stanje, iz katerega se veriga ne premakne več, imenujemo #emph[absorbirajoče stanje]. Za
@@ -228,10 +229,10 @@ Stanje, ki ni absorbirajoče, imenujemo #emph[prehodno stanje]. Markovsko verigo
 eno absorbirajoče stanje, imenujemo
 #link("https://en.wikipedia.org/wiki/Absorbing_Markov_chain")[absorbirajoča Markovska veriga].
 
-Predpostavimo lahko, da je začetno stanje enako $0$. Iščemo pričakovano število korakov, ko se
-slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Zanemarimo stanja, ki so več kot $k$ oddaljena
-od izhodišča in stanji $k$ in $-k$ spremenimo v absorbirajoči stanji. Obravnavamo torej
-absorbirajočo verigo z $2k+1$ stanji, pri kateri sta stanji $-k$ in $k$ absorbirajoči, ostala
+Privzamemo, da je začetno stanje enako $0$. Iščemo pričakovano število korakov, po katerem se
+slučajni sprehod prvič pojavi v stanju $k$ ali $-k$. Stanji $k$ in $-k$ spremenimo v absorbirajoči stanji, saj stanj, ki so več kot $k$ oddaljena
+od izhodišča, ni treba upoštevati. Obravnavamo torej
+absorbirajočo verigo z #linebreak(justify: true) $2k+1$ stanji, pri kateri sta stanji $-k$ in $k$ absorbirajoči, ostala
 stanja pa ne. Iščemo pričakovano število korakov, da iz začetnega stanja pridemo v eno od
 absorbirajočih stanj.
 
@@ -240,9 +241,9 @@ Za izračun iskane pričakovane vrednosti uporabimo #link("https://en.wikipedia.
 #opomba(naslov: [Kanonična oblika prehodne matrike])[
 
 Če ima Markovska veriga absorbirajoča stanja, lahko prehodno matriko
-zapišemo v bločni obliki
+zapišemo v bločni obliki:
 $
-P  = mat(
+Pm  = mat(
   Q, T;
   0, I),
 $
@@ -250,12 +251,12 @@ kjer vrstice $[Q, T]$ ustrezajo prehodnim, vrstice $[0, I]$ pa absorbirajočim s
 opiše prehodne verjetnosti za sprehod med prehodnimi stanji, matrika $Q^m$ pa prehodne
 verjetnosti po $m$ korakih, če se sprehajamo le po prehodnih stanjih.
 
-Vsoto vseh potenc matrike $Q$
+Vsoto vseh potenc matrike $Q$:
 $
 N = sum_(m=0)^infinity Q^m = (I-Q)^(-1)
 $
 
-imenujemo #emph[fundamentalna matrika] absorbirajoče markovske verige. Element
+imenujemo #emph[fundamentalna matrika] absorbirajoče Markovske verige. Element
 $n_(i j)$ predstavlja pričakovano število obiskov stanja $j$, če začnemo
 v stanju $i$.
 ]
@@ -309,7 +310,7 @@ code_box[
 caption: [Funkcija, ki izračuna vektor pričakovanih števil korakov, ki jih potrebuje slučajni
 sprehod, da se iz začetnega stanja med $1$ in $2k-1$ premakne v stanje $0$ ali $2k$.]
 )
-V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots med 0 med dots k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots 0, 1, med dots med k-1}$.
+V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots, med 0, med dots, k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots, 0, 1, med dots, med k-1}$.
 
 #code_box[
   #jlfb("scripts/03_tridiag.jl", "# koraki slika")
@@ -317,8 +318,8 @@ V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanj
 
 #figure(
   image("img/03a_koraki.svg", width:60%),
-  caption: [Pričakovano število korakov, ko slučajni sprehod prvič doseže stanji $-10$ ali $10$,
-    v odvisnosti od začetnega stanja $i in {-9, -8 dots -1, 0, 1 dots 8, 9}$.]
+  caption: [Pričakovano število korakov, da slučajni sprehod prvič doseže stanji $-10$ ali $10$,
+    v odvisnosti od začetnega stanja $i in {-9, -8 dots, -1, 0, 1, dots, 8, 9}$.]
 )
 
 Za konec se prepričajmo še s
@@ -346,7 +347,7 @@ povprečjem po velikem številu sprehodov.
 ]
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Z upoštevanjem lastnosti sistemov linearnih enačb lahko prihranimo veliko prostora in časa.
+- Z upoštevanjem lastnosti sistemov linearnih enačb prihranimo veliko prostora in časa.
 - Sistemi linearnih enačb se pogosto pojavijo, ko rešujemo matematične probleme, čeprav na
   prvi pogled nimajo nobene zveze z linearno algebro.
 ]
