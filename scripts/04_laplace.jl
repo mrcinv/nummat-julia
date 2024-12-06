@@ -3,18 +3,12 @@ using Vaja04
 # rp sin
 rp = RobniProblemPravokotnik(
   Laplace(),           # operator
-  ((0, pi), (0, pi)),  # pravokotnik
-  (sin, sin, sin, sin) # funkcije na robu
+  ((0, 1.5pi), (0, pi)),  # pravokotnik
+  (x -> 0, x -> 0, sin, sin) # funkcije na robu
 )
 # rp sin
 
 # sedlo
-rp = RobniProblemPravokotnik(
-  Laplace(),           # operator
-  ((0, 3pi/2), (0, pi)),  # pravokotnik
-  (x -> 0, x -> 0, sin, sin) # funkcije na robu
-)
-
 U, x, y = resi(rp, 0.1)
 using Plots
 surface(x, y, U)
@@ -33,9 +27,9 @@ savefig(p1, "img/04-spyA.svg")
 savefig(p2, "img/04-spyLU.svg")
 
 # lu
-A = [1 2; 3 4] # matrika sistema A x = b
-b = [1, 1] # desne strani
-F = lu(A) # funkcija lu vrne poseben podatkovi tip,
+A = [1 2; 3 4]
+b = [1, 1]
+F = lu(A) # F je tipa LU,
 x = F \ b # ki ga lahko uporabimo za rešitev sistema
 # lu
 

@@ -12,7 +12,7 @@ funkcija `fl` na levem robu `x = a` in funkcija `fd` robni pogoj na desnem robu
 `x = b`.
 """
 struct RobniProblemPravokotnik
-  op # abstrakten podatkovni tip, ki opiše diferencialni operator
+  op # diferencialni operator
   meje # meje pravokotnika [a, b] x [c, d] v obliki [(a, b), (c, d)]
   rp # funkcije na robu [fs, fz, fl, fd], f(a, y) = fl(y), f(x, c) = fs(x) ...
 end
@@ -22,7 +22,7 @@ end
 """
     L = Laplace()
 
-Ustvari abstrakten objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
+Ustvari objekt tipa `Laplace`, ki predstavlja Laplaceov diferencialni
 operator.
 """
 struct Laplace end
