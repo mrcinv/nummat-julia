@@ -7,11 +7,11 @@
 == Naloga
 <naloga>
 
-- Ustvari podatkovni tip za tridiagonalno matriko ter implementiraj operacije množenja `*` z
-  vektorjem in reševanja sistema  $A bold(x)=bold(b)$ z operatorjem `\`.
+- Ustvari podatkovni tip za tridiagonalno matriko in implementiraj operacije množenja `*` z
+  vektorjem ter reševanja sistema  $A bold(x)=bold(b)$ z operatorjem `\`.
 - Za slučajni sprehod v eni dimenziji izračunaj povprečno število korakov, ki jih potrebujemo, da
   se od izhodišča oddaljimo za $k$ korakov.
-  - Zapiši fundamentalno matriko za #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo], ki modelira slučajni sprehod, ki se lahko oddalji od izhodišča le za $k$ korakov.
+  - Zapiši fundamentalno matriko za #link("https://en.wikipedia.org/wiki/Markov_chain")[Markovsko verigo], ki modelira slučajni sprehod, ki se lahko od izhodišča oddalji le za $k$ korakov.
   - Reši sistem s fundamentalno matriko in vektorjem enic.
   - Povprečno število korakov oceni še z vzorčenjem velikega števila simulacij slučajnega sprehoda.
   - Primerjaj oceno z rešitvijo sistema.
@@ -35,7 +35,7 @@ Elementi tridiagonalne matrike, za katere se indeksa razlikujeta za več kot 1, 
 enaki 0:
 $ |i-j| > 1 => a_(i j) = 0. $
 
-Z implementacijo posebnega podatkovnega tipa za tridiagonalno matriko lahko prihranimo tako na
+Z implementacijo posebnega podatkovnega tipa za tridiagonalno matriko prihranimo tako na
 prostoru kot tudi pri časovni zahtevnosti algoritmov, saj jih lahko prilagodimo posebnim lastnostim
 tridiagonalnih matrik.
 
@@ -52,7 +52,7 @@ Podatkovni tip za tridiagonalne matrike imenujemo `Tridiag` in vsebuje tri polja
   #jlfb("Vaja03/src/Vaja03.jl", "# Tridiagonalna")
 ]
 
-Zgornja definicija omogoča, da ustvarimo nove objekte tipa `Tridiag`
+Zgornja definicija omogoča, da ustvarimo nove objekte tipa `Tridiag`:
 
 #code_box[
   #repl("using Vaja03", none)
@@ -63,8 +63,8 @@ Zgornja definicija omogoča, da ustvarimo nove objekte tipa `Tridiag`
 V zgornji definiciji `Tridiag` smo poleg deklaracije polj dodali tudi
 #link("https://docs.julialang.org/en/v1/manual/constructors/#man-inner-constructor-methods")[notranji konstruktor]
 v obliki funkcije `Tridiag`. Vemo, da mora biti dolžina vektorjev `sd` in `zd` za ena
-manjša od dolžine vektorja `d`. Zato je pogoj najbolje preveriti, ko ustvarimo objekt in
-se nam s tem v nadaljevanju ni več treba ukvarjati. Z notranjim konstruktorjem lahko te
+manjša od dolžine vektorja `d`. Zato je pogoj najbolje preveriti, ko ustvarimo objekt, in
+se nam s tem v nadaljevanju ni več treba ukvarjati. Z notranjim konstruktorjem te
 pogoje uveljavimo ob nastanku objekta in preprečimo ustvarjanje objektov z nekonsistentnimi podatki.
 ]
 
@@ -75,7 +75,7 @@ metoda deluje za argumente tipa `Tridiag`, argumentu dodamo `::Tridiag`. Več in
 #link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
 #link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih].
 
-Implementirajmo naslednje metode specifične za tip `Tridiag`:
+Implementiraj naslednje metode, specifične za tip `Tridiag` (rešitve so na koncu poglavja):
 
 - #jl("size(T::Tridiag)") vrne dimenzije matrike (@pr:03-size),
 - #jl("getindex(T::Tridiag, i, j)") vrne element `T[i,j]` (@pr:03-getindex),
@@ -109,8 +109,8 @@ Velikost      |    1      1  0.0s"
   , env: "nummat")
 ]
 
-Podobno definiramo teste še za druge funkcije. Primeri testov so v poglavju
-@sec:03-testi.
+Podobno definiramo teste še za druge funkcije (glej
+@sec:03-testi).
 
 == Reševanje tridiagonalnega sistema
 
