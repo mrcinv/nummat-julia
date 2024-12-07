@@ -1,4 +1,4 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": jl, code_box, jlfb, repl, blk
 
 = Konvergenčna območja sistemov nelinearnih enačb
@@ -7,10 +7,10 @@
 Za razliko od sistemov linearnih enačb, ki imajo preproste množice rešitev, so
 množice rešitev za sisteme nelinearnih enačb zapletene in nepredvidljive.
 Zato tudi reševanje sistemov nelinearnih enačb z numeričnimi metodami ni tako preprosto
-kot pri sistemih linearnih enačb. Numerične metode lahko
+kot za sisteme linearnih enačb. Numerične metode lahko
 konvergenco k določeni rešitvi zagotovijo le ob dodatnih predpostavkah,
-ki jih je težko v naprej izpolniti. V tej vaji si bomo na preprostem
-primeru ogledali, kako se obnaša Newtonova metoda, ko izbiramo različne
+ki jih je težko vnaprej izpolniti. V tej vaji si bomo na preprostem
+primeru ogledali, kako se obnaša Newtonova metoda za različne
 začetne približke.
 
 == Naloga
@@ -42,14 +42,14 @@ dots.v\
 f_(n)(x_1, x_2, med dots, med x_n)&=0,
 $<eq:9-nelin-sistem>
 kjer so $f_1, f_2, med dots, med f_n$ nelinearne funkcije več spremenljivk.
-Sistem @eq:9-nelin-sistem lahko zapišemo v vektorski obliki:
+Sistem @eq:9-nelin-sistem zapišemo v vektorski obliki:
 
 $
   bold(F)(bold(x)) = bold(0),
 $<eq:09enacba>
 
 kjer sta $bold(0) = [0, 0, dots, 0]^T$ in $bx = [x_1, x_2, dots, x_n]^T in RR^n$ $n$-dimenzionalna
-vektorja, $bF: RR^n -> RR^n$ pa vektorska funkcija z vektorskim argumentom.
+vektorja, $bF: RR^n -> RR^n$ pa je vektorska funkcija z vektorskim argumentom.
 Komponente vektorske funkcije $F(bold(x))$ so leve strani nelinearnih enačb @eq:9-nelin-sistem:
 
 $
@@ -85,7 +85,7 @@ $
   //=> JF(bx^((k)))bx^((k+1)) = JF(bx^((k))) bx^((k)) - bF(bx^((k))).
 $
 
-Formulo za naslednji približek $bx^((k+1))$ lahko formalno zapišemo kot:
+Formulo za naslednji približek $bx^((k+1))$ formalno zapišemo kot:
 
 $
   bx^((k+1)) = bx^((k)) - JF(bx^((k)))^(-1)bF(bx^((k))),
@@ -96,11 +96,12 @@ izračunamo. Izraz $JF(bx^((k)))^(-1)bF(bx^((k)))$ poiščemo tako, da rešimo s
 $JF(bx^((k)))bx = bF(bx^((k)))$ (npr. z LU razcepom ali s kakšno drugo metodo za reševanje
 sistemov linearnih enačb).
 
-Napišimo funkcijo #jl("newton(f, jf, x0)"), ki poišče rešitev sistema nelinearnih enačb z Newtonovo
+#naloga[
+Napiši funkcijo #jl("newton(f, jf, x0)"), ki poišče rešitev sistema nelinearnih enačb z Newtonovo
 metodo (@pr:09-newton).
+]
 
-
-Poglejmo si, kako uporabimo Newtonovo metodo za enačbe @eq:09primer. Spremenljivke $x, y$ postavimo
+Poglejmo, kako uporabimo Newtonovo metodo za enačbe @eq:09primer. Spremenljivke $x, y$ postavimo
 v vektor $bx=[x, y]^T$ in za lažje pisanje programa vpeljemo komponente $x_1=x$ in $x_2=y$.
 Sistem enačb @eq:09primer preuredimo tako, da je na desni strani $0$:
 $
@@ -108,13 +109,13 @@ x_1^3 - 3x_1x_2^2 - 1 &= 0,\
 3x_1^2x_2 - x_2^3 &= 0.
 $
 
-Funkcija levih strani $bF(bx)$ je enaka
+Funkcija levih strani $bF(bx)$ je enaka:
 
 $
 bF(bx) = vec(x_1^3 - 3x_1 x_2^2 - 1, 3x_1^2 x_2 - x_2^3),
 $
 
-Jacobijeva matrika $JF(bx)$ pa
+Jacobijeva matrika $JF(bx)$ pa:
 
 $
   JF(bx) = mat(
@@ -131,9 +132,8 @@ $
 )
 
 #opomba(naslov: [Avtomatsko odvajanje])[
-V našem primeru smo Jacobijevo matriko izračunali na roke, saj je bila funkcija
-desnih strani preprosta.
-Če je funkcija $bF$ bolj kompleksna ali je ne poznamo v naprej, lahko Jacobijevo matriko odvodov
+V našem primeru smo Jacobijevo matriko izračunali na roke, saj je bila funkcija preprosta.
+Če je funkcija $bF$ kompleksnejša ali je ne poznamo vnaprej, lahko Jacobijevo matriko odvodov
 učinkovito izračunamo z
 #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatskim odvajanjem]. V Julii
 uporabimo funkcijo #jl("jacobian") iz paketa
@@ -143,9 +143,9 @@ uporabimo funkcijo #jl("jacobian") iz paketa
 Sistem @eq:09primer izhaja iz kompleksne enačbe $z^3 = 1$ in ima tako
 3 rešitve:
 $
-x_1=1, med y_1=0 &quad (z_1=1),\
-x_2=-1/2, med y_2=sqrt(3)/2 &quad (z_2= -1/2 + sqrt(3)/2 i) #text[ in]\
-x_3=-1/2, med y_3=-sqrt(3)/2 &quad (z_3 = -1/2 - sqrt(3)/2 i).
+x_1=1, quad y_1=0 &quad (z_1=1),\
+x_2=-1/2, quad y_2=sqrt(3)/2 &quad (z_2= -1/2 + sqrt(3)/2 i) #text[ in]\
+x_3=-1/2, quad y_3=-sqrt(3)/2 &quad (z_3 = -1/2 - sqrt(3)/2 i).
 $
 
 Za različne začetne približke Newtonova metoda konvergira k različnim
@@ -163,12 +163,14 @@ Newtonova metoda je občutljiva glede izbire začetnega približka. Če je zače
 rešitve, Newtonova metoda konvergira k tisti rešitvi. Če pa je približek med ničlami, postane
 obnašanje Newtonove metode precej nepredvidljivo.
 
-Napišimo funkcijo
-#jl("konvergenca(obmocje, metoda, nx, ny)"), ki za dano območje izračuna dele območja, na katerem
-Newtonova metoda (@pr:09-konvergenca) konvergira k določeni ničli. Za lažje delo s pravokotnimi območji, si bomo pripravili nekaj pomožnih tipov
-in funkcij (@pr:09-box).
+#naloga[
+- Definiraj podatkovni tip #jl("Box2d"), ki opiše pravokotnik v ravnini s stranicami vzporednimi koordinatnim osem (@pr:09-box) in
+- Napiši funkcijo #jl("konvergenca(obmocje::Box2d, metoda, nx, ny)"), ki za dano #jl("območje") izračuna dele območja, na katerem
+   #jl("metoda") konvergira k določeni ničli.
+  Argument #jl("metoda") naj bo funkcija oblike #jl("x, it = metoda(x0)"), ki sprejme začetni približek in vrne rešitev ter število iteracij (@pr:09-konvergenca).
+]
 
-Program #jl("konvergencno_obmocje") uporabimo na našem primeru @eq:09primer:
+Program #jl("konvergenca") uporabimo na našem primeru @eq:09primer:
 
 #code_box(
   vaja9s("# obmocje")
@@ -180,11 +182,17 @@ Program #jl("konvergencno_obmocje") uporabimo na našem primeru @eq:09primer:
    približka.]
 )
 
+#opomba(naslov: [Kaj smo se naučili?])[
+  - Sisteme nelinearnih enačb lahko rešimo z Newtonovo metodo.
+  - Sistemi nelinearnih enačb imajo navadno več rešitev.
+  - Konvergenca Newtonove metode je odvisna od začetnega približka.
+  - Za izbrani začetni približek je težko predvideti, h kateri izmed rešitev bo Newtonova metoda konvergirala.
+]
 == Rešitve
 
 #let vaja9(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja09/src/Vaja09.jl", koda)))
 
-#vaja9("# newton")[Newtonova metoda za sisteme enačb]<pr:09-newton>
+#vaja9("# newton")[Newtonova metoda za reševanje sistemov nelinearnih enačb]<pr:09-newton>
 
 #vaja9("# box2d")[Pomožne funkcije za delo s pravokotnimi območji]<pr:09-box>
 

@@ -6,7 +6,7 @@ using LinearAlgebra
     x, it = newton(f, jf, x0)
 
 Poišči rešitev sistema nelinearnih enačb `f(x) = 0` z Newtonovo metodo.
-Argument `jf` je funkcija, ki vrne Jacobiijovo matriko funkcije`f`.
+Argument `jf` je funkcija, ki vrne Jacobijevo matriko funkcije`f`.
 Argument `x0`je začetni približek za Newtonovo metodo.
 """
 function newton(f, jf, x0; maxit=100, atol=1e-8)
@@ -32,8 +32,8 @@ end
 vsebuje(x, I::Interval) = x >= I.min && x <= I.max
 
 """
-Podatkovna struktura za pravokotnik vzporeden s koordinatnimi osmi (škatla).
-Pravokotnik je podan kot produkt dveh intervalov za spremenljivki `x`in `y`.
+Podatkovna struktura za pravokotnik, vzporeden s koordinatnimi osmi (škatla).
+Pravokotnik je podan kot produkt dveh intervalov za spremenljivki `x` in `y`.
 """
 struct Box2d
   int_x
@@ -80,7 +80,7 @@ Konvergenčno območje za Newtonovo metodo za reševanje
 kompleksne enačbe ``z^3=(x + i y) ^3 = 1``
 
 ```jl
-F((x, y)) = [x^3-3x*y^2; 3x^2*y-y^3];
+F((x, y)) = [x^3-3x*y^2-1; 3x^2*y-y^3];
 JF((x, y)) = [3x^2-3y^2 -6x*y; 6x*y 3x^2-3y^2]
 metoda(x0) = newton(F, JF, x0; maxit=10; tol=1e-3);
 obmocje = Box2d(Interval(-2, 2), (-1, 1))
