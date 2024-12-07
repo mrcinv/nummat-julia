@@ -4,7 +4,7 @@ using LinearAlgebra
 # razdalja
 """
 Izračunaj razdaljo med dvema točkama podanima v enem vektorju `x`.
-Koordinate prve točke so podana v prvi polovici, koordinate druge točke pa v
+Koordinate prve točke so podane v prvi polovici, koordinate druge točke pa v
 drugi polovici komponent vektorja `x`.
 """
 function razdalja(x)
@@ -44,7 +44,7 @@ term("14-napaka", napaka)
 
 # mc izračun
 using Random
-rng = Xoshiro(4526) # ustvarimo nov pseudo random generator
+rng = Xoshiro(4526) # ustvarimo nov generator psevdonaključnih števil
 mc = MonteCarlo(rng, 16^4) # uporabimo isto število izračunov kot prvič
 dmc = [
   integriraj(integral, mc) for i in 1:5] # vsaka ponovitev vrne nekaj drugega

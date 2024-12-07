@@ -83,7 +83,7 @@ end
 """
   naslednji!(index, n)
 
-Izračunanj naslednji multi index v zaporedju vseh multi indeksov
+Izračunanj naslednji multiindeks v zaporedju vseh multiindeksov
 ``\\{1, 2, ... n\\}^d`` in ga zapiši v vektor `index`.
 """
 function naslednji!(index, n)

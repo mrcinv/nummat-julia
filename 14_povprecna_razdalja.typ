@@ -8,7 +8,7 @@ formul preprosta utežena vsota
 
 $ integral_a^b f (x) d x approx sum w_k f (x_k), $
 
-kjer so uteži $w_k$ in vozli $x_k$ primerno izbrana, da se formula čim bolj približa pravi
+kjer so uteži $w_k$ in vozli $x_k$ primerno izbrani, da se formula čim bolj približa pravi
 vrednosti.
 
 Izračun večkratnih integralov je zapletenejši, a v principu enak. Kvadrature so tudi za večkratne
@@ -17,7 +17,7 @@ V tej vaji si bomo ogledali produktne kvadrature za večkratne integrale.
 
 == Naloga
 
-- Izpeljite algoritem, ki izračuna integral na več dimenzionalnem kvadru kot
+- Izpeljite algoritem, ki izračuna integral na večdimenzionalnem kvadru kot
   večkratni integral tako, da za vsako dimenzijo uporabite isto kvadraturno formulo za enkratni
   integral.
 - Pri implementaciji pazite, da ne delate nepotrebnih dodelitev pomnilnika.
@@ -25,16 +25,16 @@ V tej vaji si bomo ogledali produktne kvadrature za večkratne integrale.
   kvadratu $[0, 1]^2$ in enotski kocki $[0, 1]^3$.
 - Za sestavljeno Simpsonovo formulo in Gauss-Legendrove kvadrature ugotovite, kako napaka
   pada s številom izračunov funkcije, ki jo integriramo. Primerjajte rezultate s preprosto
-  Monte-Carlo metodo (računanje vzorčnega povprečja za enostaven slučajni vzorec).
+  Monte Carlo metodo (računanje vzorčnega povprečja za enostaven slučajni vzorec).
 
 == Dvojni integral in integral integrala
 <dvojni-integral-in-integral-integrala>
 
 Oglejmo si najenostavnejši primer integrala funkcije na kvadratu
 $[a , b]^2$. Dvojni integral lahko zapišemo kot dva gnezdena enojna
-integrala #footnote[Več o tem, kdaj je mogoče večkratni integral
+integrala#footnote[Več o tem, kdaj je mogoče večkratni integral
 zamenjati z gnezdenimi enojnimi integrali, pove
-#link("https://en.wikipedia.org/wiki/Fubini's_theorem")[Fubinijev izrek];.]
+#link("https://en.wikipedia.org/wiki/Fubini's_theorem")[Fubinijev izrek];.]:
 
 $
 integral integral_([a , b]^2) f (x , y) d x d y =
@@ -72,7 +72,7 @@ Formulo @eq:14-prodkvad2 posplošimo za integrale v več dimenzijah:
 
 $
 integral_([a, b]^d) f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx
-sum_(i_1, i_2, med dots, med i_d) product_(j=1)^d w_(i_j) f(x_(i_1), x_(i_2), dots, med x_(i_d)),
+sum_(i_1, i_2, med dots, med i_d) (product_(j=1)^d w_(i_j)) f(x_(i_1), x_(i_2), dots, med x_(i_d)),
 $<eq:14-prodkvad>
 kjer seštevamo po vseh možnih multi indeksih $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$.
 S preprosto linearno funkcijo formulo @eq:14-prodkvad razširimo na poljuben
@@ -80,11 +80,11 @@ $d$-dimenzionalen kvader $[a_1, b_1] times [a_2, b_2] times med dots med times [
 
 $
 integral_(a_1)^(b_1) integral_(a_2)^(b_2)dots integral_(a_n)^(b_n)
-  f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d\
+  f(x_1, x_2, med dots, med x_d) d x_1 d x_2 med dots med d x_d approx\
   approx product_(i=1)^(d) ((b_i - a_i)/(b - a)) sum_(i_1, i_2, med dots, med i_d)
   product_(j=1)^d w_(i_j) f(t_(1 i_1), t_(1 i_2), med dots, med t_(d i_d)),
 $<eq:14-prodkvadkvad>
-kjer je $t_(i j)$ vozle $x_(j)$ preslikano na interval $[a_i, b_i]$.
+kjer so $t_(i j)$ vozli $x_(j)$ preslikani na interval $[a_i, b_i]$.
 Kvadraturnim formulam @eq:14-prodkvad2, @eq:14-prodkvad in @eq:14-prodkvadkvad
 pravimo #emph[produktne formule].
 
@@ -92,7 +92,7 @@ pravimo #emph[produktne formule].
 
 Število vozlov, ki jih dobimo v produktni formuli, narašča eksponentno z
 dimenzijo prostora. Zato produktne kvadrature postanejo hitro
-(že v dimenzijah nad 6 ali 7) časovno tako zahtevne, da celo počasneje konvergirajo kot metoda
+(že v dimenzijah nad 6 ali 7) časovno tako zahtevne, da konvergirajo počasneje kot metoda
 Monte Carlo (@sec:14-monte-carlo).
 Pojav imenujemo
 #link("https://en.wikipedia.org/wiki/Curse_of_dimensionality")[prekletstvo dimenzionalnosti] in
@@ -112,12 +112,14 @@ kot v notranjosti. Tako so razvili
 omilijo prekletstvo dimenzionalnosti.
 ]
 
-Definirajmo naslednje tipe in funkcije:
+#naloga[
+Definiraj naslednje tipe in funkcije:
 - podatkovni tip #jl("VeckratniIntegral(fun, box)"), ki opiše večkratni integral na kvadru
-  $product [a_i, b_i]$ (@pr:14-veckratni-integral),
-- metodo #jl("integriraj(I::VeckratniIntegral, kvad::Kvadratura)") za funkcijo #jl("integriraj"),
-  ki izračuna večkratni integral s kvadraturno formulo @eq:14-prodkvadkvad (@pr:14-preslikaj,
-  @pr:14-integriraj, @pr:14-naslednji).
+  $product_i [a_i, b_i]$ (@pr:14-veckratni-integral),
+- metodo #jl("integriraj(I::VeckratniIntegral, kvad::Kvadratura)"),
+  ki izračuna večkratni integral s kvadraturno formulo @eq:14-prodkvadkvad (@pr:14-preslikaj, @pr:14-naslednji,
+  @pr:14-integriraj).
+]
 
 == Metoda Monte Carlo
 <sec:14-monte-carlo>
@@ -158,15 +160,16 @@ ima pa prednost, da ne trpi za
 prekletstvom dimenzionalnosti. Zato se jo najpogosteje uporablja za računanje integralov v
 višjih dimenzijah.
 
-Definirajmo naslednji tip in metodo:
+#naloga[
+Definiraj naslednji tip in metodo:
 - podatkovni tip #jl("MonteCarlo(rng, n)") za parametre metode Monte Carlo in
-- novo metodo #jl("integriraj(integral::VeckrantiIntegral, mc::MonteCarlo)") za funkcijo
-  #jl("integriraj"), ki dani integral izračuna z metodo Monte Carlo (@pr:14-mc).
+- metodo #jl("integriraj(integral::VeckrantiIntegral, mc::MonteCarlo)"), ki dani integral izračuna z metodo Monte Carlo (@pr:14-mc).
+]
 
 == Povprečna razdalja med točkama na kvadratu $[0 , 1]^2$
 <povprečna-razdalja-med-točkama-na-kvadratu-012>
 
-Povprečna razdaljo med dvema točkama na kvadratu $[0, 1]^2$ izračunamo s štirikratnem integralom:
+Povprečno razdaljo med dvema točkama na kvadratu $[0, 1]^2$ izračunamo s štirikratnim integralom:
 
 $ overline(d) = integral_([0 , 1]^4) sqrt((x_1 - x_2)^2 + (y_1 - y_2)^2) d x_1 d x_2 d y_1 d y_2 . $
 
@@ -174,21 +177,22 @@ Za izračun integrala bomo uporabili produktno kvadraturo s sestavljeno Simpsono
 formulo in metodo Monte Carlo.
 
 #let demo14(koda) = code_box(jlfb("scripts/14_quad4d.jl", koda))
+#pagebreak()
 Najprej definiramo funkcijo razdalje:
 
 #demo14("# razdalja")
 
-Nato pa še funkcijo, ki izračuna povprečno razdaljo:
+Nato pa še funkcijo, ki izračuna povprečno razdaljo.
 
 #demo14("# povprecna")
 
-Za izračun uporabimo sestavljeno Simpsonovo formulo:
+Za izračun uporabimo sestavljeno Simpsonovo formulo.
 
 #demo14("# izracun")
 #code_box(raw(read("out/14-dp.out")))
 
 Napako ocenimo tako, da izračun ponovimo z natančnejšo kvadraturno formulo. Na primer tako, da
-podvojimo število vozlov v osnovni kvadraturi:
+podvojimo število vozlov v osnovni kvadraturi.
 
 #demo14("# ocena napake")
 #code_box(raw(read("out/14-napaka.out")))
@@ -199,7 +203,7 @@ je odvisen od naključnega vzorca. Zato dobimo različne približke, če metodo 
 #demo14("# mc izračun")
 #code_box(raw(read("out/14-dmc.out")))
 
-Poglejmo si, kako napaka pada, če povečamo število podintervalov v sestavljeni Simpsonovi formuli.
+Poglejmo, kako napaka pada, če povečamo število podintervalov v sestavljeni Simpsonovi formuli.
 
 #demo14("# napaka simpson")
 
@@ -256,9 +260,9 @@ vzorčenje.
 
 #vaja14("# VeckratniIntegral")[Podatkovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
 #vaja14("# preslikaj")[Funkcija, ki preslika kvadraturo na drug interval.]<pr:14-preslikaj>
-#vaja14("# integriraj")[Funkcija, ki izračuna večkratni integral s produktno kvadraturo.]<pr:14-integriraj>
 #vaja14("# naslednji!")[Funkcija, ki izračuna naslednji multiindeks
 $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$. ]<pr:14-naslednji>
+#vaja14("# integriraj")[Funkcija, ki izračuna večkratni integral s produktno kvadraturo.]<pr:14-integriraj>
 #vaja14("# simpson")[Funkcija, ki izračuna vozle in uteži za sestavljeno Simpsonovo pravilo.]<pr:14-simpson>
 #vaja14("# mc")[Funkcija, ki izračuna večkratni integral z metodo Monte Carlo.]<pr:14-mc>
 

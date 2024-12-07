@@ -3,7 +3,7 @@ using Vaja13
 using Test
 
 # naslednji
-@testset "Naslednji index" begin
+@testset "Naslednji indeks" begin
   index = [1, 1, 1]
   Vaja14.naslednji!(index, 3)
   @test index == [2, 1, 1]
