@@ -1,4 +1,4 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": jl, jlfb, code_box, repl
 = Spektralno razvrščanje v gruče
 <spektralno-razvrščanje-v-gruče>
@@ -10,7 +10,7 @@ Ogledali si bomo metodo, ki s
 #link("https://sl.wikipedia.org/wiki/Spektralna_teorija_grafov")[spektralno analizo
 Laplaceove matrike] podobnostnega grafa podatke
 preslika v prostor, v katerem jih nato preprosteje razvrstimo z algoritmi gručenja.
-Sledili bomo postopku imenovanemu
+Sledili bomo postopku, imenovanemu
 #link("https://en.wikipedia.org/wiki/Spectral_clustering")[spektralno gručenje], kot je
 opisan v @von_luxburg_tutorial_2007.
 
@@ -19,7 +19,7 @@ opisan v @von_luxburg_tutorial_2007.
 
 - Napiši funkcijo, ki zgradi podobnostni graf za podatke, podane kot oblak točk v
   $RR^d$. V podobnostnem grafu je vsaka točka v oblaku vozlišče, povezani pa so vsi pari
-  točk $i$ in $j$, ki so za manj kot $epsilon$ oddaljeni za primerno izbrani $epsilon$.
+  točk $i$ in $j$, ki so oddaljeni za manj kot $epsilon$ za primerno izbrani $epsilon$.
 - Napiši funkcijo, ki za dano simetrično matriko poišče $k$ po absolutni vrednosti najmanjših
   lastnih vrednosti in pripadajoče lastne vektorje.
   Uporabi inverzno iteracijo za $k$ vektorjev in na vsakem koraku s QR razcepom poskrbi, da so
@@ -41,20 +41,20 @@ načinov:
   $epsilon$ okolici te točke,
 - #strong[$k$ najbližji sosedi]: $x_k$ povežemo z $x_i$, če je
   $x_i$ med $k$ najbližjimi točkami. Tako dobimo usmerjen graf,
-  zato ponavadi upoštevamo povezavo v obe smeri.
+  zato navadno upoštevamo povezavo v obe smeri.
 - #strong[poln utežen graf]: povežemo vse točke, vendar povezave utežimo
   glede na razdaljo. Pogosto uporabljena utež je nam znana
-  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialna bazna funkcija]
+  #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialna bazna funkcija]:
 
   $ w(x_i , x_k) = exp (-(norm(x_i - x_k)^2)/(2 sigma^2)), $
 
   pri kateri s parametrom $sigma$ določamo velikost okolic.
 
-Uteženemu grafu podobnosti z matriko uteži
+Uteženemu grafu podobnosti z matriko uteži:
 
 $ W = [w_(i j)] $
 
-priredimo #link("https://sl.wikipedia.org/wiki/Laplaceova_matrika")[Laplaceovo matriko]
+priredimo #link("https://sl.wikipedia.org/wiki/Laplaceova_matrika")[Laplaceovo matriko]:
 
 $ L = D - W, $
 
@@ -82,10 +82,10 @@ grafa. Postopek je naslednji:
 - Označimo matriko lastnih vektorjev $Q=[v_1, v_2, dots,v_k]$. Stolpci
   $Q^T$ ustrezajo koordinatam točk v novem prostoru.
 - Za stolpce matrike $Q^T$ izvedemo izbran algoritem gručenja
-  (npr. algoritem $k$ povprečij).
+  (npr. algoritem #link("https://en.wikipedia.org/wiki/K-means_clustering")[$k$-povprečij]).
 
-V tej vaji bomo postopek gručenja izpustili. Grafično si bomo ogledali, kako
-je videti oblak točk v novem koordinatnem sistemu.
+V tej vaji bomo zadnji korak izpustili. Grafično si bomo ogledali, kako
+je videti oblak točk v novem koordinatnem sistemu, določenem z matriko $Q$.
 
 == Primer
 <primer>
@@ -101,6 +101,13 @@ Algoritem preverimo na mešanici treh Gaussovih porazdelitev.
     Mešanica treh različnih Gaussovih porazdelitev v ravnini
   ]
 )
+
+#naloga[
+  Napiši naslednji funkciji:
+  - #jl("graf_eps(tocke, r)"), ki za dane točke določi matriko sosednosti za podobnostni graf z $epsilon$ okolicami (rešitev je @pr:9-graf_eps) in
+  - #jl("laplace(A)"), ki za dano matriko sosednosti izračuna Laplaceovo
+    matriko grafa (rešitev je @pr:9-laplace).
+]
 
 Izračunamo graf sosednosti z metodo $epsilon$ okolic in poiščemo
 Laplaceovo matriko dobljenega grafa.
@@ -149,7 +156,7 @@ najbolj razčlenjene.
 
 == Inverzna iteracija
 <inverzna-potenčna-metoda>
-Ker nas zanima le nekaj najmanjših lastnih vrednosti, lahko za izračun uporabimo
+Ker nas zanima le nekaj najmanjših lastnih vrednosti, lahko za njihov izračun uporabimo
 #link("https://en.wikipedia.org/wiki/Inverse_iteration")[inverzno iteracijo].
 Pri tej metodi zgradimo zaporedje približkov z rekurzivno
 formulo:
@@ -161,27 +168,28 @@ lastno vrednost matrike $A$ za skoraj vse izbire začetnega približka $bold(x)^
 
 #opomba(naslov:
 [Namesto inverza uporabite LU razcep ali drugo metodo za reševanje sistema linearnih enačb])[
-V inverzni iteraciji moramo večkrat zaporedoma izračunati vrednost
+V inverzni iteraciji moramo večkrat zaporedoma izračunati vrednost:
 $ A^(-1) bold(x^((k))). $
 
-Za izračun te vrednosti pa v resnici ne potrebujemo inverzne matrike $A^(-1)$.
+Za izračun te vrednosti v resnici ne potrebujemo inverzne matrike $A^(-1)$.
 Računanje inverzne matrike je namreč časovno zelo zahtevna operacija, zato se ji, razen v nizkih
-dimenzijah, če je le mogoče, izognemo. Produkt $bold(x) = A^(-1)bold(b)$ je rešitev sistema linearnih enačb $A bold(x) = bold(b)$ in metode za reševanje sistema so bolj učinkovite, kot če izračunamo
-inverz $A^(-1)$ in ga pomnožimo z vektorjem $bold(x)$.
+dimenzijah, če je le mogoče, izognemo. Produkt $bold(x) = A^(-1)bold(b)$ je rešitev
+sistema linearnih enačb $A bold(x) = bold(b)$ in metode za reševanje sistema so učinkovitejše od računanja
+inverza $A^(-1)$ in množenja z vektorjem $bold(x)$.
 
 Inverz $A^(-1)$ matrike $A$ lahko nadomestimo tudi z razcepom matrike $A$.
 Če na primer uporabimo LU razcep $A=L U$, lahko $A^(-1) bold(b)$ izračunamo tako, da rešimo
- sistem $A bold(x) = bold(b)$ oziroma $L U bold(x) = bold(b)$ v dveh korakih
+ sistem $A bold(x) = bold(b)$ oziroma $L U bold(x) = bold(b)$ v dveh korakih:
 
  $
- L bold(y)& = bold(b) #text[ in]\
+ L bold(y)& = bold(b) quad #text[ in]\
  U bold(x)& = bold(y),
  $
 
  ki sta časovno toliko zahtevna, kot je množenje z matriko $A^(-1)$.
- Programski jezik `julia` ima za ta namen prav posebno metodo
+ Programski jezik `julia` ima za ta namen posebno metodo
  #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/index.html#LinearAlgebra.factorize")[factorize],
- ki za različne vrste matrik izračuna najbolj primeren razcep. Rezultat metode `factorize` je
+ ki za različne vrste matrik izračuna najprimernejši razcep. Rezultat metode `factorize` je
  vrednost posebnega tipa, za katero lahko uporabimo operator `\`, da učinkovito izračunamo rešitev sistema:
 
  #code_box[
@@ -190,10 +198,11 @@ Inverz $A^(-1)$ matrike $A$ lahko nadomestimo tudi z razcepom matrike $A$.
  ]
 ]
 
-Napišimo funkcijo #jl("inviter(resi, x0)"), ki poišče lastni par za najmanjšo lastno vrednost matrike
+#naloga[
+Napiši funkcijo #jl("inviter(resi, x0)"), ki poišče lastni par za najmanjšo lastno vrednost matrike
 (rešitev je @pr:9-inviter). Matrika ni podana eksplicitno, ampak je podana le funkcija `resi`, ki
 reši sistem $A bold(x) = bold(b)$ za dani vektor $bold(b)$.
-
+]
 == Inverzna iteracija s QR razcepom
 
 Laplaceova matrika je simetrična, zato so lastni vektorji ortogonalni.
@@ -201,15 +210,18 @@ Lastne vektorje lahko poiščemo tako, da iteracijo izvajamo na več
 vektorjih hkrati in nato na dobljeni bazi izvedemo ortogonalizacijo s QR
 razcepom. Tako dobljeno zaporedje lastnih vektorjev konvergira  k lastnim vektorjem za po absolutni
 vrednosti najmanjše lastne vrednosti. Priredimo sedaj funkcijo #jl("inviter"), da za začetni
-približek sprejme $k times n$ matriko in izvede inverzno iteracijo s QR razcepom. Napišimo funkcijo
+približek sprejme $k times n$ matriko in izvede inverzno iteracijo s QR razcepom.
+#naloga[
+Napiši funkcijo
 #jl("inviterqr(resi, X0)"), ki poišče lastne vektorje za prvih nekaj najmanjših lastnih vrednosti
 (rešitev je @pr:9-inviterqr).
 Število lastnih vektorjev, ki jih metoda poišče, naj bo določeno z dimenzijami začetnega
 približka `X0`.
+]
 
-Laplaceova matrika grafa je pogosto redka. Zato se splača uporabiti eno izmed iterativnih metod.
-Poleg tega je Laplaceova matrika simetrična in pozitivno semidefinitna.
-Zato za rešitev sistema uporabimo
+Laplaceova matrika grafa je pogosto redka, zato se splača uporabiti eno izmed iterativnih metod.
+Poleg tega je Laplaceova matrika simetrična in pozitivno semidefinitna,
+zato za rešitev sistema uporabimo
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov].
 Težava je, ker ima Laplaceova matrika grafa tudi lastno vrednost $0$, zato metoda konjugiranih
 gradientov ne konvergira, če jo uporabimo na njej. To lahko rešimo s preprostim
@@ -219,16 +231,16 @@ premikom Laplaceove matrike za $epsilon I$.
 
 Inverzna iteracija @eq:9-inviter konvergira k lastnemu vektorju za najmanjšo lastno vrednost.
 Lastne vektorje za druge lastne vrednosti poiščemo s premikom.
-Če ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, med dots, med lambda_n$, potem ima matrika
+Če ima matrika $A$ lastne vrednosti $lambda_1, lambda_2, med dots, med lambda_n$, potem ima matrika:
 
 $ A - delta I $
 
 lastne vrednosti $lambda_1 - delta, lambda_2 - delta, med dots, med lambda_n - delta$. Če izberemo
 $delta$ dovolj blizu $lambda_k$, lahko poskrbimo, da je $lambda_k - delta$ najmanjša lastna vrednost
-matrike $A - delta I$. Tako lahko z inverzno iteracijo za matriko $A - delta I$ poiščemo lastni vektor za poljubno lastno
+matrike $A - delta I$. Tako z inverzno iteracijo za matriko $A - delta I$ poiščemo lastni vektor za poljubno lastno
 vrednost.
 
-Podobno lahko premaknemo Laplaceovo matriko, da postane strogo pozitivno definitna. Potem
+Podobno premaknemo Laplaceovo matriko, da postane strogo pozitivno definitna. Potem
 lahko za reševanje sistema uporabimo metodo konjugiranih gradientov. Namesto lastnih
 vrednosti in vektorjev matrike $L$, iščemo lastne vrednosti in vektorje malce premaknjene matrike
 $L + epsilon I$ z enakimi lastnimi vektorji kot $L$.
@@ -239,7 +251,7 @@ $L + epsilon I$ z enakimi lastnimi vektorji kot $L$.
 raw(read("out/08_inviterqr.out").split("\n").slice(-5).join("\n"))
 )
 
-Vidimo, da metoda konjugiranih gradientov zelo hitro konvergira za naš primer. Z inverzno iteracijo
+Vidimo, da metoda konjugiranih gradientov za naš primer zelo hitro konvergira. Z inverzno iteracijo
 s QR razcepom smo učinkovito poiskali lastne vektorje Laplaceove matrike za najmanjše lastne
 vrednosti. Ti lastni vektorji pa izboljšajo proces gručenja.
 
@@ -279,13 +291,13 @@ in #emph[metoda konjugiranih gradientov].
 
 #figure(
   vaja8("# graf_eps"),
-  caption: [Funkcija, ki ustvari graf podobnosti z $epsilon$ okolicami za dane podatke.]
-  )
+  caption: [Funkcija, ki ustvari matriko sosednosti za graf podobnosti z $epsilon$ okolicami za dane podatke.]
+  )<pr:9-graf_eps>
 
 #figure(
   vaja8("# laplace"),
   caption: [Funkcija, ki izračuna Laplaceovo matriko grafa.]
-  )
+  )<pr:9-laplace>
 
 == Testi
 

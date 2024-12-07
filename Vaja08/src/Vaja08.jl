@@ -44,10 +44,10 @@ end
 """
     x, lambda = inviterqr(resi, x0)
 
-Poišči nekaj najmanjših lastnih vrednosti in  lastnih vektorjev z inverzno iteracijo
+Poišči nekaj najmanjših lastnih vrednosti in lastnih vektorjev z inverzno iteracijo
 s QR razcepom.
 Argument `resi` je funkcija, ki za dani vektor `b` poišče rešitev sistema `Ax=b`.
-Argument `x0` je matrika začetnih približkov. Toliko, kot je stolpcev v matriki
+Argument `x0` je matrika začetnih približkov. Toliko kot je stolpcev v matriki
 `x0`, toliko lastnih parov vrne funkcija.
 """
 function inviterqr(resi, x0, maxit=100, tol=1e-10)
