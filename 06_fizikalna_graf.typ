@@ -51,7 +51,7 @@ sosednja vozlišča s silo, ki je sorazmerna razdalji med vozlišči.
 
 Harmonična vzmet je idealna vzmet dolžine $0$, za katero sila ni sorazmerna spremembi dolžine, pač
 pa dolžini vzmeti. Sila harmonične vzmeti, ki je vpeta med točki $(x_1, y_1, z_1)$ in
-$(x_2, y_2, z_2)$ in deluje na prvo krajišče, je enaka
+$(x_2, y_2, z_2)$ in deluje na prvo krajišče, je enaka:
 
 $
 Fvec_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
@@ -59,8 +59,8 @@ $
 
 kjer je $k$ koeficient vzmeti.
 
-Koordinate vozlišč določimo tako, da poiščemo ravnovesje sistema. To pomeni, da so v vsakem vozlišču $j$ v ravnovesju sile, s katerimi
-sosednja vozlišča delujejo nanj:
+Koordinate vozlišč določimo tako, da poiščemo ravnovesje sistema. To pomeni, da so v vsakem vozlišču $j$ sile, s katerimi
+sosednja vozlišča delujejo nanj, v ravnovesju:
 
 $
   sum_(i in N(j)) Fvec_(i j) = bold(0),
@@ -94,8 +94,8 @@ $
 $<eq:06-trojni-sistem>
 
 
-Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem  le ničelno rešitev#footnote[Rešitev je enolična le, če je matrika sistema @eq:06-trojni-sistem polnega ranga. To velja, če graf nima izoliranih točk]. Če želimo
-netrivijalno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
+Enačbe @eq:06-trojni-sistem so homogene, kar pomeni, da ima sistem  le ničelno rešitev#footnote[Rešitev je enolična le, če je matrika sistema @eq:06-trojni-sistem polnega ranga. To velja, če graf nima izoliranih točk.]. Če želimo
+netrivialno rešitev, moramo nekatera vozlišča v grafu pritrditi in jim predpisati koordinate. Brez
 škode lahko predpostavimo, da so vozlišča, ki jih pritrdimo, na koncu. Označimo z
 $F = {m+1, dots, n} subset V(G); quad m<n$ množico vozlišč, ki imajo določene koordinate. Koordinate za
 vozlišča iz $F$ niso več spremenljivke, ampak jih moramo prestaviti na drugo stran enačbe.
@@ -124,7 +124,7 @@ A = mat(
   a_(2 1), - st(2), dots, a_(2 m);
   dots.v, dots.v, dots.down, dots.v;
   a_(m 1), a_(m 2), dots, - st(m)
-)#text[ in ]
+)quad #text[ in ] quad
 bold(b) = -vec(sum_(i=m+1)^n a_(1 i)x_i, sum_(i=m+1)^n a_(2 i)x_i, dots.v,
 sum_(i=m+1)^n a_(n i)x_i).
 $<eq:06-matrika>
@@ -142,7 +142,7 @@ Za sosede fiksnih vozlišč je neenakost stroga, zato je matrika diagonalno domi
 eno vrstico je neenakost stroga. Ker so vsi elementi na diagonali negativni in je matrika diagonalno
 dominantna (z vsaj eno vrstico, ki je strogo diagonalno dominantna), je
 matrika $A$ negativno definitna in matrika $-A$ pozitivno definitna. Za večino grafov, za katere
-uporabimo zgornji postopek, bo matrika sistema $A$ redka.
+uporabimo zgornji postopek, je matrika sistema $A$ redka.
 Zato lahko za reševanje sistema $-A bold(x) = -bold(b)$ uporabimo
 #link("https://en.wikipedia.org/wiki/Conjugate_gradient_method")[metodo konjugiranih gradientov], ki deluje za sisteme s pozitivno definitno matriko.
 Metoda konjugiranih gradientov in druge iterativne metode so zelo primerne za redke matrike.
@@ -154,10 +154,10 @@ ki bi dodale neničelne elemente.
 Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl]@Graphs2021,
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
-Napišimo naslednje funkcije:
+Napiši naslednje funkcije:
 - #jl("krozna_lestev(n)"), ki ustvari graf krožne lestve z $2n$ vozlišči (rešitev @pr:06-lestev).
 - #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za
-  dani graf `G` in seznam vozlišč, ki niso pritrjena `sprem` (rešitev @pr:06-matrika),
+  dani graf `G` in seznam vozlišč `sprem`, ki niso pritrjena (rešitev @pr:06-matrika),
 - #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za
   sistem @eq:06sistem-x (rešitev @pr:06-desne-strani),
 - #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A bold(x) = bold(b)$ z metodo konjugiranih gradientov
@@ -193,14 +193,14 @@ po krožnici.
 
 #figure(
   image("img/06-lestev-fiz.svg", width: 60%),
-  caption: [Graf krožna lestev s 16 vozlišči vložen s fizikalno metodo. Zunanja
+  caption: [Graf krožna lestev s 16 vozlišči, vložen s fizikalno metodo. Zunanja
   vozlišča so fiksna, notranja pa postavljena tako, da so sile vzmeti na povezavah v ravnovesju.]
 )
 
 == Dvodimenzionalna mreža
 
 Preizkusimo algoritem na dvodimenzionalni mreži. Dvodimenzionalna mreža je graf, ki ga dobimo,
-če v ravnini pravokotnik razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje,
+če pravokotnik v ravnini razdelimo v pravokotno mrežo. Najprej pritrdimo štiri točke druge stopnje,
 ki ustrezajo ogliščem pravokotnika.
 
 #code_box(

@@ -1,5 +1,6 @@
 #import "julia.typ": code_box, jl, jlfb, repl, blk
 #import "admonitions.typ": opomba
+#import "@preview/metro:0.3.0": unit
 
 = Začetni problem za navadne diferencialne enačbe
 
@@ -379,9 +380,10 @@ Nato napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih st
 
 #demo16("# posevni")
 
-Poiščimo približno rešitev za prvih $5"s"$ leta z začetnimi pogoji
-$x_0 = 0"m"$, $y_0 = 1"m"$, $bold(v)_0=[10"m"/"s", 20"m"/"s"]^T$ in
-parametri $g = 9.8 "m"/"s"^2$ in $c=0.1 1/"m"$.
+Poiščimo približno rešitev za prvih $unit(5s)$ leta z začetnimi pogoji
+$x_0 = unit(0 m)$, $y_0 = unit(1m)$, #linebreak(justify: false)
+$bold(v)_0=[unit(10m/s), unit(20m/s)]^T$ in
+parametri $g = unit(9.8 m/s^2)$ in $C=unit( 0.1/ m)$.
 
 #demo16("# primer 1")
 
@@ -392,14 +394,14 @@ parametri $g = 9.8 "m"/"s"^2$ in $c=0.1 1/"m"$.
     spreminjajo v odvisnosti od časa.]
 )
 Iz grafa lahko razberemo, da se hitrost približuje limitni vrednosti. V vodoravni
-smeri gre hitrost proti $0"m"/"s"$, v vertikalni smeri pa se približuje
+smeri gre hitrost proti $unit(0 m/s)$, v vertikalni smeri pa se približuje
 vrednosti, ko sta sila teže in sila upora v ravnovesju
 $
   |bold(F)_u| = |bold(F)_g| => C v^2 = g => v = sqrt(g/C).
 $
 Hitrost, ko se to
 zgodi imenujemo #emph[terminalna hitrost] prostega pada. v našem primeru je
-terminalna hitrost enaka $v = sqrt(9.8/0.1)"m"/"s" approx 9.9"m"/"s"$.
+terminalna hitrost enaka $v = sqrt(9.8 slash 0.1)med unit(m/s) approx unit(9.9m/s)$.
 
 Poglejmo, kako se obnesejo različne metode.
 Primerjali bomo vse tri metode, ki smo jih spoznali. Za različne vrednosti koraka bomo
@@ -504,14 +506,12 @@ Napišimo naslednje funkcije:
   (@pr:16-nicla).
 
 #let demo16str(koda) = blk("scripts/16_nde.jl", koda)
-#let meter = $upright(m)$
-#let sekunda = $upright(s)$
 Funkcijo #jl("nicla") uporabimo za poševni met. Uporabili bomo relativno velik
 korak, da bo postopek iskanja ničle bolj nazoren. Rešimo začetni problem za poševni
-met @eq:16-sistem-1-reda s parametri $g=9.8 meter slash sekunda^2$, $c=0.1 1/"m"$, z začetnim
-položajem $x = 0meter, y = 1meter$ in začetno hitrostjo
-$v_(x) = 10 meter slash sekunda, v_(y) = 20 meter slash sekunda$. Enote so v
- v numeričnem izračunu izpuščene.
+met @eq:16-sistem-1-reda s parametri $g=9.8 unit(m/s^2)$, $c=unit(0.1/m)$, z začetnim
+položajem $x = unit(0m), y = unit(1m)$ in začetno hitrostjo
+$v_(x) = unit(10 m/s^2)$, $v_(y) = unit(20 m/s)$. Enote so v
+ numeričnem izračunu izpuščene.
 
 #demo16("# nicla 1")
 
@@ -536,8 +536,8 @@ prve komponente rešitve.
 repl(demo16str("# nicla 4"), read("out/16-nicla-vrednost.out"))
 )
 
-Iz rezultata razberemo, da je čas leta približno $2.57 sekunda$, medtem ko je
-dolžina, ki jo izstrelek doseže enaka $9.67 meter$. Narišimo še
+Iz rezultata razberemo, da je čas leta približno $unit(2.57 s)$, medtem ko je
+dolžina, ki jo izstrelek doseže enaka $unit(9.67 m)$. Narišimo še
 trajektorijo sistema, ki je podana s parametrično krivuljo $(x(t), y(t)) = (u_1(t), u_2(t))$.
 
 #demo16("# nicla 3")
