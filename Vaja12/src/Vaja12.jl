@@ -9,7 +9,7 @@ s koeficienti `a` in vozlišči `x`.
 
 # Primer
 
-Poglejmo polinom ``1+x+x(x-1)``, ki je definiran s koeficienti `[1, 1, 1]` in z vozlišči
+Poglejmo polinom ``1+x+x(x-1)``, ki je definiran s koeficienti `[1, 1, 1]` in z vozliščema
 ``x_0 = 0`` in ``x_1 = 1``
 
 ```jldoctest
@@ -60,7 +60,7 @@ metoda predvideva, da so v `f` poleg vrednosti podani tudi odvodi.
 
 # Primer
 
-Polinom ``x^2-1`` interpolira podatke `x=[0,1,2]` in `y=[-1, 0, 3]` lahko v
+Polinom ``x^2-1``, ki interpolira podatke `x=[0,1,2]` in `y=[-1, 0, 3]`, v
 Newtonovi obliki zapišemo kot ``1 + x + x(x-1)``
 
 ```jldoctest

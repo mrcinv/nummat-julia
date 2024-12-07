@@ -90,7 +90,7 @@ polinomom v Čebiševih točkah (@ineterpolacija-z-baricentrično-formulo).
 <ineterpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
 $[a , b]$ izračuna polinomski interpolant v Čebiševih točkah.
-Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangevo interpolacijo] po formuli
+Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangeevo interpolacijo] po formuli
 
 $ l(x) = cases(frac(sum frac(f lr((x_j)) lambda_j, x - x_j), sum frac(lambda_j, x - x_j))"," & quad x eq.not x_j",",
   f lr((x_j))","& quad "sicer.") $

@@ -135,7 +135,7 @@ $
 $
 
 kjer je napaka enaka $R_f = -1/2880 h^5 f^((4))(xi)$ za neznano vrednost $xi in [0, h]$. Obstoj
-vrednosti $xi$ je posledica Lagrangevega izreka in vrednost $xi$ je odvisna od funkcije $f$, ki
+vrednosti $xi$ je posledica Lagrangeevega izreka in vrednost $xi$ je odvisna od funkcije $f$, ki
 jo integriramo. Izpeljavo Simpsonovega pravila si lahko ogledate v @sec:13-izpeljava[poglavju].
 
 Podobno kot trapezno lahko tudi Simpsonovo pravilo preoblikujemo v sestavljeno pravilo. Sestavljeno

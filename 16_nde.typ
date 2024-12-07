@@ -29,7 +29,7 @@ V tej vaji bomo napisali knjižnico za reševanje začetnega problema za NDE.
   - z metodo Runge-Kutta reda 2,
   - z metodo Runge-Kutta reda 4.
 4. Napiši funkcijo `vrednost`, ki za dano rešitev začetnega problema izračuna vrednost rešitve v vmesnih
-  točkah s Hermiteovim kubičnim zlepkom (@sec:12-zlepki).
+  točkah s Hermitovim kubičnim zlepkom (@sec:12-zlepki).
 Napisane funkcije uporabi za obravnavo poševnega meta z upoštevanjem zračnega upora.
 Iz Newtonovih zakonov gibanja in kvadratnega zakona upora zapiši sistem NDE.
 Kako daleč leti telo, preden pade na tla? Koliko časa leti?
@@ -219,7 +219,7 @@ numerično rešitev.
 Približke, ki jih bomo izračunali z različnimi metodami, bomo shranili v poseben podatkovni tip
 #jl("ResitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunanih približkov rešitve, bomo
 v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE.
-Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermiteovim zlepkom.
+Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermitovim zlepkom.
 
 #figure(
   vaja16("# ResitevNDE"),
@@ -286,24 +286,24 @@ Definirajmo:
   #jl("korak(m::RK4, fun, t0, u0, par, smer)"), ki izračuna približek na naslednjem koraku
   (@pr:16-rk4).
 
-== Hermiteova interpolacija
+== Hermitova interpolacija
 
 Numerične metode za začetni problem NDE izračunajo približke za rešitev zgolj v nekaterih vrednostih
 spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo s
-#link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermiteovim zlepkom], ki smo ga
-že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermiteov
+#link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom], ki smo ga
+že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermitov
 zlepek je na intervalu $[t_i, t_(i+1)]$ določen z vrednostmi rešitve in odvodi v krajiščih
 intervala. Ti podatki so shranjeni v vrednosti tipa #jl("ResitevNDE").
 Napišimo sedaj funkcijo #jl("vrednost(res::ResitevNDE, t)"), ki vrne približek
 za rešitev NDE v dani točki (@pr:16-vrednost). Vrednosti rešitve lahko na ta način izračunamo tudi
 za argumente $t$, ki so med približki, ki jih izračuna Eulerjeva ali kakšna druga metoda.
-Prikažemo Hermiteovo interpolacijo na grafu:
+Prikažemo Hermitovo interpolacijo na grafu:
 
 #demo16("# plot hermite")
 
 #figure(
   image("img/16-hermite.svg", width: 60%),
-  caption: [Vmesne vrednosti med približki metode Runge - Kutta reda 2 interpoliramo s Hermiteovim
+  caption: [Vmesne vrednosti med približki metode Runge - Kutta reda 2 interpoliramo s Hermitovim
   zlepkom.]
 )
 == Poševni met z upoštevanja zračnega upora
@@ -578,7 +578,7 @@ Oglejmo si še, kako se hitrost spreminja s časom.
 
 #figure(
   vaja16("# interpolacija"),
-  caption: [Vmesne vrednosti rešitve NDE izračunamo s Hermiteovim kubičnim
+  caption: [Vmesne vrednosti rešitve NDE izračunamo s Hermitovim kubičnim
   zlepkom.]
 )<pr:16-vrednost>
 

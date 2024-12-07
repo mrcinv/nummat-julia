@@ -12,7 +12,7 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
 == Naloga
 
 - Podatke iz @hermitovi-podatki[Tabele] interpoliraj s
-  #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[Hermiteovim kubičnim zlepkom].
+  #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[Hermitovim kubičnim zlepkom].
   #figure(
   table(columns: 5, stroke: none, align: center,
     table.vline(x: 1),
@@ -20,9 +20,9 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     table.hline(),
     $f(x)$, $y_1$, $y_2$, $dots$, $y_n$,
     $f'(x)$, $d y_1$, $d y_2$, $dots$, $d y_n$),
-    caption: [Podatki, ki jih potrebujemo za Hermiteov kubični zlepek.]
+    caption: [Podatki, ki jih potrebujemo za Hermitov kubični zlepek.]
   )<hermitovi-podatki>
-- Uporabi Hermiteovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @hermitova-baza[Tabele] in
+- Uporabi Hermitovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @hermitova-baza[Tabele] in
   jih z linearno funkcijo preslikaj z intervala $[0, 1]$ na interval $[x_i, x_(i+1)]$.
 
 #figure(
@@ -37,32 +37,32 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     ),
 caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$]
 )<hermitova-baza>
-- Definiraj podatkovni tip `HermitovZlepek` za Hermiteov kubični zlepek, ki vsebuje podatke iz
+- Definiraj podatkovni tip `HermitovZlepek` za Hermitov kubični zlepek, ki vsebuje podatke iz
   @hermitovi-podatki[Tabele].
-- Napiši funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermiteovega kubičnega zlepka za dano
+- Napiši funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermitovega kubičnega zlepka za dano
   vrednost argumenta $x$. Omogoči, da se vrednosti tipa #jl("HermitovZlepek")
   #link("https://docs.julialang.org/en/v1/manual/methods/#Function-like-objects")[kliče kot funkcije].
-- S Hermiteovim zlepkom interpoliraj funkcijo $f(x) = cos(2x) + sin(3x)$ na intervalu $[0, 6]$ v
-  $10$ točkah. Napako oceni s formulo za napako polinomske interpolacije
+- S Hermitovim zlepkom interpoliraj funkcijo $f(x) = cos(2x) + sin(3x)$ na intervalu $[0, 6]$ v
+  $10$ točkah. Napako oceni s formulo za napako polinomske interpolacije:
   $
     f(x) - p_3(x) = (f^((4))(xi))/(4!)(x - x_1)(x - x_2)(x - x_3)(x - x_4)
   $<eq:12-ocena>
-  in oceno primerjaj z dejansko napako. Upoštevaj, da je pri Hermiteovi interpolaciji $x_1=x_2$
+  in oceno primerjaj z dejansko napako. Upoštevaj, da je pri Hermitovi interpolaciji $x_1=x_2$
   in $x_3=x_4$. Nariši graf napake.
 - Z oceno za napako @eq:12-ocena določi število interpolacijskih točk, pri katerem
-  bo napaka Hermiteovega zlepka manjša od $10^(-7)$.
+  bo napaka Hermitovega zlepka manjša od $10^(-7)$.
 - Funkcijo $f$ interpoliraj tudi z Newtonovim polinomom in primerjaj napako z napako
-  Hermiteovega zlepka.
+  Hermitovega zlepka.
 
-== Hermiteov kubični zlepek<sec:12-hermitov-zlepek>
+== Hermitov kubični zlepek<sec:12-hermitov-zlepek>
 
-Hermiteov kubični zlepek, ki interpolira podatke iz @hermitovi-podatki[Tabele], je sestavljen
+Hermitov kubični zlepek, ki interpolira podatke iz @hermitovi-podatki[Tabele], je sestavljen
 iz kubičnih polinomov $p_(k)$ na intervalih $[x_(k), x_(k+1)]$. Kubični polinom je podan s
 štirimi parametri, ravno toliko kot je podatkov v krajiščih intervala $[x_(k), x_(x+1)]$.
 Zato lahko vsak polinom $p_(k)$ določimo le na podlagi podatkov v točkah $x_k$ in $x_(k+1)$.
 Polinom $p_(k)$ poiščemo tako, da interval $[x_k, x_(k+1)]$ preslikamo z linearno funkcijo
-na $[0, 1]$ in uporabimo Lagrangevo bazo $h_(00)$, $h_(01)$, $h_(10)$ in $h_(11)$
-za podatke iz @hermitova-baza[tabele]. Polinome poiščemo v standardni bazi
+na $[0, 1]$ in uporabimo Lagrangeevo bazo $h_(00)$, $h_(01)$, $h_(10)$ in $h_(11)$
+za podatke iz @hermitova-baza[Tabele]. Polinome poiščemo v standardni bazi:
 $
 h_(i j)(t) = a_0 + a_1 t + a_2 t^2 + a_3t^3.
 $
@@ -77,8 +77,8 @@ h'_(00)(1) & = a_1 + 2a_2 +3a_3=0.
 $<eq:12-sistem-baza>
 
 Za ostale polinome dobimo podobne sisteme, ki imajo isto matriko sistema, razlikujejo pa se v
-desnih straneh. Če desne strani postavimo v matriko, dobimo ravno identično matriko.
-Inverzna matrika sistema @eq:12-sistem-baza ima v stolpcih ravno koeficiente baznih polinomov
+desnih straneh. Če desne strani postavimo v matriko, dobimo identično matriko.
+Inverzna matrika sistema @eq:12-sistem-baza ima v stolpcih koeficiente baznih polinomov
 $h_(i j)$. Inverz izračunamo z Julio.
 
 #let demo12(koda) = code_box(jlfb("scripts/12_zlepki.jl", koda))
@@ -95,21 +95,20 @@ h_(10)(t) &= t - 2t^2 + t^3,\
 h_(11)(t) &= -t^2 + t^3.
 $
 
-Sedaj moramo še določiti preslikavo z intervala $[x_(k), x_(k+1)]$ na $[0, 1]$. Naj bo
+Določiti moramo še preslikavo z intervala $[x_(k), x_(k+1)]$ na $[0, 1]$. Naj bo
 $x in[x_(k), x_(k+1)]$ in $t in [0, 1]$. Potem je preslikava med $x$ in $t$ enaka:
 
 $
 t(x) = (x - x_k)/(x_(k+1) - x_(k)),
 $<eq:12-tx>
 
-medtem ko je
-
+medtem ko je preslikava med $t$ in $x$ enaka:
 $
-x(t) = x_k + t(x_(k+1)-x_(k))
+x(t) = x_k + t(x_(k+1)-x_(k)).
 $
 
-preslikava med $t$ in $x$. Želimo uporabiti bazo $h_(i j)$,
-zato podatke interpoliramo s polinomom $p_(k)(x(t))$ na intervalu $[0, 1]$. Vidimo, da je
+Želimo uporabiti bazo $h_(i j)$,
+zato podatke interpoliramo s polinomom $p_(k)(x(t))$ na intervalu $[0, 1]$. Velja:
 
 $
 p_(k)(x(0)) = p_(k)(x_k) = y_(k),\
@@ -123,17 +122,20 @@ p_(k)(x) = y_k h_(00)(t) + y_(k+1) h_(01)(t) +
   (x_(k+1)-x_(k))(d y_(k)h_(10)(t) + d y_(k+1)h_(11)(t)),
 $
 
-kjer $t$ izračunamo kot $t(x)$ iz @eq:12-tx. Sedaj napišemo naslednje funkcije in tipe:
-- funkcijo #jl("hermiteint(x, xint, y, dy)"), ki izračuna vrednost Hermiteovega polinoma v #jl("x")
-  (@pr:12-hermiteint),
-- podatkovni tip #jl("HermitovZlepek") in funkcijo #jl("vrednost(x, Z::HermitovZlepek)"), ki
-  izračuna vrednost Hermiteovega zlepka #jl("z") v dani točki #jl("x") (@pr:12-zlepek).
+kjer $t$ izračunamo kot $t(x)$ iz @eq:12-tx.
+#naloga[
+Sedaj napiši naslednje funkcije in tipe:
+- funkcijo #jl("hermiteint(x, xint, y, dy)"), ki izračuna vrednost Hermitovega polinoma v #jl("x")
+  (rešitev @pr:12-hermiteint) in
+- podatkovni tip #jl("HermitovZlepek") ter funkcijo #jl("vrednost(x, Z::HermitovZlepek)"), ki
+  izračuna vrednost Hermitovega zlepka #jl("Z") v dani točki #jl("x") (rešitev @pr:12-HermitovZlepek in @pr:12-vrednost-hermite).
+]
 
   #opomba(naslov:[Vrednosti kot funkcije])[
-  Na primeru Hermiteovega zlepka lahko ilustriramo, kako v Julii ustvarimo vrednosti, ki se obnašajo
-  kot funkcije. Tako lahko zapis v programskemu jeziku približamo matematičnemu zapisu.
-  Za Hermiteov zlepek smo definirali tip #jl("HermitovZlepek") in funkcijo
-  #jl("vrednost"), s katero lahko izračunamo vrednost Hermiteovega zlepka v
+  Na primeru Hermitovega zlepka ilustriramo, kako v Julii ustvarimo vrednosti, ki se obnašajo
+  kot funkcije. Tako zapis v programskemu jeziku približamo matematičnemu zapisu.
+  Za Hermitov zlepek smo definirali tip #jl("HermitovZlepek") in funkcijo
+  #jl("vrednost"), s katero izračunamo vrednost Hermitovega zlepka v
   dani točki. Vrednost tipa #jl("HermitovZlepek") hrani interpolacijske podatke
   in hkrati predstavlja zlepek kot funkcijo. V Julii lahko definiramo, da se vrednosti
   tipa #("HermitovZlepek")
@@ -157,26 +159,26 @@ ekvidistančnih točkah na intervalu $[0, 6]$:
 #demo12("# zlepek")
 
 Na eno sliko narišemo graf funkcije in zlepka, na drugo pa napako interpolacije (razliko
-med funkcijo in zlepkom):
+med funkcijo in zlepkom).
 
 #demo12("# zl int")
 #demo12("# zl napaka")
 
 #figure(kind: image, table(stroke: none, columns: 2,
 image("img/12-interpolacija.svg"), image("img/12-napaka.svg")),
-  caption:[Levo: Graf funkcije $f(x)=cos(2x) + sin(3x)$ in Hermiteovega zlepka, ki interpolira
+  caption:[Graf funkcije $f(x)=cos(2x) + sin(3x)$ in Hermitovega zlepka, ki interpolira
   funkcijo $f$ na 10 točkah (levo). Graf napake interpolacije (desno). Zlepek interpolira tudi vrednosti
   odvodov, zato ima napaka v interpolacijskih točkah stacionarne točke.])
 
 == Ocena za napako
 
-Oceno za napako interpolacije lahko za Hermiteov polinomom izračunamo analitično.
-Napako polinomske interpolacije v splošnem zapišemo kot
+Oceno za napako Hermitove interpolacije lahko izračunamo analitično.
+Napako polinomske interpolacije v splošnem zapišemo kot:
 $
 f(x) - p_(n)(x) = (f^((n+1))(xi))/((n+1)!)product_(k=1)^(n) (x-x_i),
 $
-kjer je $xi$ neznana vrednost znotraj interpolacijskega območja, ki je odvisna od vrednosti $x$.
-Ker imamo poleg vrednosti na voljo tudi odvode, interpolacijski točki štejemo dvojno.
+kjer je $xi$ neznana vrednost znotraj interpolacijskega območja, odvisna od vrednosti $x$.
+Poleg vrednosti imamo na voljo tudi odvode, zato interpolacijski točki štejemo dvojno.
 Tako dobimo naslednjo formulo za napako:
 $
   f(x) - p_3(x) = (f^((4))(xi))/(4!) (x-x_1)^2(x-x_2)^2.
@@ -186,7 +188,7 @@ Vrednosti $f^((4))(xi)$ ne poznamo in jo lahko zgolj ocenimo. Poleg tega moramo 
 absolutni vrednosti največjo vrednost polinoma $p(x) = (x-x_1)^2(x-x_2)^2$ na intervalu $[x_1, x_2]$.
 V krajiščih intervala je vrednost polinoma $p(x)$ enaka nič, zato je maksimum dosežen v notranjosti
 in je dosežen v stacionarni točki. Poiščimo torej stacionarno točko $p(x)$, ki leži znotraj
-intervala $[x_1, x_2]$. Odvod je enak
+intervala $[x_1, x_2]$. Odvod je enak:
 $
 p'(x) &= 2(x-x_1)(x-x_2)^2 + 2(x-x_1)^2(x-x_2)\
 &= 2(x-x_1)(x-x_2)(x-x_2 + x-x_1) \
@@ -199,7 +201,7 @@ na $[x_1, x_2]$:
 $
 p((x_1+x_2)/2) = ((x_1+x_2)/2-x_1)^2((x_1+x_2)/2-x_2)^2 = 1/4(x_2-x_1)^4.
 $
-Največjo napako lahko ocenimo z
+Največjo napako ocenimo z:
 $
 |f(x) -p_3(x)|<= (f^((4))(xi))/(4!)(x_2 - x_1)^4/4 =1/(96)f^((4))(xi)(x_2 - x_1)^4.
 $<eq:12-ocena-hermite>
@@ -259,16 +261,17 @@ $
 $
 
 Koeficiente $a_i$ je namreč lažje izračunati, kot če bi bil polinom zapisan v standardni bazi. Poleg tega
-je računanje vrednosti polinoma v standardni bazi lahko numerično nestabilno, če so vrednosti $x_i$
-relativno blizu. Koeficiente $a_i$ lahko poiščemo bodisi tako, da rešimo spodnje trikotni sistem,
+je računanje vrednosti polinoma v standardni bazi numerično nestabilno, če so vrednosti $x_i$
+relativno blizu. Koeficiente $a_i$ poiščemo bodisi tako, da rešimo spodnje trikotni sistem,
 ki ga dobimo iz enačb @eq:12-int-enacbe, ali pa z
 #link("https://en.wikipedia.org/wiki/Divided_differences")[deljenimi diferencami].
-Definirali bomo naslednje tipe in funkcije:
+#naloga[
+Definiraj naslednje tipe in funkcije:
 - podatkovno strukturo za Newtonov interpolacijski polinom #jl("NewtonovPolinom") (@pr:12-newton),
 - funkcijo #jl("vrednost(p, x)"), ki izračuna vrednost Newtonovega polinoma v dani točki (@pr:12-vrednost-newton),
 - funkcijo #jl("interpoliraj(NewtonovPolinom, x, y)"), ki poišče koeficiente polinoma za dane
   interpolacijske podatke (@pr:12-interpoliraj).
-
+]
 
 == Rungejev pojav
 
@@ -307,10 +310,10 @@ Problemu se pogosto izognemo, če namesto ekvidistančnih točk uporabimo
 
 #let vaja12(koda, caption) = figure(code_box(jlfb("Vaja12/src/Vaja12.jl", koda)), caption: caption)
 
-#vaja12("# hermiteint")[Funkcija, ki interpolira podatke iz @hermitovi-podatki[tabele] s
-  Hermitovim kubičnim polinomom.]
-#vaja12("# HermitovZlepek")[Podatkovni tip za Hermiteov kubični zlepek]<pr:12-hermite>
-#vaja12("# vrednost")[Funkcija, ki izračuna vrednost Hermiteovega kubičnega zlepka.]<pr:12-vrednost-hermite>
+#vaja12("# hermiteint")[Funkcija, ki interpolira podatke iz @hermitovi-podatki[Tabele] s
+  Hermitovim kubičnim polinomom.]<pr:12-hermiteint>
+#vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]<pr:12-HermitovZlepek>
+#vaja12("# vrednost")[Funkcija, ki izračuna vrednost Hermitovega kubičnega zlepka.]<pr:12-vrednost-hermite>
 
 #vaja12("# NewtonovPolinom")[Podatkovni tip za polinom v Newtonovi obliki]<pr:12-newton>
 #vaja12("# np vrednost")[Funkcija, ki izračuna vrednost Newtonovega polinoma.]<pr:12-vrednost-newton>
@@ -321,7 +324,7 @@ Problemu se pogosto izognemo, če namesto ekvidistančnih točk uporabimo
 #let test12(koda, caption) = figure(code_box(jlfb("Vaja12/test/runtests.jl", koda)),
   caption: caption)
 
-#test12("# hermiteint")[Test za izračun Hermiteovega kubičnega polinoma]<pr:12-hermiteint>
-#test12("# zlepek")[Test za izračun vrednosti zlepka]<pr:12-zlepek>
+#test12("# hermiteint")[Test za izračun Hermitovega kubičnega polinoma]<pr:12-hermiteint-test>
+#test12("# zlepek")[Test za izračun vrednosti zlepka]<pr:12-zlepek-test>
 #test12("# newton")[Test za izračun vrednosti Newtonovega polinoma]
 #test12("# interpoliraj")[Test za izračun koeficientov Newtonovega interpolacijskega polinoma]
