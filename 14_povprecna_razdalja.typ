@@ -23,7 +23,7 @@ V tej vaji si bomo ogledali produktne kvadrature za večkratne integrale.
 - Pri implementaciji pazite, da ne delate nepotrebnih dodelitev pomnilnika.
 - Uporabite algoritem za izračun povprečne razdalje med dvema točkama na enotskem
   kvadratu $[0, 1]^2$ in enotski kocki $[0, 1]^3$.
-- Za sestavljeno Simpsonovo formulo in Gauss-Legendreove kvadrature ugotovite, kako napaka
+- Za sestavljeno Simpsonovo formulo in Gauss-Legendrove kvadrature ugotovite, kako napaka
   pada s številom izračunov funkcije, ki jo integriramo. Primerjajte rezultate s preprosto
   Monte-Carlo metodo (računanje vzorčnega povprečja za enostaven slučajni vzorec).
 

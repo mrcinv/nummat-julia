@@ -186,7 +186,7 @@ p_n(x) = (a(n)x+b(n))p_{n-1}(x) - c_n p_{n-2}(x)
 
 # Primer
 za računanje integrala z utežjo ``w(x)=1`` na intervalu ``[-1,1]``, lahko uporabimo
-[Legendreove ortogonalne polinome](https://sl.wikipedia.org/wiki/Legendrovi_polinomi),
+[Legendrove ortogonalne polinome](https://sl.wikipedia.org/wiki/Legendrovi_polinomi),
 ki zadoščajo rekurzivni zvezi
 
 ```math
@@ -198,7 +198,7 @@ Naslednji program izpiše vozle in uteži za n od 1 do 5
 ```julia
 a(n) = (2*n-1)/n; b(n) = 0.0; c(n) = (n-1)/n;
 μ = 2;
-println("Gauss-Legendreove kvadrature")
+println("Gauss-Legendrove kvadrature")
 for n=1:5
   x0, w = gauss_quad_rule(a, b, c, μ, n);
   println("n=\$n")
@@ -224,7 +224,7 @@ end
 """
   x0, w0 = gauss_legendre_rule(n)
 
-Izračunaj vozle in uteži za Gauss-Legendreove kvadrature z Golub-Welschovim
+Izračunaj vozle in uteži za Gauss-Legendrove kvadrature z Golub-Welschovim
 algoritmom.
 """
 function gauss_legendre_rule(n)

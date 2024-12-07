@@ -25,18 +25,21 @@ struct Integral{T}
 end
 # Integral
 
-abstract type AbstraktnaKvadratura end
 
 # Trapez
+"""Krovni podatkovni tip za vse vrste kvadratur"""
+abstract type AbstraktnaKvadratura end
+
 """
 Parametri za sestavljeno trapezno pravilo. Sestavljeno trapezno
-pravilo ima en sam parameter `n`,  ki pove na koliko podintervalov
+pravilo ima en sam parameter `n`,  ki pove, na koliko podintervalov
 razdelimo interval.
 """
 struct Trapez <: AbstraktnaKvadratura
   n::Integer
 end
 # Trapez
+
 # integriraj trapez
 """
     I = integriraj(i::Integral, k::Trapez)
@@ -58,7 +61,7 @@ end
 # Simpson
 """
 Parametri za sestavljeno Simpsonovo pravilo. Pravilo ima en sam
-parameter `n`,  ki pove na koliko podintervalov razdelimo interval.
+parameter `n`,  ki pove, na koliko podintervalov razdelimo interval.
 """
 struct Simpson <: AbstraktnaKvadratura
   n::Integer
@@ -124,9 +127,9 @@ using FastGaussQuadrature
 """
     kvadratura = glkvad(n)
 
-Izračunaj vozle in uteži za Gauss-Legendreove kvadraturne formule z
+Izračunaj vozle in uteži za Gauss-Legendrove kvadraturne formule z
 `n` vozli. Funkcija vrne vrednost tipa `Kvadratura`, ki jo lahko uporabimo
-v funkcij `integriraj`.
+v funkciji `integriraj`.
 # Primer
 ```jl
 k = glkvad(10)

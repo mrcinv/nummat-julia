@@ -47,9 +47,9 @@ $
   aproksimacijo s Čebiševimi polinomi.
   - Namesto funkcije $Phi(x)$ aproksimiraj funkcijo $x e^(x^2) Phi(x)$.
   - Vrednosti funkcije $Phi(x)$ v Čebiševih točkah izračunajte z adaptivno metodo s parom
-    Gauss-Legendreovih kvadratur
+    Gauss-Legendrovih kvadratur
 - Na intervalu $[-1, 0]$ za primerno izbran $a$ uporabite
-  #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreove kvadrature].
+  #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrove kvadrature].
 - Na intervalu $[0, oo)$ uporabite lastnost $Phi(x) = 1 - Phi(-x)$.
 
 === Razdelitev definicijskega območja
@@ -68,7 +68,7 @@ omenjenima pogojema.
 
 === Izračun na $[-c, oo)$
 Izračunamo $Phi(-c)$ in $Phi(x) = Phi(-c) + integral_(-c)^x e^(-x^2/2)d x$. Integral izračunamo z
-Gauss-Legendreovimi kvadraturami s fiksnim številom vozlov, tako da je absolutna napaka enakomerno
+Gauss-Legendrovimi kvadraturami s fiksnim številom vozlov, tako da je absolutna napaka enakomerno
 omejena. Na $[b, oo)$, za dovolj velik $b$, je vrednost enaka $1$.
 
 === Izračun na $(-oo, -c]$
@@ -335,7 +335,7 @@ Za Gaussove kvadrature je več težav, saj se vozli kvadratur višjega reda ne p
 kvadratur nižjega reda. Rešitev ponujajo
 #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula")[Gauss-Kronrodove kvadrature],
 ki so podane kot pari kvadratur, pri katerem kvadratura višjega reda vsebuje vse vozle
-kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendreova kvadratura z $n$ vozli.
+kvadrature nižjega reda. Kvadratura nižjega reda je Gauss-Legendrova kvadratura z $n$ vozli.
 Nato se izbere dodatnih $n+1$ vozlov in na novo določi uteži, tako da je druga kvadratura čim
 višjega reda.
 ]

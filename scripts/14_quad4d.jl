@@ -74,7 +74,7 @@ scatter!(ngl .^ 4, abs.(napakegl), yscale=:log10, xscale=:log10,
 dgl = povprecna_razdalja(kvadrat, glkvvad(60))
 dgl - d1
 """
-Izračunaj sestavljeno Gauss-Legendreovo formulo s osnovnim pravilom s `k`
+Izračunaj sestavljeno Gauss-Legendrovo formulo s osnovnim pravilom s `k`
 vozli in delitvijo na `n` podintervalov.
 """
 function glsest(k, n)

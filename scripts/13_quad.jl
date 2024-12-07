@@ -96,7 +96,7 @@ I_gl = [integriraj(integral, glkvad(k)) for k in n_gl]
 scatter(n .+ 1, abs.(I_t .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_s .- I_p), label="napaka Simpsonove formule",)
 scatter!(n_gl, abs.(I_gl .- I_p), scale=:log10,
-  label="napaka Gauss-Legendreove kvadrature",
+  label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
   legend=:bottomright, yticks=10.0 .^ (0:-5:-15))
 # graf napake sin x2
@@ -119,7 +119,7 @@ F(x) = 2x - x^3/3
 # primer 2.2
 I_p = 2F(sqrt(2)) - F(-1) - F(2)
 # primer 2.2
-term("13-primer-2.2", Ip)
+term("13-primer-2.2", I_p)
 
 # primer 2.3
 integral = Integral(g, Interval(-1.0, 2.0))
@@ -130,20 +130,20 @@ I_gl = [integriraj(integral, glkvad(k)) for k in n]
 scatter(n .+ 1, abs.(I_t .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_s .- I_p), label="napaka Simpsonove formule",)
 scatter!(n, abs.(I_gl .- I_p), scale=:log10,
-  label="napaka Gauss-Legendreove kvadrature",
+  label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
   legend=:topright, yticks=10.0 .^ (0:-2:-15))
 # primer 2.3
 savefig("img/13-napaka-abs.svg")
 
 
-savefig("img/13-adaptivna-abs.svg")
+  savefig("img/13-adaptivna-abs.svg")
 
 # napaka abs
 scatter(n .+ 1, abs.(I_trapez .- I_p), label="napaka trapezne formule")
 scatter!(2n .+ 1, abs.(I_simpson .- I_p), label="napaka Simpsonove formule",)
 scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10,
-  label="napaka Gauss-Legendreove kvadrature",
+  label="napaka Gauss-Legendrove kvadrature",
   xlabel="število funkcijskih izračunov", ylabel="napaka",
   legend=:topright)
 # napaka abs
@@ -246,7 +246,7 @@ scatter(n .+ 1, [abs_napaka(Trapez(k)) for k in n],
 scatter!(n .+ 1, [abs_napaka(Simpson(k / 2)) for k in n],
   label="napaka Simpsonovega pravila")
 scatter!(n, [abs_napaka(glkvad(k)) for k in n],
-  label="napaka Gauss-Legendreove kvadrature")
+  label="napaka Gauss-Legendrove kvadrature")
 # simulacija
 savefig("img/13-napaka-sum-1.svg")
 savefig("img/13-napaka-sum-2.svg")

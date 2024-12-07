@@ -10,7 +10,7 @@ end
 
 # simpson
 @testset "Sestavljeno Simpsonovo pravilo" begin
-  # Simpsonva metoda je točna za polinome 3. stopnje
+  # Simpsonovo pravilo je točno za kubične polinome
   integral = Integral(x -> x^3 + x^2, Interval(-1.0, 3.0))
   # nedoločeni integral je x^4/4 + x^3/3
   I(x) = x^4 / 4 + x^3 / 3
@@ -20,7 +20,7 @@ end
 
 # kvadratura
 @testset "Splošna kvadratura" begin
-  # Gauss-Legendreova kvadratura na dveh točkah
+  # Gauss-Legendrova kvadratura na dveh točkah
   k = Kvadratura(1 / sqrt(3) * [-1, 1], [1.0, 1.0], Interval(-1.0, 1.0))
   # formula je točna za kubične polinome
   integral = Integral(x -> x^3 - x^2, Interval(-1.0, 3.0))
@@ -30,7 +30,7 @@ end
 # kvadratura
 
 # gl
-@testset "Gauss-Legendreove kvadrature" begin
+@testset "Gauss-Legendrove kvadrature" begin
   k = glkvad(3)
   @test length(k.x) == 3
   # formula je točna za polinome do vključno stopnje 5

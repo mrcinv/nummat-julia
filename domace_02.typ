@@ -167,9 +167,9 @@ $ (0 , 0) , (1 , 1) , (2 , 3) , (1 , 4) , (0 , 4) , (- 1 , 3) , (0 , 1) , (1 , 0
 
 $ P = 1 / 2 integral_(t_1)^(t_2) lr((x(t) dot(y)(t) - dot(x)(t) y(t))) d t. $
 
-== Gauss-Legendreove kvadrature (lažja)
-<gauss-Legendreove-kvadrature>
-Izpelji #link("https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendreovo integracijsko pravilo]
+== Gauss-Legendrove kvadrature (lažja)
+<gauss-Legendrove-kvadrature>
+Izpelji #link("https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss%E2%80%93Legendre_quadrature")[Gauss-Legendrovo integracijsko pravilo]
 na dveh točkah
 
 $ integral_0^h f(x) d x = A f(x_1) + B f(x_2) + R_f $

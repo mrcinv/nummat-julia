@@ -108,8 +108,7 @@ x(t) = x_k + t(x_(k+1)-x_(k)).
 $
 
 Želimo uporabiti bazo $h_(i j)$,
-zato podatke interpoliramo s polinomom $p_(k)(x(t))$ na intervalu $[0, 1]$. Velja:
-
+zato podatke interpoliramo s polinomom $p_(k)(x(t))$ na intervalu $[0, 1]$. Če $t$ izračunamo kot $t(x)$ iz @eq:12-tx, velja:
 $
 p_(k)(x(0)) = p_(k)(x_k) = y_(k),\
 (d)/(d t) p_(k)(x(0)) = p'_(k)(x_k)x'(0) = p'_(k)(x_k)(x_(k+1)-x_(k)) = d y_(k)(x_(k+1)-x_(k)),\
@@ -119,10 +118,9 @@ $
 in
 $
 p_(k)(x) = y_k h_(00)(t) + y_(k+1) h_(01)(t) +
-  (x_(k+1)-x_(k))(d y_(k)h_(10)(t) + d y_(k+1)h_(11)(t)),
+  (x_(k+1)-x_(k))(d y_(k)h_(10)(t) + d y_(k+1)h_(11)(t)).
 $
 
-kjer $t$ izračunamo kot $t(x)$ iz @eq:12-tx.
 #naloga[
 Sedaj napiši naslednje funkcije in tipe:
 - funkcijo #jl("hermiteint(x, xint, y, dy)"), ki izračuna vrednost Hermitovega polinoma v #jl("x")
