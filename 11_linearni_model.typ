@@ -9,7 +9,7 @@
 V znanosti pogosto želimo opisati odvisnost ene količine od druge.
 Matematičnemu opisu povezave med dvema ali več spremenljivkami pravimo
 #strong[matematični model]. Primer modela je Hookov zakon za vzmet, ki
-pravi, da je sila vzmeti $F$ sorazmerna z raztezkom $x$, torej
+pravi, da je sila vzmeti $F$ sorazmerna z raztezkom $x$, torej:
 
 $ F = k x. $
 
@@ -29,7 +29,7 @@ V tej vaji bomo podatke o koncentraciji $co2$ v zadnjih desetletjih opisali z li
 
 == Linearni model
 <linearni-model>
-Najpreporstejši matematični model je
+Najpreprostejši matematični model je
 #link("https://en.wikipedia.org/wiki/Linear_model")[linearni model],
 pri katerem odvisno količino $y$ zapišemo kot linearno kombinacijo
 baznih funkcij $phi_j, quad j=1, 2, med dots, med k$ neodvisne spremenljivke $x$:
@@ -72,7 +72,7 @@ $
   (y_1 - M (p , x_1))^2 + dots.h + (y_n - M (p , x_n))^2 = sum_(i = 1)^n (y_i + M (p , x_i))^2.
 $<eq:11-minkvad>
 
-Sistem @eq:11-sistem lahko zapišemo v matrični obliki
+Sistem @eq:11-sistem zapišemo v matrični obliki
 $A bold(p) = bold(y)$, kjer so stolpci matrike
 sistema $A$ enaki vrednostim baznih funkcij:
 
@@ -89,7 +89,7 @@ $ bold(y) = [y_1 , y_2 , dots.h , y_n]^(sans(T)). $
 
 Pogoj najmanjših kvadratov razlik @eq:11-minkvad za optimalne
 vrednosti parametrov $upright(bold(p))_(o p t)$ potem zapišemo s
-kvadratno vektorsko normo
+kvadratno vektorsko normo:
 
 #let argmin = math.op("argmin")
 
@@ -100,7 +100,7 @@ $ bold(p)_(o p t) = argmin_(bold(p)) norm(A bold(p) - bold(y))_2^2 . $
 #link("https://en.wikipedia.org/wiki/Statistical_model")[statistični model],
 so vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov,
 v določenem smislu najboljše cenilke za parametre modela.
-Bolj natančno:
+Natančneje:
 #link("https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem")[Gauss-Markov izrek]
 pravi, da so cenilke za parametre linearnega modela z najmanjšo varianco
 ravno vrednosti parametrov, ki jih dobimo z metodo najmanjših kvadratov.
@@ -113,7 +113,7 @@ Na observatoriju
 #link("http://www.esrl.noaa.gov/gmd/obop/mlo/")[Mauna Loa] na Havajih že
 vrsto let spremljajo koncentracijo #co2 v ozračju in podatke objavljajo
 na svoji spletni strani v različnih oblikah. Oglejmo si
-tedenska povprečja koncentracije od začetka meritev leta 1974. Za prenos podatkov bomo uporabili knjižnico #link("https://github.com/invenia/FTPClient.jl")[FTPClient.jl].
+tedenska povprečja koncentracije od začetka meritev leta 1974. Za prenos podatkov uporabimo knjižnico #link("https://github.com/invenia/FTPClient.jl")[FTPClient.jl].
 
 #let demo11(koda) = code_box(jlfb("scripts/11_co2.jl", koda))
 #let demo11raw(koda) = blk("scripts/11_co2.jl", koda)
@@ -125,7 +125,7 @@ Nato iz datoteke odstranimo komentarje in izluščimo podatke.
 #demo11("# plot")
 
 #figure(caption: [Koncentracija atmosferskega #co2 v zadnjih desetletjih],
-  image("img/11_co2.svg", width: 60%))
+  image("img/11_co2.svg", width: 53%))
 
 
 Časovni potek koncentracije #co2 matematično opišemo kot
@@ -140,7 +140,7 @@ periodičnega dela, ki opiše nihanja med letom:
 $ co2(bold(p), t) =
 p_1 + p_2 t + p_3 t^2 + p_4 sin (2 pi t) + p_5 cos (2 pi t) , $
 
-pri čemer je čas $t$ podan v letih. Predoločen sistem @eq:11-sistem, ki
+kjer je čas $t$ podan v letih. Predoločen sistem @eq:11-sistem, ki
 ga dobimo za naš model, ima $n times 5$ matriko sistema:
 
 $ A = mat(
@@ -165,16 +165,34 @@ najmanjša.
 
 == Normalni sistem<normalni-sistem>
 
-Vektor parametrov modela $bold(p)$ izberemo tako, da je napoved modela $A bold(p)$
-enaka pravokotni projekciji $bold(y)$ na prostor, ki ga razpenjajo stolpci matrike $A$. Tako lahko
-izpeljemo #emph[normalni sistem] za dani predoločen sistem
+Osvežimo nekaj pojmov iz linearne algebre. _Stolpčni prostor_ matrike $A$ je prostor
+$
+  C(A) = {bold(y): quad bold(y) = A bold(x) " za nek " bold(x)},
+$
+ki ga razpenjajo stolpci matrike $A$. _Ničelni prostor_ matrike $A$ je prostor
+$
+  N(A) = {bold(x): quad A bold(x) = bold(0)},
+$
+v katerem so vektorji, ki jih $A$ preslika v $bold(0)$.
+
+Po metodi najmanjših kvadratov vektor parametrov modela $bold(p)$ izberemo tako, da je norma razlike med napovedjo modela $A bold(p)$
+in vrednostmi $bold(y)$ najmanjša. Geometrijsko je $A bold(p)$ pravokotna projekcija vektorja $bold(y)$ na stolpčni prostor $C(A)$, torej je razlika $A bold(p) - bold(y)$ pravokotna  na $C(A)$:
+
+$
+A bold(p)-bold(y) &perp C(A).
+$
+
+Iz linearne algebre vemo, da je $C(A)^perp = N(A^T)$:
+$
+  A bold(p)-bold(y) in N(A^T) => A^(T)(A bold(p)-bold(y))=bold(0).
+$
+Tako lahko izpeljemo #emph[normalni sistem] za dani predoločen sistem
 $A bold(p) = bold(y)$:
 
 $
-A bold(p)-bold(y) &perp C(A)\
-A bold(p)-bold(y) &in N(A^T)\
-A^(T) (A bold(p) - bold(y)) &= 0\
-A^T A bold(p)&=A^T bold(y).
+
+A^(T) (A bold(p) - bold(y)) &= 0 =>\
+ A^T A bold(p)&=A^T bold(y).
 $<eq:11-normalni-sistem>
 
 Normalni sistem $A^T A bold(p) = A^T bold(y)$ je kvadraten in ima enolično rešitev,
@@ -190,6 +208,7 @@ in je sistem posledično občutljiv. Izračunamo ga z ukazom #jl("cond"):
  repl(demo11raw("# cond"), read("out/11_cond.out"))
  )
 
+Manjše kot je število občutljivosti, manj je sistem občutljiv.
 Iz rezultata vidimo, da je že sama matrika $A$ slabo pogojena, matrika $N$
 pa še toliko bolj. Razlog je v izbiri
 baznih funkcij. Če narišemo normirane stolpce $A$ kot funkcije, vidimo,
@@ -199,7 +218,7 @@ da so zelo podobni.
 
 #figure(image("img/11_baza.svg", width: 60%),
   caption: [Normirani prvi trije bazni vektorji (stolpci matrike $A$) ])
-Občutljivost je deloma posledica dejstva, da čas merimo v letih od začetka našega štetja. Vrednosti
+Veliko število občutljivosti matrike je deloma posledica dejstva, da čas merimo v letih od začetka našega štetja. Vrednosti
 $1975$ in $2020$ sta relativno blizu in tako ima vektor vrednosti $t_i$ skoraj enako smer kot vektor
 enic. Občutljivost matrike $A$ lahko precej zmanjšamo, če časovno skalo premaknemo, da je ničla bliže
 dejanskim podatkom. Namesto $t$ uporabimo spremenljivko $t - tau$, kjer je $tau$ premik časovne
@@ -212,8 +231,7 @@ skale. Najboljša izbira za $tau$ je na sredini podatkov:
  #repl(demo11raw("# premik 3"), read("out/11_cond_premik.out"))
  ]
 
-Matrika $A$ je sedaj precej dlje od singularne matrike in posledično je
-tudi normalni sistem manj občutljiv.
+Matrika $A$ ima število občutljivosti precej manjše kot prej in posledično je manjše tudi za matriko normalnega sistema $N$.
 
 #opomba(naslov:[Prednosti normalnega sistema])[
 Čeprav je normalni sistem zelo občutljiv, se v praksi izkaže, da napaka vendarle ni tako velika.
@@ -243,10 +261,10 @@ desne s $Q^T$ in upoštevamo, da je $Q^T Q = I$, dobimo zopet kvadratni sistem z
 $bold(p)$:
 
 $
-A bold(p) &= bold(y)\
-Q R bold(p) &= bold(y) \
-Q^T Q R bold(p)& = Q^T bold(y)\
-R bold(p) &= Q^T bold(y).
+A bold(p) &= bold(y)=>\
+=> &Q R bold(p) = bold(y)\
+=> &Q^T Q R bold(p) = Q^T bold(y)\
+=> &R bold(p) = Q^T bold(y).
 $
 
 Matrika $R$ je zgornje trikotna, tako da lahko sistem rešimo z obratnim vstavljanjem.
@@ -292,7 +310,7 @@ Lahko poskusimo tudi napovedati prihodnost:
 #repl(demo11raw("# napoved 2"), read("out/11_napoved.out"))
 ]
 
-Naš model napoveduje, da bo leta 2050 koncentracija #co2 znašala skoraj
+Naš model napoveduje, da bo leta 2050 koncentracija #co2 v ozračju znašala skoraj
 $500 #text[ppm]$.
 
 #opomba(naslov: [Kaj smo se naučili?])[
