@@ -1,5 +1,5 @@
 #import "julia.typ": code_box, jl, jlfb, repl, blk
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "@preview/metro:0.3.0": unit
 
 = Začetni problem za navadne diferencialne enačbe
@@ -225,11 +225,11 @@ Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermiteovim zlepkom.
   vaja16("# ResitevNDE"),
   caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema.]
 )
-
-Definirajmo podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
-Nato napišimo funkcijo #jl("resi(p::ZacetniProblem, metoda::Euler)"), ki poišče rešitev začetnega
-problema z Eulerjevo metodo (za rešitev glej @pr:16-euler-resi).
-
+#naloga[
+- Definiraj podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
+- Napiši funkcijo #jl("resi(p::ZacetniProblem, metoda::Euler)"), ki poišče rešitev začetnega
+  problema z Eulerjevo metodo (za rešitev glej @pr:16-euler-resi).
+]
 Ponovno rešimo začetni problem
 $
   u'(t) &= -2 t u\

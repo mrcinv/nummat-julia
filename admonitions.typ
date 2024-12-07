@@ -16,3 +16,8 @@
   color: lime.desaturate(40%),
   content,
 )
+#let naloga(content) = admonition(
+  title: emph[Samostojno delo],
+  color: orange.desaturate(40%),
+  content,
+)

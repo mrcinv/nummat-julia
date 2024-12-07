@@ -1,4 +1,4 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": code_box, jl, jlfb, repl, blk
 
 = Integrali
@@ -115,7 +115,8 @@ povzame odločitve in zasnovo programskega vmesnika, kot smo si ga zamislili.
 #test13("# Trapez")[Test za sestavljeno trapezno formulo]
 
 #pagebreak()
-Definirajmo naslednje tipe in funkcije in poskrbimo, da bo test uspešen:
+#naloga[
+Definiraj naslednje tipe in funkcije in poskrbi, da bo test uspešen:
 - tip #jl("Interval(a, b)"), ki predstavlja zaprti interval $[a, b]$ (@pr:13-Interval),
 - tip #jl("Integral(fun, interval::Interval)"), ki predstavlja določeni integral funkcije #jl("fun")
   na intervalu #jl("interval") (@pr:13-Integral),
@@ -123,7 +124,7 @@ Definirajmo naslednje tipe in funkcije in poskrbimo, da bo test uspešen:
   (@pr:13-Trapez) in
 - metodo #jl("integriraj(i::Integral, k::Trapez)"), ki izračuna približek za integral #jl("i")
   s sestavljeno trapezno formulo #jl("k") (@pr:13-int-trapez).
-
+]
 == Simpsonovo pravilo
 
 Simpsonovo pravilo dobimo tako, da poleg vrednosti funkcije v krajiščih intervala uporabimo še
@@ -158,12 +159,14 @@ zato v testu uporabimo polinom 3. stopnje.
 
 #test13("# simpson")[Test sestavljenega Simpsonovega pravila]
 
-Definirajmo naslednje tipe in metode ter poskrbimo, da se test pravilno izvede:
+#naloga[
+Definiraj naslednje tipe in metode ter poskrbi, da se test pravilno izvede:
 - podatkovni tip #jl("Simpson(n::Int)"), ki predstavlja sestavljeno Simpsonovo formulo
   (@pr:13-simpson) in
-- metodo #jl("integriraj(i::Integral, k::Simpson)") za funkcijo #jl("integriraj"), ki
+- metodo #jl("integriraj(i::Integral, k::Simpson)"), ki
   izračuna približek za integral #jl("i") s sestavljeno Simpsonovo formulo #jl("k")
   (@pr:13-int-simpson).
+]
 
 == Gaussove kvadraturne formule
 
@@ -261,8 +264,10 @@ ki je točna za kubične polinome.
 
 #test13("# kvadratura")[Test za integracijo s splošno kvadraturo oblike @eq:13-kvad]
 
-Napišimo funkcijo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
+#naloga[
+Napiši metodo $jl("integriraj(i::Integral, k::Kvadratura)")$, ki izračuna
 približek za dani integral #jl("i") z dano kvadraturo #jl("k") (@pr:13-int-gl).
+]
 
 Napišimo sedaj test za Gauss-Legendreove kvadrature. Uporabimo dejstvo, da so kvadrature
 z $n$ vozli točne za polinome stopnje $2n-1$.

@@ -1,5 +1,5 @@
 #import "julia.typ": code_box, jl, jlfb
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "@preview/fletcher:0.5.2": diagram, node, edge
 #import "simboli.typ": Pm
 
@@ -47,7 +47,7 @@ Povedano drugače: invariantna porazdelitev za Markovsko verigo s prehodno matri
 - Implementiraj potenčno metodo za iskanje največje lastne vrednosti in pripadajočega lastnega vektorja dane matrike.
 - Uporabi potenčno metodo in poišči invariantno porazdelitev Markovske verige z
   dano prehodno matriko $Pm$. Poišči invariantne porazdelitve za naslednja primera:
-    - veriga, ki opisuje skakanje skakača (skakača) po šahovnici,
+    - veriga, ki opisuje skakanje skakača (konja) po šahovnici,
     - veriga, ki opisuje brskanje po mini spletu s 5-10 stranmi (podobno spletni iskalniki
       #link("https://en.wikipedia.org/wiki/PageRank")[razvrščajo strani po relevantnosti]).
 
@@ -84,9 +84,10 @@ potenčna metoda ne konvergira. Za normo, s katero delimo produkt
 $A bold(x)^((k))$, lahko izberemo katerokoli vektorsko normo. Navadno je to neskončna norma
 $norm(dot)_(oo)$, saj jo lahko najhitreje izračunamo.
 
-Napišimo program #jl("x, it = potencna(A, x0)"), ki poišče lastni vektor za po absolutni vrednosti
-največjo lastno vrednost matrike $A$ (@pr:07potencna).
-
+#naloga[
+Napiši program #jl("x, it = potencna(A, x0)"), ki poišče lastni vektor za po absolutni vrednosti
+največjo lastno vrednost matrike $A$ (za rešitev glej @pr:07potencna).
+]
 == Razvrščanje spletnih strani
 
 Spletni iskalniki želijo uporabniku prikazati čim relevantnejše rezultate. Zato morajo ugotoviti,
@@ -104,6 +105,7 @@ Približno tako deluje algoritem za razvrščanje spletnih strani po pomembnosti
 #link("https://en.wikipedia.org/wiki/PageRank")[Page Rank], ki sta ga prva opisala in uporabila
 ustanovitelja podjetja Google Larry Page in Sergey Brin.
 
+Poglejmo preprost primer spleta s šestimi stranmi in povezavami med njimi (@im:07-splet).
 #figure(
   diagram(
     node-stroke: 1pt,
@@ -127,9 +129,9 @@ ustanovitelja podjetja Google Larry Page in Sergey Brin.
     edge(label("6"), label("2"), "-|>"),
   ),
   caption: [Mini splet s 6 stranmi]
-)
+)<im:07-splet>
 
-Prehodna matrika verige je
+Prehodna matrika verige za mini splet je:
 
 $
 Pm = mat(
@@ -181,26 +183,28 @@ Stanja označimo s pari
 indeksov $(i, j)$, ki označujejo posamezno polje. Prvi indeks označuje vrstice, drugi pa stolpce. Indeks $(1, 1)$ označuje polje levo zgoraj. Invariantna porazdelitev je podana z matriko, katere elementi $p_(i j)$ so enaki verjetnosti, da je skakač na polju $(i, j)$.
 Ponovno se srečamo s problemom iz prejšnjega poglavja (@minimalne-ploskve), kako elemente matrike
 postaviti v vektor. Elemente matrike zložimo v vektor po stolpcih. Preslikava med indeksi $i, j$ v
-matriki in indeksom $k$ v vektorju je podana s formulami
+matriki in indeksom $k$ v vektorju je podana s formulami:
 
 $
-  k &= i + (j-1)m\
-  j &= floor((k -1)\/ m)\
+  k &= i + (j-1)m,\
+  j &= floor((k -1)slash m,)\
   i &= ((k -1) mod m) + 1.
 $
 
-Za lažje delo napišimo funkciji
+#naloga[
+Za lažje delo napiši funkciji
 
 - #jl("k = ij_v_k(i, j, m)") in
 - #jl("i, j = k_v_ij(k, m)"),
 
 ki izračunata preslikavo med indeksi $i, j$ v matriki in indeksom $k$ v vektorju (@pr:07indeksi).
 
-Nato definirajmo:
+Nato definiraj:
 - podatkovno strukturo #jl("Skakač(m, n)"), ki predstavlja Markovsko verigo za skakača na
   $m times n$ šahovnici (@pr:07skakač) in
 - funkcijo #jl("prehodna_matrika(k::Skakač)"), ki vrne
   prehodno matriko za Markovsko verigo za skakača (@pr:07prehodna).
+]
 Invariantno porazdelitev poskusimo poiskati s potenčno metodo:
 
 #code_box(
@@ -218,6 +222,7 @@ $
 $
 
 kjer je $v_1$ lastni vektor za $1$ in $v_(-1)$ lastni vektor za $-1$.
+S funkcijo #jl("eigen") poiščimo lastne pare matrike $Pm$ in preverimo, da sta dominantni lastni vrednosti res $-1$ in $1$:
 
 #code_box[
   #jlfb("scripts/07_page_rank.jl", "# lastne")
@@ -226,7 +231,7 @@ kjer je $v_1$ lastni vektor za $1$ in $v_(-1)$ lastni vektor za $-1$.
 
 Težavo rešimo s preprostim premikom. Če matriki prištejemo večkratnik identitete, se lastni vektorji
 ne spremenijo, le lastne vrednosti se premaknejo. Če so
-$(lambda_1, bold(v)_1), (lambda_2, bold(v)_2), dots$ lastni pari matrike $A$, so:
+$(lambda_1, bold(v)_1), (lambda_2, bold(v)_2), dots$ lastni pari matrike $A$, so
 
 $ (lambda_1 + delta, bold(v)_1), (lambda_2 + delta, bold(v)_2), med dots $
 
@@ -234,8 +239,8 @@ lastni pari matrike
 
 $ A + delta I. $
 
-S premikom $Pm^T + I$ dosežemo, da se lastne vrednosti premaknejo za $1$ v pozitivni smeri in se
-lastna vrednost $-1$ premakne v $0$, lastna vrednost $1$ pa v $2$. Tako lastna vrednost $2$ postane edina
+S premikom $Pm^T + I$ dosežemo, da se lastne vrednosti premaknejo za $1$ v pozitivni smeri:
+lastna vrednost $-1$ se premakne v $0$, lastna vrednost $1$ pa v $2$. Tako lastna vrednost $2$ postane edina
 dominantna lastna vrednost. Za matriko $Pm^T + I$ potenčna metoda konvergira k lastnemu vektorju
 za lastno vrednost $2$, ki je hkrati lastni vektor matrike $Pm^T$ za lastno
 vrednost $1$.
@@ -247,11 +252,11 @@ vrednost $1$.
 #figure(
   image("img/07-konj.svg", width:60%),
   caption: [Limitna porazdelitev za skakača na standardni $8 times 8$ šahovnici. Svetlejša polja so
-  pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve na začetku.]
+  pogosteje obiskana. Limitna porazdelitev je ena sama in ni odvisna od porazdelitve začetne lege skakača.]
 )
 
 #opomba(naslov: [Kaj smo se naučili?])[
-- Tudi pri iskanju lastnih vektorjev in vrednosti se iterativne metode dobro obnesejo.
+- Iterativne metode se dobro obnesejo tudi pri iskanju lastnih vektorjev in lastnih vrednosti.
 - Potenčna metoda se obnese tudi pri matrikah zelo velikih dimenzij.
 - Problem lastnih vrednosti se pojavi pri študiju Markovskih verig.
 ]

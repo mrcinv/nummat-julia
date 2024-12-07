@@ -46,8 +46,8 @@ using SparseArrays
 """
   P = prehodna_matrika(k::Skakač)
 
-Poišči prehodno matriko za Markovsko verigo, ki opisuje skanje figure skakača po
-šahovnici.
+Poišči prehodno matriko za Markovsko verigo, ki opisuje
+skakanje figure skakača po šahovnici.
 """
 function prehodna_matrika(skakač::Skakač)
   m = skakač.m
