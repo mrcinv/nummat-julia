@@ -159,9 +159,9 @@ zp = ZacetniProblem(f_posevni, vcat(x0, v0), tint, (g, c))
 res = resi(zp, RK4(0.1))
 using Plots
 plot(t -> res(t)[1], tint..., label="\$x(t)\$")
-plot!(t -> res(t)[2], tint..., label="\$y(t)\$")
+plot!(t -> res(t)[2], tint..., label="\$z(t)\$")
 plot!(t -> res(t)[3], tint..., label="\$v_x(t)\$")
-plot!(t -> res(t)[4], tint..., label="\$v_y(t)\$")
+plot!(t -> res(t)[4], tint..., label="\$v_z(t)\$", xlabel="\$t\$")
 # primer 1
 savefig("img/16-komponente.svg")
 
@@ -218,17 +218,18 @@ scatter!(res.t[i:i+1], [res.u[i][2], res.u[i+1][2]], label="interval z ničlo")
 t0 = nicla(res, fun, dfun)
 scatter!([t0], [res(t0)[2]], label="ničla \$t=$(t0)\$")
 plot!(t -> res(t)[2], 0, t0, label="Hermitov zlepek", xlabel="\$t\$",
-  ylabel="višina \$y=u_2\$")
+  ylabel="višina \$z=u_2\$")
 # nicla 2
 savefig("img/16-nicla-2.svg")
 
+using BookUtils
 term("16-nicla-vrednost", (t0, res(t0)))
 
 # nicla 3
 t = range(0, t0, 100)
 x = [res(ti)[1] for ti in t]
 y = [res(ti)[2] for ti in t]
-plot(x, y, label="trajektorija", xlabel="\$x\$", ylabel="\$y\$")
+plot(x, y, label="trajektorija", xlabel="\$x\$", ylabel="\$z\$")
 # nicla 3
 savefig("img/16-nicla-3.svg")
 

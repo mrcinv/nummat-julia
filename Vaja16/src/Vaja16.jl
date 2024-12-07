@@ -32,15 +32,15 @@ end
 """
   zp = ZacetniProblem(f, u0 tint, p)
 
-Podatkovna struktura s podatki za začetni problem za 
+Podatkovna struktura s podatki za začetni problem za
 navadne diferencialne enačbe (NDE) oblike:
 
 ```math
 u'(t) = f(t, u, p).
 ```
 Desna stran NDE je podana s funkcijo `f`, ki je odvisna od vrednosti `u`, `t` in
-parametrov enačbe `p`. Začetni pogoj ``u(t0) = u_0`` je določen s poljem `u0` 
-v začetni točki intervala ``tint=[t0, t_k]`` na katerem iščemo rešitev.
+parametrov enačbe `p`. Začetni pogoj ``u(t0) = u_0`` je določen s poljem `u0`
+v začetni točki intervala ``tint=[t0, t_k]``, na katerem iščemo rešitev.
 
 ## Atributi
 
@@ -64,7 +64,7 @@ Uporablja se kot tip, ki ga vrnejo metode za reševanje začetnega problema.
 """
 struct ResitevNDE{TU,TT,TP}
   zp::ZacetniProblem{TU,TT,TP} # referenca na začetni problem
-  t::Vector{TT}  # vrednosti časa(argumenta)
+  t::Vector{TT}  # vrednosti časa (argumenta)
   u::Vector{TU}  # približki za vrednosti rešitve
   du::Vector{TU} # izračunane vrednosti odvoda
 end
@@ -75,7 +75,7 @@ abstract type ResevalecNDE end
 """
     Euler(n)
 
-Parametri za Eulerjevo metodo za reševanje začetnega problema NDE s fiksnim 
+Parametri za Eulerjevo metodo za reševanje začetnega problema NDE s fiksnim
 korakom. Edini parameter je `h`, ki je enak velikosti koraka Eulerjeve metode.
 """
 struct Euler{T} <: ResevalecNDE
@@ -129,7 +129,7 @@ struct RK2{T} <: ResevalecNDE
 end
 
 """
-Izračunaj en korak metode Runge-Kutta reda 2. 
+Izračunaj en korak metode Runge-Kutta reda 2.
 """
 function korak(m::RK2, fun, t0, u0, par, smer)
   h = smer * m.h
@@ -161,7 +161,7 @@ end
 
 """
 Izračunaj k-je pri metodi Runge-Kutta s koeficienti `a` in `c` in korakom `h`
-za enačbo podano s funkcijo `fun(t, u, p)`, začetnimi pogoji `t0` in `u0` in 
+za enačbo podano s funkcijo `fun(t, u, p)`, začetnimi pogoji `t0` in `u0` in
 vredonstjo parametrov `p`.
 """
 function rk_k(a, c, fun, t0, u0, h, par)
@@ -190,7 +190,7 @@ end
 (res::ResitevNDE)(t) = vrednost(res, t)
 # interpolacija
 
-# nicla 
+# nicla
 function newton(fdf, x0, maxit=10, atol=1e-8)
   for _ in 1:maxit # Newtonova metoda
     z, dz = fdf(x0)
