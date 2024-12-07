@@ -62,7 +62,7 @@ odvod(f, x) = odvod(f(x + ε))
 """
     Dual(x, dx::Vector)
 
-Predstavlja vrednost `f` odvisno od `n` spremenljivk in njen gradient
+Predstavlja vrednost `f`, odvisno od `n` spremenljivk, in njen gradient
 ``\\nabla f = f__1 \\frac{\\partial}{\\partial x_1} + f_2 \\frac{\\partial}{\\partial x_2}
 + ... f_n \\frac{\\partial}{\\partial x_n}``.
 """
@@ -103,10 +103,10 @@ log(a::Dual) = Dual(log(a.x), a.dx / a.x)
 """
     x = spremenljivka(v)
 
-Generiraj vektor `x` vektorskih dualnih števil za vrednost vektorske 
+Generiraj vektor `x` vektorskih dualnih števil za vrednost vektorske
 spremenljivke `v`. Komponente vektorja `x` so vektorska dualna števila
-z vrednostmi enakimi komponentam vektorja `v` in parcialnimi odvodi enakimi
-1, če se indeksa komponente in parcialnega odvoda ujemata in 0 sicer.
+z vrednostmi, enakimi komponentam vektorja `v`, in parcialnimi odvodi enakimi
+1, če se indeksa komponente in parcialnega odvoda ujemata, in 0 sicer.
 Reszultat te funkcije lahko uporabimo kot vhodni argument pri računanju
 gradienta vektorske funkcije z argumentom `v`.
 """

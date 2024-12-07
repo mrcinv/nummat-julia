@@ -12,7 +12,7 @@ function koren(x)
   return y
 end
 
-"""Izračunaj simetično diferenco za funkcijo `f` v točki `x` z odmikom `h`."""
+"""Izračunaj simetrično diferenco za funkcijo `f` v točki `x` z odmikom `h`."""
 dif(f, x, h) = (f(x + h) - f(x - h)) / (2h)
 
 k2 = koren(2)
@@ -41,7 +41,7 @@ plot!(x -> M, -10, 10, label="\$M\$")
 savefig("img/15-enacba.svg")
 
 
-# iteracija 
+# iteracija
 plot(E -> E, -10, 10)
 plot!(E -> M + e * sin(E), -10, 10)
 # iteracija
@@ -70,6 +70,9 @@ end
 # keplerE
 
 # orbita
+"""
+Izračunaj x in y koordinati na Keplerjevi orbiti.
+"""
 function orbita(t, a, b, n)
   M = n * t
   e = sqrt(1 - b^2 / a^2)
@@ -132,7 +135,7 @@ end
 """
     y, dy = dkoren(x)
 
-Izračunaj vrednost korenske funkcije in  njenega odvoda za argument `x`.
+Izračunaj vrednost korenske funkcije in njenega odvoda za argument `x`.
 """
 function dkoren(x)
   y = 1 + (x - 1) / 2
@@ -187,8 +190,8 @@ end
 using Vaja15
 # ackley
 """
-Izračunj vrednost Ackleyeve funkcije za argument `x` 
-s parametri `a`, `b` in `c`. 
+Izračunj vrednost Ackleyeve funkcije za argument `x`
+s parametri `a`, `b` in `c`.
 """
 function ackley(x, a, b, c)
   d = length(x)
