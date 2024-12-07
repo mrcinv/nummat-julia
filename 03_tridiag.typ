@@ -1,4 +1,4 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": jlfb, jl, pkg, code_box, repl, out
 #import "simboli.typ": Pm
 

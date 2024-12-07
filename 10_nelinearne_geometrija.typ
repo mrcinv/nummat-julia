@@ -1,10 +1,10 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": code_box, jlfb, jl, repl, blk
 
 = Nelinearne enačbe v geometriji
 
 Ko obravnavamo geometrijske objekte, ki so ukrivljeni (na primer krožnice,
-krivulje, ukrivljene ploskve), lahko probleme pogosto prevedemo na reševanje
+krivulje, ukrivljene ploskve), probleme pogosto prevedemo na reševanje
 sistema nelinearnih enačb. Ogledali si bomo dva primera, kjer problem rešimo
 na ta način: iskanje samopresečišča
 krivulje in minimalne razdalje med dvema krivuljama.
@@ -12,10 +12,10 @@ krivulje in minimalne razdalje med dvema krivuljama.
 == Naloga
 
 - Napiši funkcijo, ki poišče eno od samopresečišč
-  #link("https://sl.wikipedia.org/wiki/Lissajousova_krivulja")[Lissajousove krivulje]
+  #link("https://sl.wikipedia.org/wiki/Lissajousova_krivulja")[Lissajousove krivulje]:
    $ (x(t), y(t)) = (a sin(n t), b cos(m t)) $
    za parametre $a = b = 1$, $n=3$ in $m=2$.
-- Poišči točki na parametrično podanima krivuljama:
+- Poišči točki na parametrično podanih krivuljah:
 
     $
     (x_1(t), y_1(t)) = &(2 cos(t) + 1/3, quad sin(t) + 1/4), \
@@ -35,7 +35,7 @@ krivulje in minimalne razdalje med dvema krivuljama.
 == Presečišča parametrično podanih krivulj
 
 Poiščimo samopresečišča
-#link("https://sl.wikipedia.org/wiki/Lissajousova_krivulja")[Lissajousove krivulje]
+#link("https://sl.wikipedia.org/wiki/Lissajousova_krivulja")[Lissajousove krivulje]:
 $
 x(t) = a sin(n t),\
 y(t) = b cos(m t)
@@ -53,13 +53,13 @@ za parametre $a=b=1$, $n=2$ in $m=3$. Za lažjo predstavo najprej narišemo kriv
   image("img/10-lissajous.svg", width: 60%), caption: [Lissajousova krivulja za $a=b=1$, $n=2$ in $m=3$]
 )
 
-Iščemo različni vrednosti parametra $t_1$ in $t_2$ $t_1 eq.not t_2$, za katera velja
+Iščemo različni vrednosti parametra $t_1$ in $t_2$ $$, za katera velja
 $
-x(t_1) = x(t_2),\
-y(t_1) = y(t_2).
+x(t_1) &= x(t_2),\
+y(t_1) &= y(t_2), quad t_1 eq.not t_2.
 $<eq:10-samopres>
 
-Dobili smo torej sistem dveh nelinearnih enačb z dvema neznankama. Rešitve sistema @eq:10-samopres
+Dobili smo sistem dveh nelinearnih enačb z dvema neznankama. Rešitve sistema @eq:10-samopres
 poiščemo z Newtonovo metodo, ki smo jo spoznali v @9-poglavje[poglavju]. Newtonova
 metoda zahteva, da sistem enačb prevedemo v vektorsko enačbo $bold(F)(bold(t))=bold(0)$,
 kjer je $bold(t)=[t_1, t_2]^T$. Funkcija, katere ničlo iščemo, je
@@ -82,10 +82,12 @@ $
   image("img/10-samopres.svg", width: 60%),
   caption: [Krivulja doseže izbrano samopresečišče pri dveh različnih vrednostih parametra $t$.])
 
-Napišimo funkcijo #jl("samopres(k, dk, ts0)"), ki poišče eno od samopresečišč
-krivulje z Newtonovo metodo (rešitev @pr:10-samopres).
+#naloga[
+  Napiši funkcijo #jl("samopres(k, dk, tt0)"), ki poišče eno od samopresečišč
+  krivulje z Newtonovo metodo z danim začetnim približkom (rešitev @pr:10-samopres).
+]
 
-Nato uporabimo @pr:09-konvergenca in poiščemo vsa samopresečišča ter določimo konvergenčna
+Uporabimo @pr:09-konvergenca in poiščemo vsa samopresečišča ter določimo konvergenčna
 območja. Ker sta funkciji $sin$ in $cos$, ki nastopata v definiciji krivulje,
 periodični s periodo $2pi$, vrednosti parametrov $t$ in $s$ računamo po modulu
 $2pi$.
@@ -135,7 +137,7 @@ Funkcija $d_m$ ni prava razdalja v smislu
 #opomba(naslov: [Hausdorffova razdalja])[
 Alternativna definicije razdalje med dvema množicama je #emph[Hausdorffova razdalja].
 Hausdorffova razdalja pove, koliko je lahko točka na eni krivulji največ oddaljena od druge
-krivulje in je definirana kot
+krivulje in je definirana kot:
 
 $ d_(h)(K_1, K_2) = max(max_(T_1 in K_1) min_(T_2 in K_2) d(T_1, T_2),
   max_(T_2 in K_2) min_(T_1 in K_1) d(T_1, T_2)).
@@ -147,8 +149,8 @@ je Hausdorffova razdalja lahko tudi neskončna (na primer, če je ena krivulja o
 druga pa neomejena).
 ]
 
-Iščemo točko $bk_1(t)$ na krivulji $bk_1$ in točko $bk_2(s)$ na
-krivulji $bk_2$, ki sta najbližji med vsemi pari točk. Iščemo vrednosti
+Iščemo točko $bk_1(t)$ na krivulji $K_1$ in točko $bk_2(s)$ na
+krivulji $K_2$, ki sta najbližji med vsemi pari točk. Iščemo vrednosti
 parametrov $t$ in $s$, pri katerih funkcija razdalje
 
 $
@@ -162,13 +164,18 @@ $
 D(t, s) = d^2(t, s)=(x_1(t)-x_2(s))^2 + (y_1(t)-y_2(s))^2.
 $
 
+#naloga[
+  Napiši funkcijo #jl("razdalja2(k1, k2)"), ki za dani krivulji #jl("k1") in
+  #jl("k2") vrne funkcijo kvadrata razdalje $D(t_1, t_2)$. Vrnjena funkcija naj sprejme dva argumenta #jl("t1") in #jl("t2") in vrne kvadrat razdalje med točkama #jl("k1(t1)") in #jl("k2(t2)") (rešitev je @pr:10-razdalja2).
+]
+
 Funkcijo $D(t, s)$ za krivulji @eq:10-krivulji  grafično predstavimo z
 nivojnicami in barvami na kvadratu $[-pi, pi]^2$.
 
 #demo10("# razdalja")
 
 #figure(image("img/10-graf-razdalja.svg", width: 60%),
-caption: [Razdalja med točkama na krivuljah $k_1$ in $k_2$ v odvisnosti od parametrov na krivulji]
+caption: [Razdalja med točkama na krivuljah $K_1$ in $K_2$ v odvisnosti od parametrov na krivulji]
 )
 
 
@@ -176,7 +183,7 @@ caption: [Razdalja med točkama na krivuljah $k_1$ in $k_2$ v odvisnosti od para
 
 Metoda gradientnega spusta je sila enostavna. Predstavljamo si, da je gosta megla in da smo na
 pobočju gore. Želimo čim prej priti v dno doline. Na vsakem koraku izberemo smer, v kateri je
-pobočje najstrmejše in se spustimo v tej smeri. Na ta način bomo najhitreje izgubili višino.
+pobočje najstrmejše in se spustimo v tej smeri. Na ta način najhitreje izgubljamo višino.
 Vendar ni nujno, da bomo prišli v dno doline, saj lahko prej pristanemo v kakšni
 kotanji ali vrtači na pobočju gore. V vsakem primeru bomo
 prišli nekam na dno, od koder bo šlo le še navzgor.
@@ -192,11 +199,14 @@ bold(x)^((n+1)) = bold(x)^((n)) - h_n nabla f(bold(x)^((n))),
 $
 kjer je $nabla f(bold(x)^((n)))$ vrednost gradienta v točki $bold(x)^((n))$,  $h_n$ pa je
 parameter, ki poskrbi, da zaporedje približkov ne skače preveč po domeni in se lahko na vsakem
-koraku spremeni. Napišimo funkcijo #jl("spust(gradf, x0, h)"), ki poišče lokalni minimum funkcije
+koraku spremeni.
+#naloga[
+Napiši funkcijo #jl("spust(gradf, x0, h)"), ki poišče lokalni minimum funkcije
 z metodo gradientnega spusta (rešitev @pr:10-spust).
+]
 
-Gradient funkcije $D$ bi lahko izračunali na roke, vendar je to zamudno in se pri tem lahko
-hitro zmotimo. Uporabili bomo knjižnico za
+Gradient funkcije $D$ lahko izračunamo na roke, vendar je to zamudno in se pri tem lahko
+hitro zmotimo. Raje uporabimo knjižnico za
 #link("https://en.wikipedia.org/wiki/Automatic_differentiation")[avtomatsko odvajanje]
 #link("https://juliadiff.org/ForwardDiff.jl/stable/")[`ForwardDiff.jl`]@RevelsLubinPapamarkou2016, ki učinkovito izračuna
 vrednosti parcialnih odvodov funkcije v posameznih točkah.
@@ -212,7 +222,7 @@ dveh spremenljivk #jl("d2(t, s)") spremenimo v funkcijo vektorske spremenljivke
 #figure(caption: [Zaporedje približkov gradientnega spusta],
   image("img/10_priblizki_grad.svg", width: 60%))
 
-Iz slike je razvidno, da gradientni spust konvergira k lokalnemu minimumu, vendar postane konvergenca
+S slike je razvidno, da gradientni spust konvergira k lokalnemu minimumu, vendar postane konvergenca
 počasna, ko se približamo minimumu. Konvergenco lahko pohitrimo s primerno izbiro parametra $h_n$, na
 primer z metodo
 #link("https://sl.wikipedia.org/wiki/Minimizacija_v_dani_smeri")[minimiziranja v dani smeri].
@@ -231,7 +241,7 @@ $
   nabla D(t, s) = vec((partial D)/(partial t)(t, s), (partial D)/(partial s)(t, s)) = bold(0).
 $<eq:10-stac>
 
-Rešitev enačbe @eq:10-stac lahko poiščemo z Newtonovo metodo.
+Rešitev enačbe @eq:10-stac poiščemo z Newtonovo metodo.
 
 #demo10("# newton")
 
@@ -249,7 +259,7 @@ gradientnim spustom:
 
 #demo10("# minimum")
 
-in Newtonovo metodo:
+in z Newtonovo metodo:
 
 #demo10("# sedlo")
 
@@ -275,7 +285,7 @@ image("img/10_obmocje_grad.svg"),
 image("img/10_obmocje_newton.svg")),
 caption: [Območja konvergence za gradientni spust (levo) in Newtonovo metodo (desno)])
 
-Problem iskanja minimuma funkcije, ki smo ga reševali, spada med optimizacijske probleme.
+Problem iskanja minimuma funkcije, ki smo ga reševali, uvrščamo med optimizacijske probleme.
 Študij optimizacijskih problemov je obsežno raziskovalno področje. Več o tem si lahko preberete v knjigi
 @kochenderfer_algorithms_2019.
 
@@ -283,5 +293,5 @@ Problem iskanja minimuma funkcije, ki smo ga reševali, spada med optimizacijske
 
 #let vaja10(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja10/src/Vaja10.jl", koda)))
 #vaja10("# samopres")[Funkcija, ki poišče samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
-#vaja10("# razdalja2")[Funkcija, ki izračuna kvadrata razdalje med dvema krivuljama.]<pr:10-razdalja2>
+#vaja10("# razdalja2")[Funkcija, ki za dani krivulji vrne funkcijo kvadrata razdalje med dvema točkama na krivuljah.]<pr:10-razdalja2>
 #vaja10("# grad")[Gradientni spust]<pr:10-spust>

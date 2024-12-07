@@ -2,7 +2,7 @@
 using Plots
 l(t) = [sin(2t), cos(3t)]
 t = range(0, 2pi, 500)
-# Funkcija plot drugače interpretira vektor vektorjev, kot vektor parov (Tuple).
+# Funkcija plot drugače interpretira vektor vektorjev kot vektor parov (Tuple).
 # Zato vektorje koordinat spremenimo v pare koordinat (Tuple).
 plot(Tuple.(l.(t)), label=nothing)
 # krivulja
@@ -45,7 +45,7 @@ scatter!(Tuple.(nicle), label="samopresečišča", legend=:bottomleft)
 savefig("img/10-obmocje-samopres.svg")
 
 # vsa samopres
-p = plot(Tuple.(l.(t)), label="krivulja", legend=:bottom) # narišemo zopet krivuljo
+p = plot(Tuple.(l.(t)), label="krivulja", legend=:bottom)
 for tt in nicle
   scatter!(p, Tuple.(l.(tt)), label=@sprintf "\$t_1=%.2f\$, \$t_2=%.2f\$" tt...)
 end
@@ -55,7 +55,6 @@ display(p)
 savefig("img/10-vsa-samopres.svg")
 
 # krivulji
-using Plots
 k1(t) = [2 * cos(t) + 1 / 3, sin(t) + 0.25]
 k2(s) = [cos(s) / 3 - sin(s) / 2, cos(s) / 3 + sin(s) / 2]
 t = range(0, 2pi, 60);

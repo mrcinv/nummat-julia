@@ -1,5 +1,5 @@
 #import "julia.typ": jlfb, code_box, jl
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "simboli.typ": bx
 
 = Interpolacija z implicitnimi funkcijami

@@ -1,4 +1,4 @@
-#import "admonitions.typ": opomba
+#import "admonitions.typ": opomba, naloga
 #import "julia.typ": jlfb, jlf, jl, repl, code_box, pkg, blk, readlines
 
 = Uvod v programski jezik Julia
