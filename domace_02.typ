@@ -16,7 +16,6 @@ Implementacija funkcije naj zadošča naslednjim zahtevam:
 - časovna zahtevnost je omejena s konstanto, ki je neodvisna od argumenta.
 
 == Fresnelov integral (težja)
-<fresnelov-integral-težja>
 Napiši učinkovito funkcijo, ki izračuna vrednosti Fresnelovega
 kosinusa
 
@@ -71,7 +70,6 @@ $
 kot je opisano v @dlmf6.
 
 == Naravni parameter \(težja)
-<besselova-funkcija-težja>
 
 Napišite učinkovito funkcijo, ki izračuna #link("https://en.wikipedia.org/wiki/Differentiable_curve#Length_and_natural_parametrization")[naravni parameter]:
 
@@ -84,10 +82,10 @@ $
 $
 
 #strong[Namig]: Za velike vrednosti argumenta $t$ interpoliraj funkcijo $1/s(1/t)$ s
-polinomom v Čebiševih točkah (@ineterpolacija-z-baricentrično-formulo).
+polinomom v Čebiševih točkah (@interpolacija-z-baricentrično-formulo).
 
 == Interpolacija z baricentrično formulo
-<ineterpolacija-z-baricentrično-formulo>
+<interpolacija-z-baricentrično-formulo>
 Napišite program, ki za dano funkcijo $f$ na danem intervalu
 $[a , b]$ izračuna polinomski interpolant v Čebiševih točkah.
 Vrednosti naj računa z #link("https://en.wikipedia.org/wiki/Lagrange_polynomial#Barycentric_form")[baricentrično Lagrangeevo interpolacijo] po formuli
@@ -155,7 +153,6 @@ $ integral_(A - B) integral_(A - B) & f(x, y) d x d y = integral_A integral_A f(
 & - 2 integral_A integral_B f(x, y) d x d y + integral_B integral_B f(x, y) d x d y. $
 
 == Ploščina zanke Bézierjeve krivulje
-<ploščina-bézierove-krivulje>
 
 Izračunajte ploščino zanke, ki jo omejuje Bézierjeva krivulja dana s
 kontrolnim poligonom:

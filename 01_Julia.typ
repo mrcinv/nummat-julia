@@ -253,16 +253,16 @@ end", none)
 #link("https://docs.julialang.org/en/v1/manual/types/")[Podatkovne tipe] definiramo z ukazom `struct`. Ustvarimo tip, ki predstavlja točko z dvema koordinatama:
 
 #code_box[
-  #repl("struct Tocka
+  #repl("struct Točka
   x
   y
 end", none)
 ]
 
-Ko definiramo nov tip, se avtomatično ustvari tudi funkcija z istim imenom, s katero lahko ustvarimo vrednost novo definiranega tipa. Vrednost tipa #jl("Tocka") ustvarimo s funkcijo `Tocka(x, y)`:
+Ko definiramo nov tip, se avtomatično ustvari tudi funkcija z istim imenom, s katero lahko ustvarimo vrednost novo definiranega tipa. Vrednost tipa #jl("Točka") ustvarimo s funkcijo `Točka(x, y)`:
 
 #code_box[
-  #repl("T = Tocka(1, 2) # ustvari vrednost tipa Tocka", "Tocka(1, 2)")
+  #repl("T = Točka(1, 2) # ustvari vrednost tipa Točka", "Točka(1, 2)")
   #repl("T.x", "1")
   #repl("T.y", "2")
 ]
@@ -270,8 +270,8 @@ Ko definiramo nov tip, se avtomatično ustvari tudi funkcija z istim imenom, s k
 Julia omogoča različne definicije iste funkcije za različne podatkovne tipe. Za določitev tipa argumenta funkcije uporabimo operator `::`. Definirajmo funkcijo, ki izračuna razdaljo med dvema točkama:
 
 #code_box[
-  #repl("razdalja(T1::Tocka, T2::Tocka) = sqrt((T2.x - T1.x)^2 + (T2.y - T1.y)^2)", "razdalja (generic function with 1 method)")
-  #repl("razdalja(Tocka(1, 2), Tocka(2, 1))", "1.4142135623730951")
+  #repl("razdalja(T1::Točka, T2::Točka) = sqrt((T2.x - T1.x)^2 + (T2.y - T1.y)^2)", "razdalja (generic function with 1 method)")
+  #repl("razdalja(Točka(1, 2), Točka(2, 1))", "1.4142135623730951")
 ]
 
 === Moduli
@@ -421,11 +421,11 @@ Okolje za delo z Julio je pripravljeno.
 
 == Priprava korenske mape
 
-Programe, ki jih bomo napisali v nadaljevanju, bomo hranili v mapi `nummat`. Ustvarimo jo z ukazom:
+Programe, ki jih bomo napisali v nadaljevanju, bomo hranili v mapi `num_mat`. Ustvarimo jo z ukazom:
 
 #code_box[
 ```sh
-$ mkdir nummat
+$ mkdir num_mat
 ```
 ]
 
@@ -433,15 +433,15 @@ Korenska mapa bo služila kot #link("https://pkgdocs.julialang.org/v1/environmen
 
 #code_box[
   ```sh
-$ cd nummat
+$ cd num_mat
 $ julia
 ```
   #repl("# s pritiskom na ] vključimo paketni način", none)
   #pkg("activate .", none)
-  #pkg("", none, env: "nummat")
+  #pkg("", none, env: "num_mat")
 ]
 
-Zgornji ukaz ustvari datoteko `Project.toml` in pripravi novo projektno okolje v mapi `nummat`.
+Zgornji ukaz ustvari datoteko `Project.toml` in pripravi novo projektno okolje v mapi `num_mat`.
 
 #opomba(
   naslov: [Projektno okolje v Julii],
@@ -462,7 +462,7 @@ Projektnemu okolju dodamo pakete, ki jih bomo uporabili v nadaljevanju. Zaenkrat
 paket #link("https://github.com/JuliaPlots/Plots.jl")[Plots.jl], ki ga uporabljamo za risanje grafov:
 
 #code_box[
-  #pkg("add Plots", "", env: "nummat")
+  #pkg("add Plots", "", env: "num_mat")
 ]
 
 Datoteka `Project.toml` vsebuje le ime paketa `Plots` in identifikacijski niz:
@@ -479,7 +479,7 @@ Točna verzija paketa `Plots` in vsi paketi, ki jih potrebuje, so zabeleženi  v
 == Vodenje različic s programom Git
 
 Za vodenje različic priporočam uporabo programa #link("https://git-scm.com/")[Git].
-V nadaljevanju bomo opisali, kako v korenski mapi `nummat` pripraviti Git repozitorij in vpisati
+V nadaljevanju bomo opisali, kako v korenski mapi `num_mat` pripraviti Git repozitorij in vpisati
 datoteke, ki smo jih do sedaj ustvarili.
 
 #opomba(naslov: [Sistem za vodenje različic Git])[
@@ -493,7 +493,7 @@ programske kode, na primer #link("https://github.com/")[Github] ali
 #link("https://gitlab.com/")[Gitlab].]
 
 
-Z naslednjim ukazom v mapi `nummat` ustvarimo repozitorij za `git` in
+Z naslednjim ukazom v mapi `num_mat` ustvarimo repozitorij za `git` in
 registriramo novo ustvarjene datoteke.
 
 #code_box[
@@ -510,7 +510,7 @@ Pogosti vpisi namreč precej olajšajo nadzor nad spremembami kode in spodbujajo
 
 == Priprava paketa za vajo
 
-Ob začetku vsake vaje bomo v korenski mapi (`nummat`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
+Ob začetku vsake vaje bomo v korenski mapi (`num_mat`) najprej ustvarili mapo oziroma #link("https://pkgdocs.julialang.org/v1/creating-packages/")[paket],
 v katerem bo shranjena koda za določeno vajo. S ponavljanjem postopka priprave
 paketa za vsako vajo posebej se bomo naučili, kako hitro začeti s projektom.
 Obenem bomo optimizirali potek dela in odpravili ozka grla v postopkih priprave projekta. Ponavljanje vedno istih postopkov nas prisili, da postopke kar se da poenostavimo in ponavljajoča se opravila avtomatiziramo. Na dolgi rok se tako lahko bolj posvečamo dejanskemu reševanju problemov.
@@ -520,11 +520,11 @@ Za vajo bomo ustvarili paket `Vaja01`, s katerim bomo narisali
   "https://sl.wikipedia.org/wiki/Geronova_lemniskata",
 )[Geronovo lemniskato].
 
-V mapi `nummat` ustvarimo paket `Vaja01`, v katerega bomo shranili kodo. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
+V mapi `num_mat` ustvarimo paket `Vaja01`, v katerega bomo shranili kodo. Nov paket ustvarimo v paketnem načinu z ukazom `generate`:
 
 #code_box[
 ```shell
-$ cd nummat
+$ cd num_mat
 $ julia
 ```
 #repl(" # pritisnemo ] za vstop v paketni način", none)
@@ -546,14 +546,14 @@ Vaja01
 ```
 ]
 
-Paket `Vaja01` nato dodamo v projektno okolje v korenski mapi `nummat`, da bomo lahko kodo iz paketa uporabili v programih in ukazni zanki. Namesto ukaza `add` uporabimo ukaz `develop`, ker želimo paket `Vaja01` še spreminjati:
+Paket `Vaja01` nato dodamo v projektno okolje v korenski mapi `num_mat`, da bomo lahko kodo iz paketa uporabili v programih in ukazni zanki. Namesto ukaza `add` uporabimo ukaz `develop`, ker želimo paket `Vaja01` še spreminjati:
 
 #code_box[
 #pkg("activate . ", none)
 #pkg(
   "develop ./Vaja01",
   none,
-  env: "nummat",
+  env: "num_mat",
 )
 ]
 
@@ -695,7 +695,7 @@ Test Summary: | Pass  Total  Time
 Koordinata x  |    2      2  0.1s
 Test Summary: | Pass  Total  Time
 Koordinata y  |    2      2  0.0s
-     Testing Vaja01 tests passed", env:"nummat")
+     Testing Vaja01 tests passed", env:"num_mat")
 ]
 
 == Dokumentacija <sec:01docs>
@@ -791,10 +791,10 @@ Poročilo pripravimo z ukazom ```jl Weave.weave```. Ustvarimo program
   caption: [Program za pripravo PDF dokumenta],
 )
 
-Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Julii. Preden poženemo program `makedocs.jl`, moramo projektnemu okolju `nummat` dodati paket `Weave.jl`.
+Program poženemo z ukazom ```jl include("Vaja01/doc/makedocs.jl")``` v Julii. Preden poženemo program `makedocs.jl`, moramo projektnemu okolju `num_mat` dodati paket `Weave.jl`.
 
 #code_box[
-  #pkg("add Weave", none, env: "nummat")
+  #pkg("add Weave", none, env: "num_mat")
   #repl("include(\"Vaja01/doc/makedocs.jl\")", none)
 ]
 
@@ -874,7 +874,7 @@ Nato poženi teste:
 
 #code_box[
   #pkg("test Vaja01", "...
-  Testing Vaja01 tests passed", env: "nummat")
+  Testing Vaja01 tests passed", env: "num_mat")
 ]
 
 Na koncu pa poženi še program `01uvod.jl`:

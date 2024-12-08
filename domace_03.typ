@@ -9,7 +9,6 @@ osnovne operacije z matrikami in razcepe matrik. Vse ostale algoritme
 morate implementirati sami.
 
 == Ničle Airyjeve funkcije
-<ničle-airijeve-funkcije>
 
 Airyjeva funkcija je dana kot rešitev začetnega problema
 
@@ -40,7 +39,6 @@ $exp(sigma_(k + 1))$ pa v programskem jeziku Julia dobite z
 ukazom `exp`.
 
 == Dolžina implicitno podane krivulje
-<dolžina-implicinto-podane-krivulje>
 Poiščite približek za dolžino krivulje, ki je dana implicitno z enačbama:
 
 $ F_1 lr((x , y , z)) & = x^4 + y^2 slash 2 + z^2 = 12,\
