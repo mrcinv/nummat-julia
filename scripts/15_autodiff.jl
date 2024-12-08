@@ -188,9 +188,9 @@ function eanomalija(M, e)
 end
 
 using Vaja15
-# ackley
+# Ackley
 """
-Izračunj vrednost Ackleyeve funkcije za argument `x`
+Izračunaj vrednost Ackleyeve funkcije za argument `x`
 s parametri `a`, `b` in `c`.
 """
 function ackley(x, a, b, c)
@@ -206,7 +206,7 @@ function ackley(x, a, b, c)
   y -= exp(S2 / d)
   return y
 end
-# ackley
+# Ackley
 
 # ack 0
 x0 = [1.1, 1.2, 1.3]
@@ -227,6 +227,6 @@ dy = odvod(y)
 
 using BookUtils
 
-term("15-ackley-1", x0)
-term("15-ackley-2", y)
-term("15-ackley-3", dy)
+term("15-Ackley-1", x0)
+term("15-Ackley-2", y)
+term("15-Ackley-3", dy)

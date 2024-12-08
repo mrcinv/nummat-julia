@@ -37,7 +37,7 @@ V tej vaji bomo v Julii implementirali avtomatsko odvajanje z
   #link("https://en.wikipedia.org/wiki/Ackley_function")[Ackleyeve funkcije]:
   $
   f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
-  $<eq:15-ackley>
+  $<eq:15-Ackley>
   ki se uporablja za testiranje optimizacijskih algoritmov.
 
 == Ideja avtomatskega odvoda
@@ -432,11 +432,11 @@ Računanje z dualnimi števili uporablja način odvajanja naprej.
 Izračunajmo gradient funkcije #link("https://en.wikipedia.org/wiki/Ackley_function")[Ackleyeve funkcije]:
 $
 f(bold(x)) = -a exp(-b sqrt(1/d sum_(i=1)^d x_(i)^2)) - exp(1/d sum_(i=1)^d cos(c x_i)) + a + exp(1),
-$<eq:15-ackley>
+$<eq:15-Ackley>
 ki se uporablja za testiranje optimizacijskih algoritmov.
 
 #naloga[
-Najprej napiši funkcijo, ki izračuna vrednost Ackleyeve funkcije (@pr:15-ackley).
+Najprej napiši funkcijo, ki izračuna vrednost Ackleyeve funkcije (@pr:15-Ackley).
 ]
 
 Gradient izračunamo tako, da za vhodni vektor $bold(x)_0$ ustvarimo
@@ -446,9 +446,9 @@ vhodnega vektorja $bold(x)_0$.
 
 #code_box[
   #repl(demo15raw("# ack 0"), none)
-  #repl(demo15raw("# ack 1"), read("out/15-ackley-1.out"))
-  #repl(demo15raw("# ack 2"), read("out/15-ackley-2.out"))
-  #repl(demo15raw("# ack 3"), read("out/15-ackley-3.out"))
+  #repl(demo15raw("# ack 1"), read("out/15-Ackley-1.out"))
+  #repl(demo15raw("# ack 2"), read("out/15-Ackley-2.out"))
+  #repl(demo15raw("# ack 3"), read("out/15-Ackley-3.out"))
 ]
 
 Dualni del rezultata je enak gradientu funkcije.
@@ -483,4 +483,4 @@ Dualni del rezultata je enak gradientu funkcije.
 #figure(caption: [Elementarne funkcije za vektorska dualna števila], vaja15("# funkcije dual"))<pr:15-dual-fun>
 #figure(caption: [Funkcija, ki izračuna gradient funkcije vektorske spremenljivke v dani točki.],
   vaja15("# gradient"))<pr:15-grad>
-#figure(caption: [Funkcija za izračun Ackleyeve funkcije], demo15("# ackley"))<pr:15-ackley>
+#figure(caption: [Funkcija za izračun Ackleyeve funkcije], demo15("# Ackley"))<pr:15-Ackley>

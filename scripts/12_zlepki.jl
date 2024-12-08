@@ -53,7 +53,7 @@ plot(x -> f(x) - Z(x), 0, 5, label="\$f(x)-Z(x)\$")
 savefig("img/12-napaka-eps.svg")
 
 
-# runge
+# Runge
 f(x) = cos(2x) + sin(3x)
 n = 65
 x = range(0, 6, n + 1)
@@ -62,12 +62,12 @@ p_newton = interpoliraj(NewtonovPolinom, x, f.(x))
 plot(f, 0, 6, label="\$f(x)\$")
 plot!(x -> p_newton(x), 0, 6, label="\$p_{$n}(x)\$")
 scatter!(x, f.(x), label="\$(x_i, f(x_i))\$")
-# runge
+# Runge
 
-savefig("img/12-runge.svg")
+savefig("img/12-Runge.svg")
 
 # run napaka
 plot(x -> f(x) - p_newton(x), 0, 6, label="razlika \$f(x)-p_{$n}(x)\$")
 # run napaka
-savefig("img/12-runge-napaka.svg")
+savefig("img/12-Runge-napaka.svg")
 

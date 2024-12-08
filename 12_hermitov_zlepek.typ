@@ -277,12 +277,12 @@ Pri nizkih stopnjah polinomov se z večanjem števila interpolacijskih točk nap
 zmanjšuje. A le do neke mere! Če stopnjo polinoma preveč povečamo, začne napaka
 naraščati.
 
-#demo12("# runge")
+#demo12("# Runge")
 
 #demo12("# run napaka")
 
 #figure(kind: image, table(stroke: none, columns: 2,
-  image("img/12-runge.svg"), image("img/12-runge-napaka.svg")),
+  image("img/12-Runge.svg"), image("img/12-Runge-napaka.svg")),
   caption: [Interpolacija s polinomi visokih stopenj na ekvidistančnih točkah
   na robu območja močno niha. Interpolacija funkcije $f(x)=cos(2x) + sin(3x)$ s polinomom
   stopnje $65$ (levo). Razlika med funkcijo in interpolacijskim polinomom (desno).]

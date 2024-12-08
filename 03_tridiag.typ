@@ -43,8 +43,8 @@ tridiagonalnih matrik.
 Preden se lotimo naloge, ustvarimo nov paket `Vaja03`, kamor bomo postavili kodo:
 
 #code_box[
-  #pkg("generate Vaja03", none, env: "nummat")
-  #pkg("develop Vaja03/", none, env: "nummat")
+  #pkg("generate Vaja03", none, env: "num_mat")
+  #pkg("develop Vaja03/", none, env: "num_mat")
 ]
 
 Podatkovni tip za tridiagonalne matrike imenujemo `Tridiag` in vsebuje tri polja z elementi na posameznih diagonalah. Definicijo postavimo v `Vaja03/src/Vaja03.jl`:
@@ -96,7 +96,7 @@ Preden nadaljujemo, preverimo, ali so funkcije pravilno implementirane. Napišem
 V paket `Vaja03` moramo dodati še paket `Test`:
 
 #code_box[
-  #pkg("activate Vaja03", none, env: "nummat")
+  #pkg("activate Vaja03", none, env: "num_mat")
   #pkg("add Test", none, env: "Vaja03")
 ]
 
@@ -109,7 +109,7 @@ Teste poženemo v paketnem načinu z ukazom `test Vaja03`:
      Testing Running tests...
 Test Summary: | Pass  Total  Time
 Velikost      |    1      1  0.0s"
-  , env: "nummat")
+  , env: "num_mat")
 ]
 
 #naloga[
@@ -133,7 +133,7 @@ $cal(O)(n)$.
 Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala
 lastnosti tridiagonalnih matrik. Napiši funkcijo `\`:
 
-#code_box[ #jl("function \(T::Tridiagonal, b::Vector),")]
+#code_box[ #jl("function \(T::Tridiag, b::Vector),")]
 
 ki poišče rešitev sistema $T bold(x) = bold(b)$ (rešitev je @pr:03-backslash).
 
@@ -178,7 +178,7 @@ $
 Simulirajmo prvih 100 korakov slučajnega sprehoda:
 
 #jlfb(
-  "scripts/03_tridiag.jl",
+  "scripts/03_Tridiag.jl",
   "# sprehod"
   )
 
@@ -301,7 +301,7 @@ matriko $I - Q$:
 
 #figure(
 code_box(
-  jlfb("scripts/03_tridiag.jl", "# matrika_sprehod")
+  jlfb("scripts/03_Tridiag.jl", "# matrika_sprehod")
 ),
 caption: [Funkcija, ki sestavi tridiagonalno matriko $I-Q$ za slučajni sprehod.
   Slučajni sprehod se konča, ko se prvič oddalji za $k$ korakov od izhodišča.]
@@ -312,7 +312,7 @@ Uporabimo operator `\` za tridiagonalno matriko:
 
 #figure(
 code_box[
-  #jlfb("scripts/03_tridiag.jl", "# koraki")
+  #jlfb("scripts/03_Tridiag.jl", "# koraki")
 ],
 caption: [Funkcija, ki izračuna vektor pričakovanih števil korakov, ki jih potrebuje slučajni
 sprehod, da se iz začetnega stanja med $1$ in $2k-1$ premakne v stanje $0$ ali $2k$.]
@@ -320,7 +320,7 @@ sprehod, da se iz začetnega stanja med $1$ in $2k-1$ premakne v stanje $0$ ali 
 V matriki $Q$ so stanja označena z indeksi matrike od $1$ do $2k-1$. Zato stanja premaknemo za $-k$, dobimo stanja $-k, -k+1, med dots, med 0, med dots, k$. Komponente vektorja $bold(k)$ tako predstavljajo pričakovano število korakov, ki jih slučajni sprehod potrebuje, da prvič doseže stanji $-k$ ali $k$, če začnemo v stanju $i in {-k+1, -k+2, med dots, 0, 1, med dots, med k-1}$.
 
 #code_box[
-  #jlfb("scripts/03_tridiag.jl", "# koraki slika")
+  #jlfb("scripts/03_Tridiag.jl", "# koraki slika")
 ]
 
 #figure(
@@ -336,10 +336,9 @@ naključnih števil in izračunamo
 #link("https://en.wikipedia.org/wiki/Sample_mean_and_covariance")[vzorčno povprečje] za število
 korakov $m$.
 
+#let demo03(koda) = code_box(jlfb("scripts/03_Tridiag.jl", koda))
 #figure(
-code_box[
-  #jlfb("scripts/03_tridiag.jl", "# simulacija")
-],
+demo03("# simulacija"),
 caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da oceno za pričakovano
 število korakov.]
 )
@@ -348,10 +347,10 @@ caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da 
 Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim
 povprečjem po velikem številu sprehodov.
 
-#code_box[
-  #jlfb("scripts/03_tridiag.jl", "# poskus")
-  #out("out/03_tridiag_1.out")
-]
+#demo03("# poskus")
+#code_box(
+  out("out/03_Tridiag_1.out")
+)
 
 #opomba(naslov: [Kaj smo se naučili?])[
 - Z upoštevanjem lastnosti sistemov linearnih enačb prihranimo veliko prostora in časa.
