@@ -24,7 +24,7 @@ smiselno prilagodimo.
 
 Seznam delov, ki jih mora vsebovati vsaka domača naloga:
 
-- koda (`src\DomacaXY.jl`),
+- koda (`src\NalogaXY.jl`),
 - testi (`test\runtests.jl`),
 - dokument `README.md`,
 - demo skripta, s katero ustvarite rezultate za poročilo,
@@ -186,7 +186,7 @@ ki se izvede med testi, imenujemo #link(
 z argumentom ```jl coverage=true```, ki ga dodamo metodi `Pkg.test`:
 
 #code_box(
-  repl("import Pkg; Pkg.test(\"DomacaXY\"; coverage=true)", none)
+  repl("import Pkg; Pkg.test(\"NalogaXY\"; coverage=true)", none)
 )
 
 Zgornji ukaz bo za vsako datoteko iz mape `src` ustvaril ustrezno datoteko s končnico `.cov`, v kateri je shranjena informacija o tem, kateri deli kode so bili uporabljeni med izvajanjem testov.
@@ -196,7 +196,7 @@ Za pripravo povzetka o pokritosti kode uporabimo paket
 #code_box[
   ```jl
   using Coverage
-  cov = process_folder("DomacaXY")
+  cov = process_folder("NalogaXY")
   pokrite_vrstice, vse_vrstice = get_summary(cov)
   delež = pokrite_vrstice / vse_vrstice
   println("Pokritost kode s testi: $(round(delež*100))%.")
@@ -213,11 +213,11 @@ storiš, če repozitorij z domačimi nalogami gostiš na GitLabu.
 Postopek za GitHub in druge platforme je podoben.
 
 Preden začneš z delom, ustvari vejo na svoji delovni kopiji repozitorija in jo
-potisno na GitLab. Ime veje naj bo `domača-X`, se pravi `domaca-01` za prvo domačo nalogo in tako naprej. To narediš z ukazom
+potisno na GitLab. Ime veje naj bo `domača-X`, se pravi `domača-01` za prvo domačo nalogo in tako naprej. To narediš z ukazom
 
 ```sh
-$ git checkout -b domaca-01
-$ git push -u origin domaca-01
+$ git checkout -b domača-01
+$ git push -u origin domača-01
 ```
 
 Stikalo `-u` pove gitu, naj z domačo vejo sledi veji na GitLabu.
@@ -226,7 +226,7 @@ Med delom sproti dodajaj vnose z `git commit` in jih prenesi na GitLab z ukazom 
 Ko je domača naloga končana, na GitLabu ustvari zahtevo za združitev
 (angl. Merge request):
 - Klikni na zavihek `Merge requests` in nato na gumb `New merge request`.
-- Na desni strani izberi vejo `domaca-01` in klikni na gumb `Compare branches and continue`.
+- Na desni strani izberi vejo `domača-01` in klikni na gumb `Compare branches and continue`.
 - Ko je koda pripravljena na pregled, odstrani besedo `Draft:` v naslovu in
   v komentarju povabi asistenta k pregledu. To storiš tako, da v komentar dodaš uporabniško ime asistenta
   (npr. `@mojZlobniAsistent`):

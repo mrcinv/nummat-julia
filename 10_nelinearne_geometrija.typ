@@ -39,7 +39,7 @@ Poiščimo samopresečišča
 $
 x(t) = a sin(n t),\
 y(t) = b cos(m t)
-$<eq:10-lissajous>
+$<eq:10-Lissajous>
 
 za parametre $a=b=1$, $n=2$ in $m=3$. Za lažjo predstavo najprej narišemo krivuljo.
 
@@ -76,7 +76,7 @@ J_(bold(F))(vec(delim: "[", t_1, t_2)) = mat(
 ).
 $
 
-#demo10("# samopres")
+#demo10("# samopresečišče")
 
 #figure(
   image("img/10-samopres.svg", width: 60%),
@@ -92,14 +92,14 @@ območja. Ker sta funkciji $sin$ in $cos$, ki nastopata v definiciji krivulje,
 periodični s periodo $2pi$, vrednosti parametrov $t$ in $s$ računamo po modulu
 $2pi$.
 
-#demo10("# obmocje samopres")
+#demo10("# območje samopres")
 
 #figure(image("img/10-obmocje-samopres.svg", width: 60%),
   caption: [Območje konvergence za samopresečišča Lissajousove krivulje])
 
 Narišimo sedaj še krivuljo in na njej označimo vsa samopresečišča.
 
-#demo10("# vsa samopres")
+#demo10("# vsa samopresečišča")
 
 #figure(image("img/10-vsa-samopres.svg", width: 60%)
 )
@@ -239,9 +239,9 @@ Potreben pogoj za nastop lokalnega ekstrema je tako vektorska enačba
 
 $
   nabla D(t, s) = vec((partial D)/(partial t)(t, s), (partial D)/(partial s)(t, s)) = bold(0).
-$<eq:10-stac>
+$<eq:10-stacionarne>
 
-Rešitev enačbe @eq:10-stac poiščemo z Newtonovo metodo.
+Rešitev enačbe @eq:10-stacionarne poiščemo z Newtonovo metodo.
 
 #demo10("# newton")
 
@@ -273,11 +273,11 @@ table(stroke: none, columns: 2, image("img/10_minimum.svg"), image("img/10_sedlo
 
 Za konec si oglejmo še konvergenčna območja za gradientni spust:
 
-#demo10("# obmocje grad")
+#demo10("# območje grad")
 
 in Newtonovo metodo:
 
-#demo10("# obmocje newton")
+#demo10("# območje newton")
 
 #figure(kind: image,
 table(stroke: none, columns: 2,
@@ -292,6 +292,6 @@ Problem iskanja minimuma funkcije, ki smo ga reševali, uvrščamo med optimizac
 == Rešitve
 
 #let vaja10(koda, caption) = figure(caption: caption, code_box(jlfb("Vaja10/src/Vaja10.jl", koda)))
-#vaja10("# samopres")[Funkcija, ki poišče samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
+#vaja10("# samopresečišče")[Funkcija, ki poišče samopresečišče krivulje z Newtonovo metodo.]<pr:10-samopres>
 #vaja10("# razdalja2")[Funkcija, ki za dani krivulji vrne funkcijo kvadrata razdalje med dvema točkama na krivuljah.]<pr:10-razdalja2>
 #vaja10("# grad")[Gradientni spust]<pr:10-spust>

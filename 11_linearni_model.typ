@@ -70,7 +70,7 @@ kvadratov razlik med meritvami in napovedjo modela:
 
 $
   (y_1 - M (p , x_1))^2 + dots.h + (y_n - M (p , x_n))^2 = sum_(i = 1)^n (y_i + M (p , x_i))^2.
-$<eq:11-minkvad>
+$<eq:11-min-kvadrati>
 
 Sistem @eq:11-sistem zapišemo v matrični obliki
 $A bold(p) = bold(y)$, kjer so stolpci matrike
@@ -87,7 +87,7 @@ stolpec desnih strani pa je enak meritvam:
 
 $ bold(y) = [y_1 , y_2 , dots.h , y_n]^(sans(T)). $
 
-Pogoj najmanjših kvadratov razlik @eq:11-minkvad za optimalne
+Pogoj najmanjših kvadratov razlik @eq:11-min-kvadrati za optimalne
 vrednosti parametrov $upright(bold(p))_(o p t)$ potem zapišemo s
 kvadratno vektorsko normo:
 

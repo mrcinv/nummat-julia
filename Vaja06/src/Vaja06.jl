@@ -82,7 +82,7 @@ function desne_strani(G::AbstractGraph, sprem, koordinate)
 end
 # desne strani
 
-# vlozitev
+# vložitev
 """
     vloži!(G::AbstractGraph, fix, točke)
 
@@ -103,7 +103,7 @@ function vloži!(G::AbstractGraph, fix, točke)
     točke[k, sprem] = x
   end
 end
-# vlozitev
+# vložitev
 
 
 # cg

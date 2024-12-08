@@ -62,7 +62,7 @@ pravilo, je odvod programa $P$ z danimi argumenti $bold(x)$ enak produktu:
 
 $
 D P(bold(x)) = D k_(n)(bold(x)_(n-1)) dot.c D k_(n-1)(bold(x)_(n-2))med  dots.c med D k_1(bold(x)_0),
-$<eq:15-verizno>
+$<pr:13-verižno>
 
 kjer je $bold(x)_i = k_(i)(k_(i-1) dots k_2(k_1(bold(x)))dots)$ stanje lokalnih spremenljivk po tem,
 ko se je izvedel $i$-ti korak.
@@ -262,7 +262,7 @@ Keplerjeva enačba ima eno samo rešitev. Res, funkcija $f(E) = E - e sin(E)$ je
 in surjektivna na $(-oo, oo)$, saj je odvod $f'(E) = 1 - e cos(E) >= 0$ vedno nenegativen. Keplerjevo
 enačbo @eq:15-kepler predstavimo grafično:
 
-#demo15("# enacba")
+#demo15("# enačba")
 
 #figure(image("img/15-enacba.svg", width: 60%),
   caption: [Leva in desna stran Keplerjeve enačbe za $M=5$ in $e=0.5$])
@@ -276,7 +276,7 @@ g(E) = M - E + e sin(E).
 $
 
 #naloga[
-  Napiš naslednji funkciji:
+  Napiši naslednji funkciji:
 - #jl("keplerE(M, e)"), ki izračuna vrednost ekscentrične anomalije za dane
   vrednosti ekscentričnosti $e$ in povprečne anomalije $M$ (@pr:15-keplerE) in
 - #jl("orbita(t, a, b, n)"), ki izračuna položaj orbite v času $t$, če je v času $t=0$ telo najbližje
@@ -332,7 +332,7 @@ Avtomatsko odvajanje deluje le za funkcije, ki so implementirane s programom.
 Če je funkcija podana s tabelo funkcijskih vrednosti,
 avtomatsko odvajanje ni mogoče. V tem primeru uporabimo končne diference.
 ]
-== Računajne gradientov
+== Računanje gradientov
 
 Parcialne odvode funkcije več spremenljivk lahko prav tako izračunamo z
 dualnimi števili. Pri tem moramo paziti, da za odvode po različnih spremenljivkah
@@ -401,7 +401,7 @@ Z dualnimi števili učinkovito računamo odvode in gradiente funkcij, ki so
 implementirane s programom.
 To metodo lahko posplošimo tudi na računaje Jacobijevih matrik in višjih odvodov.
 V osnovi metoda temelji na verižnem pravilu in zapisu programa kot kompozituma posameznih
-korakov. Formula @eq:15-verizno predstavlja odvod kot produkt
+korakov. Formula @pr:13-verižno predstavlja odvod kot produkt
 matrik:
 $
   D P(bold(x)) = D k_(n)(bold(x)_(n-1)) dot.c D k_(n-1)(bold(x)_(n-2)) med dots.c med D k_1(bold(x)).

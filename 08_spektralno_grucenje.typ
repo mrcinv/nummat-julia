@@ -30,7 +30,6 @@ opisan v @Von_Luxburg_tutorial_2007.
   Komponente lastnih vektorjev uporabi kot nove koordinate in podatke predstavi v novih koordinatah.
 
 == Podobnostni graf in Laplaceova matrika
-<podobnostni-graf-in-laplaceova-matrika>
 
 Podatke (množico točk v $RR^d$) želimo razvrstiti v več gruč.
 Osnova za spektralno gručenje je #emph[podobnostni uteženi graf], ki povezuje točke, ki
@@ -104,7 +103,7 @@ Algoritem preverimo na mešanici treh Gaussovih porazdelitev.
 
 #naloga[
   Napiši naslednji funkciji:
-  - #jl("graf_eps(tocke, r)"), ki za dane točke določi matriko sosednosti za podobnostni graf z $epsilon$ okolicami (rešitev je @pr:9-graf_eps) in
+  - #jl("graf_eps(točke, r)"), ki za dane točke določi matriko sosednosti za podobnostni graf z $epsilon$ okolicami (rešitev je @pr:9-graf_eps) in
   - #jl("laplace(A)"), ki za dano matriko sosednosti izračuna Laplaceovo
     matriko grafa (rešitev je @pr:9-laplace).
 ]
@@ -112,7 +111,7 @@ Algoritem preverimo na mešanici treh Gaussovih porazdelitev.
 Izračunamo graf sosednosti z metodo $epsilon$ okolic in poiščemo
 Laplaceovo matriko dobljenega grafa.
 
-#demo8("# laplace")
+#demo8("# Laplace")
 
 #figure(
   image("img/08_laplaceova_matrika.svg", width: 60%),
@@ -137,7 +136,7 @@ Vidimo, da sta peta in šesta lastna vrednost najmanjši vrednosti,
 ki sta različni od 0. Komponente lastnih vektorjev za peto in šesto lastno
 vrednost uporabimo za nove koordinate.
 
-#demo8("# vlozitev")
+#demo8("# vložitev")
 
 #figure(
   image("img/08_vlozitev.svg", width: 60%),
@@ -187,7 +186,7 @@ Inverz $A^(-1)$ matrike $A$ lahko nadomestimo tudi z razcepom matrike $A$.
  $
 
  ki sta časovno toliko zahtevna, kot je množenje z matriko $A^(-1)$.
- Programski jezik `julia` ima za ta namen posebno metodo
+ Programski jezik Julia ima za ta namen posebno metodo
  #link("https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/index.html#LinearAlgebra.factorize")[factorize],
  ki za različne vrste matrik izračuna najprimernejši razcep. Rezultat metode `factorize` je
  vrednost posebnega tipa, za katero lahko uporabimo operator `\`, da učinkovito izračunamo rešitev sistema:

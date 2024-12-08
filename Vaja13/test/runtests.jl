@@ -42,30 +42,30 @@ end
 # gl
 
 @testset "Čebiševe točke" begin
-  x = Vaja13.cebiseve_tocke(5)
+  x = Vaja13.čebiševe_točke(5)
   @test minimum(x) > -1
   @test maximum(x) < 1
   @test sum(x) ≈ 0
-  x = Vaja13.cebiseve_tocke(3, Interval(2.0, 3.0))
+  x = Vaja13.čebiševe_točke(3, Interval(2.0, 3.0))
   @test sum(x) / 3 ≈ 2.5
   @test maximum(x) < 3
   @test minimum(x) > 2
 end
 
 @testset "Čebiševa vrsta" begin
-  T = CebisevaVrsta([4.0, 3.0, 2.0, 1.0])
+  T = ČebiševaVrsta([4.0, 3.0, 2.0, 1.0])
   T(0.5) ≈ 4 + 3cos(0.5) + 2cos(2 * 0.5) + cos(3 * 0.5)
   T(0.1) ≈ 4 + 3cos(0.1) + 2cos(2 * 0.1) + cos(3 * 0.1)
   T(1) ≈ 4 + 3cos(1) + 2cos(2) + cos(3)
 end
 
-@testset "Approksimiraj" begin
-  T = aproksimiraj(CebisevaVrsta, x -> 4x^3 - 3x, Interval(-1.0, 1.0), 4)
+@testset "Aproksimiraj s Čebiševo vrsto" begin
+  T = aproksimiraj(ČebiševaVrsta, x -> 4x^3 - 3x, Interval(-1.0, 1.0), 4)
   @test T.koef ≈ [0, 0, 0, 1, 0]
-  T = aproksimiraj(CebisevaVrsta,
+  T = aproksimiraj(ČebiševaVrsta,
     x -> 4(2x - 1)^3 - 3(2x - 1), Interval(0.0, 1.0), 4)
   @test T.koef ≈ [0, 0, 0, 1, 0]
-  T = aproksimiraj(CebisevaVrsta, sin, Interval(0.0, 2pi), 10)
+  T = aproksimiraj(ČebiševaVrsta, sin, Interval(0.0, 2pi), 10)
   t = range(0, 2pi, 7)
   @test isapprox(T.(t), sin.(t); atol=1e-3)
 end

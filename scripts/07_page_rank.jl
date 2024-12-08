@@ -10,7 +10,7 @@ P = [
   0 0 0 0 0 1;
   0 1 0 0 0 0
 ]
-x, it = potencna(P', rand(6))
+x, it = potenčna(P', rand(6))
 # splet 1
 # splet 2
 delta = P' * x - x
@@ -25,7 +25,7 @@ savefig("img/07-rang.svg")
 # skakač
 P = prehodna_matrika(Skakač(8, 8))
 
-x, it = potencna(P', rand(64))
+x, it = potenčna(P', rand(64))
 # skakač
 using LinearAlgebra
 capture("07_lastne") do
@@ -41,7 +41,7 @@ end
 
 # premik
 
-x, it = potencna(P' + I, rand(64))
+x, it = potenčna(P' + I, rand(64))
 x = x / sum(x) # vrednosti normiramo, da je vsota enaka 1
 porazdelitev = reshape(x, 8, 8)
 

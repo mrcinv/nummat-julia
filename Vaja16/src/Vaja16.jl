@@ -1,8 +1,8 @@
 module Vaja16
 
-export ZacetniProblem, ResitevNDE, resi, Euler, RK2, RK4, nicla
+export ZačetniProblem, RešitevNDE, resi, Euler, RK2, RK4, ničla
 
-# euler plain
+# Euler plain
 """
     u, t = euler(fun, u0, (t0, tk), n)
 
@@ -26,11 +26,11 @@ function euler(fun, u0, tint, n)
   end
   return t, u
 end
-# euler plain
+# Euler plain
 
-# ZacetniProblem
+# ZačetniProblem
 """
-  zp = ZacetniProblem(f, u0 tint, p)
+  zp = ZačetniProblem(f, u0 tint, p)
 
 Podatkovna struktura s podatki za začetni problem za
 navadne diferencialne enačbe (NDE) oblike:
@@ -49,36 +49,36 @@ v začetni točki intervala ``tint=[t0, t_k]``, na katerem iščemo rešitev.
 * `tint`: časovni interval za rešitev
 * `p`: vrednosti parametrov enačbe
 """
-struct ZacetniProblem{TU,TT,TP}
+struct ZačetniProblem{TU,TT,TP}
   f       # desne strani NDE u' = f(t, u, p)
   u0::TU  # začetna vrednost
   tint::Tuple{TT,TT}    # interval, na katerem iščemo rešitev
   p::TP       # parametri sistema
 end
-# ZacetniProblem
+# ZačetniProblem
 
-# ResitevNDE
+# RešitevNDE
 """
 Podatkovna struktura, ki hrani približek za rešitev začetnega problema za NDE.
 Uporablja se kot tip, ki ga vrnejo metode za reševanje začetnega problema.
 """
-struct ResitevNDE{TU,TT,TP}
-  zp::ZacetniProblem{TU,TT,TP} # referenca na začetni problem
+struct RešitevNDE{TU,TT,TP}
+  zp::ZačetniProblem{TU,TT,TP} # referenca na začetni problem
   t::Vector{TT}  # vrednosti časa (argumenta)
   u::Vector{TU}  # približki za vrednosti rešitve
   du::Vector{TU} # izračunane vrednosti odvoda
 end
-# ResitevNDE
+# RešitevNDE
 
 # Euler
-abstract type ResevalecNDE end
+abstract type ReševalecNDE end
 """
     Euler(n)
 
 Parametri za Eulerjevo metodo za reševanje začetnega problema NDE s fiksnim
 korakom. Edini parameter je `h`, ki je enak velikosti koraka Eulerjeve metode.
 """
-struct Euler{T} <: ResevalecNDE
+struct Euler{T} <: ReševalecNDE
   h::T # dolžina koraka
 end
 
@@ -91,21 +91,21 @@ end
 
 # resi
 """
-  r = resi(zp::ZacetniProblem, resevalec::TR) where {TR<:ResevalecNDE}
+  r = resi(zp::ZačetniProblem, reševalec::TR) where {TR<:ReševalecNDE}
 
-Reši začetni problem za NDE `zp` z danim reševalcem `resevalec`.
+Reši začetni problem za NDE `zp` z danim reševalcem `reševalec`.
 
 # Primer
 
 Rešimo ZP za enačbo `u'(t) = -2t u` z začetnim pogojem `u(-0.5) = 1.0`:
 ```julia-repl
 julia> fun(t, u, p) = -p * t * u;
-julia> problem = ZacetniProblem(fun, 1., (-0.5, 1), 2);
+julia> problem = ZačetniProblem(fun, 1., (-0.5, 1), 2);
 julia> res = resi(problem, Euler(0.5)) # reši problem s korakom 0.5
 ```
 """
-function resi(zp::ZacetniProblem{TU,TT,TP}, metoda::TM) where
-{TU,TT,TP,TM<:ResevalecNDE}
+function resi(zp::ZačetniProblem{TU,TT,TP}, metoda::TM) where
+{TU,TT,TP,TM<:ReševalecNDE}
   t0, tk = zp.tint
   u0 = zp.u0
   smer = sign(tk - t0)
@@ -119,12 +119,12 @@ function resi(zp::ZacetniProblem{TU,TT,TP}, metoda::TM) where
     push!(du, du0)
   end
   push!(du, zp.f(t[end], u[end], zp.p)) # odvod v zadnjem približku
-  return ResitevNDE(zp, t, u, du)
+  return RešitevNDE(zp, t, u, du)
 end
 # resi
 
 # RK2
-struct RK2{T} <: ResevalecNDE
+struct RK2{T} <: ReševalecNDE
   h::T # dolžina koraka
 end
 
@@ -142,7 +142,7 @@ end
 # RK2
 
 # RK4
-struct RK4{T} <: ResevalecNDE
+struct RK4{T} <: ReševalecNDE
   h::T
 end
 
@@ -162,7 +162,7 @@ end
 """
 Izračunaj k-je pri metodi Runge-Kutta s koeficienti `a` in `c` in korakom `h`
 za enačbo podano s funkcijo `fun(t, u, p)`, začetnimi pogoji `t0` in `u0` in
-vredonstjo parametrov `p`.
+vrednostjo parametrov `p`.
 """
 function rk_k(a, c, fun, t0, u0, h, par)
   k = [h * fun(t0 + c[1] * h, u0, par)]
@@ -181,16 +181,16 @@ using Vaja12
 Izračunaj vrednost rešitve `r` v točki `t`. Funkcija za izračun vrednosti
 uporabi interpolacijo s Hermitovim zlepkom.
 """
-function vrednost(r::ResitevNDE, t)
+function vrednost(r::RešitevNDE, t)
   z = Vaja12.HermitovZlepek(r.t, r.u, r.du)
   return Vaja12.vrednost(t, z)
 end
 
 # Omogočimo, da rešitev NDE kličemo kot funkcijo.
-(res::ResitevNDE)(t) = vrednost(res, t)
+(res::RešitevNDE)(t) = vrednost(res, t)
 # interpolacija
 
-# nicla
+# ničla
 function newton(fdf, x0, maxit=10, atol=1e-8)
   for _ in 1:maxit # Newtonova metoda
     z, dz = fdf(x0)
@@ -203,22 +203,22 @@ function newton(fdf, x0, maxit=10, atol=1e-8)
   throw("Newtonova metoda ne konvergira po $maxit korakih!")
 end
 
-function nicla(res::ResitevNDE, fun, dfun, maxit=10, atol=1e-8)
+function ničla(res::RešitevNDE, fun, dfun, maxit=10, atol=1e-8)
   t, u = res.t, res.u
-  i = niclaint(res, fun)
+  i = ničla_interval(res, fun)
   function rhs(tk) # desne strani enačbe
-    resevalec = RK4(tk - t[i])
+    reševalec = RK4(tk - t[i])
     smer = sign(tk - t[i])
-    t0, u0, du0 = korak(resevalec, res.zp.f, t[i], u[i], res.zp.p, smer)
+    t0, u0, du0 = korak(reševalec, res.zp.f, t[i], u[i], res.zp.p, smer)
     return fun(t0, u0, du0), dfun(t0, u0, du0)
   end
   newton(rhs, t[i], maxit, atol)
 end
 
-# nicla
+# ničla
 
-# niclaint
-function niclaint(res::ResitevNDE, fun)
+# ničla_interval
+function ničla_interval(res::RešitevNDE, fun)
   t, u, du = res.t, res.u, res.du
   n = length(t)
   for i in 1:n-1
@@ -228,6 +228,6 @@ function niclaint(res::ResitevNDE, fun)
   end
   throw("Ni intervala z ničlo")
 end
-# niclaint
+# ničla_interval
 
 end # module Vaja16

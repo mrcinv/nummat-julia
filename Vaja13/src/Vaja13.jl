@@ -12,8 +12,6 @@ struct Interval{T}
 end
 # Interval
 
-"""Izračunaj predznačeno dolžino intervala."""
-dolzina(int::Interval) = int.max - int.min
 
 # Integral
 """
@@ -101,6 +99,9 @@ end
 # Kvadratura
 
 # integriraj gl
+"""Izračunaj predznačeno dolžino intervala."""
+dolžina(int::Interval) = int.max - int.min
+
 """
     I = integriraj(i::Integral, k::Kvadratura)
 
@@ -114,7 +115,7 @@ integriraj(i, k)
 """
 function integriraj(i::Integral, k::Kvadratura)
   # funkcija, ki vozle kvadrature preslika na interval integrala
-  razteg = dolzina(i.interval) / dolzina(k.interval)
+  razteg = dolžina(i.interval) / dolžina(k.interval)
   preslikaj(x) = razteg * (x - k.interval.min) + i.interval.min
   # zaporedje parov (u(j), x(j)) ustvarimo s funkcijo `zip`
   I = sum(u * i.f(preslikaj(x)) for (u, x) in zip(k.u, k.x))
@@ -180,31 +181,31 @@ function integriraj(i::Integral, adk::AdaptivnaKvadratura)
 end
 
 
-cebiseve_tocke(n) = [cos((2k + 1)pi / (2n)) for k in 0:n-1]
+čebiševe_točke(n) = [cos((2k + 1)pi / (2n)) for k in 0:n-1]
 
 function preslikaj(x, int1::Interval, int2::Interval)
-  razteg = dolzina(int2) / dolzina(int1)
+  razteg = dolžina(int2) / dolžina(int1)
   return razteg * (x - int1.min) + int2.min
 end
 
-function cebiseve_tocke(n, int::Interval)
-  x = cebiseve_tocke(n)
+function čebiševe_točke(n, int::Interval)
+  x = čebiševe_točke(n)
   preslikava(x) = preslikaj(x, Interval(-1.0, 1.0), int)
   return preslikava.(x)
 end
 
-struct CebisevaVrsta{T1,T2}
+struct ČebiševaVrsta{T1,T2}
   koef::T1
   interval::Interval{T2}
 end
 
-CebisevaVrsta(koef) = CebisevaVrsta(koef, Interval(-1.0, 1.0))
+ČebiševaVrsta(koef) = ČebiševaVrsta(koef, Interval(-1.0, 1.0))
 
 import Base.length
 
-length(T::CebisevaVrsta) = length(T.koef)
+length(T::ČebiševaVrsta) = length(T.koef)
 
-function vrednost(x, T::CebisevaVrsta)
+function vrednost(x, T::ČebiševaVrsta)
   n = length(T)
   x = preslikaj(x, T.interval, Interval(-1.0, 1.0))
   y = T.koef[1]
@@ -225,22 +226,22 @@ function vrednost(x, T::CebisevaVrsta)
   return y
 end
 
-(T::CebisevaVrsta)(x) = vrednost(x, T)
+(T::ČebiševaVrsta)(x) = vrednost(x, T)
 
 """
-  T = aproksimiraj(CebisevaVrsta, fun, int::Interval, n::Int)
+  T = aproksimiraj(ČebiševaVrsta, fun, int::Interval, n::Int)
 
 Aproksimiraj funkcijo `fun` na intervalu `int` s prvimi `n` členi
 Čebiševe vrste.
 """
-function aproksimiraj(::Type{<:CebisevaVrsta}, fun, int::Interval, n::Int)
+function aproksimiraj(::Type{<:ČebiševaVrsta}, fun, int::Interval, n::Int)
   koef = zeros(n + 1)
-  t = cebiseve_tocke(n + 1)
+  t = čebiševe_točke(n + 1)
   f = [fun(preslikaj(ti, Interval(-1.0, 1.0), int)) for ti in t]
   T0 = ones(n + 1)
   koef[1] = sum(f) / (n + 1)
   if n == 1
-    return CebisevaVrsta(koef, int)
+    return ČebiševaVrsta(koef, int)
   end
   T1 = t
   koef[2] = 2 * sum(f .* T1) / (n + 1)
@@ -249,10 +250,10 @@ function aproksimiraj(::Type{<:CebisevaVrsta}, fun, int::Interval, n::Int)
     koef[i] = 2 * sum(f .* T2) / (n + 1)
     T0, T1 = T1, T2
   end
-  return CebisevaVrsta(koef, int)
+  return ČebiševaVrsta(koef, int)
 end
 
 export Interval, Integral, Trapez, Simpson, integriraj, glkvad
-export Kvadratura, CebisevaVrsta, aproksimiraj, AdaptivnaKvadratura
+export Kvadratura, ČebiševaVrsta, aproksimiraj, AdaptivnaKvadratura
 
 end # module Vaja13

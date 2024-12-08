@@ -15,23 +15,23 @@ end
 
 razdalja([1, 2, 3, 4])
 
-# povprecna
+# povprečna
 """Izračunaj povprečno razdaljo med dvema točkama na danem pravokotniku."""
-function povprecna_razdalja(box::Vector{Interval{Float64}}, kvadratura)
-  integral = VeckratniIntegral{Float64,Float64}(razdalja, vcat(box, box))
+function povprečna_razdalja(box::Vector{Interval{Float64}}, kvadratura)
+  integral = VečkratniIntegral{Float64,Float64}(razdalja, vcat(box, box))
   I = integriraj(integral, kvadratura)
   return I / volumen(box)^2
 end
-# povprecna
+# povprečna
 
 using BookUtils
 
-# izracun
+# izračun
 kvadrat = [Interval(0.0, 1.0), Interval(0.0, 1.0)]
-integral = VeckratniIntegral{Float64,Float64}(razdalja, vcat(kvadrat, kvadrat))
+integral = VečkratniIntegral{Float64,Float64}(razdalja, vcat(kvadrat, kvadrat))
 n = 15
 d0 = integriraj(integral, simpson(0.0, 1.0, n))
-# izracun
+# izračun
 term("14-dp", d0)
 
 # ocena napake
@@ -54,7 +54,7 @@ term("14-dmc", dmc)
 # napaka simpson
 using Plots
 nsim = 3:20
-napakesim = [povprecna_razdalja(kvadrat, simpson(0.0, 1.0, i)) - d1 for i in nsim]
+napakesim = [povprečna_razdalja(kvadrat, simpson(0.0, 1.0, i)) - d1 for i in nsim]
 scatter((2 * nsim .+ 1) .^ 4, abs.(napakesim), yscale=:log10, xscale=:log10,
   label="napaka Simpson")
 # napaka simpson
@@ -67,11 +67,11 @@ term("14-ksim", k)
 using FastGaussQuadrature
 glkvvad(n) = Kvadratura(gausslegendre(n)..., Interval(-1.0, 1.0))
 ngl = 10:4:40
-napakegl = [povprecna_razdalja(kvadrat, glkvvad(i)) - d1 for i in ngl]
+napakegl = [povprečna_razdalja(kvadrat, glkvvad(i)) - d1 for i in ngl]
 scatter!(ngl .^ 4, abs.(napakegl), yscale=:log10, xscale=:log10,
   label="napaka Gauss-Legendre")
 # napaka gl
-dgl = povprecna_razdalja(kvadrat, glkvvad(60))
+dgl = povprečna_razdalja(kvadrat, glkvvad(60))
 dgl - d1
 """
 Izračunaj sestavljeno Gauss-Legendrovo formulo s osnovnim pravilom s `k`
@@ -91,14 +91,14 @@ end
 glsest(3, 2)
 
 ngls = 1:20
-napakegls = [povprecna_razdalja(kvadrat, glsest(1, i)) - dgl for i in ngls]
+napakegls = [povprečna_razdalja(kvadrat, glsest(1, i)) - dgl for i in ngls]
 scatter!((1 * ngls) .^ 4, abs.(napakegls), yscale=:log10, xscale=:log10,
   label="napaka GL7")
 # napaka mc
 using Random
 rng = Xoshiro(526)
 nmc = 2 .^ (10:25)
-napakamc = [povprecna_razdalja(kvadrat, MonteCarlo(rng, i)) - d1 for i in nmc]
+napakamc = [povprečna_razdalja(kvadrat, MonteCarlo(rng, i)) - d1 for i in nmc]
 scatter!(nmc, abs.(napakamc), yscale=:log10, xscale=:log10,
   label="napaka MC", xlabel="število izračunov funkcije")
 # napaka mc

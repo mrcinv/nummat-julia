@@ -2,14 +2,14 @@ using Vaja07
 using Test
 using LinearAlgebra
 
-@testset "Potencna" begin
+@testset "Potenčna" begin
   A = [0.5 0.5 0; 0.25 0.25 0.5; 0.1 0.8 0.1]
   x0 = [1, 1, 1]
-  x, it = potencna(A, x0)
+  x, it = potenčna(A, x0)
   @test x ≈ x0 / norm(x0, Inf)
   @test it == 1
   x0 = [1, 2, 1]
-  x, it = potencna(A, x0)
+  x, it = potenčna(A, x0)
   @test x / x[1] ≈ [1, 1, 1]
   @test it > 10
 end

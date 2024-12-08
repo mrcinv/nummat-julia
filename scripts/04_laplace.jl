@@ -33,31 +33,31 @@ F = lu(A) # F je tipa LU,
 x = F \ b # ki ga lahko uporabimo za rešitev sistema
 # lu
 
-# konvergenca jacobi 0
+# konvergenca Jacobi 0
 U0, x, y = Vaja04.diskretiziraj(rp, 0.1)
 wireframe(x, y, U0, legend=false, title="\$ k=0\$")
-# konvergenca jacobi 0
+# konvergenca Jacobi 0
 savefig("img/04-konv-0.svg")
-# konvergenca jacobi 10
+# konvergenca Jacobi 10
 U = U0
 for i = 1:10
   U = Vaja04.korak_gs(U)
 end
 wireframe(x, y, U, legend=false, title="\$k=10\$")
-# konvergenca jacobi 10
+# konvergenca Jacobi 10
 savefig("img/04-konv-10.svg")
-# konvergenca jacobi 50
+# konvergenca Jacobi 50
 U = U0
 for i = 1:50
   U = Vaja04.korak_gs(U)
 end
 wireframe(x, y, U, legend=false, title="\$k=50\$")
-# konvergenca jacobi 50
+# konvergenca Jacobi 50
 savefig("img/04-konv-50.svg")
-# konvergenca jacobi oo
+# konvergenca Jacobi oo
 U, it = Vaja04.iteracija(Vaja04.korak_gs, U0; atol=1e-3)
 wireframe(x, y, U, legend=false, title="\$k=$it\$")
-# konvergenca jacobi oo
+# konvergenca Jacobi oo
 savefig("img/04-konv-oo.svg")
 
 # konvergenca sor

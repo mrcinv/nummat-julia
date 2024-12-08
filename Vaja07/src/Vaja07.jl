@@ -1,13 +1,13 @@
 module Vaja07
-# potencna
+# potenčna
 using LinearAlgebra
 
 """
-    x, it = potencna(A)
+    x, it = potenčna(A)
 
 Poišči lastni vektor matrike `A` za največjo lastno vrednost s potenčno metodo.
 """
-function potencna(A, x0; atol=1e-8, maxit=1000)
+function potenčna(A, x0; atol=1e-8, maxit=1000)
   for i = 1:maxit
     x = A * x0
     x = x / norm(x, Inf)
@@ -18,7 +18,7 @@ function potencna(A, x0; atol=1e-8, maxit=1000)
   end
   throw("Potenčna metoda ne konvergira po $maxit korakih!")
 end
-# potencna
+# potenčna
 
 # indeksi
 ij_v_k(i, j, n) = i + (j - 1) * n
@@ -72,7 +72,7 @@ function prehodna_matrika(skakač::Skakač)
 end
 # prehodna_matrika
 
-export potencna, Skakač, prehodna_matrika
+export potenčna, Skakač, prehodna_matrika
 
 
 end # module Vaja07

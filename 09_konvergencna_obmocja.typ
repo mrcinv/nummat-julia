@@ -152,9 +152,9 @@ Za različne začetne približke Newtonova metoda konvergira k različnim
 rešitvam:
 
 #code_box[
-  #repl(repl9("# nicle 1"), read("out/09_nicle_1.out"))
-  #repl(repl9("# nicle 2"), read("out/09_nicle_2.out"))
-  #repl(repl9("# nicle 2"), read("out/09_nicle_2.out"))
+  #repl(repl9("# ničle 1"), read("out/09_nicle_1.out"))
+  #repl(repl9("# ničle 2"), read("out/09_nicle_2.out"))
+  #repl(repl9("# ničle 2"), read("out/09_nicle_2.out"))
 ]
 
 == Konvergenčno območje
@@ -165,7 +165,7 @@ obnašanje Newtonove metode precej nepredvidljivo.
 
 #naloga[
 - Definiraj podatkovni tip #jl("Box2d"), ki opiše pravokotnik v ravnini s stranicami vzporednimi koordinatnim osem (@pr:09-box) in
-- Napiši funkcijo #jl("konvergenca(obmocje::Box2d, metoda, nx, ny)"), ki za dano #jl("območje") izračuna dele območja, na katerem
+- Napiši funkcijo #jl("konvergenca(območje::Box2d, metoda, nx, ny)"), ki za dano #jl("območje") izračuna dele območja, na katerem
    #jl("metoda") konvergira k določeni ničli.
   Argument #jl("metoda") naj bo funkcija oblike #jl("x, it = metoda(x0)"), ki sprejme začetni približek in vrne rešitev ter število iteracij (@pr:09-konvergenca).
 ]
@@ -173,7 +173,7 @@ obnašanje Newtonove metode precej nepredvidljivo.
 Program #jl("konvergenca") uporabimo na našem primeru @eq:09primer:
 
 #code_box(
-  vaja9s("# obmocje")
+  vaja9s("# območje")
 )
 
 #figure(

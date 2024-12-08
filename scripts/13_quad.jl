@@ -150,10 +150,6 @@ scatter!(n_gl, abs.(I_gl .- I_p), xscale=:log10, yscale=:log10,
 
 gl78 = Vaja13.KvadraturniPar(glkvad(7), glkvad(8))
 
-adgl78 = AdaptivnaKvadratura(gl78, 1e-13)
-interfc(x) = DoloceniIntegral{Float64,Float64}(u -> exp(-1 / u^2) / u^2, Interval(0.0, x))
-I, napaka = Vaja13.oceninapako(interfc(1 / 10.0), adgl78)
-I, napaka = Vaja13.oceninapako(interfc(1 / 20.0), adgl78)
 
 
 
@@ -166,16 +162,16 @@ plot(x -> (SpecialFunctions.erfc(x) - erfc_ad(x)), 1, 20)
 
 SpecialFunctions.erfcx(30)
 exp(30^2)
-relnapaka(a, b) = abs(b - a) / b
-plot(x -> relnapaka(2 / sqrt(pi) * erfc_ad(x), SpecialFunctions.erfc(x)), 1, 20)
+rel_napaka(a, b) = abs(b - a) / b
+plot(x -> rel_napaka(2 / sqrt(pi) * erfc_ad(x), SpecialFunctions.erfc(x)), 1, 20)
 (erfc_ad(2.0), SpecialFunctions.erfc(2))
 using SpecialFunctions
 function intexp(x, n)
   integrand(u) = exp(-(u - x)^2 / 2 + u)
-  vozlisca, utezi = FastGaussQuadrature.gausslaguerre(n)
-  I0 = vozlisca' * integrand.(utezi)
-  vozlisca, utezi = FastGaussQuadrature.gausslaguerre(n + 1)
-  I1 = vozlisca' * integrand.(utezi)
+  vozlišča, uteži = FastGaussQuadrature.gausslaguerre(n)
+  I0 = vozlišča' * integrand.(uteži)
+  vozlišča, uteži = FastGaussQuadrature.gausslaguerre(n + 1)
+  I1 = vozlišča' * integrand.(uteži)
   return (I0, I1)
 end
 
@@ -216,7 +212,7 @@ plot(x -> phi_adaptivna(x)[2], -15, -1)
 x = -14
 exp(-x^2)
 
-f3 = aproksimiraj(CebisevaVrsta, sin, (0, 2pi), 18)
+f3 = aproksimiraj(ČebiševaVrsta, sin, (0, 2pi), 18)
 f3.koef
 plot(sin, 0, 2pi)
 plot(x -> sin(x) - f3(x), 0, 2pi)

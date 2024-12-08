@@ -8,7 +8,7 @@
 Naj bo #emph[A n × n] diagonalno dominantna razpršena matrika (velika
 večina elementov je ničelnih, $a_(i j) = 0$).
 
-Definiraj nov podatkovni tip `RazprsenaMatrika`, ki matriko zaradi
+Definiraj nov podatkovni tip `RedkaMatrika`, ki matriko zaradi
 prostorskih zahtev hrani v dveh matrikah $V$ in $I$, kjer sta $V$ in $I$
 $n times m$ matriki, tako da velja:
 
@@ -20,7 +20,7 @@ V matriki $V$ se torej nahajajo neničelni elementi matrike $A$. Vsaka
 vrstica matrike $V$ vsebuje neničelne elemente iz iste vrstice v $A$. V
 matriki $I$ pa so shranjeni indeksi stolpcev teh neničelnih elementov.
 
-Za podatkovni tip `RazprsenaMatrika` definiraj metode za naslednje
+Za podatkovni tip `RedkaMatrika` definiraj metode za naslednje
 funkcije:
 
 - indeksiranje: `Base.getindex`,`Base.setindex!`,`Base.firstindex` in
@@ -51,7 +51,7 @@ konvergence od izbire $omega$.
 
 == Metoda konjugiranih gradientov za razpršene matrike
 <metoda-konjugiranih-gradientov-za-razpršene-matrike>
-Definirajte nov podatkovni tip `RazprsenaMatrika`, kot je opisano v
+Definirajte nov podatkovni tip `RedkaMatrika`, kot je opisano v
 prejšnji nalogi.
 
 Napišite funkcijo `[x,i]=conj_grad(A, b)`, ki reši sistem
@@ -60,7 +60,7 @@ $
 A bold(x) = bold(b),
 $
 
-z metodo konjugiranih gradientov za tip matrike `RazprsenaMatrika`.
+z metodo konjugiranih gradientov za tip matrike `RedkaMatrika`.
 
 Metodo uporabite na primeru vložitve grafa v ravnino ali prostor s
 fizikalno metodo, kot je opisano v prejšnji nalogi.
@@ -92,7 +92,7 @@ ampak uporabite razcep $M = L^T L$. Za različne primere preverite, ali
 se izboljša hitrost konvergence.
 
 == QR razcep zgornje Hessenbergove matrike
-<qr-razcep-zgornje-hessenbergove-matrike>
+<qr-razcep-zgornje-Hessenbergove-matrike>
 
 Naj bo $H$ $n times n$ zgornja Hessenbergova matrika (velja
 $a_(i j) = 0$ za $j < i - 1$). Definiraj podatkovni tip
@@ -129,9 +129,9 @@ Preverite časovno zahtevnost vaših funkcij in ju primerjajte z metodo
 Naj bo $A$ $n times n$ simetrična tridiagonalna matrika \(velja
 $a_(i j) = 0$ za $lr(|i - j|) gt 1$).
 
-Definiraj podatkovni tip `SimetricnaTridiagonalna` za simetrično
+Definiraj podatkovni tip `SimTridiag` za simetrično
 tridiagonalno matriko, ki hrani glavno in stransko diagonalo matrike. Za
-tip `SimetricnaTridiagonalna` definiraj metode za naslednje funkcije:
+tip `SimTridiag` definiraj metode za naslednje funkcije:
 
 - indeksiranje: `Base.getindex`, `Base.setindex!`, `Base.firstindex` in
   `Base.lastindex`,
@@ -139,14 +139,14 @@ tip `SimetricnaTridiagonalna` definiraj metode za naslednje funkcije:
 
 Časovna zahtevnost omenjenih funkcij naj bo linearna.
 Napiši funkcijo `Q, R = qr(T)`, ki izvede QR razcep matrike `T` tipa
-`Tridiagonalna` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
-trikotna tridiagonalna matrika tipa `ZgornjeTridiagonalna`, v `Q` pa naj
+`Tridiag` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
+trikotna tridiagonalna matrika tipa `ZgornjeTridiag`, v `Q` pa naj
 bo matrika tipa `Givens`.
 
-Definiraj podatkovna tipa `ZgornjeTridiagonalna` in `Givens`
-(glej @qr-razcep-zgornje-hessenbergove-matrike[nalogo]). Poleg tega
+Definiraj podatkovna tipa `ZgornjeTridiag` in `Givens`
+(glej @qr-razcep-zgornje-Hessenbergove-matrike[nalogo]). Poleg tega
 implementiraj množenje `Base.*` matrik tipa `Givens` in
-`ZgornjeTridiagonalna`.
+`ZgornjeTridiag`.
 
 Uporabi QR razcep za QR iteracijo simetrične tridiagonalne matrike.
 Napiši funkcijo `lastne_vrednosti, lastni_vektorji = eigen(T)`, ki
@@ -157,7 +157,7 @@ Preveri časovno zahtevnost vaše funkcije in jih primerjaj z metodo
 `qr` za navadne matrike.
 
 == Inverzna potenčna metoda za zgornjo Hessenbergovo matriko
-<inverzna-potenčna-metoda-za-zgornje-hessenbergovo-matriko>
+<inverzna-potenčna-metoda-za-zgornje-Hessenbergovo-matriko>
 Lastne vektorje matrike $A$ lahko računamo z #strong[inverzno potenčno
 metodo]. Naj bo $A_lambda = A - lambda I$. Če je $lambda$ približek
 za lastno vrednost, potem zaporedje vektorjev
@@ -189,7 +189,7 @@ Definiraj tip `ZgornjiHessenberg`, kot je opisano v nalogi o QR
 razcepu zgornje Hessenbergove matrike. Poleg tega implementirajte metodo
 `L, U = lu(A)` za matrike tipa `ZgornjiHessenberg`, ki bo pri razcepu
 upoštevala lastnosti zgornje Hessenbergovih matrik. Matrika `L` naj ne
-bo polna, ampak tipa `SpodnjaTridiagonalna`. Tip `SpodnjaTridiagonalna`
+bo polna, ampak tipa `SpTridiag`. Tip `SpTridiag`
 definirajte sami, tako da bo hranil le neničelne elemente in za ta tip
 matrike definirajte operator `Base.\`, tako da bo upošteval strukturo
 matrike `L`.
@@ -246,16 +246,16 @@ $
 lastne vrednosti matrik $T$ in $A$ pa so enake.
 
 Napiši funkcijo `T, Q = tridiag(A)`, ki s Householderjevimi zrcaljenji
-poišče tridiagonalno matriko `H` tipa `Tridiagonalna`, ki je podobna
+poišče tridiagonalno matriko `H` tipa `Tridiag`, ki je podobna
 matriki `A`.
 
-Definiraj tip `Tridiagonalna`, kot je opisano v nalogi o QR
+Definiraj tip `Tridiag`, kot je opisano v nalogi o QR
 razcepu tridiagonalne matrike. Poleg tega implementiraj metodo
-`L, U = lu(A)` za matrike tipa `Tridiagonalna`, ki bo pri razcepu
+`L, U = lu(A)` za matrike tipa `Tridiag`, ki bo pri razcepu
 upoštevala lastnosti tridiagonalnih matrik. Matrike `L` in `U` naj ne
-bodo polne matrike. Matrika `L` naj bo tipa `SpodnjaTridiagonalna`,
-matrika `U` pa tipa `ZgornjaTridiagonalna`. Definiraj tipa `SpodnjaTridiagonalna`
-in `ZgornjaTridiagonalna`, tako da bosta hranila le
+bodo polne matrike. Matrika `L` naj bo tipa `SpTridiag`,
+matrika `U` pa tipa `ZgTridiag`. Definiraj tipa `SpTridiag`
+in `ZgTridiag`, tako da bosta hranila le
 neničelne elemente. Za oba tipa definiraj operator `Base.\`, ki z obratnim
 oziroma direktnim vstavljanjem reši sistem linearnih enačb.
 
@@ -342,4 +342,4 @@ elemente, ki so nujno potrebni (glej nalogo
 #emph[QR razcep simetrične tridiagonalne matrike]).
 
 Funkcijo preskusi na Laplaceovi matriki grafa podobnosti (glej
-#link("../vaje/3_lastne_vrednosti/06_spektralno_grucenje.md")[vajo o spektralnem gručenju]).
+@spektralno-razvrščanje-v-gruče).

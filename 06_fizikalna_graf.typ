@@ -5,7 +5,7 @@
 
 = Fizikalna metoda za vložitev grafov
 <sec:6-fizikalna-metoda>
-#let Fvec = $bold(F)$
+#let Fv = $bold(F)$
 
 Naj bo $G$ neusmerjen povezan graf z množico vozlišč $V(G)$ in povezav $E(G)subset V(G) times V(G)$.
 Brez škode predpostavimo, da so vozlišča grafa $G$ kar zaporedna naravna števila
@@ -54,7 +54,7 @@ pa dolžini vzmeti. Sila harmonične vzmeti, ki je vpeta med točki $(x_1, y_1, 
 $(x_2, y_2, z_2)$ in deluje na prvo krajišče, je enaka:
 
 $
-Fvec_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
+Fv_(2 1) = k dot vec(x_2 - x_1, y_2 - y_1, z_2 - z_1),
 $
 
 kjer je $k$ koeficient vzmeti.
@@ -63,15 +63,15 @@ Koordinate vozlišč določimo tako, da poiščemo ravnovesje sistema. To pomeni
 sosednja vozlišča delujejo nanj, v ravnovesju:
 
 $
-  sum_(i in N(j)) Fvec_(i j) = bold(0),
+  sum_(i in N(j)) Fv_(i j) = bold(0),
 $<eq:06-ravnovesje>
 
-kjer je $N(j) = {i: thick (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fvec_(i j)$
+kjer je $N(j) = {i: thick (i, j) in E(G)}$ množica sosednjih točk v grafu za točko $j$ in $Fv_(i j)$
 sila, s katero vozlišče $i$ deluje na vozlišče $j$. Iz enačbe @eq:06-ravnovesje lahko izpeljemo
 sistem enačb za koordinate $x_j, y_j$ in $z_j$. Iz vektorske enačbe za vozlišče $j$:
 
 $
-  sum_(i in N(j)) Fvec_(i j) = sum_(i in N(j)) k vec(x_i - x_j, y_i - y_j, z_i - z_j) = bold(0),
+  sum_(i in N(j)) Fv_(i j) = sum_(i in N(j)) k vec(x_i - x_j, y_i - y_j, z_i - z_j) = bold(0),
 $
 
 dobimo 3 enačbe za posamezne koordinate:
@@ -163,9 +163,9 @@ Napiši naslednje funkcije:
   sistem @eq:06sistem-x (rešitev @pr:06-desne-strani),
 - #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A bold(x) = bold(b)$ z metodo konjugiranih gradientov
   (rešitev @pr:06-cg) in
-- #jl("vloži!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
-  metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
-  točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke`
+- #jl("vloži!(G::AbstractGraph, fix, točke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
+  metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `točke` pa matrika s koordinatami
+  točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `točke`
   (rešitev @pr:06-vlozitev).
 ]
 == Krožna lestev
@@ -174,10 +174,10 @@ Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dv
 dolžine $n$, ki sta med seboj povezana z $n$ povezavami. Za grafično predstavitev grafov bomo
 uporabili paket #link("https://docs.juliaplots.org/stable/GraphRecipes/introduction/")[GraphRecipes.jl].
 
-#let svaja06(koda) = jlfb("scripts/06_graf.jl", koda)
+#let s_vaja06(koda) = jlfb("scripts/06_graf.jl", koda)
 
 #code_box(
-  svaja06("# lestev")
+  s_vaja06("# lestev")
 )
 
 #figure(
@@ -189,7 +189,7 @@ Poiščimo drugačno vložitev s fizikalno metodo, tako da vozlišča enega cikl
 po krožnici.
 
 #code_box(
-  svaja06("# lestev fiz")
+  s_vaja06("# lestev fiz")
 )
 
 #figure(
@@ -205,7 +205,7 @@ Preizkusimo algoritem na dvodimenzionalni mreži. Dvodimenzionalna mreža je gra
 ki ustrezajo ogliščem pravokotnika.
 
 #code_box(
-  svaja06("# mreža")
+  s_vaja06("# mreža")
 )
 
 #figure(
@@ -216,7 +216,7 @@ ki ustrezajo ogliščem pravokotnika.
 Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 
 #code_box(
-  svaja06("# krožna")
+  s_vaja06("# krožna")
 )
 
 #figure(
@@ -262,7 +262,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 )<pr:06-cg>
 #figure(
   code_box(
-    vaja06("# vlozitev")
+    vaja06("# vložitev")
   ),
   caption: [Funkcija, ki poišče koordinate vložitve grafa v $RR^d$ s fizikalno metodo.]
 )<pr:06-vlozitev>

@@ -107,7 +107,7 @@ Generiraj vektor `x` vektorskih dualnih števil za vrednost vektorske
 spremenljivke `v`. Komponente vektorja `x` so vektorska dualna števila
 z vrednostmi, enakimi komponentam vektorja `v`, in parcialnimi odvodi enakimi
 1, če se indeksa komponente in parcialnega odvoda ujemata, in 0 sicer.
-Reszultat te funkcije lahko uporabimo kot vhodni argument pri računanju
+Rezultat te funkcije lahko uporabimo kot vhodni argument pri računanju
 gradienta vektorske funkcije z argumentom `v`.
 """
 function spremenljivka(v::Vector{T}) where {T}

@@ -2,7 +2,7 @@ module Vaja10
 
 using Vaja09
 export samopres, razdalja2
-# samopres
+# samopresečišče
 """
     ts, it = samopres(k, dk, ts0)
 
@@ -26,7 +26,7 @@ function samopres(k, dk, ts0)
   end
   return ts, it
 end
-# samopres
+# samopresečišče
 
 # razdalja2
 using LinearAlgebra

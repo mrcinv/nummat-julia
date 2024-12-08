@@ -144,9 +144,9 @@ Simpsonovo pravilo z $2n$ enakomernimi koraki dolžine $h$ je dano kot:
 $
   integral_a^b f(x) d x approx h/3 (f(a) + f(b) +
   4sum_(k=1)^n f(a + (2k - 1) h) + 2sum_(j=1)^(n-1)f(a+2 j h)),
-$<eq:13-simpson>
+$<eq:13-Simpson>
 
-kjer je $h = (b - a)/(2n)$. Napaka sestavljenega pravila @eq:13-simpson je enaka:
+kjer je $h = (b - a)/(2n)$. Napaka sestavljenega pravila @eq:13-Simpson je enaka:
 
 $
  -1/180 h^4(b-a)f^((4))(xi).
@@ -156,19 +156,19 @@ Podobno kot pri trapeznem pravilu sledimo testno vodenemu razvoju in najprej nap
 zasnove smo določili že pri trapeznem pravilu. Preostane nam le še podatkovni tip za Simpsonovo
 pravilo, ki ga imenujemo #jl("Simpson").
 #naloga[
-  Napiši test za sestavljeno Simpsonovo pravilo. Vemo, da je Simpsonovo pravilo točno za polinome stopnje 3, zato v testu uporabi polinom stopnje 3(@pr:16-simpson-test).
+  Napiši test za sestavljeno Simpsonovo pravilo. Vemo, da je Simpsonovo pravilo točno za polinome stopnje 3, zato v testu uporabi polinom stopnje 3(@eq:13-Simpson-test).
 
 Definiraj naslednje tipe in metode ter poskrbi, da se test pravilno izvede:
 - podatkovni tip #jl("Simpson(n::Int)"), ki predstavlja sestavljeno Simpsonovo formulo
-  (@pr:13-simpson) in
+  (@pr:13-Simpson) in
 - metodo #jl("integriraj(i::Integral, k::Simpson)"), ki
   izračuna približek za integral #jl("i") s sestavljeno Simpsonovo formulo #jl("k")
-  (@pr:13-int-simpson).
+  (@pr:13-int-Simpson).
 ]
 
 == Gaussove kvadraturne formule
 
-Sestavljeni trapezna @eq:13-trapez in Simpsonova formula @eq:13-simpson nista nič drugega kot
+Sestavljeni trapezna @eq:13-trapez in Simpsonova formula @eq:13-Simpson nista nič drugega kot
 uteženi vsoti funkcijskih vrednosti v izbranih točkah na integracijskem intervalu
 
 $
@@ -188,7 +188,7 @@ kvadrature
 
 $
  integral_(-1)^1 f(t) d t approx sum_(k=1)^n w_k f(t_k),
-$<eq:10-gauss-lagendre>
+$
 
 ki so del družine
 #link("https://en.wikipedia.org/wiki/Gaussian_quadrature")[Gaussovih kvadratur]. Za
@@ -231,7 +231,7 @@ $
 
 Vozlov $x_k$ in uteži $u_k$ za Gauss-Legendrove kvadrature ni tako enostavno poiskati, saj moramo
 poiskati ničle ustreznega Legendrovega polinoma in določiti uteži. Obstaja tudi
-#link("https://en.wikipedia.org/wiki/Gaussian_quadrature#The_Golub-Welsch_algorithm")[Golub-Welschov   algoritem],
+#link("https://en.wikipedia.org/wiki/Gaussian_quadrature#The_Golub-Welsch_algorithm")[Golub-Welschev   algoritem],
 ki vozle in uteži poišče kot lastne vrednosti posebej ustvarjene tridiagonalne matrike.
 A računanje vozlov in uteži presega obseg te vaje in zato bomo za njihov izračun uporabili knjižnico
 #jl("FastGaussQuadrature.jl").
@@ -420,7 +420,7 @@ polinomi. V takih primerih se bolje obnesejo
 
 == Testi
 
-#test13("# simpson")[Test sestavljenega Simpsonovega pravila]<pr:16-simpson-test>
+#test13("# simpson")[Test sestavljenega Simpsonovega pravila]<eq:13-Simpson-test>
 
 #test13("# kvadratura")[Test za integracijo s splošno kvadraturo oblike @eq:13-kvad]<pr:13-kvad-test>
 
@@ -434,8 +434,8 @@ polinomi. V takih primerih se bolje obnesejo
 #vaja13("# Integral")[Podatkovni tip za določeni integral $integral_a^b f(x) d x$]<pr:13-Integral>
 #vaja13("# Trapez")[Podatkovni tip za sestavljeno trapezno pravilo z $n$ enakomernimi koraki]<pr:13-Trapez>
 #vaja13("# integriraj trapez")[Funkcija, ki izračuna integral s sestavljenim trapeznim pravilom.]<pr:13-int-trapez>
-#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ enakomernimi koraki]<pr:13-simpson>
-#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavljenim Simpsonovim pravilom.]<pr:13-int-simpson>
+#vaja13("# Simpson")[Podatkovni tip za sestavljeno Simpsonovo pravilo z $2n$ enakomernimi koraki]<pr:13-Simpson>
+#vaja13("# integriraj simpson")[Funkcija, ki izračuna integral s sestavljenim Simpsonovim pravilom.]<pr:13-int-Simpson>
 #vaja13("# Kvadratura")[Podatkovni tip za splošno kvadraturno formulo]<pr:13-Kvadratura>
 #vaja13("# integriraj gl")[Funkcija, ki izračuna integral z dano kvadraturo.]<pr:13-int-gl>
 #vaja13("# glkvad")[Funkcija, ki vrne Gauss-Legendrovo kvadraturo z $n$ vozli.]<pr:13-glkvad>

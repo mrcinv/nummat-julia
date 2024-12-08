@@ -114,9 +114,9 @@ omilijo prekletstvo dimenzionalnosti.
 
 #naloga[
 Definiraj naslednje tipe in funkcije:
-- podatkovni tip #jl("VeckratniIntegral(fun, box)"), ki opiše večkratni integral na kvadru
+- podatkovni tip #jl("VečkratniIntegral(fun, box)"), ki opiše večkratni integral na kvadru
   $product_i [a_i, b_i]$ (@pr:14-veckratni-integral),
-- metodo #jl("integriraj(I::VeckratniIntegral, kvad::Kvadratura)"),
+- metodo #jl("integriraj(I::VečkratniIntegral, kvad::Kvadratura)"),
   ki izračuna večkratni integral s kvadraturno formulo @eq:14-prodkvadkvad (@pr:14-preslikaj, @pr:14-naslednji,
   @pr:14-integriraj).
 ]
@@ -184,11 +184,11 @@ Najprej definiramo funkcijo razdalje:
 
 Nato pa še funkcijo, ki izračuna povprečno razdaljo.
 
-#demo14("# povprecna")
+#demo14("# povprečna")
 
 Za izračun uporabimo sestavljeno Simpsonovo formulo.
 
-#demo14("# izracun")
+#demo14("# izračun")
 #code_box(raw(read("out/14-dp.out")))
 
 Napako ocenimo tako, da izračun ponovimo z natančnejšo kvadraturno formulo. Na primer tako, da
@@ -258,7 +258,7 @@ vzorčenje.
 
 #let vaja14(koda, caption) = figure(code_box(jlfb("Vaja14/src/Vaja14.jl", koda)), caption: caption)
 
-#vaja14("# VeckratniIntegral")[Podatkovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
+#vaja14("# VečkratniIntegral")[Podatkovni tip, ki opiše večkratni integral.]<pr:14-veckratni-integral>
 #vaja14("# preslikaj")[Funkcija, ki preslika kvadraturo na drug interval.]<pr:14-preslikaj>
 #vaja14("# naslednji!")[Funkcija, ki izračuna naslednji multiindeks
 $(i_1, i_2, med dots, med i_d) in {1, 2, med dots, med n}^d$. ]<pr:14-naslednji>

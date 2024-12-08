@@ -93,7 +93,7 @@ function resi(rp::RobniProblemPravokotnik, h)
 end
 # resi
 
-# jacobi
+# Jacobi
 """
     U = korak_jacobi(U0)
 
@@ -112,7 +112,7 @@ function korak_jacobi(U0)
   end
   return U
 end
-# jacobi
+# Jacobi
 
 # gs
 """

@@ -9,7 +9,7 @@ plot(Tuple.(l.(t)), label=nothing)
 
 savefig("img/10-lissajous.svg")
 
-# samopres
+# samopresečišče
 using Vaja09: newton
 using Printf
 f(tt) = l(tt[1]) - l(tt[2])
@@ -18,11 +18,11 @@ df(tt) = hcat(dl(tt[1]), -dl(tt[2]))
 tt, it = newton(f, df, [0.0, pi / 2])
 scatter!(Tuple.(l.(tt)),
   label=@sprintf "samopresečišče: \$t_1=%.3f\$, \$t_2=%.3f\$" tt...)
-# samopres
+# samopresečišče
 
 savefig("img/10-samopres.svg")
 
-# obmocje samopres
+# območje samopres
 using Vaja10: samopres
 mod2pi(x) = rem(x, 2pi)
 """ Poišči samopresečišče Lissajousove krivulje. Upoštevaj periodičnost."""
@@ -36,21 +36,21 @@ function splissajous(tt0)
 end
 
 using Vaja09: konvergenca, Box2d, Interval
-x, y, Z, nicle, koraki = konvergenca(Box2d(Interval(0, 2pi), Interval(0, 2pi)),
+x, y, Z, ničle, koraki = konvergenca(Box2d(Interval(0, 2pi), Interval(0, 2pi)),
   splissajous, 200, 200)
 heatmap(x, y, Z, xlabel="\$t_1\$", ylabel="\$t_2\$")
-scatter!(Tuple.(nicle), label="samopresečišča", legend=:bottomleft)
-# obmocje samopres
+scatter!(Tuple.(ničle), label="samopresečišča", legend=:bottomleft)
+# območje samopres
 
 savefig("img/10-obmocje-samopres.svg")
 
-# vsa samopres
+# vsa samopresečišča
 p = plot(Tuple.(l.(t)), label="krivulja", legend=:bottom)
-for tt in nicle
+for tt in ničle
   scatter!(p, Tuple.(l.(tt)), label=@sprintf "\$t_1=%.2f\$, \$t_2=%.2f\$" tt...)
 end
 display(p)
-# vsa samopres
+# vsa samopresečišča
 
 savefig("img/10-vsa-samopres.svg")
 
@@ -86,7 +86,7 @@ p("10_grad", v)
 
 # spust
 "Izračunaj zaporedje približkov gradientne metode."
-function priblizki(grad, x0, h, n)
+function približki(grad, x0, h, n)
   p = [x0]
   for i = 1:n
     x = x0 - h * grad(x0)
@@ -96,7 +96,7 @@ function priblizki(grad, x0, h, n)
   return p
 end
 
-pribl = priblizki(gradd2, [2.0, -1.5], 0.2, 40)
+pribl = približki(gradd2, [2.0, -1.5], 0.2, 40)
 scatter!(Tuple.(pribl), label="približki gradientne metode")
 # spust
 
@@ -141,7 +141,7 @@ scatter!(Tuple(k2(ts[2])), label="\$k_2(s_0)\$")
 savefig("img/10_minimum.svg")
 
 
-# obmocje grad
+# območje grad
 using Vaja09: konvergenca
 using Vaja10: spust
 function spustd2(x0)
@@ -149,26 +149,26 @@ function spustd2(x0)
   ts = map(t -> mod(t + pi, 2pi) - pi, ts)
   return ts, it
 end
-x, y, Z, nicle, koraki = konvergenca(
+x, y, Z, ničle, koraki = konvergenca(
   Box2d(Interval(-pi, pi), Interval(-pi, pi)), spustd2, 100, 100;
   atol=1e-2)
 heatmap(x, y, Z)
-scatter!(Tuple.(nicle), label="lokalni minimi")
+scatter!(Tuple.(ničle), label="lokalni minimumi")
 contour!(x, y, d2)
-# obmocje grad
+# območje grad
 savefig("img/10_obmocje_grad.svg")
 
-# obmocje newton
+# območje newton
 function newtond2(x0)
   ts, it = newton(gradd2, jacd2, x0; atol=1e-5)
   ts = map(t -> mod(t + pi, 2pi) - pi, ts)
   return ts, it
 end
-x, y, Z, nicle, koraki = konvergenca(
+x, y, Z, ničle, koraki = konvergenca(
   Box2d(Interval(-pi, pi), Interval(-pi, pi)), newtond2, 500, 500;
   atol=1e-2)
 heatmap(x, y, Z)
-scatter!(Tuple.(nicle), label="stacionarne točke")
+scatter!(Tuple.(ničle), label="stacionarne točke")
 contour!(x, y, d2)
-# obmocje newton
+# območje newton
 savefig("img/10_obmocje_newton.svg")

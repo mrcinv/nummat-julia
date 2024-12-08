@@ -2,14 +2,14 @@ module Vaja05
 
 # rbf
 """
-    RBF(tocke, utezi, phi)
+    RBF(točke, uteži, phi)
 
 Podatkovni tip za linearno kombinacijo *radialnih baznih funkcij* oblike
-`phi(norm(x - tocke[i])^2)`.
+`phi(norm(x - točke[i])^2)`.
 """
 struct RBF
-  tocke
-  utezi
+  točke
+  uteži
   phi
 end
 # rbf
@@ -23,10 +23,10 @@ Izračunaj vrednost linearne kombinacije radialnih baznih funkcij
 """
 function vrednost(x, rbf::RBF)
   vsota = zero(x[1])
-  n = length(rbf.tocke)
+  n = length(rbf.točke)
   for i = 1:n
-    norma = norm(rbf.tocke[i] - x) # norma razlike
-    vsota += rbf.utezi[i] * rbf.phi(norma) # utežena vsota
+    norma = norm(rbf.točke[i] - x) # norma razlike
+    vsota += rbf.uteži[i] * rbf.phi(norma) # utežena vsota
   end
   vsota
 end
@@ -47,27 +47,27 @@ Poišči matriko sistema enačb za interpolacijo točk v seznamu `tocke`,
 z linearno kombinacijo radialnih baznih funkcij s funkcijo oblike
 `phi`.
 """
-function matrika(tocke, phi)
-  n = length(tocke)
+function matrika(točke, phi)
+  n = length(točke)
   A = zeros(n, n)
   for i = 1:n, j = i:n
-    A[i, j] = phi(norm(tocke[i] - tocke[j]))
+    A[i, j] = phi(norm(točke[i] - točke[j]))
     A[j, i] = A[i, j]
   end
   return A
 end
 
 """
-    rbf = interpoliraj(tocke, vrednosti, phi)
+    rbf = interpoliraj(točke, vrednosti, phi)
 
-Interpoliraj `vrednosti` v danih točkah s seznama `tocke` z linearno
+Interpoliraj `vrednosti` v danih točkah s seznama `točke` z linearno
 kombinacijo radialnih baznih funkcij s funkcijo oblike `phi`.
 """
-function interpoliraj(tocke, vrednosti, phi)
-  A = matrika(tocke, phi)
+function interpoliraj(točke, vrednosti, phi)
+  A = matrika(točke, phi)
   F = cholesky!(A) # da prihranimo prostor, razcep naredimo kar v matriko A
-  utezi = F \ vrednosti
-  return RBF(tocke, utezi, phi)
+  uteži = F \ vrednosti
+  return RBF(točke, uteži, phi)
 end
 # interpolacija
 

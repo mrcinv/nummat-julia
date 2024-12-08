@@ -2,7 +2,7 @@ module Vaja14
 using Vaja13
 import LinearAlgebra: eigen, eigvals, eigvecs, SymTridiagonal
 
-export VeckratniIntegral, integriraj, volumen, simpson, MonteCarlo
+export VečkratniIntegral, integriraj, volumen, simpson, MonteCarlo
 
 # simpson
 """Poišči vozle in uteži za sestavljeno Simpsonovo pravilo na intervalu
@@ -11,19 +11,19 @@ simpson(a, b, n) = Kvadratura(collect(LinRange(a, b, 2n + 1)),
   (b - a) / (6 * n) * vcat([1.0], repeat([4, 2], n - 1), [4, 1]), Interval(a, b))
 # simpson
 
-# VeckratniIntegral
+# VečkratniIntegral
 """Podatkovni tip za večkratni integral."""
-struct VeckratniIntegral{T,TIntegral}
+struct VečkratniIntegral{T,TIntegral}
   fun # funkcija, ki jo integriramo
   box::Vector{Interval{T}}
 end
 
 """Vrni dimenzijo večkratnega integrala."""
-dim(i::VeckratniIntegral) = length(i.box)
-# VeckratniIntegral
+dim(i::VečkratniIntegral) = length(i.box)
+# VečkratniIntegral
 
 # preslikaj
-import Vaja13: preslikaj, dolzina
+import Vaja13: preslikaj, dolžina
 """
   kvad2 = preslikaj(kvad1::Kvadratura{T}, interval::Interval{T})
 
@@ -31,7 +31,7 @@ Preslikaj kvadraturo `kvad1` na drug `interval`.
 """
 function preslikaj(kvad::Kvadratura{T}, interval::Interval{T}) where {T}
   x = map(x -> preslikaj(x, kvad.interval, interval), kvad.x)
-  u = dolzina(interval) / dolzina(kvad.interval) * kvad.u
+  u = dolžina(interval) / dolžina(kvad.interval) * kvad.u
   return Kvadratura(x, u, interval)
 end
 # preslikaj
@@ -39,14 +39,14 @@ end
 import Vaja13: integriraj
 # integriraj
 """
-  I = integriraj(int::VeckratniIntegral{T, TI}, kvad::Kvadratura{T})
+  I = integriraj(int::VečkratniIntegral{T, TI}, kvad::Kvadratura{T})
 
-Integriraj veckratni `int` s produktno kvadraturo, ki je podana kot produkt
-enodimenzionalne kvadrature `kvad`.
+Integriraj večkratni integral `int` s produktno kvadraturo, ki je podana kot
+produkt enodimenzionalne kvadrature `kvad`.
 
 # Primer
 ```jldoctest
-int = VeckratniIntegral{Float64, Float64}(
+int = VečkratniIntegral{Float64, Float64}(
   x -> x[1] - x[2], [Interval(0., 2.), Interval(-1., 2.)]);
 kvad = Kvadratura([0.5], [1.0], Interval(0.0, 1.0)); # sredinsko pravilo
 integriraj(int, kvad)
@@ -57,7 +57,7 @@ integriraj(int, kvad)
 ```
 """
 function integriraj(
-  int::VeckratniIntegral{T,TI}, kvad::Kvadratura{T}) where {T,TI}
+  int::VečkratniIntegral{T,TI}, kvad::Kvadratura{T}) where {T,TI}
   # kvadrature preslikamo pred glavno zanko
   kvadrature = [preslikaj(kvad, interval) for interval in int.box]
   d = dim(int)
@@ -100,7 +100,7 @@ end
 # naslednji!
 # mc
 """Izračunaj volumen večrazsežne škatle `box`."""
-volumen(box::Vector{Interval{T}}) where {T} = prod(dolzina.(box))
+volumen(box::Vector{Interval{T}}) where {T} = prod(dolžina.(box))
 
 """Podatkovna struktura za parametre metode Monte Carlo."""
 struct MonteCarlo
@@ -109,12 +109,12 @@ struct MonteCarlo
 end
 
 """
-  I = integriraj(int::::VeckratniIntegral{T,TI}, mc::MonteCarlo)
+  I = integriraj(int::::VečkratniIntegral{T,TI}, mc::MonteCarlo)
 
 Izračunaj približek za večkratni integral `int` z metodo Monte Carlo s parametri
 `mc`.
 """
-function integriraj(int::VeckratniIntegral{T,TI}, mc::MonteCarlo) where {T,TI}
+function integriraj(int::VečkratniIntegral{T,TI}, mc::MonteCarlo) where {T,TI}
   I = zero(TI)
   x = zeros(T, dim(int))
   for _ in 1:mc.n
@@ -129,27 +129,27 @@ end
 # mc
 
 """
-    I = ndquad(f, x0, utezi, d)
+    I = ndquad(f, x0, uteži, d)
 
 izračuna integral funkcije `f` na d-dimenzionalni kocki ``[a,b]^d``
 z večkratno uporabo enodimenzionalne kvadrature za integral na
-intervalu ``[a,b]``, ki je podana z utežmi `utezi` in vozli `x0`.
+intervalu ``[a,b]``, ki je podana z utežmi `uteži` in vozli `x0`.
 
 # Primer
 ```jldoctest
 julia> f(x) = x[1] + x[2]; #f(x,y)=x+1;
-julia> utezi = [1,1]; x0 = [0.5, 1.5]; #sestavljeno sredinsko pravilo
-julia> ndquad(f, x0, utezi, 2)
+julia> uteži = [1,1]; x0 = [0.5, 1.5]; #sestavljeno sredinsko pravilo
+julia> ndquad(f, x0, uteži, 2)
 8.0
 ```
 """
-function ndquad(f, x0, utezi, d)
+function ndquad(f, x0, uteži, d)
   # število vozlov
   n = length(x0)
   index = ones(Int, d)
   I = 0.0
   x = view(x0, index) # da se izognemo alokacijam spomina
-  w = view(utezi, index)
+  w = view(uteži, index)
   for i = 1:n^d
     z = f(x) * prod(w)
     I += z

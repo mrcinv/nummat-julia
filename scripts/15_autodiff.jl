@@ -30,13 +30,13 @@ scatter(h, napaka, yscale=:log10, xscale=:log10,
 savefig("img/15-napaka-dif.svg")
 
 
-# enacba
+# enačba
 using Plots
 e = 0.5
 plot(E -> E - e * sin(E), -10, 10, label="\$E - e\\sin(E)\$")
 M = 5
 plot!(x -> M, -10, 10, label="\$M\$")
-# enacba
+# enačba
 
 savefig("img/15-enacba.svg")
 
@@ -170,7 +170,7 @@ struct Elipsa{T}
   b::T
 end
 
-ekscentricnost(e::Elipsa) = sqrt(1 - e.b^2 / e.a^2)
+ekscentričnost(e::Elipsa) = sqrt(1 - e.b^2 / e.a^2)
 
 struct KeplerOrbit{T}
   n::T # povprečno gibanje

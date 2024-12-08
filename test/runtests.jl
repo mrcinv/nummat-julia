@@ -1,0 +1,18 @@
+using Pkg
+
+Pkg.test(Vaja01)
+Pkg.test(Vaja02)
+Pkg.test(Vaja03)
+Pkg.test(Vaja04)
+Pkg.test(Vaja05)
+Pkg.test(Vaja06)
+Pkg.test(Vaja07)
+Pkg.test(Vaja08)
+Pkg.test(Vaja09)
+Pkg.test(Vaja10)
+Pkg.test(Vaja11)
+Pkg.test(Vaja12)
+Pkg.test(Vaja13)
+Pkg.test(Vaja14)
+Pkg.test(Vaja15)
+Pkg.test(Vaja16)

@@ -27,7 +27,7 @@ end
 """
     vrednost(p::NewtonovPolinom, x)
 
-Izračunaj vrednot Newtonovega polinoma `p` v `x` s Hornerjevo methodo.
+Izračunaj vrednot Newtonovega polinoma `p` v `x` s Hornerjevo metodo.
 
 # Primer
 
@@ -110,15 +110,15 @@ h10(t) = t * (1 + t * (-2 + t))
 h11(t) = t^2 * (-1 + t)
 
 """
-    hermiteint(x, xint, y, dy)
+    hermiteint(x, x_int, y, dy)
 
 Izračunaj vrednost Hermitovega kubičnega polinoma p v točki `x`, ki interpolira
-podatke `p(xint[1]) == y[1]`, `p(xint[2]) == y[2]` in
-`p'(xint[1]) == dy[1]`, `p'(xint[2]) == dy[2]`.
+podatke `p(x_int[1]) == y[1]`, `p(x_int[2]) == y[2]` in
+`p'(x_int[1]) == dy[1]`, `p'(x_int[2]) == dy[2]`.
 """
-function hermiteint(x, xint, y, dy)
-  dx = xint[2] - xint[1]
-  t = (x - xint[1]) / dx
+function hermiteint(x, x_int, y, dy)
+  dx = x_int[2] - x_int[1]
+  t = (x - x_int[1]) / dx
   return y[1] * h00(t) + y[2] * h01(t) + dx * (dy[1] * h10(t) + dy[2] * h11(t))
 end
 # hermiteint

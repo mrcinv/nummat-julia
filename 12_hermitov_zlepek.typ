@@ -11,7 +11,7 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
 
 == Naloga
 
-- Podatke iz @hermitovi-podatki[Tabele] interpoliraj s
+- Podatke iz @tab:12-Hermitovi-podatki[Tabele] interpoliraj s
   #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[Hermitovim kubičnim zlepkom].
   #figure(
   table(columns: 5, stroke: none, align: center,
@@ -21,8 +21,8 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
     $f(x)$, $y_1$, $y_2$, $dots$, $y_n$,
     $f'(x)$, $d y_1$, $d y_2$, $dots$, $d y_n$),
     caption: [Podatki, ki jih potrebujemo za Hermitov kubični zlepek.]
-  )<hermitovi-podatki>
-- Uporabi Hermitovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @hermitova-baza[Tabele] in
+  )<tab:12-Hermitovi-podatki>
+- Uporabi Hermitovo bazo kubičnih polinomov, ki zadoščajo pogojem iz @tab:12-Hermitova-baza[Tabele] in
   jih z linearno funkcijo preslikaj z intervala $[0, 1]$ na interval $[x_i, x_(i+1)]$.
 
 #figure(
@@ -36,9 +36,9 @@ Funkcijam, ki so definirane z različnimi predpisi na različnih intervalih, pra
       [$h_(11)$], [$0$], [$0$], [$0$], [$1$]
     ),
 caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah $t=0$ in $t=1$]
-)<hermitova-baza>
+)<tab:12-Hermitova-baza>
 - Definiraj podatkovni tip `HermitovZlepek` za Hermitov kubični zlepek, ki vsebuje podatke iz
-  @hermitovi-podatki[Tabele].
+  @tab:12-Hermitovi-podatki[Tabele].
 - Napiši funkcijo `vrednost(zlepek, x)`, ki izračuna vrednost Hermitovega kubičnega zlepka za dano
   vrednost argumenta $x$. Omogoči, da se vrednosti tipa #jl("HermitovZlepek")
   #link("https://docs.julialang.org/en/v1/manual/methods/#Function-like-objects")[kliče kot funkcije].
@@ -56,13 +56,13 @@ caption: [Vrednosti baznih polinomov $h_(i j)(t)$ in njihovih odvodov v točkah 
 
 == Hermitov kubični zlepek<sec:12-hermitov-zlepek>
 
-Hermitov kubični zlepek, ki interpolira podatke iz @hermitovi-podatki[Tabele], je sestavljen
+Hermitov kubični zlepek, ki interpolira podatke iz @tab:12-Hermitovi-podatki[Tabele], je sestavljen
 iz kubičnih polinomov $p_(k)$ na intervalih $[x_(k), x_(k+1)]$. Kubični polinom je podan s
 štirimi parametri, ravno toliko kot je podatkov v krajiščih intervala $[x_(k), x_(x+1)]$.
 Zato lahko vsak polinom $p_(k)$ določimo le na podlagi podatkov v točkah $x_k$ in $x_(k+1)$.
 Polinom $p_(k)$ poiščemo tako, da interval $[x_k, x_(k+1)]$ preslikamo z linearno funkcijo
 na $[0, 1]$ in uporabimo Lagrangeevo bazo $h_(00)$, $h_(01)$, $h_(10)$ in $h_(11)$
-za podatke iz @hermitova-baza[Tabele]. Polinome poiščemo v standardni bazi:
+za podatke iz @tab:12-Hermitova-baza[Tabele]. Polinome poiščemo v standardni bazi:
 $
 h_(i j)(t) = a_0 + a_1 t + a_2 t^2 + a_3t^3.
 $
@@ -123,7 +123,7 @@ $
 
 #naloga[
 Sedaj napiši naslednje funkcije in tipe:
-- funkcijo #jl("hermiteint(x, xint, y, dy)"), ki izračuna vrednost Hermitovega polinoma v #jl("x")
+- funkcijo #jl("hermiteint(x, x_int, y, dy)"), ki izračuna vrednost Hermitovega polinoma v #jl("x")
   (rešitev @pr:12-hermiteint) in
 - podatkovni tip #jl("HermitovZlepek") ter funkcijo #jl("vrednost(x, Z::HermitovZlepek)"), ki
   izračuna vrednost Hermitovega zlepka #jl("Z") v dani točki #jl("x") (rešitev @pr:12-HermitovZlepek in @pr:12-vrednost-hermite).
@@ -219,7 +219,7 @@ $
 |x_2 -x_1| <= root(4, (96)/(f^((4))(xi))epsilon).
 $
 
-Peverimo še numerično, ali izračunana formula deluje:
+Preverimo še numerično, ali izračunana formula deluje:
 
 #demo12("# predpisana napaka")
 
@@ -308,7 +308,7 @@ Problemu se pogosto izognemo, če namesto ekvidistančnih točk uporabimo
 
 #let vaja12(koda, caption) = figure(code_box(jlfb("Vaja12/src/Vaja12.jl", koda)), caption: caption)
 
-#vaja12("# hermiteint")[Funkcija, ki interpolira podatke iz @hermitovi-podatki[Tabele] s
+#vaja12("# hermiteint")[Funkcija, ki interpolira podatke iz @tab:12-Hermitovi-podatki[Tabele] s
   Hermitovim kubičnim polinomom.]<pr:12-hermiteint>
 #vaja12("# HermitovZlepek")[Podatkovni tip za Hermitov kubični zlepek]<pr:12-HermitovZlepek>
 #vaja12("# vrednost")[Funkcija, ki izračuna vrednost Hermitovega kubičnega zlepka.]<pr:12-vrednost-hermite>

@@ -69,7 +69,7 @@
   let r = regex("(?s)" + start + "[\r\n]*(.*?)" + start)
   let match = content.match(r)
   if match == none {
-    "No match for " + start + " in " + file
+    panic("No match for " + start + " in " + file)
   }
   else {
     match.captures.first()

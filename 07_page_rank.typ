@@ -76,7 +76,7 @@ sestavimo zaporedje približkov:
 
 $
 bold(x)^((k+1)) = (A bold(x)^((k)))/norm(A bold(x)^((k))), quad k=0, 1, med dots
-$<eq:potencna>
+$<eq:7-potenčna>
 
 Zaporedje $bold(x)^((k))$ konvergira k lastnemu vektorju matrike $A$ z lastno vrednostjo, ki je po
 absolutni vrednosti največja. Če je takih lastnih vrednosti več (npr. $1$ in $-1$), se lahko zgodi, da
@@ -86,7 +86,7 @@ $norm(dot)_(oo)$, saj jo lahko najhitreje izračunamo.
 
 #naloga[
 Napiši program #jl("x, it = potencna(A, x0)"), ki poišče lastni vektor za po absolutni vrednosti
-največjo lastno vrednost matrike $A$ (za rešitev glej @pr:07potencna).
+največjo lastno vrednost matrike $A$ (za rešitev glej @pr:7-potenčna).
 ]
 == Razvrščanje spletnih strani
 
@@ -265,11 +265,11 @@ vrednost $1$.
 
 #figure(
   code_box(
-    jlfb("Vaja07/src/Vaja07.jl", "# potencna")
+    jlfb("Vaja07/src/Vaja07.jl", "# potenčna")
   ),
   caption: [Funkcija, ki s potenčno metodo poišče lastni vektor za po absolutni vrednosti
   največjo lastno vrednost dane matrike.]
-)<pr:07potencna>
+)<pr:7-potenčna>
 
 #figure(
   code_box(

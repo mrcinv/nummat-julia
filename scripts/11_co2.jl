@@ -15,7 +15,7 @@ t = [l[4] for l in data]
 co2 = [l[5] for l in data]
 using Plots
 scatter(t, co2, xlabel="leto",
-  ylabel="delci na miljon (ppm)",
+  ylabel="delci na milijon (ppm)",
   label="koncentracija \$\\mathrm{CO}_2\$", markersize=1)
 # plot
 savefig("img/11_co2.svg")

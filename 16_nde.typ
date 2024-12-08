@@ -69,7 +69,7 @@ Poglejmo, kako je videti smerno polje za enačbo @eq:16-nde1. Tangente vzorčimo
 mreži na pravokotniku $(t, u) in [-2, 2] times [0, 4]$. Za eksplicitno podano krivuljo $u = u(t)$ je
 vektor v smeri tangente podan s koordinatami $[1, u'(t)]$. Za nazornejšo sliko, vektor v smeri
 tangente normaliziramo in pomnožimo s primernim faktorjem, da se tangente na sliki ne prekrivajo.
-Uporabimo funkcijo #jl("risi_polje(fun, (t0, tk), (u0, uk), n)"), ki nariše polje tangent za
+Uporabimo funkcijo #jl("riši_polje(fun, (t0, tk), (u0, uk), n)"), ki nariše polje tangent za
 diferencialno enačbo (glej @pr:16-polje-smeri  in @pr:16-risi-polje).
 
 Narišimo polje smeri za enačbo @eq:16-nde1:
@@ -129,14 +129,14 @@ približke v točkah $t_1, t_2, med dots, t_n$:
 
 $
   u_(k+1) = u_k + (t_(k+1) - t_k)f(t_k, u_k).
-$<eq:16-euler>
+$<eq:16-Euler>
 
 #naloga[
 Napiši funkcijo #jl("u, t = euler(fun, u0, (t0, tk), n)"), ki implementira Eulerjevo metodo
-s konstantnim korakom (@pr:16-euler).
+s konstantnim korakom (@pr:16-Euler).
 ]
 
-#demo16("# euler 1")
+#demo16("# Euler 1")
 
 #figure(
   image("img/16-euler.svg", width: 60%),
@@ -206,28 +206,28 @@ za podrobnejšo razlago).
 
 #let vaja16(koda) = code_box(jlfb("Vaja16/src/Vaja16.jl", koda))
 
-Definirajmo podatkovni tip #jl("ZacetniProblem"), ki vsebuje vse podatke o začetnem problemu
+Definirajmo podatkovni tip #jl("ZačetniProblem"), ki vsebuje vse podatke o začetnem problemu
 @eq:16-začetni-problem. Uporabili ga bomo kot vhodni podatek za funkcije, ki bodo poiskale
 numerično rešitev.
 
 #figure(
-  vaja16("# ZacetniProblem"),
+  vaja16("# ZačetniProblem"),
   caption: [Podatkovni tip, ki vsebuje vse podatke o začetnem problemu.]
 )
 
 Približke, ki jih bomo izračunali z različnimi metodami, bomo shranili v poseben podatkovni tip
-#jl("ResitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunanih približkov rešitve bomo
-v tipu #jl("ResitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE.
+#jl("RešitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunanih približkov rešitve bomo
+v tipu #jl("RešitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE.
 Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermitovim zlepkom.
 
 #figure(
-  vaja16("# ResitevNDE"),
+  vaja16("# RešitevNDE"),
   caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema.]
 )
 #naloga[
 - Definiraj podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
-- Napiši funkcijo #jl("resi(p::ZacetniProblem, metoda::Euler)"), ki poišče rešitev začetnega
-  problema z Eulerjevo metodo (rešitev @pr:16-euler-resi).
+- Napiši funkcijo #jl("resi(p::ZačetniProblem, metoda::Euler)"), ki poišče rešitev začetnega
+  problema z Eulerjevo metodo (rešitev @pr:16-Euler-resi).
 ]
 Ponovno rešimo začetni problem:
 $
@@ -237,7 +237,7 @@ $
 
 Faktor $-2$ v enačbi $u'(t) = - 2 t u$ lahko obravnavamo kot parameter enačbe. Ker poznamo točno rešitev $u(t) = e^(-t^2/sqrt(2))$, lahko izračunamo napako. Narišimo napako Eulerjeve metode za dve različni velikosti koraka.
 
-#demo16("# euler 2")
+#demo16("# Euler 2")
 
 #figure(
   image("img/16-euler-napaka.svg", width: 60%), caption: [Napaka Eulerjeve metode za začetni problem $u' = -2 u t; quad u(-0.5)=1$ pri
@@ -248,7 +248,7 @@ Faktor $-2$ v enačbi $u'(t) = - 2 t u$ lahko obravnavamo kot parameter enačbe.
 Uporaba specifičnih tipov omogoča definicijo specifičnih metod, ki so posebej napisane za posamezen
 primer. Taka organizacija kode omogoča večjo abstrakcijo in definicijo
 #link("https://en.wikipedia.org/wiki/Domain-specific_language")[domenskega jezika], ki je
-prilagojen posameznemu področju. Tako lahko obravnavamo #jl("ZacetniProblemNDE") namesto funkcije in vektorja, ki vsebujeta dejanske podatke. Vrednost tipa #jl("ResitevNDE") se
+prilagojen posameznemu področju. Tako lahko obravnavamo #jl("ZačetniProblemNDE") namesto funkcije in vektorja, ki vsebujeta dejanske podatke. Vrednost tipa #jl("RešitevNDE") se
 razlikuje od vektorjev in matrik, ki jih vsebuje, predvsem v tem, da Julia ve, da gre za podatke,
 ki so numerični približek za rešitev začetnega problema. To prevajalniku omogoča, da za dane podatke
 avtomatično uporabi metode glede na vlogo, ki jo imajo v danem kontekstu. Takšna organizacija je zelo
@@ -294,17 +294,17 @@ spremenljivke $t$. Vrednosti rešitve diferencialne enačbe lahko interpoliramo 
 #link("https://en.wikipedia.org/wiki/Cubic_Hermite_spline")[kubičnim Hermitovim zlepkom], ki smo ga
 že spoznali v poglavju o zlepkih (@sec:12-zlepki). Hermitov
 zlepek je na intervalu $[t_i, t_(i+1)]$ določen z vrednostmi rešitve in odvodi v krajiščih
-intervala. Ti podatki so shranjeni v vrednosti tipa #jl("ResitevNDE").
+intervala. Ti podatki so shranjeni v vrednosti tipa #jl("RešitevNDE").
 
 #naloga[
-Napiši metodo #jl("vrednost(res::ResitevNDE, t)"), ki vrne približek
+Napiši metodo #jl("vrednost(res::RešitevNDE, t)"), ki vrne približek
 za rešitev NDE v dani točki (@pr:16-vrednost). Vrednosti rešitve lahko na ta način izračunamo tudi
 za argumente $t$, ki so med približki, ki jih izračuna Eulerjeva ali kakšna druga metoda.
 ]
 
 Prikažimo Hermitovo interpolacijo na grafu:
 
-#demo16("# plot hermite")
+#demo16("# plot Hermite")
 
 #figure(
   image("img/16-hermite.svg", width: 60%),
@@ -329,7 +329,7 @@ dano telo, opiše drugi Newtonov zakon:
 
 $
 bold(F) = m bold(a)(t).
-$<eq:16-2-newtonov-zakon>
+$<pr:16-2-Newtonov-zakon>
 
 Sile, ki delujejo na telo, so lahko odvisne tako od položaja kot tudi od hitrosti. Sili, ki delujeta
 na telo pri poševnem metu, sta sila teže $bold(F)_g$ in sila zračnega upora $bold(F)_u$. Privzamemo, da velja
@@ -350,7 +350,7 @@ $
 bold(F) = -m bold(g) - C' bold(v)norm(bold(v)).
 $<eq:16-vsota-sil>
 
-Ko vstavimo @eq:16-vsota-sil v drugi Newtonov zakon @eq:16-2-newtonov-zakon, dobimo sistem enačb
+Ko vstavimo @eq:16-vsota-sil v drugi Newtonov zakon @pr:16-2-Newtonov-zakon, dobimo sistem enačb
 drugega reda:
 
 $
@@ -376,12 +376,12 @@ $
 bold(u)(t)=vec(x, z, v_x, v_z).
 $
 
-Nato napišemo funkcijo #jl("f_posevni(t, u, p)"), ki izračuna vektor desnih stani enačb
+Nato napišemo funkcijo #jl("f_poševni(t, u, p)"), ki izračuna vektor desnih stani enačb
 @eq:16-sistem-1-reda:
 
-#demo16("# posevni")
+#demo16("# poševni")
 
-Definirajmo vrednost tipa #jl("ZacetniProblem"), ki opiše začetni problem za enačbe @eq:16-sistem-1-reda za prvih $unit(5s)$ leta z začetnimi pogoji
+Definirajmo vrednost tipa #jl("ZačetniProblem"), ki opiše začetni problem za enačbe @eq:16-sistem-1-reda za prvih $unit(5s)$ leta z začetnimi pogoji
 $x_0 = unit(0 m)$, $z_0 = unit(1m)$,
 $bold(v)_0=[unit(10m/s), unit(20m/s)]^T$ in
 parametri $g = unit(9.8 m/s^2)$ ter $C=unit( 0.1/ m)$.
@@ -500,22 +500,22 @@ $
 
 #naloga[
 Napiši naslednje funkcije:
-- #jl("niclaint(res::ResitevNDE, F)"), ki poišče interval, na katerem je dana funkcija
-  #jl("F(t, u, du)") enaka $0$ (@pr:16-niclaint) in
-- #jl("nicla(res::ResitevNDE, F, DF)"), ki poišče ničlo funkcije #jl("F(t, u, du)")
+- #jl("ničla_interval(res::RešitevNDE, F)"), ki poišče interval, na katerem je dana funkcija
+  #jl("F(t, u, du)") enaka $0$ (@pr:16-ničla_interval) in
+- #jl("ničla(res::RešitevNDE, F, DF)"), ki poišče ničlo funkcije #jl("F(t, u, du)")
   za dano rešitev začetnega problema. Za računanje novih vrednosti naj uporabi metodo #jl("RK4")
-  (@pr:16-nicla).
+  (@pr:16-ničla).
 ]
 
 #let demo16str(koda) = blk("scripts/16_nde.jl", koda)
-Funkcijo #jl("nicla") uporabimo za poševni met. Uporabili bomo relativno velik
+Funkcijo #jl("ničla") uporabimo za poševni met. Uporabili bomo relativno velik
 korak, da bo postopek iskanja ničle nazornejši. Rešimo začetni problem za poševni
 met @eq:16-sistem-1-reda s parametri $g=9.8 unit(m/s^2)$, $c=unit(0.1/m)$, z začetnim
 položajem $x = unit(0m), z = unit(1m)$ in začetno hitrostjo
 $v_(x) = unit(10 m/s^2)$, $v_(z) = unit(20 m/s)$. Enote so v
  numeričnem izračunu izpuščene.
 
-#demo16("# nicla 1")
+#demo16("# ničla 1")
 
 Približki za rešitev so precej narazen, saj smo za izračun uporabili
 relativno velik korak $h=0.3$. Kljub temu je zaradi visokega reda metode Runge-Kutta
@@ -523,8 +523,8 @@ izračun dokaj natančen. V tabeli približkov, ki smo jo dobili
 z metodo Runge-Kutta, poiščemo interval, na katerem druga komponenta $u_2$
 spremeni predznak. Nato z Newtonovo metodo rešimo nelinearno enačbo $u_2(t) = 0$.
 
-#demo16("# nicla 2")
-#figure(image("img/16-nicla-2.svg", width: 60%),
+#demo16("# ničla 2")
+#figure(image("img/16-ničla-2.svg", width: 60%),
 caption: [Slika ilustrira postopek, s katerim poiščemo, koliko časa
 izstrelek leti, preden pade na tla. Najprej poiščemo približke za rešitev z metodo Runge-Kutta reda 4.
 Nato poiščemo interval med približki, na katerem višina $z = u_2$ spremeni predznak. Enačbo $u_2(t)=0$
@@ -535,15 +535,15 @@ Vrednost #jl("t0") predstavlja čas leta, medtem ko dolžino leta razberemo iz
 prve komponente rešitve.
 
 #code_box(
-repl(demo16str("# nicla 4"), read("out/16-nicla-vrednost.out"))
+repl(demo16str("# ničla 4"), read("out/16-ničla-vrednost.out"))
 )
 
 Iz rezultata razberemo, da je čas leta približno $unit(2.57 s)$, medtem ko je
 dolžina, ki jo izstrelek doseže enaka $unit(9.67 m)$. Narišimo še
 trajektorijo, ki je podana s parametrično krivuljo $(x(t), z(t)) = (u_1(t), u_2(t))$.
 
-#demo16("# nicla 3")
-#figure(image("img/16-nicla-3.svg", width: 60%),
+#demo16("# ničla 3")
+#figure(image("img/16-ničla-3.svg", width: 60%),
 caption: [Trajektorija poševnega meta od začetka do trenutka, ko izstrelek pade na tla.])
 
 == Rešitve
@@ -554,14 +554,14 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko izstrelek pad
 )<pr:16-polje-smeri>
 
 #figure(
-  demo16("# risipolje"), caption:[Funkcija nariše polje smeri za NDE prvega reda
+  demo16("# riši_polje"), caption:[Funkcija nariše polje smeri za NDE prvega reda
   v ravnini $t, u$. ]
 )<pr:16-risi-polje>
 
 #figure(
-  vaja16("# euler plain"),
+  vaja16("# Euler plain"),
   caption: [Eulerjeva metoda za reševanje začetnega problema NDE]
-)<pr:16-euler>
+)<pr:16-Euler>
 
 #figure(
   vaja16("# resi"),
@@ -573,7 +573,7 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko izstrelek pad
   vaja16("# Euler"),
   caption: [Metoda za funkcijo #jl("korak"), ki poišče rešitev začetnega problema
     z enim korakom #linebreak()Eulerjeve metode.]
-)<pr:16-euler-resi>
+)<pr:16-Euler-resi>
 
 #figure(
   vaja16("# interpolacija"),
@@ -595,14 +595,14 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko izstrelek pad
 )<pr:16-rk4>
 
 #figure(
-  vaja16("# niclaint"),
+  vaja16("# ničla_interval"),
   caption: [Funkcija, ki poišče interval $[t_(i), t_(i+1)]$, na katerem ima funkcija
   $F(bold(u)(t))$ ničlo.
   ]
-)<pr:16-niclaint>
+)<pr:16-ničla_interval>
 
 
 #figure(
-  vaja16("# nicla"),
+  vaja16("# ničla"),
   caption: [Funkcija, ki poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$.]
-)<pr:16-nicla>
+)<pr:16-ničla>

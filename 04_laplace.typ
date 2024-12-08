@@ -58,15 +58,15 @@ Funkcija $u$, ki opisuje milno opno, zadošča
 #link("https://en.wikipedia.org/wiki/Young%E2%80%93Laplace_equation")[Young-Laplaceovi enačbi]:
 $
   (1+u_(x)^2) u_(y y) -u_(x) u_(y) u_(x y) + (1 + u_(y)^2)u_(x x) = rho(x, y),
-$ <eq:4-young-laplace>
+$ <eq:4-Young-Laplace>
 
 kjer so $u_x=(partial u)/(partial x)$, $u_y=(partial u)/(partial y)$,
 $u_(x x) = (partial^2 u)/(partial x^2)$, $u_(x y) = (partial^2 u)/(partial x partial y)$
 in $u_(y y) = (partial^2 u)/(partial y^2)$ parcialni odvodi funkcije $u$.
 Funkcija $rho$ je sorazmerna tlačni razliki med zgornjo in spodnjo površino milne opne in je posledica teže milnice.
-Enačba @eq:4-young-laplace vsebuje parcialne odvode in jo zato uvrščamo med
+Enačba @eq:4-Young-Laplace vsebuje parcialne odvode in jo zato uvrščamo med
 #link("https://sl.wikipedia.org/wiki/Parcialna_diferencialna_ena%C4%8Dba")[parcialne diferencialne
-enačbe] ali s kratico PDE. Parcialni odvodi nastopajo nelinearno, zato enačbo @eq:4-young-laplace
+enačbe] ali s kratico PDE. Parcialni odvodi nastopajo nelinearno, zato enačbo @eq:4-Young-Laplace
 uvrščamo med nelinearne PDE.
 
 Če zanemarimo tlačno razliko $rho$ in višje potence odvodov $u_x^2$, $u_y^2$ in $u_x u_y$, dobimo
@@ -275,29 +275,29 @@ $
 
 V splošnem je formulo za vektor desnih strani lažje sprogramirati, zato bomo zapis izpustili.
 
-#let vecop = math.op("vec", limits: true)
+#let vec_op = math.op("vec", limits: true)
 
-#opomba(naslov: [Razvrstitev po stolpcih in operator $vecop$])[
+#opomba(naslov: [Razvrstitev po stolpcih in operator $vec_op$])[
 Elemente matrike razvrstimo v vektor tako, da stolpce
 matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$
 izrazimo z indeksi v matriki $i,j$ s formulo
 
 $ k = i+(j-1)m. $
 
-Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vecop$:
+Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vec_op$:
 
 $
-vecop: RR^(m times n) -> RR^(m dot n)\
-vecop(A)_(i + (j-1)m) = a_(i j).
+vec_op: RR^(m times n) -> RR^(m dot n)\
+vec_op(A)_(i + (j-1)m) = a_(i j).
 $
 ]
 
 == Izpeljava sistema s Kroneckerjevim produktom
 
-Množenje matrike $A$ z vektorjem $bold(x) = vecop(U)$ lahko zapišemo kot:
+Množenje matrike $A$ z vektorjem $bold(x) = vec_op(U)$ lahko zapišemo kot:
 
 $
-  A vecop(U) = vecop(L U + U L),
+  A vec_op(U) = vec_op(L U + U L),
 $
 
 kjer je $L$ matrika Laplaceovega operatorja v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji
@@ -328,12 +328,12 @@ kar je enako levi strani enačbe @eq:ravnovesje.
 
 Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s
 #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kroneckerjevim produktom $times.circle$],
-saj velja $vecop(A X B) = A times.circle B dot vecop(X)$. Tako velja:
+saj velja $vec_op(A X B) = A times.circle B dot vec_op(X)$. Tako velja:
 
 $
-  A vecop(U) &= vecop(L U + U L) = vecop(L U I + I U L) =\
-  & = vecop(L U I) + vecop(I U L)
-   = (L times.circle I) vecop(U) + (I times.circle L) vecop(U)
+  A vec_op(U) &= vec_op(L U + U L) = vec_op(L U I + I U L) =\
+  & = vec_op(L U I) + vec_op(I U L)
+   = (L times.circle I) vec_op(U) + (I times.circle L) vec_op(U)
 $
 
 in
@@ -342,7 +342,7 @@ $
   A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
 $
 
-#opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Julii])[
+#opomba(naslov:[Kroneckerjev produkt in operator $vec_op$ v Julii])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in
 računanje Kroneckerjevega produkta. Z ukazom `reshape` iz vektorja
 znova zgradimo matriko.
@@ -352,14 +352,14 @@ znova zgradimo matriko.
 Preden se lotimo programiranja, ustvarimo nov paket za to vajo:
 
 #code_box[
-  #pkg("generate Vaja04", none, env: "nummat")
-  #pkg("develop Vaja04/", none, env: "nummat")
+  #pkg("generate Vaja04", none, env: "num_mat")
+  #pkg("develop Vaja04/", none, env: "num_mat")
 ]
 
 Nato dodamo pakete, ki jih bomo potrebovali:
 
 #code_box[
-  #pkg("activate Vaja04", none, env:"nummat")
+  #pkg("activate Vaja04", none, env:"num_mat")
   #pkg("add SparseArrays", none, env: "Vaja04")
 ]
 
@@ -536,10 +536,10 @@ rekurzivne enačbe:
 
 $
 u_(i j)^((k+1)) = 1/4 (u_(i j-1)^((k))+u_(i-1 j)^((k))+u_(i+1 j)^((k))+u_(i j+1)^((k))),
-$<eq:jacobi>
+$<eq:04-Jacobi>
 
 ki ustrezajo #link("https://en.wikipedia.org/wiki/Jacobi_method")[Jacobijevi iteraciji]. Približek
-za rešitev dobimo tako, da zaporedoma uporabimo rekurzivno formulo @eq:jacobi.
+za rešitev dobimo tako, da zaporedoma uporabimo rekurzivno formulo @eq:04-Jacobi.
 
 #opomba(naslov: [Pogoji konvergence])[
 Rekli boste, da je preveč enostavno enačbe le preurediti in se potem rešitev kar sama pojavi, če le dovolj dolgo računamo. Gotovo se nekje skriva kak "hakelc". Res je! Težave se pojavijo, če zaporedje približkov *ne konvergira dovolj hitro* ali pa sploh ne. Jacobijeva, Gauss-Seidlova in SOR iteracija
@@ -593,7 +593,7 @@ funkcijo
 ki izračuna zaporedje približkov za poljubno iteracijsko metodo, dokler se rezultat ne spreminja več znotraj določene tolerance.
 Argument #jl("korak") je funkcija, ki iz danega približka izračuna naslednjega, argument #jl("x0") pa začetni približek iteracije.
 
-Rešitve so na koncu poglavja v programih @pr:jacobi, @pr:sor in @pr:iteracija.
+Rešitve so na koncu poglavja v programih @pr:4-Jacobi, @pr:sor in @pr:iteracija.
 ]
 === Konvergenca
 <konvergenca>
@@ -601,9 +601,9 @@ Rešitve so na koncu poglavja v programih @pr:jacobi, @pr:sor in @pr:iteracija.
 Poglejmo si, kako zaporedje približkov Gauss-Seidlove iteracije konvergira k rešitvi.
 
 #code_box[
-  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi 0")
-  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi 10")
-  #jlfb("scripts/04_laplace.jl", "# konvergenca jacobi oo")
+  #jlfb("scripts/04_laplace.jl", "# konvergenca Jacobi 0")
+  #jlfb("scripts/04_laplace.jl", "# konvergenca Jacobi 10")
+  #jlfb("scripts/04_laplace.jl", "# konvergenca Jacobi oo")
 ]
 
 #figure(
@@ -686,10 +686,10 @@ od parametra $omega$])
 
 #figure(
   code_box(
-    jlfb("Vaja04/src/Vaja04.jl", "# jacobi")
+    jlfb("Vaja04/src/Vaja04.jl", "# Jacobi")
   ),
   caption: [Funkcija, ki poišče naslednji približek Jacobijeve iteracije za diskretizacijo Laplaceove enačbe.]
-)<pr:jacobi>
+)<pr:4-Jacobi>
 
 #figure(
   code_box(

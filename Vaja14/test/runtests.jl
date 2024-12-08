@@ -37,7 +37,7 @@ end
 # integriraj
 @testset "Integriraj večkratni integral" begin
   kvad = Kvadratura([0.0, 1.0], [0.5, 0.5], Interval(0.0, 1.0)) # trapezna
-  int = VeckratniIntegral{Float64,Float64}(x -> x[1] - x[2],
+  int = VečkratniIntegral{Float64,Float64}(x -> x[1] - x[2],
     [Interval(0.0, 2.0), Interval(-1.0, 2.0)])
   @test integriraj(int, kvad) ≈ 3.0
 end

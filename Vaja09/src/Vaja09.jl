@@ -47,7 +47,7 @@ vsebuje(x, b::Box2d) = vsebuje(x[1], b.int_x) && vsebuje(x[2], b.int_y)
   x = diskretiziraj(I, n)
 
 Razdeli interval `I` na `n` enakih podintervalov. Vrni seznam krajišč
-poditntervalov.
+podintervalov.
 """
 diskretiziraj(I::Interval, n) = range(I.min, I.max, n)
 
@@ -55,7 +55,7 @@ diskretiziraj(I::Interval, n) = range(I.min, I.max, n)
   x = diskretiziraj(b, m, n)
 
 Razdeli škatlo `b` na manjše škatle. Vrni seznama krajišč
-poditntervalov v smereh `x` in `y`.
+podintervalov v smereh `x` in `y`.
 """
 diskretiziraj(b::Box2d, m, n) = (
   diskretiziraj(b.int_x, m), diskretiziraj(b.int_y, n))
@@ -63,10 +63,10 @@ diskretiziraj(b::Box2d, m, n) = (
 # box2d
 # konvergenca
 """
-    x, y, Z, nicle, koraki = konvergenca(obmocje, metoda, n=50, m=50; maxit=50, tol=1e-3)
+    x, y, Z, ničle, koraki = konvergenca(območje, metoda, n=50, m=50; maxit=50, tol=1e-3)
 
 Izračunaj, h katerim vrednostim konvergira metoda `metoda`, če uporabimo različne
-začetne približke na pravokotniku `[a, b]x[c, d]`, podanim z argumentom `obmocje`.
+začetne približke na pravokotniku `[a, b]x[c, d]`, podanim z argumentom `območje`.
 
 Funkcija vrne:
 - seznam krajišč podintervalov v x smeri,
@@ -83,15 +83,15 @@ kompleksne enačbe ``z^3=(x + i y) ^3 = 1``
 F((x, y)) = [x^3-3x*y^2-1; 3x^2*y-y^3];
 JF((x, y)) = [3x^2-3y^2 -6x*y; 6x*y 3x^2-3y^2]
 metoda(x0) = newton(F, JF, x0; maxit=10; tol=1e-3);
-obmocje = Box2d(Interval(-2, 2), (-1, 1))
-x, y, Z, nicle, koraki = konvergenca(obmocje, metoda; n=5, m=5)
+območje = Box2d(Interval(-2, 2), (-1, 1))
+x, y, Z, ničle, koraki = konvergenca(območje, metoda; n=5, m=5)
 ```
 """
-function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
+function konvergenca(območje::Box2d, metoda, m=50, n=50; atol=1e-3)
   Z = zeros(m, n)
   koraki = zeros(m, n)
-  x, y = diskretiziraj(obmocje, n, m)
-  nicle = []
+  x, y = diskretiziraj(območje, n, m)
+  ničle = []
   for i = 1:n, j = 1:m
     z = [x[i], y[j]]
     it = 0
@@ -100,11 +100,11 @@ function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
     catch
       continue
     end
-    k = findfirst([norm(z - z0, Inf) < 2atol for z0 in nicle])
+    k = findfirst([norm(z - z0, Inf) < 2atol for z0 in ničle])
     if isnothing(k)
-      if vsebuje(z, obmocje)
-        push!(nicle, z)
-        k = length(nicle)
+      if vsebuje(z, območje)
+        push!(ničle, z)
+        k = length(ničle)
       else
         continue
       end
@@ -112,7 +112,7 @@ function konvergenca(obmocje::Box2d, metoda, m=50, n=50; atol=1e-3)
     Z[j, i] = k # vrednost elementa je enaka indeksu ničle
     koraki[j, i] = it # število korakov metode
   end
-  return x, y, Z, nicle, koraki
+  return x, y, Z, ničle, koraki
 end
 # konvergenca
 

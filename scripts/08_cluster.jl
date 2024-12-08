@@ -11,15 +11,15 @@ scatter!(x[201:300], y[201:300], label="\$\\mu = (0, 1)\$")
 # gauss mix
 savefig("img/08_oblak.svg")
 
-# laplace
+# Laplace
 using Vaja08
 using SparseArrays
-tocke = hcat(x, y)'
+točke = hcat(x, y)'
 r = 1.0
-G = graf_eps(tocke, r)
+G = graf_eps(točke, r)
 L = laplace(G)
 spy(L, legend=false)
-# laplace
+# Laplace
 savefig("img/08_laplaceova_matrika.svg")
 
 # eigen
@@ -29,13 +29,13 @@ scatter(razcep.values[1:20], title="Prvih 20 lastnih vrednosti Laplaceove matrik
 # eigen
 savefig("img/08_lastne_vrednosti.svg")
 
-# vlozitev
-xnov = razcep.vectors[:, 5]
-ynov = razcep.vectors[:, 6]
-scatter(xnov[1:100], ynov[1:100], label="\$\\mu=(1, -2)\$")
-scatter!(xnov[101:200], ynov[101:200], label="\$\\mu=(-3, -1)\$")
-scatter!(xnov[201:300], ynov[201:300], label="\$\\mu=(0, 1)\$")
-# vlozitev
+# vložitev
+x_nov = razcep.vectors[:, 5]
+y_nov = razcep.vectors[:, 6]
+scatter(x_nov[1:100], y_nov[1:100], label="\$\\mu=(1, -2)\$")
+scatter!(x_nov[101:200], y_nov[101:200], label="\$\\mu=(-3, -1)\$")
+scatter!(x_nov[201:300], y_nov[201:300], label="\$\\mu=(0, 1)\$")
+# vložitev
 savefig("img/08_vlozitev.svg")
 
 using BookUtils
