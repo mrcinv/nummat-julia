@@ -489,8 +489,8 @@ datotekami. Priporočam, da si bralec ustvari svoj Git repozitorij, kjer si ured
 kodo in zapiske, ki jih bo napisal pri spremljanju te knjige.
 
 Git repozitorij lahko hranimo zgolj lokalno na lastnem računalniku, lahko pa ga kloniramo na lastni strežnik ali na enega od javnih spletnih skladišč
-programske kode, na primer #link("https://github.com/")[Github] ali
-#link("https://gitlab.com/")[Gitlab].]
+programske kode, na primer #link("https://github.com/")[GitHub] ali
+#link("https://gitlab.com/")[GitLab].]
 
 
 Z naslednjim ukazom v mapi `num_mat` ustvarimo repozitorij za `git` in

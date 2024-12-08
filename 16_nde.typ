@@ -78,7 +78,7 @@ Narišimo polje smeri za enačbo @eq:16-nde1:
 
 Narišimo še nekaj začetnih pogojev in rešitev, ki gredo skoznje.
 
-#demo16("# zacetni pogoj")
+#demo16("# začetni pogoj")
 
 #figure(
   kind: image,
@@ -100,11 +100,11 @@ točki $u(t_0)=u_0$, ima enačba @eq:16-nde1 enolično rešitev $u$. Pogoj $u(t_
 $
   u'(t) &= f(t, u),\
   u(t_0) &= u_0,
-$<eq:16-zacetni-problem>
+$<eq:16-začetni-problem>
 
 pa #emph[začetni problem].
 
-Rešitev začetnega problema @eq:16-zacetni-problem je funkcija $u(t)$. Funkcijo $u$ lahko
+Rešitev začetnega problema @eq:16-začetni-problem je funkcija $u(t)$. Funkcijo $u$ lahko
 numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto uporabljata, sta:
 - z vektorjem vrednosti $[u_0, u_1, med dots, med u_n]$ v danih točkah $t_0, t_1, med dots, t_n$ ali
 - z vektorjem koeficientov $[a_0, a_1, med dots, med a_n]$ v razvoju $u(t) = sum a_k phi_(k)(t)$
@@ -120,7 +120,7 @@ Metode, ki jih bomo spoznali v nadaljevanju, uvrščamo med kolokacijske metode.
 
 Najpreprostejša metoda za reševanje začetnega problema je
 #link("https://en.wikipedia.org/wiki/Euler_method")[Eulerjeva metoda].
-Za dani začetni problem @eq:16-zacetni-problem bomo poiskali vrednosti $u_i = u(t_i)$ v
+Za dani začetni problem @eq:16-začetni-problem bomo poiskali vrednosti $u_i = u(t_i)$ v
 točkah $t_0 < t_1 < med dots med < t_n=t_k$ na intervalu $[t_0, t_k]$. Vrednosti $u_i$ poiščemo tako,
 da najprej izračunamo približek $u_1$ za $t_1$ in nato z isto metodo rešimo začetni
 problem z začetnim pogojem $u(t_1) approx u_1$. Pri Eulerjevi metodi naslednjo vrednost
@@ -207,7 +207,7 @@ za podrobnejšo razlago).
 #let vaja16(koda) = code_box(jlfb("Vaja16/src/Vaja16.jl", koda))
 
 Definirajmo podatkovni tip #jl("ZacetniProblem"), ki vsebuje vse podatke o začetnem problemu
-@eq:16-zacetni-problem. Uporabili ga bomo kot vhodni podatek za funkcije, ki bodo poiskale
+@eq:16-začetni-problem. Uporabili ga bomo kot vhodni podatek za funkcije, ki bodo poiskale
 numerično rešitev.
 
 #figure(

@@ -51,9 +51,9 @@ savefig("img/02_koren_tangenta.svg")
 
 # koren7
 plot(sqrt, 0, 20, label="y=sqrt(x)")
-plot!(Vaja02.zacetni, 0, 20, label="y = zacetni(x)")
+plot!(Vaja02.začetni, 0, 20, label="y = začetni(x)")
 # koren7
-savefig("img/02_koren_zacetni.svg")
+savefig("img/02_koren_začetni.svg")
 
 capture("02_koren_8") do
 # koren8

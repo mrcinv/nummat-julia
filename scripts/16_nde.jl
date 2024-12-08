@@ -59,7 +59,7 @@ fun(t, u) = -2 * t * u
 plt = risi_polje(fun, (-2, 2), (0, 4))
 # polje slika
 
-# zacetni pogoj
+# začetni pogoj
 t0 = [-1, -1, 1]
 u0 = [0.5, 1, 1.5]
 scatter!(plt, t0, u0, label="začetni pogoji")
@@ -68,7 +68,7 @@ for i in 1:3
   plot!(plt, t -> C * exp(-t^2), -2, 2, label="rešitev \$u(t)\$")
 end
 plt
-# zacetni pogoj
+# začetni pogoj
 
 savefig("img/16-resitve.svg")
 

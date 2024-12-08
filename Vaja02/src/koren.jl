@@ -16,14 +16,14 @@ function koren_heron(x, x0, n)
 end
 # koren_heron
 
-# zacetni
+# začetni
 """
-  y0 = zacetni(x)
+  y0 = začetni(x)
 
 Izračunaj začetni približek za kvadratni koren števila `x` z uporabo
 eksponenta za števila s plavajočo vejico. 
 """
-function zacetni(x)
+function začetni(x)
   d, ost = divrem(abs(exponent(x)), 2)
   m = significand(x) # mantisa
   koren2ost = (ost == 0) ? 1 : 1.4142135623730951 # koren(2^ost)
@@ -34,7 +34,7 @@ function zacetni(x)
     return (0.5 + m / 2) / koren2e
   end
 end
-# zacetni
+# začetni
 
 # koren2
 """
@@ -69,7 +69,7 @@ end
 
 Izračunaj vrednost kvadratnega korena danega števila `x˙. 
 """
-koren(x) = koren(x, zacetni(x))
+koren(x) = koren(x, začetni(x))
 # koren_x
 
 

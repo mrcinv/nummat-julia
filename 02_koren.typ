@@ -33,8 +33,8 @@ Preden se lotimo reševanja, ustvarimo projekt za trenutno vajo in ga dodamo v d
 
 #code_box(
     [
-        #pkg("generate Vaja02", none, env: "nummat")
-        #pkg("develop Vaja02/", none, env: "nummat")
+        #pkg("generate Vaja02", none, env: "num_mat")
+        #pkg("develop Vaja02/", none, env: "num_mat")
     ]
 )
 
@@ -246,9 +246,9 @@ Potenco števila $2^n$ izračunamo s premikom binarnega zapisa števila $1$ v le
 
 #figure(
     code_box(
-        jlfb("Vaja02/src/koren.jl", "# zacetni")
+        jlfb("Vaja02/src/koren.jl", "# začetni")
     ),
-    caption: [Funkcija `zacetni(x)`, ki izračuna začetni približek.]
+    caption: [Funkcija `začetni(x)`, ki izračuna začetni približek.]
 )
 
 Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo:
@@ -258,7 +258,7 @@ Primerjajmo izboljšano verzijo začetnega približka s pravo korensko funkcijo:
 )
 
 #figure(
-    image("img/02_koren_zacetni.svg", width: 80%),
+    image("img/02_koren_začetni.svg", width: 80%),
     caption: [Korenska funkcija in izboljšani začetni približek]
 )
 
