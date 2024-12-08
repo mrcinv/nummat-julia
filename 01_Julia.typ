@@ -31,7 +31,7 @@ nato v terminalu poženite ukaz `julia`. Ukaz odpre interaktivno ukazno zanko
 #text(green)[`julia>`]. Za ukaznim pozivnikom lahko napišemo posamezne ukaze, ki jih nato
 Julia prevede, izvede in izpiše rezultate. Poskusimo najprej s preprostimi izrazi:
 
-#let demo01raw(koda) = blk("scripts/01_julia.jl", koda)
+#let demo01raw(koda) = blk("scripts/01_Julia.jl", koda)
 
 #let repl01(koda) = repl(demo01raw("# "+koda), read("out/"+koda+".out"))
 
@@ -345,7 +345,7 @@ znaka `]` za pozivnikom. Nato paket dodamo z ukazom `add`:
   #pkg("add Plots", "...")
   #repl("using Plots # naložimo modul s funkcijami iz paketa", none)
   #repl(
-    blk("scripts/01_julia.jl","# 01plot"),
+    blk("scripts/01_Julia.jl","# 01plot"),
     none,
   )
 ]
