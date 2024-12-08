@@ -154,6 +154,7 @@ ki bi dodale neničelne elemente.
 Za predstavitev grafa bomo uporabili paket #link("https://juliagraphs.org/Graphs.jl")[Graphs.jl]@Graphs2021,
 ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
+#naloga[
 Napiši naslednje funkcije:
 - #jl("krozna_lestev(n)"), ki ustvari graf krožne lestve z $2n$ vozlišči (rešitev @pr:06-lestev).
 - #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za
@@ -166,7 +167,7 @@ Napiši naslednje funkcije:
   metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
   točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke`
   (rešitev @pr:06-vlozitev).
-
+]
 == Krožna lestev
 
 Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dveh ciklov enake
@@ -240,14 +241,12 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   ),
   caption: [Funkcija, ki ustvari graf krožna lestev.]
 )<pr:06-lestev>
-
 #figure(
   code_box(
     vaja06("# matrika")
   ),
   caption: [Funkcija, ki ustvari matriko sistema za ravnovesje sil v grafu.]
 )<pr:06-matrika>
-
 #figure(
   code_box(
     vaja06("# desne strani")
@@ -255,14 +254,12 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
   caption: [Funkcija, ki izračuna desne strani sistema za ravnovesje sil v grafu na
   podlagi koordinat pritrjenih vozlišč.]
 )<pr:06-desne-strani>
-
 #figure(
   code_box(
     vaja06("# cg")
   ),
   caption: [Funkcija, ki reši sistem linearnih enačb $A bold(x)=bold(b)$ z metodo konjugiranih gradientov.]
 )<pr:06-cg>
-
 #figure(
   code_box(
     vaja06("# vlozitev")

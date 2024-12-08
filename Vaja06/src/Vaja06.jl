@@ -27,7 +27,6 @@ end
 # lestev
 # matrika
 using SparseArrays
-
 """
     A = matrika(G::AbstractGraph, sprem)
 
