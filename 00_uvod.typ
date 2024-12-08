@@ -31,14 +31,14 @@ ki reši določen problem in še ustreza minimalnim standardom pisanja kvalitetn
 sta izpuščena preverjanje in implementacija robnih primerov, včasih tudi obravnava pričakovanih
 napak. Da je bralcu lažje razumeti, kaj koda počne, sem dal prednost berljivosti pred celovitostjo.
 
-Na tem mestu bi se rad zahvalil prof. Bojanu Orlu, prof. Emilu Žagarju, asist. dr. Petru Kinku in doc. Aljažu Zalarju, s
+Na tem mestu bi se rad zahvalil prof. dr. Bojanu Orlu, prof. dr. Emilu Žagarju, asist. dr. Petru Kinku in doc. dr. Aljažu Zalarju, s
 katerimi sem sodeloval ali še sodelujem pri numeričnih predmetih na FRI. Veliko idej za naloge,
-ki so v tej knjigi, prihaja prav od njih. Posebna zahvala gre recenzentoma doc. Aljažu Zalarju in prof. Emilu Žagarju, ki sta knjigo podrobno pregledala in veliko prispevala h kakovosti vsebine.
-Moja draga žena doc. Mojca Vilfan mi je pomagala _"zbrusiti ostre robove"_, za kar sem jim izjemno
+ki so v tej knjigi, prihaja prav od njih. Posebna zahvala gre recenzentoma, ki sta knjigo podrobno pregledala in veliko prispevala h kakovosti vsebine.
+Moja draga žena doc. dr. Mojca Vilfan mi je pomagala _"zbrusiti ostre robove"_, za kar sem ji izjemno
 hvaležen. Prav tako se zahvaljujem članom Laboratorija za
-matematične metode v računalništvu in informatiki, še posebej prof. Neži Mramor-Kosta in asist. dr. Damirju
+matematične metode v računalništvu in informatiki, še posebej prof. dr. Neži Mramor-Kosta in asist. dr. Damirju
 Franetiču, ki so tako ali drugače prispevali k nastanku
-te knjige. Hvala Založbi FRI in njenemu uredniku prof. Francu Solini, ki sta omogočila izid.
+te knjige. Hvala Založbi FRI in njenemu uredniku prof. dr. Francu Solini, ki sta omogočila izid.
 Na koncu bi se rad zahvalil študentom, ki so obiskovali numerične predmete. Čeprav sem
 jih jaz učil, so bili oni tisti, ki so me naučili marsikaj novega.
 
