@@ -76,6 +76,7 @@ metoda deluje za argumente tipa `Tridiag`, argumentu dodamo `::Tridiag`. Več in
 #link("https://docs.julialang.org/en/v1/manual/types/")[tipih] in
 #link("https://docs.julialang.org/en/v1/manual/interfaces/")[vmesnikih].
 
+#naloga[
 Implementiraj naslednje metode, specifične za tip `Tridiag` (rešitve so na koncu poglavja):
 
 - #jl("size(T::Tridiag)") vrne dimenzije matrike (@pr:03-size),
@@ -84,6 +85,7 @@ Implementiraj naslednje metode, specifične za tip `Tridiag` (rešitve so na kon
 - #jl("*(T::Tridiag, x::Vector)") izračuna produkt matrike `T` z vektorjem `x` (@pr:03-produkt).
 
 Za tridiagonalne matrike je časovna zahtevnost množenja matrike z vektorjem bistveno manjša kot v splošnem ($cal(O)(n)$ namesto $cal(O)(n^2)$).
+]
 
 Preden nadaljujemo, preverimo, ali so funkcije pravilno implementirane. Napišemo avtomatske teste, ki jih lahko kadarkoli poženemo. V projektu `Vaja03` ustvarimo datoteko `Vaja03/test/runtests.jl` in vanjo zapišemo kodo, ki preveri pravilnost zgoraj definiranih funkcij.
 
@@ -110,8 +112,9 @@ Velikost      |    1      1  0.0s"
   , env: "nummat")
 ]
 
-Podobno definiramo teste še za druge funkcije (glej
-@sec:03-testi).
+#naloga[
+  Napiši teste za ostale funkcije (rešitve so v @sec:03-testi[podpoglavju]).
+]
 
 == Reševanje tridiagonalnega sistema
 
@@ -126,13 +129,17 @@ tridiagonalni sistem $T bold(x) = bold(b)$ linearna $cal(O)(n)$ namesto kubična
 obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša na linearno
 $cal(O)(n)$.
 
-Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala lastnosti tridiagonalnih matrik. Napiši funkcijo `\`:
+#naloga[
+Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala
+lastnosti tridiagonalnih matrik. Napiši funkcijo `\`:
 
 #code_box[ #jl("function \(T::Tridiagonal, b::Vector),")]
 
-ki poišče rešitev sistema $T bold(x) = bold(b)$ (rešitev je @pr:03-backslash). V datoteko
-`Vaja03/test/runtests.jl` dodaj test, ki na primeru preveri pravilnost funkcije `\`.
+ki poišče rešitev sistema $T bold(x) = bold(b)$ (rešitev je @pr:03-backslash).
 
+V datoteko
+`Vaja03/test/runtests.jl` dodaj test, ki na primeru preveri pravilnost funkcije `\`.
+]
 == Slučajni sprehod
 <slučajni-sprehod>
 Metodo za reševanje tridiagonalnega sistema bomo uporabili na primeru
