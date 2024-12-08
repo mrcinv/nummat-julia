@@ -1,3 +1,5 @@
+#import "@preview/metro:0.3.0": unit
+
 = Tretja domača naloga
 
 Zahtevana števila izračunajte na #strong[10 decimalk] \(z relativno
@@ -37,9 +39,9 @@ $[A, B] = A B - B A$. Eksponentno funkcijo na matriki
 $exp(sigma_(k + 1))$ pa v programskem jeziku Julia dobite z
 ukazom `exp`.
 
-== Dolžina implicinto podane krivulje
+== Dolžina implicitno podane krivulje
 <dolžina-implicinto-podane-krivulje>
-Poiščite približek za dolžino krivulje, ki je dana implicitno z enačbama
+Poiščite približek za dolžino krivulje, ki je dana implicitno z enačbama:
 
 $ F_1 lr((x , y , z)) & = x^4 + y^2 slash 2 + z^2 = 12,\
 F_2 lr((x , y , z)) & = x^2 + y^2 - 4 z^2 = 8 dot.basic $
@@ -109,7 +111,7 @@ $
   quad theta(0) = theta_0, med dot(theta)(0) = dot(theta)_0,
 $
 
-kjer je $g = 9.80665 "m" slash "s"^2$ težni pospešek in $l$ dolžina nihala.
+kjer je $g$ težni pospešek in $l$ dolžina nihala.
 Napiši funkcijo, ki izračuna odmik nihala ob določenem času.
 Enačbo drugega reda prevedi na sistem prvega reda in računajte z
 metodo #link("https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method")[DOPRI5].

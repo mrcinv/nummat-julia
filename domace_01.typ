@@ -10,7 +10,7 @@ večina elementov je ničelnih, $a_(i j) = 0$).
 
 Definiraj nov podatkovni tip `RazprsenaMatrika`, ki matriko zaradi
 prostorskih zahtev hrani v dveh matrikah $V$ in $I$, kjer sta $V$ in $I$
-$n times m$ matriki, tako da velja
+$n times m$ matriki, tako da velja:
 
 $
 V(i,j)=A(i,I(i,j)).
