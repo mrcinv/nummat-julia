@@ -46,7 +46,7 @@ function matrika(_::Laplace, m, n)
 end
 # matrika
 
-# desne strani
+# diskretiziraj
 """
   U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, h)
 
@@ -66,7 +66,8 @@ function diskretiziraj(rp::RobniProblemPravokotnik, h)
   U0[end, :] = fz.(x)
   return U0, x, y
 end
-
+# diskretiziraj
+# desne strani
 function desne_strani(U0)
   return -vec(U0[2:end-1, 1:end-2] + U0[2:end-1, 3:end] +
               U0[1:end-2, 2:end-1] + U0[3:end, 2:end-1])

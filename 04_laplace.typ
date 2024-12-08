@@ -400,17 +400,26 @@ predstavimo z objektom:
 Zaenkrat si s tem objektom še ne moremo nič pomagati. Zato napišemo funkcije, ki bodo poiskale
 rešitev za dani robni problem. Kot smo videli v @diskretizacija-in-linearni-sistem-enačb[poglavju],
 lahko približek za rešitev robnega problema poiščemo kot rešitev sistema linearnih enačb
-@eq:ravnovesje. Najprej napiši funkcijo, ki vrne matriko sistema:
+@eq:ravnovesje.
+
+#naloga[
+Najprej napiši funkcijo, ki vrne matriko sistema:
 
 #code_box[
   #jl("function matrika(_::Laplace, n, m)")
 ]
 
-za dane dimenzije notranje mreže $n times m$ (za rešitev glej @pr:matrika). Nato na robu mreže
+za dane dimenzije notranje mreže $n times m$ (za rešitev glej @pr:matrika).
+]
+
+Nato na robu mreže
 izračunamo robne pogoje in sestavimo vektor desnih strani sistema @eq:ravnovesje. Ker je
 preslikovanje dvojnega indeksa v enojnega in nazaj precej sitno, bomo večino operacij
 naredili na matriki $U = [u_(i j)]$ dimenzij $(m+2) times (n+2)$, ki vsebuje tudi
-vrednosti na robu. Napiši funkcijo:
+vrednosti na robu.
+
+#naloga[
+Napiši funkcijo:
 
 #code_box[
   #jl("U0, x, y = diskretiziraj(rp::RobniProblemPravokotnik, h),")
@@ -419,11 +428,15 @@ ki poišče pravokotno mrežo z razmikom med vozlišči približno enakim `h` in
 izračuna vrednosti na robu. Rezultati funkcije `diskretiziraj` so matrika `U0`, vektor `x` in
 vektor `y`. Matrika `U0` ima notranje elemente
 enake $0$, robni elementi pa so določeni z robnimi pogoji. Vektorja `x` in `y` vsebujeta delilne
-točke na intervalih $[a, b]$ in $[c, d]$.
+točke na intervalih $[a, b]$ in $[c, d]$ (rešitev je @pr:4-diskretiziraj).
+]
 
 Iz matrike `U0` preprosto sestavimo desne strani enačb. Notranje indekse
 zaporedoma zamaknemo v levo, desno, gor in dol ter seštejemo ustrezne podmatrike.
-Rezultat nato spremenimo v vektor s funkcijo #jl("vec") (za rešitev glej @pr:desne-strani).
+Rezultat nato spremenimo v vektor s funkcijo #jl("vec") .
+#naloga[
+Napiši funkcijo #jl("desne_strani(U0)"), ki iz rezultata funkcije #jl("diskretiziraj")
+sestavi vektor desnih strani sistema (rešitev je @pr:desne-strani).
 
 Ko imaš pripravljeno matriko in desne strani, vse skupaj zloži v funkcijo:
 
@@ -433,8 +446,9 @@ Ko imaš pripravljeno matriko in desne strani, vse skupaj zloži v funkcijo:
 
 ki za dani robni problem `rp` in razmik med vozlišči `h` sestavi matriko sistema, izračuna desne
 strani na podlagi robnih pogojev in reši sistem. Funkcija vrne matriko vrednosti `U`
-in vektorja delilnih točk `x` in `y` (za rešitev glej @pr:resi).
-
+in vektorja delilnih točk `x` in `y` (rešitev je @pr:resi).
+]
+#pagebreak()
 Napisane programe uporabimo za rešitev robnega problema na pravokotniku $[0, pi32]times[0, pi]$ z
 robnimi pogoji:
 $
@@ -569,6 +583,7 @@ en korak Gauss-Seidlove iteracije podan s preprosto zanko.
     Laplaceove enačbe.]
 )<pr:gs>
 
+#naloga[
 Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
 naslednji približek za Jacobijevo in SOR iteracijo za sistem za Laplaceovo enačbo. Nato napišite še
 funkcijo
@@ -579,7 +594,7 @@ ki izračuna zaporedje približkov za poljubno iteracijsko metodo, dokler se rez
 Argument #jl("korak") je funkcija, ki iz danega približka izračuna naslednjega, argument #jl("x0") pa začetni približek iteracije.
 
 Rešitve so na koncu poglavja v programih @pr:jacobi, @pr:sor in @pr:iteracija.
-
+]
 === Konvergenca
 <konvergenca>
 
@@ -641,6 +656,12 @@ od parametra $omega$])
 //     #jl("SparseArrays") - knjižnica za razpršene matrike]
 //   )
 // )
+#let vaja04(koda, caption) = figure(
+  code_box(
+    jlfb("Vaja04/src/Vaja04.jl", koda)
+  ),
+  caption: caption
+)
 
 #figure(
   code_box(
@@ -648,7 +669,7 @@ od parametra $omega$])
   ),
   caption: [Funkcija, ki zgradi matriko za diskretizacijo Laplaceovega operatorja.]
 )<pr:matrika>
-
+#vaja04("# diskretiziraj")[Funkcija, ki diskretizira robni problem na pravokotniku.]<pr:4-diskretiziraj>
 #figure(
   code_box(
     jlfb("Vaja04/src/Vaja04.jl", "# desne strani")
