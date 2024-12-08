@@ -174,10 +174,10 @@ Uporabimo napisano kodo za primer grafa krožna lestev. Graf je sestavljen iz dv
 dolžine $n$, ki sta med seboj povezana z $n$ povezavami. Za grafično predstavitev grafov bomo
 uporabili paket #link("https://docs.juliaplots.org/stable/GraphRecipes/introduction/")[GraphRecipes.jl].
 
-#let s_vaja06(koda) = jlfb("scripts/06_graf.jl", koda)
+#let svaja06(koda) = jlfb("scripts/06_graf.jl", koda)
 
 #code_box(
-  s_vaja06("# lestev")
+  svaja06("# lestev")
 )
 
 #figure(
@@ -189,7 +189,7 @@ Poiščimo drugačno vložitev s fizikalno metodo, tako da vozlišča enega cikl
 po krožnici.
 
 #code_box(
-  s_vaja06("# lestev fiz")
+  svaja06("# lestev fiz")
 )
 
 #figure(
@@ -205,7 +205,7 @@ Preizkusimo algoritem na dvodimenzionalni mreži. Dvodimenzionalna mreža je gra
 ki ustrezajo ogliščem pravokotnika.
 
 #code_box(
-  s_vaja06("# mreža")
+  svaja06("# mreža")
 )
 
 #figure(
@@ -216,7 +216,7 @@ ki ustrezajo ogliščem pravokotnika.
 Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 
 #code_box(
-  s_vaja06("# krožna")
+  svaja06("# krožna")
 )
 
 #figure(

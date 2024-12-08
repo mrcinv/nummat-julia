@@ -179,20 +179,20 @@ Najprej definiramo podatkovni tip, ki opiše linearno kombinacijo RBF @eq:05-rbf
 Za primer ustvarimo mešanico
 dveh Gaussovih RBF v točkah $(1, 0)$ in $(2, 1)$ in izračunamo vrednost v točki $(1.5, 1.5)$:
 
-#let s_vaja05(koda) = jlfb(
+#let svaja05(koda) = jlfb(
   "scripts/05_implicit.jl",
   koda
 )
 
 #code_box[
-  #s_vaja05("# primer 2 točk")
+  #svaja05("# primer 2 točk")
   #raw(read("out/05_z.out"))
 ]
 
 Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF.
 
 #code_box(
-  s_vaja05("# slika 2 točki")
+  svaja05("# slika 2 točki")
 )
 
 #figure(
@@ -201,19 +201,19 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
 )
 
 #naloga[
-Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(točke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija).
+Zapiši funkcijo #jl("interpoliraj(točke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija).
 ]
 
 Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @Turk99 in
-točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo, da ne dobimo trivialne rešitve.
+točkam na krivulji dodamo točke znotraj krivulje, ki poskrbijo, da ne dobimo trivialne rešitve.
 
 #code_box(
-  s_vaja05("# oblak")
+  svaja05("# oblak")
 )
 Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so med seboj enake, hkrati pa se razlikujejo od vrednosti v notranjosti.
 
 #code_box(
-  s_vaja05("# interpolacija")
+  svaja05("# interpolacija")
 )
 
 #figure(

@@ -104,6 +104,7 @@ $<eq:16-začetni-problem>
 
 pa #emph[začetni problem].
 
+#pagebreak()
 Rešitev začetnega problema @eq:16-začetni-problem je funkcija $u(t)$. Funkcijo $u$ lahko
 numerično opišemo na mnogo različnih načinov. Dva načina, ki se pogosto uporabljata, sta:
 - z vektorjem vrednosti $[u_0, u_1, med dots, med u_n]$ v danih točkah $t_0, t_1, med dots, t_n$ ali
@@ -210,20 +211,15 @@ Definirajmo podatkovni tip #jl("ZačetniProblem"), ki vsebuje vse podatke o zač
 @eq:16-začetni-problem. Uporabili ga bomo kot vhodni podatek za funkcije, ki bodo poiskale
 numerično rešitev.
 
-#figure(
-  vaja16("# ZačetniProblem"),
-  caption: [Podatkovni tip, ki vsebuje vse podatke o začetnem problemu.]
-)
+#vaja16("# ZačetniProblem")
 
 Približke, ki jih bomo izračunali z različnimi metodami, bomo shranili v poseben podatkovni tip
 #jl("RešitevNDE"). Poleg vrednosti neodvisne spremenljivke in izračunanih približkov rešitve bomo
 v tipu #jl("RešitevNDE") hranili tudi vrednosti odvodov, ki jih izračunamo s smernim poljem NDE.
 Odvode bomo potrebovali za izračun vmesnih vrednosti s Hermitovim zlepkom.
 
-#figure(
-  vaja16("# RešitevNDE"),
-  caption: [Podatkovni tip, ki vsebuje numerično rešitev začetnega problema.]
-)
+#vaja16("# RešitevNDE")
+
 #naloga[
 - Definiraj podatkovni tip #jl("Euler"), ki vsebuje parametre za Eulerjevo metodo.
 - Napiši funkcijo #jl("resi(p::ZačetniProblem, metoda::Euler)"), ki poišče rešitev začetnega

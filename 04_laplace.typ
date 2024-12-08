@@ -275,29 +275,29 @@ $
 
 V splošnem je formulo za vektor desnih strani lažje sprogramirati, zato bomo zapis izpustili.
 
-#let vec_op = math.op("vec", limits: true)
+#let vecop = math.op("vec", limits: true)
 
-#opomba(naslov: [Razvrstitev po stolpcih in operator $vec_op$])[
+#opomba(naslov: [Razvrstitev po stolpcih in operator $vecop$])[
 Elemente matrike razvrstimo v vektor tako, da stolpce
 matrike enega za drugim postavimo v vektor. Indeks v vektorju $k$
 izrazimo z indeksi v matriki $i,j$ s formulo
 
 $ k = i+(j-1)m. $
 
-Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vec_op$:
+Ta način preoblikovanja matrike v vektor označimo s posebnim operatorjem $vecop$:
 
 $
-vec_op: RR^(m times n) -> RR^(m dot n)\
-vec_op(A)_(i + (j-1)m) = a_(i j).
+vecop: RR^(m times n) -> RR^(m dot n)\
+vecop(A)_(i + (j-1)m) = a_(i j).
 $
 ]
 
 == Izpeljava sistema s Kroneckerjevim produktom
 
-Množenje matrike $A$ z vektorjem $bold(x) = vec_op(U)$ lahko zapišemo kot:
+Množenje matrike $A$ z vektorjem $bold(x) = vecop(U)$ lahko zapišemo kot:
 
 $
-  A vec_op(U) = vec_op(L U + U L),
+  A vecop(U) = vecop(L U + U L),
 $
 
 kjer je $L$ matrika Laplaceovega operatorja v eni dimenziji, ki ima $-2$ na diagonali in $1$ na spodnji
@@ -328,12 +328,12 @@ kar je enako levi strani enačbe @eq:ravnovesje.
 
 Operacijo množenja matrike $U: U |-> L U + U L$ lahko predstavimo s
 #link("https://sl.wikipedia.org/wiki/Kroneckerjev_produkt")[Kroneckerjevim produktom $times.circle$],
-saj velja $vec_op(A X B) = A times.circle B dot vec_op(X)$. Tako velja:
+saj velja $vecop(A X B) = A times.circle B dot vecop(X)$. Tako velja:
 
 $
-  A vec_op(U) &= vec_op(L U + U L) = vec_op(L U I + I U L) =\
-  & = vec_op(L U I) + vec_op(I U L)
-   = (L times.circle I) vec_op(U) + (I times.circle L) vec_op(U)
+  A vecop(U) &= vecop(L U + U L) = vecop(L U I + I U L) =\
+  & = vecop(L U I) + vecop(I U L)
+   = (L times.circle I) vecop(U) + (I times.circle L) vecop(U)
 $
 
 in
@@ -342,7 +342,7 @@ $
   A^(N, N) &= L^(m, m) times.circle I^(n, n) + I^(m, m) times.circle L^(n, n).
 $
 
-#opomba(naslov:[Kroneckerjev produkt in operator $vec_op$ v Julii])[
+#opomba(naslov:[Kroneckerjev produkt in operator $vecop$ v Julii])[
 Programski jezik Julia ima vgrajene funkcije `vec` in `kron` za preoblikovanje matrik v vektorje in
 računanje Kroneckerjevega produkta. Z ukazom `reshape` iz vektorja
 znova zgradimo matriko.

@@ -156,7 +156,7 @@ Podobno kot pri trapeznem pravilu sledimo testno vodenemu razvoju in najprej nap
 zasnove smo določili že pri trapeznem pravilu. Preostane nam le še podatkovni tip za Simpsonovo
 pravilo, ki ga imenujemo #jl("Simpson").
 #naloga[
-  Napiši test za sestavljeno Simpsonovo pravilo. Vemo, da je Simpsonovo pravilo točno za polinome stopnje 3, zato v testu uporabi polinom stopnje 3(@eq:13-Simpson-test).
+  Napiši test za sestavljeno Simpsonovo pravilo. Vemo, da je Simpsonovo pravilo točno za polinome stopnje 3, zato v testu uporabi polinom stopnje 3 (@eq:13-Simpson-test).
 
 Definiraj naslednje tipe in metode ter poskrbi, da se test pravilno izvede:
 - podatkovni tip #jl("Simpson(n::Int)"), ki predstavlja sestavljeno Simpsonovo formulo

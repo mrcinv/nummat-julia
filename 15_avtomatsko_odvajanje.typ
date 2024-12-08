@@ -224,7 +224,7 @@ računske operacije za ta tip in elementarne funkcije #jl("sin"), #jl("cos"), #j
 
 Napiši funkcijo #jl("odvod(f, x)"), ki izračuna vrednost funkcije #jl("f") in njenega odvoda v točki #jl("x") (@pr:15-odvod).
 ]
-
+#pagebreak()
 == Keplerjeva enačba
 
 #link("https://en.wikipedia.org/wiki/Kepler%27s_equation")[Keplerjeva enačba]
@@ -355,6 +355,7 @@ $
   =&x^2y + y^3sin(x) + 2x y epsilon_x + x^2 epsilon_y + 3y^2sin(x)epsilon_y +y^3cos(x)epsilon_x =\
   =&f(x, y) + (2x y + y^3cos(x))epsilon_x + (x^2 + 3y^2sin(x))epsilon_y.
 $
+#pagebreak()
 Vidimo, da sta koeficienta pri $epsilon_x$ in $epsilon_y$ ravno parcialna odvoda:
 
 $

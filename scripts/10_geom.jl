@@ -85,18 +85,18 @@ gradd2(ts) = ForwardDiff.gradient(ts -> d2(ts...), ts)
 p("10_grad", v)
 
 # spust
-"Izračunaj zaporedje približkov gradientne metode."
-function približki(grad, x0, h, n)
+"Izračunaj zaporedje približkov podano z rekurzivno funkcijo `f`."
+function približki(f, x0, n)
   p = [x0]
-  for i = 1:n
-    x = x0 - h * grad(x0)
+  x = x0
+  for _ = 1:n
+    x = f(x)
     push!(p, x)
-    x0 = x
   end
   return p
 end
-
-pribl = približki(gradd2, [2.0, -1.5], 0.2, 40)
+korak_grad(x0) = x0 - 0.2 * gradd2(x0)
+pribl = približki(korak_grad, [2.0, -1.5], 40)
 scatter!(Tuple.(pribl), label="približki gradientne metode")
 # spust
 
@@ -104,14 +104,10 @@ savefig("img/10_priblizki_grad.svg")
 
 # newton
 jacd2(x0) = ForwardDiff.jacobian(gradd2, x0)
-korak_newton(f, Jf, x0) = x0 - Jf(x0) \ f(x0)
-x0 = [2.0, -1.5]
-pribl_newton = [x0]
-for i = 1:10
-  x0 = korak_newton(gradd2, jacd2, x0)
-  push!(pribl_newton, x0)
-end
-scatter!(Tuple.(pribl_newton), label="približki Newtonove metode")
+korak_newton(x0) = x0 - jacd2(x0) \ gradd2(x0)
+približki_n = približki(korak_newton, [2.0, -1.5], 10)
+scatter!(Tuple.(približki_n), label="približki Newtonove metode")
+scatter!([(2.0, -1.5)], label="začetni približek")
 # newton
 
 savefig("img/10_priblizki.svg")
