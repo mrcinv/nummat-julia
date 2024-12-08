@@ -62,7 +62,7 @@ formulami in splošnimi izrazi. V nadaljevanju besedilo stopnjujemo k vedno podr
 Določene podrobnosti, ki so povezane s konkretno implementacijo, brez škode
 izpustimo.
 
-== Opis rešitve naj bo okviren
+#heading(numbering: none, level: 3)[Opis rešitve naj bo okviren]
 
 Opis rešitve naj bo zgolj okviren. Izogibaj se uporabi programerskih izrazov.
 Raje uporabi matematične. Na primer: izraz #text(slababarva)[uporabimo "for" zanko], nadomesti s #text(dobrabarva)[postopek ponavljamo]. Od bralca zahteva
@@ -87,7 +87,7 @@ z `U.z[i-1]`. Nato smo izračunali diagonalni element, tako da smo uporabili
 formulo `U.d[i]-L.s[i]*U.d[i-1]`. Na koncu zanke smo vrnili matriki `L` in `U`.
 ]
 
-== Podrobnosti implementacije ne sodijo v poročilo
+#heading(numbering: none, level: 3)[Podrobnosti implementacije ne sodijo v poročilo]
 
 Podrobnosti implementacije so razvidne iz kode, zato jih nima smisla ponavljati
 v poročilu. Algoritme opišemo okvirno, tako da izpustimo podrobnosti, ki niso
@@ -177,7 +177,7 @@ Nekaj nasvetov, kako lahko testiramo kodo:
 - Če je le mogoče, v testih ne uporabljamo rezultatov, ki jih proizvede koda sama.
   Ko je koda dovolj časa v uporabi, lahko rezultate kode same uporabimo za #link("https://en.wikipedia.org/wiki/Regression_testing")[regresijske teste].
 
-== Pokritost kode s testi <sec:pokritost-testi>
+#heading(numbering: none, level: 3)[Pokritost kode s testi]
 
 Pri pisanju testov je pomembno, da testi izvedejo vse veje v kodi. Delež kode,
 ki se izvede med testi, imenujemo #link(
@@ -204,11 +204,11 @@ Za pripravo povzetka o pokritosti kode uporabimo paket
 ]
 
 
-== Priprava zahteve za združitev na GitLab
+== Priprava zahteve za združitev
 
 Za lažjo komunikacijo predlagam, da rešitev domače naloge postaviš v
-svojo vejo in ustvariš zahtevo za združitev (_Pull request_ na GitHub
-oziroma _Merge request_ na GitLabu). V nadaljevanju bomo opisali, kako to
+svojo vejo in ustvariš zahtevo za združitev (_Pull request_ za GitHub
+oziroma _Merge request_ za GitLab). V nadaljevanju bomo opisali, kako to
 storiš, če repozitorij z domačimi nalogami gostiš na GitLabu.
 Postopek za GitHub in druge platforme je podoben.
 
