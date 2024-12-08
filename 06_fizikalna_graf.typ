@@ -163,7 +163,7 @@ Napiši naslednje funkcije:
   sistem @eq:06sistem-x (rešitev @pr:06-desne-strani),
 - #jl("cg(A, b; atol=1e-8)"), ki poišče rešitev sistema $A bold(x) = bold(b)$ z metodo konjugiranih gradientov
   (rešitev @pr:06-cg) in
-- #jl("vlozi!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
+- #jl("vloži!(G::AbstractGraph, fix, tocke)"), ki poišče vložitev grafa `G` v $RR^d$ s fizikalno
   metodo.  Argument `fix` naj bo seznam fiksnih vozlišč, argument `tocke` pa matrika s koordinatami
   točk. Metoda naj ne vrne ničesar, ampak naj vložitev zapiše kar v matriko `tocke`
   (rešitev @pr:06-vlozitev).

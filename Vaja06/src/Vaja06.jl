@@ -84,7 +84,7 @@ end
 
 # vlozitev
 """
-    vlozi!(G::AbstractGraph, fix, točke)
+    vloži!(G::AbstractGraph, fix, točke)
 
 Poišči vložitev grafa `G` v prostor s fizikalno metodo. Argument `fix` vsebuje
 vektor vozlišč grafa, ki imajo določene koordinate. Argument `točke` je
@@ -93,7 +93,7 @@ z novimi koordinatami.
 
 Metoda ne vrne ničesar, ampak zapiše izračunane koordinate v matriko `točke`.
 """
-function vlozi!(G::AbstractGraph, fix, točke)
+function vloži!(G::AbstractGraph, fix, točke)
   sprem = setdiff(vertices(G), fix)
   dim, _ = size(točke)
   A = matrika(G, sprem)
@@ -140,5 +140,5 @@ function cg(A, b; atol=1e-8)
 end
 # cg
 
-export cg, vlozi!, krozna_lestev
+export cg, vloži!, krozna_lestev
 end # module Vaja06

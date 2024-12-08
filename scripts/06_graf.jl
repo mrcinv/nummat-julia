@@ -15,38 +15,38 @@ savefig("img/06-lestev.svg")
 t = range(0, 2pi, 9)[1:end-1]
 x = cos.(t)
 y = sin.(t)
-tocke = hcat(hcat(x, y)', zeros(2, 8))
+točke = hcat(hcat(x, y)', zeros(2, 8))
 # funkcija hcat zloži vektorje po stolpcih v matriko
 fix = 1:8
 
-vlozi!(G, fix, tocke)
-graphplot!(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+vloži!(G, fix, točke)
+graphplot!(G, x=točke[1, :], y=točke[2, :], curves=false)
 # lestev fiz
 savefig("img/06-lestev-fiz.svg")
 
 using Random
 Random.seed!(321)
-tocke = rand(2, 50)
+točke = rand(2, 50)
 
 using DelaunayTriangulation
 
-tri = triangulate(tocke)
+tri = triangulate(točke)
 
-G = SimpleGraph(size(tocke)[2])
+G = SimpleGraph(size(točke)[2])
 for (i, j) in each_solid_edge(tri)
   add_edge!(G, i, j)
 end
-graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 
 
 lock_convex_hull!(tri)
 rob = unique(get_boundary_nodes(tri))
-robne_tocke = [get_point(tri, i) for i in rob]
-scatter!(robne_tocke)
+robne_točke = [get_point(tri, i) for i in rob]
+scatter!(robne_točke)
 
-vlozi!(G, rob, tocke)
-graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
-scatter!(robne_tocke)
+vloži!(G, rob, točke)
+graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
+scatter!(robne_točke)
 
 using Graphs
 # mreža
@@ -55,13 +55,13 @@ G = grid((m, n), periodic=false)
 
 # vogali imajo stopnjo 2
 vogali = filter(v -> degree(G, v) <= 2, vertices(G))
-tocke = zeros(2, n * m)
-tocke[:, vogali] = [0 0 1 1; 0 1 0 1]
+točke = zeros(2, n * m)
+točke[:, vogali] = [0 0 1 1; 0 1 0 1]
 
-vlozi!(G, vogali, tocke)
-graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+vloži!(G, vogali, točke)
+graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 # mreža
-savefig("img/06-mreza.svg")
+savefig("img/06-mreža.svg")
 
 # krožna
 m, n = 6, 6
@@ -77,9 +77,9 @@ for i = 1:length(rob)-1
   push!(urejen_rob, sosedi[1])
 end
 t = range(0, 2pi, length(rob) + 1)[1:end-1]
-tocke = zeros(2, n * m)
-tocke[:, urejen_rob] = hcat(cos.(t), sin.(t))'
-vlozi!(G, urejen_rob, tocke)
-graphplot(G, x=tocke[1, :], y=tocke[2, :], curves=false)
+točke = zeros(2, n * m)
+točke[:, urejen_rob] = hcat(cos.(t), sin.(t))'
+vloži!(G, urejen_rob, točke)
+graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 # krožna
 savefig("img/06-mreza-krog.svg")
