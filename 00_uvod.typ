@@ -18,7 +18,8 @@ računalnikom, pri čemer lahko bralec naloge rešuje z različno mero samostojn
 začne z opisom naloge in jasnimi navodili, kaj je njen cilj oziroma končni rezultat. Sledijo
 podrobnejši napotki, kako se naloge lotiti, na koncu pa je rešitev z razlago posameznih korakov.
 Rešitev vključuje matematične izpeljave, programsko kodo in rezultate, ki jih dobimo, če programsko
-kodo uporabimo.
+kodo uporabimo. Vsi programi iz te knjige so na voljo na spletni strani:
+https://gitlab.com/nummat/nummat-knjiga/
 
 Domače naloge rešuje bralec povsem samostojno, zato so naloge brez rešitev. Odločitev, da rešitve niso
 vključene, je namerna, saj bralec lahko verodostojno preveri svoje znanje le, če rešuje tudi naloge, za katere
@@ -30,14 +31,18 @@ ki reši določen problem in še ustreza minimalnim standardom pisanja kvalitetn
 sta izpuščena preverjanje in implementacija robnih primerov, včasih tudi obravnava pričakovanih
 napak. Da je bralcu lažje razumeti, kaj koda počne, sem dal prednost berljivosti pred celovitostjo.
 
-Na tem mestu bi se rad zahvalil Bojanu Orlu, Emilu Žagarju, Petru Kinku in Aljažu Zalarju, s
+Na tem mestu bi se rad zahvalil prof. Bojanu Orlu, prof. Emilu Žagarju, asist. dr. Petru Kinku in doc. Aljažu Zalarju, s
 katerimi sem sodeloval ali še sodelujem pri numeričnih predmetih na FRI. Veliko idej za naloge,
-ki so v tej knjigi, prihaja prav od njih. Prav tako bi se zahvalil članom Laboratorija za
-matematične metode v računalništvu in informatiki, še posebej Neži Mramor-Kosta in Damirju
+ki so v tej knjigi, prihaja prav od njih. Posebna zahvala gre recenzentoma doc. Aljažu Zalarju in prof. Emilu Žagarju, ki sta knjigo podrobno pregledala in veliko prispevala h kakovosti vsebine.
+Moja draga žena doc. Mojca Vilfan mi je pomagala _"zbrusiti ostre robove"_, za kar sem jim izjemno
+hvaležen. Prav tako se zahvaljujem članom Laboratorija za
+matematične metode v računalništvu in informatiki, še posebej prof. Neži Mramor-Kosta in asist. dr. Damirju
 Franetiču, ki so tako ali drugače prispevali k nastanku
-te knjige. Moja draga žena Mojca Vilfan je opravila delo urednika, za kar sem ji izjemno
-hvaležen. Na koncu bi se rad zahvalil študentom, ki so obiskovali numerične predmete. Čeprav sem
+te knjige. Hvala Založbi FRI in njenemu uredniku prof. Francu Solini, ki sta omogočila izid.
+Na koncu bi se rad zahvalil študentom, ki so obiskovali numerične predmete. Čeprav sem
 jih jaz učil, so bili oni tisti, ki so me naučili marsikaj novega.
+
+
 #v(1cm)
 #align(right)[Martin Vuk]
 #outline(
