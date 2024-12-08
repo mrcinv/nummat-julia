@@ -20,7 +20,7 @@ x = range(0, 3, 50)
 y = range(-1, 3, 50)
 wireframe(x, y, (x, y) -> rbf([x, y]), xlabel="\$x\$", ylabel="\$y\$")
 # slika 2 točki
-savefig("img/05-2tocki.svg")
+savefig("img/05-2točki.svg")
 
 # oblak
 fi = range(0, 2π, 21)

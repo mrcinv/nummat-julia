@@ -196,7 +196,7 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
 )
 
 #figure(
-  image("img/05-2tocki.svg", width: 60%),
+  image("img/05-2točki.svg", width: 60%),
   caption: [Linearna kombinacija dveh RBF s središčema v točkah $(1, 0)$ in $(2, 1)$ ter funkcijo oblike $phi(r) = exp(-r^2 slash 0.7^2)$]
 )
 

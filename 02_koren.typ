@@ -273,7 +273,7 @@ lahko definiramo metodo #jl("koren(x)") brez dodatnega argumenta.
 ) <code:02-koren-x>
 
 #opomba(naslov: [Julia omogoča več definicij iste funkcije])[
-    Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polmorfizma
+    Julia uporablja posebno vrsto #link("https://en.wikipedia.org/wiki/Polymorphism_(computer_science)")[polimorfizma] imenovano #link("https://docs.julialang.org/en/v1/manual/methods/#Methods")[večlična razdelitev] (angl. multiple dispatch). Za razliko od polimorfizma
     v objektno usmerjenih jezikih, kjer se metoda izbere le na podlagi razreda
     objekta, ki to metodo kliče, se v Julii metodo izbere na podlagi tipov vseh vhodnih argumentov.
     Ta lastnost omogoča pisanje generične kode, ki deluje za zelo različne vhodne argumente.
