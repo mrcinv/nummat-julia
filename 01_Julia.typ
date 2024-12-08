@@ -216,10 +216,8 @@ funkcijskih vrednosti #jl("[f(1), f(2), f(3)]"):
   #repl01("01_for5")
 ]
 
-Zanko lahko izvedemo tudi z ukazom #jl("while"), ki deluje podobno kot v drugih
-programskih jezikih.
-
-Podobno kot v drugih programskih jezikih deluje tudi #jl("if") stavek:
+Zanko lahko izvedemo tudi z ukazom #jl("while").
+Podobno kot v drugih programskih jezikih deluje #jl("if") stavek:
 
 #code_box(repl("if 1 < 2
   println(\"1 je manj kot 2\")
@@ -287,7 +285,7 @@ funkcije v enote in omogočajo uporabo istega imena za različne funkcije in tip
 end", "Main.KrNeki")
 ]
 
-Če želimo funkcije, ki so definirane v modulu ```jl ImeModula```, uporabiti izven modula, moramo modul naložiti z ```jl using ImeModula```. Funkcije, ki so izvožene z ukazom ```jl export ime_funkcije``` lahko kličemo kar po imenu, ostalim funkcijam pa moramo dodati ime modula kot predpono. Modulom, ki niso del paketa in so definirani lokalno, moramo dodati piko, ko jih naložimo:
+Če želimo funkcije, ki so definirane v modulu ```jl NekiModul```, uporabiti izven modula, moramo modul naložiti z ```jl using NekiModul```. Funkcije, ki so izvožene z ukazom ```jl export ime_funkcije``` lahko kličemo kar po imenu, ostalim funkcijam pa moramo dodati ime modula kot predpono. Modulom, ki niso del paketa in so definirani lokalno, moramo dodati piko, ko jih naložimo:
 
 #code_box[
   #repl("using .KrNeki", "")
@@ -295,7 +293,7 @@ end", "Main.KrNeki")
   #repl("KrNeki.čaj(1)", "-0.45969769413186023")
 ]
 
-Modul lahko naložimo tudi z ukazom ```jl import ImeModula```.
+Modul lahko naložimo tudi z ukazom ```jl import NekiModul```.
 V tem primeru moramo vsem funkcijam iz modula dodati ime modula in piko kot predpono.
 
 === Paketi
