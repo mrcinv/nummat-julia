@@ -209,7 +209,7 @@ ki ustrezajo ogliščem pravokotnika.
 )
 
 #figure(
-  image("img/06-mreza.svg", width: 60%),
+  image("img/06-mreža.svg", width: 60%),
   caption: [Dvodimenzionalna mreža, vložena s fizikalno metodo. Pritrjeni so le vogali.]
 )
 
