@@ -38,7 +38,7 @@ end
 
 capture("02_koren5b") do
 # koren5b
-y = koren(200, tangenta(200))
+y = koren(1000, tangenta(1000))
 # koren5b
 end
 

@@ -115,7 +115,6 @@ Preskusimo funkcijo #jl("koren_heron") na številu 3.
 
 Funkcija `koren_heron(x, x0, n)` ni uporabna za splošno rabo, saj mora uporabnik poznati tako začetni približek kot tudi število korakov, ki so potrebni, da dosežemo želeno natančnost. Da bi bila funkcija zares uporabna, bi morala sama izbrati začetni približek in število potrebnih korakov. Najprej se bomo naučili poiskati dovolj veliko število korakov, da dosežemo želeno natančnost.
 
-#opomba(naslov: [Relativna in absolutna napaka])[
     Kako vemo, kdaj smo dosegli želeno natančnost? Navadno nekako ocenimo napako približka in jo primerjamo z želeno natančnostjo. To lahko storimo na dva načina:
 
     - preverimo, ali je absolutna napaka manjša od *absolutne tolerance* ali
@@ -128,6 +127,7 @@ Funkcija `koren_heron(x, x0, n)` ni uporabna za splošno rabo, saj mora uporabni
         | a - b | < delta(max(|a|, |b|)).
     $ <eq:02-isapprox>
 
+#opomba(naslov:[Previdno pri primerjanju s številom nič])[
     Ko uporabljamo relativno primerjavo, moramo biti previdni, če primerjamo vrednosti s številom $0$. Če je namreč eno od števil, ki ju primerjamo, enako 0 in $delta < 1$, potem neenačba  @eq:02-isapprox nikoli ni izpolnjena.
 
     *Število $0$ nikoli ni približno enako nobenemu neničelnemu številu, če ju primerjamo z relativno toleranco.*
