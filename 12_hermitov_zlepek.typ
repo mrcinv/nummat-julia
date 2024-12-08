@@ -93,7 +93,7 @@ h_(00)(t) &= 1 - 3t^2 + 2t^3,\
 h_(01)(t) &= 3t^2 - 2t^3,\
 h_(10)(t) &= t - 2t^2 + t^3,\
 h_(11)(t) &= -t^2 + t^3.
-$
+$<eq:12-Hermitova-baza>
 
 Določiti moramo še preslikavo z intervala $[x_(k), x_(k+1)]$ na $[0, 1]$. Naj bo
 $x in[x_(k), x_(k+1)]$ in $t in [0, 1]$. Potem je preslikava med $x$ in $t$ enaka:
@@ -322,6 +322,7 @@ Problemu se pogosto izognemo, če namesto ekvidistančnih točk uporabimo
 #let test12(koda, caption) = figure(code_box(jlfb("Vaja12/test/runtests.jl", koda)),
   caption: caption)
 
+#test12("# Hermitova baza")[Test, ki preveri Hermitovo bazo @eq:12-Hermitova-baza.]
 #test12("# hermiteint")[Test za izračun Hermitovega kubičnega polinoma]<pr:12-hermiteint-test>
 #test12("# zlepek")[Test za izračun vrednosti zlepka]<pr:12-zlepek-test>
 #test12("# newton")[Test za izračun vrednosti Newtonovega polinoma]

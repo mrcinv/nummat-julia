@@ -606,3 +606,12 @@ caption: [Trajektorija poševnega meta od začetka do trenutka, ko izstrelek pad
   vaja16("# ničla"),
   caption: [Funkcija, ki poišče vrednost $t$, pri kateri je $F(bold(u)(t)) = 0$.]
 )<pr:16-ničla>
+
+== Testi
+
+#let test16(koda, caption) = figure(
+  code_box(jlfb("Vaja16/test/runtests.jl", koda)),
+  caption: caption
+)
+
+#test16("# vrednost RešitevNDE")[Test za računanje vmesnih vrednosti rešitev začetnega problema]

@@ -1,6 +1,14 @@
 using Vaja12
 using Test
+# Hermitova baza
+@testset "Hermitova baza" begin
+  @test Vaja12.h00.([0, 1]) ≈ [1, 0]
+  @test Vaja12.h01.([0, 1]) ≈ [0, 1]
+  @test Vaja12.h10.([0, 1]) ≈ [0, 0]
+  @test Vaja12.h11.([0, 1]) ≈ [0, 0]
 
+end
+# Hermitova baza
 # hermiteint
 @testset "Hermitov polinom" begin
   # kubični polinom se bo vedno ujemal s Hermitovim polinomom
