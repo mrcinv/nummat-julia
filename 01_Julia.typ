@@ -562,7 +562,7 @@ Za obsežnejši projekt ali projekt, ki ga želite objaviti, je bolje uporabiti 
 pripravljene šablone
 #link("https://github.com/JuliaCI/PkgTemplates.jl")[PkgTemplates] ali
 #link("https://github.com/tpapp/PkgSkeleton.jl")[PkgSkeleton]. Zavoljo
-enostavnosti bomo v sklopu te knjige projekte ustvarjali s `Pkg.generate`.
+enostavnosti bomo v sklopu te knjige pakete ustvarjali s `Pkg.generate`.
 ]
 
 Osnovna struktura paketa je pripravljena. Paketu bomo v nadaljevanju dodali še:
@@ -749,8 +749,8 @@ caption: [Vsebina datoteke README.md, ki vsebuje osnove informacije o projektu.]
 
 === PDF poročilo
 
-V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@Knuth84).
-Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot komentarje v kodi.
+V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth @Knuth84.
+Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali v komentarje h kodi.
 
 Za ustvarjanje PDF dokumentov je treba namestiti
 #link("https://tug.org/")[TeX/LaTeX]. Priporočam namestitev
