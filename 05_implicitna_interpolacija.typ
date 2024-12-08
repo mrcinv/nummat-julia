@@ -33,7 +33,7 @@ V tej vaji bomo spoznali, kako poiskati implicitno krivuljo ali ploskev, ki dobr
 točk v ravnini ali prostoru. Funkcijo $F$ v implicitni enačbi $F(x, y) = 0$ bomo
 poiskali kot linearno kombinacijo
 #link("https://en.wikipedia.org/wiki/Radial_basis_function")[radialnih baznih funkcij (RBF)]
-(@savchenko95, @turk99, @morse01).
+(@Savchenko95, @Turk99, @Morse01).
 
 == Naloga
 
@@ -62,9 +62,9 @@ poiskali kot linearno kombinacijo
 V ravnini#footnote[Postopek, ki ga bomo opisali,
 deluje ravno tako dobro tudi za točke v prostoru. Zavoljo enostavnosti se bomo omejili na
 točke v ravnini.] je podan oblak točk ${ bx_1 , bx_2, med dots, med bx_n } subset RR^2$. Iščemo krivuljo, ki dobro
-opiše dane točke. Če zahtevamo, da vse točke ležijo na krivulji, problemu rečemo #emph[interpolacija],
+opiše dane točke. Če zahtevamo, da vse točke ležijo na krivulji, problemu rečemo _interpolacija_,
 če pa dovolimo, da je krivulja zgolj blizu danih točk in ne nujno vsebuje vseh točk, problem
-imenujemo #emph[aproksimacija]. Krivuljo bomo poiskali v implicitni obliki kot nivojsko krivuljo
+imenujemo _aproksimacija_. Krivuljo bomo poiskali v implicitni obliki kot nivojsko krivuljo
 funkcije dveh spremenljivk. Za izbrano vrednost $c in RR$ iščemo funkcijo $f(x, y)$, za katero velja:
 
 $
@@ -79,9 +79,9 @@ $
 f(x_1, y_1) = f_1,\
 dots.v\
 f(x_n, y_n) = f_n.
-$<eq:05enacbe>
+$<eq:05enačbe>
 
-Zveznih funkcij, ki zadoščajo enačbam @eq:05enacbe, je neskončno. Zato se moramo omejiti na
+Zveznih funkcij, ki zadoščajo enačbam @eq:05enačbe, je neskončno. Zato se moramo omejiti na
 podmnožico funkcij, ki je dovolj raznolika, da je sistem rešljiv, hkrati pa dovolj majhna, da je
 rešitev ena sama. V tej vaji se bomo omejili na $n$-parametrično družino funkcij oblike:
 #let bw = math.bold[w]
@@ -104,7 +104,7 @@ $phi$ je navadno pozitivna soda funkcija zvončaste oblike in jo
 imenujemo _funkcija oblike_.
 
 
-Problem @eq:05enacbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, w_2, med dots, med w_n]^T$, tako da je
+Problem @eq:05enačbe se prevede na iskanje vrednosti koeficientov $bw=[w_1, w_2, med dots, med w_n]^T$, tako da je
 izpolnjen sistem enačb:
 
 $
@@ -139,10 +139,10 @@ $
 phi_(i)(bx_j) = phi(norm(bx_j - bx_i)) = phi(norm(bx_i -bx_j)) = phi_(j)(bx_i),
 $
 
-je matrika sistema @eq:05-matrika simetrična. V literaturi @savchenko95 se pojavijo naslednje
+je matrika sistema @eq:05-matrika simetrična. V literaturi @Savchenko95 se pojavijo naslednje
 izbire za funkcijo oblike $phi$:
   - #link("https://en.wikipedia.org/wiki/Polyharmonic_spline")[poliharmonični zlepek] (_pločevina_):
-   $phi(r) = r^2 log (r)$ za 2D in $phi(r) =r^3$ za 3D @turk99,
+   $phi(r) = r^2 log (r)$ za 2D in $phi(r) =r^3$ za 3D @Turk99,
   - Gaussova funkcija: $phi(r) = exp(-r^2 slash sigma^2)$,
   - racionalni približek za Gaussovo funkcijo:
     $ phi(r) = 1/(1 + (r/sigma)^(2p)). $
@@ -157,7 +157,7 @@ phi(r) = exp(-r^2 slash sigma^2),
 $<eq:05gauss>
 
 za katero je matrika sistema @eq:05lin-sistem pozitivno definitna, če so točke
-$bx_1, bx_2, med dots, med bx_n$ različne @buhmann15.
+$bx_1, bx_2, med dots, med bx_n$ različne @Buhmann15.
 
 == Program
 
@@ -201,10 +201,10 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
 )
 
 #naloga[
-Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija).
+Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(točke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija).
 ]
 
-Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
+Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @Turk99 in
 točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo, da ne dobimo trivialne rešitve.
 
 #code_box(
@@ -248,7 +248,7 @@ Vrednosti funkcije $f_i$ za točke na krivulji izberemo tako, da so med seboj en
   caption: [Funkcija, ki interpolira dane vrednosti z linearno kombinacijo RBF.]
 )<pr:05interpolacija>
 
-#let test05(koda) = ljfb(
+#let test05(koda) = jlfb(
   "Vaja05/test/runtests.jl",
   koda
 )

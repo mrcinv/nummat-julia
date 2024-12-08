@@ -295,7 +295,7 @@ Matrika je po stolpcih _diagonalno dominantna_, če za vsak stolpec velja, da je
 absolutna vrednost diagonalnega elementa večja ali enaka vsoti absolutnih vrednosti vseh ostalih
 elementov v stolpcu: $|a_(i i)|>=sum_(i eq.not j) |a_(j i)|$. Če je matrika strogo diagonalno
 dominantna vsaj v enem stolpcu, potem je Gaussova eliminacija brez pivotiranja numerično
-stabilna @plestenjak2015.], zato lahko
+stabilna @Plestenjak2015.], zato lahko
 uporabimo Gaussovo eliminacijo brez pivotiranja. Najprej napišemo funkcijo, ki zgradi
 matriko $I - Q$:
 

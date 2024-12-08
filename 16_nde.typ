@@ -201,7 +201,7 @@ kot tudi za sisteme.
 Definirali bomo tipe in funkcije, ki bodo omogočali enotno obravnavo
 reševanja začetnega problema in enostavno dodajanje različnih metod za reševanje NDE. Pri tem
 se bomo zgledovali po paketu
-#link("https://docs.sciml.ai/DiffEqDocs/stable/")[DifferentialEquations.jl] (glej @rackauckas2017
+#link("https://docs.sciml.ai/DiffEqDocs/stable/")[DifferentialEquations.jl] (glej @Rackauckas2017
 za podrobnejšo razlago).
 
 #let vaja16(koda) = code_box(jlfb("Vaja16/src/Vaja16.jl", koda))
@@ -421,7 +421,7 @@ odvisnosti od velikosti koraka v logaritemski skali])
 V tej vaji smo spoznali tri različne metode: Eulerjevo, Runge-Kutta reda 2 in reda 4. Poleg omenjenih, obstaja še cel živalski vrt različnih metod za reševanje začetnega problema NDE. Tule je
 na primer #link("https://docs.sciml.ai/DiffEqDocs/stable/solvers/ode_solve/")[seznam metod],
 implementiranih v paketu #jl("DifferentialEquations"), podrobneje pa so opisane v
-@hairer_solving_1993. Kako se odločimo, katero metodo izbrati?
+@Hairer_solving_1993. Kako se odločimo, katero metodo izbrati?
 
 Izberemo metodo, ki ima red vsaj 4, sicer je treba korak zelo zmanjšati, da dobimo
 dovolj dobro natančnost. Za splošno rabo so najprimernejše metode s kontrolo koraka. Zelo popularna
@@ -431,7 +431,7 @@ ki jo privzeto uporabljajo Matlab, Octave in paket #jl("DifferentialEquations") 
 Pri nekaterih NDE postanejo običajne metode kot so Runge-Kutta in DOPRI5 numerično nestabilne.
 Take enačbe imenujemo
 #link("https://en.wikipedia.org/wiki/Stiff_equation")[toge diferencialne enačbe]. Za toge
-diferencialne enačbe so razvili veliko specialnih metod (glej @hairer_solving_1996).
+diferencialne enačbe so razvili veliko specialnih metod (glej @Hairer_solving_1996).
 
 Prav tako obstajajo metode, ki so prilagojene posebnim razredom diferencialnih enačb, na primer
 enačbam na Liejevih grupah in homogenih prostorih, Hamiltonskim enačbam in še mnogo drugih.

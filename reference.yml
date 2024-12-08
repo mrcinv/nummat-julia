@@ -1,4 +1,4 @@
-knuth84:
+Knuth84:
   type: article
   title: Literate programming
   author: Knuth, D. E.
@@ -11,7 +11,7 @@ knuth84:
   page-range: 97-111
   serial-number:
     doi: 10.1093/comjnl/27.2.97
-isarles2004:
+Iserles2004:
   type: article
   title: On quadrature methods for highly oscillatory integrals and their implementation
   author: ["Iserles, A.", "Nørsett, S. P."]
@@ -48,7 +48,7 @@ dlmf3:
   url:
     value: https://dlmf.nist.gov/3
     date: 2024-06-15
-savchenko95:
+Savchenko95:
   type: article
   author: [Savchenko V. V., Pasko, A. A., Okunev, O. G., Kunii T. L.]
   title: "Function representation of solids reconstructed from scattered surface points and contours"
@@ -62,7 +62,7 @@ savchenko95:
   url:
     value: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.48.80&rep=rep1&type=pdf
     date: 2024-07-22
-turk99:
+Turk99:
   type: conference
   title: Variational Implicit Surfaces
   author: ["Turk, G.", "O'Brien, J."]
@@ -70,7 +70,7 @@ turk99:
   url:
     value: https://www.semanticscholar.org/paper/Variational-Implicit-Surfaces-Turk-O'Brien/50dbc9f86af75dad7be6b2e92601e4ded7bee2d6
     date: 2024-07-22
-morse01:
+Morse01:
   type: conference
   title: Interpolating implicit surfaces from scattered surface data using compactly supported radial basis functions
   author:
@@ -91,7 +91,7 @@ morse01:
     value: https://ieeexplore.ieee.org/document/923379
     date: 2024-07-22
   date: 2001-05
-buhmann15:
+Buhmann15:
   type: chapter
   title: Radial Basis Functions
   author: Buhmann, M.
@@ -104,7 +104,7 @@ buhmann15:
     editor: Engquist, B
   date: 2015
   page-range: 1216-1219
-trefethen19:
+Trefethen19:
   type: book
   title: Approximation Theory and Approximation Practice, Extended Edition
   author: ["Trefethen, L."]
@@ -116,7 +116,7 @@ trefethen19:
   url:
     value: http://www.chebfun.org/ATAP/atap-first6chapters.pdf
     date: 2024-07-27
-rackauckas2017:
+Rackauckas2017:
   type: article
   title: DifferentialEquations.jl--a performant and feature-rich ecosystem for solving differential equations in Julia
   author:
@@ -132,7 +132,7 @@ rackauckas2017:
   url:
     value: https://openresearchsoftware.metajnl.com/articles/10.5334/jors.151
     date: 2024-08-12
-von_luxburg_tutorial_2007:
+Von_Luxburg_tutorial_2007:
   type: article
   title: A tutorial on spectral clustering
   author:
@@ -153,7 +153,7 @@ von_luxburg_tutorial_2007:
     title: Statistics and Computing
     issue: 4
     volume: 17
-shepherd1981:
+Shepherd1981:
   title: Chebyshev approximation of (1+2𝑥)𝑒𝑥𝑝(𝑥²)𝑒𝑟𝑓𝑐𝑥 in 0≤𝑥<∞
   type: article
   author: ["Shepherd, M. M.", "Laframboise, J. G."]
@@ -170,7 +170,7 @@ shepherd1981:
     title: Mathematics of Computation
     issue: 153
     volume: 36
-kochenderfer_algorithms_2019:
+Kochenderfer_algorithms_2019:
   type: book
   title: Algorithms for Optimization
   author:
@@ -184,7 +184,7 @@ kochenderfer_algorithms_2019:
   serial-number:
     isbn: 978-0-262-35140-9
 
-bezanson_julia_2017:
+Bezanson_julia_2017:
   type: article
   title: "Julia: A Fresh Approach to Numerical Computing"
   author:
@@ -206,7 +206,7 @@ bezanson_julia_2017:
     issue: 1
     volume: 59
 
-plestenjak2015:
+Plestenjak2015:
   type: book
   title: Razširjen uvod v numerične metode
   author: Plestenjak, Bor
@@ -217,7 +217,7 @@ plestenjak2015:
   page-range: 418
   serial-number:
     isbn: 978-961-212-264-5
-hairer_solving_1993:
+Hairer_solving_1993:
   type: book
   title: Solving Ordinary Differential Equations I
   author:
@@ -238,7 +238,7 @@ hairer_solving_1993:
     type: book
     title: Springer Series in Computational Mathematics
 
-hairer_solving_1996:
+Hairer_solving_1996:
   type: book
   title: Solving Ordinary Differential Equations {II}
   author:

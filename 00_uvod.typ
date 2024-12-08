@@ -5,7 +5,7 @@ poskuša nasloviti bolj praktične vidike numerične matematike, zato so primeri
 mogoče, povezani s problemi s področja fizike, matematičnega modeliranja ali
 računalništva. Za podrobnejši matematični opis uporabljenih metod in izpeljav bralcu priporočam
 učbenika Osnove numerične matematike Bojana Orla @Orel_2004 in Razširjen uvod v numerične metode
-Bora Plestenjaka @plestenjak2015.
+Bora Plestenjaka @Plestenjak2015.
 
 Knjiga je prvenstveno namenjena študentom Fakultete za računalništvo in informatiko
 Univerze v Ljubljani kot gradivo za izvedbo laboratorijskih vaj pri predmetu Numerična matematika.

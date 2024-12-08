@@ -20,7 +20,7 @@ using LinearAlgebra
 A = Vaja04.matrika(Laplace(), 10, 10)
 p1 = spy(A .!= 0, legend=false) # na grafu prikažemo neničelne elemente
 F = lu(A)
-p2 = spy(F.L .!= 0, legend=false) # neničelni elemnti za faktor L
+p2 = spy(F.L .!= 0, legend=false) # neničelni elementi za faktor L
 spy!(p2, F.U .!= 0, legend=false) # in za faktor U
 # napolnitev
 savefig(p1, "img/04-spyA.svg")

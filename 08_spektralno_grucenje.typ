@@ -12,7 +12,7 @@ Laplaceove matrike] podobnostnega grafa podatke
 preslika v prostor, v katerem jih nato preprosteje razvrstimo z algoritmi gručenja.
 Sledili bomo postopku, imenovanemu
 #link("https://en.wikipedia.org/wiki/Spectral_clustering")[spektralno gručenje], kot je
-opisan v @von_luxburg_tutorial_2007.
+opisan v @Von_Luxburg_tutorial_2007.
 
 == Naloga
 

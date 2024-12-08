@@ -302,7 +302,7 @@ S(x)=S_(i)(x)=a_i+b_i (x-x_i)+c_i (x-x_i)^2+d_i (x-x_i)^3, #h(1em)
   x in [x_i,x_(i+1)],
 $
 
-nato pa rešimo sistem linearnih enačb za koeficiente, ki jih izpeljemo iz zahtevanih pogojev (glej @plestenjak2015).
+nato pa rešimo sistem linearnih enačb za koeficiente, ki jih izpeljemo iz zahtevanih pogojev (glej @Plestenjak2015).
 
 Napiši funkcijo `Z = interpoliraj(x, y)`, ki izračuna koeficiente
 polinomov $S_i$ in vrne element tipa `Zlepek`.

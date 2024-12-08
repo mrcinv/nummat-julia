@@ -4,7 +4,7 @@
 = Uvod v programski jezik Julia
 <sec:1-uvod-julia>
 
-V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @bezanson_julia_2017. Zavoljo
+V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @Bezanson_julia_2017. Zavoljo
 učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov] in
 #link("https://docs.julialang.org/en/v1/manual/methods/")[metod, specializiranih glede na signaturo],
@@ -751,7 +751,7 @@ caption: [Vsebina datoteke README.md, ki vsebuje osnove informacije o projektu.]
 
 === PDF poročilo
 
-V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@knuth84).
+V nadaljevanju bomo opisali, kako poročilo pripraviti s paketom #link("https://github.com/JunoLab/Weave.jl")[Weave.jl]. Paket `Weave.jl` omogoča mešanje besedila in programske kode v enem dokumentu: #link("https://en.wikipedia.org/wiki/Literate_programming")[literarnemu programu], kot ga je opisal D. E. Knuth (@Knuth84).
 Za pisanje besedila bomo uporabili format #link("https://en.wikipedia.org/wiki/Markdown")[Markdown], ki ga bomo dodali kot komentarje v kodi.
 
 Za ustvarjanje PDF dokumentov je treba namestiti

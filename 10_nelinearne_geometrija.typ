@@ -287,7 +287,7 @@ caption: [Območja konvergence za gradientni spust (levo) in Newtonovo metodo (d
 
 Problem iskanja minimuma funkcije, ki smo ga reševali, uvrščamo med optimizacijske probleme.
 Študij optimizacijskih problemov je obsežno raziskovalno področje. Več o tem si lahko preberete v knjigi
-@kochenderfer_algorithms_2019.
+@Kochenderfer_algorithms_2019.
 
 == Rešitve
 
