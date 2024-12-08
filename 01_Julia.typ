@@ -1,10 +1,10 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": jlfb, jlf, jl, repl, code_box, pkg, blk, readlines
+#import "Julia.typ": jlfb, jlf, jl, repl, code_box, pkg, blk, readlines
 
 = Uvod v programski jezik Julia
-<sec:1-uvod-julia>
+<sec:1-uvod-Julia>
 
-V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @Bezanson_julia_2017. Zavoljo
+V knjigi bomo uporabili programski jezik #link("https://julialang.org/")[Julia] @Bezanson_Julia_2017. Zavoljo
 učinkovitega izvajanja, uporabe
 #link("https://docs.julialang.org/en/v1/manual/types/")[dinamičnih tipov] in
 #link("https://docs.julialang.org/en/v1/manual/methods/")[metod, specializiranih glede na signaturo],

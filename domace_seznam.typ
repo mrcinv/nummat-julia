@@ -1,5 +1,5 @@
 #import "admonitions.typ": admonition, admtitle, opomba
-#import "julia.typ": code_box, repl, pkg
+#import "Julia.typ": code_box, repl, pkg
 
 #let dobro(naslov, vsebina) = {
   let title = admtitle("Dobro!", naslov)
@@ -14,7 +14,7 @@
 #show link: set text(blue)
 
 = Navodila za pripravo domačih nalog
-<sec:navodila-domace>
+<sec:navodila-domače>
 
 V nadaljevanju so navodila za pripravo domačih nalog v programskem jeziku
 #link("https://julialang.org/")[Julia]. Navodila so uporabna tudi za reševanje v kakšnem drugem programskem jeziku. V tem primeru jih
@@ -198,8 +198,8 @@ Za pripravo povzetka o pokritosti kode uporabimo paket
   using Coverage
   cov = process_folder("DomacaXY")
   pokrite_vrstice, vse_vrstice = get_summary(cov)
-  delez = pokrite_vrstice / vse_vrstice
-  println("Pokritost kode s testi: $(round(delez*100))%.")
+  delež = pokrite_vrstice / vse_vrstice
+  println("Pokritost kode s testi: $(round(delež*100))%.")
   ```
 ]
 

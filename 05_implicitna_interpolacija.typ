@@ -1,4 +1,4 @@
-#import "julia.typ": jlfb, code_box, jl
+#import "Julia.typ": jlfb, code_box, jl
 #import "admonitions.typ": opomba, naloga
 #import "simboli.typ": bx
 

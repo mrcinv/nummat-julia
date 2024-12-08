@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jl, jlfb
+#import "Julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba, naloga
 #import "@preview/fletcher:0.5.2": diagram, node, edge
 #import "simboli.typ": Pm

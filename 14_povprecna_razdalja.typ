@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jlfb, jl
+#import "Julia.typ": code_box, jlfb, jl
 #import "admonitions.typ": opomba, naloga
 
 = Povprečna razdalja med dvema točkama na kvadratu

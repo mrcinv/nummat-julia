@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": jl, code_box, jlfb, repl, blk
+#import "Julia.typ": jl, code_box, jlfb, repl, blk
 
 = Aproksimacija z linearnim modelom
 <aproksimacija-z-linearnim-modelom>

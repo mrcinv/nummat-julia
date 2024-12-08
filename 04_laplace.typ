@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": code_box, jl, jlfb, pkg
+#import "Julia.typ": code_box, jl, jlfb, pkg
 #import "@preview/fletcher:0.5.2": diagram, node, edge
 #import "@preview/cetz:0.3.1" as cetz: canvas, plot
 

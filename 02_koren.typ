@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": jlfb, out, repl, blk, code_box, pkg, jl, readlines
+#import "Julia.typ": jlfb, out, repl, blk, code_box, pkg, jl, readlines
 
 = Računanje kvadratnega korena<sec:02-koren>
 

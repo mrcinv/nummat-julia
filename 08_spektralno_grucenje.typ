@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": jl, jlfb, code_box, repl
+#import "Julia.typ": jl, jlfb, code_box, repl
 = Spektralno razvrščanje v gruče
 <spektralno-razvrščanje-v-gruče>
 

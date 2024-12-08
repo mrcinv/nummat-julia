@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jl, jlfb, repl, blk
+#import "Julia.typ": code_box, jl, jlfb, repl, blk
 #import "admonitions.typ": opomba, naloga
 #import "@preview/metro:0.3.0": unit
 

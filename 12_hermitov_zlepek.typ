@@ -1,4 +1,4 @@
-#import "julia.typ": jl, code_box, jlfb
+#import "Julia.typ": jl, code_box, jlfb
 #import "admonitions.typ": opomba, naloga
 
 = Interpolacija z zlepki<sec:12-zlepki>

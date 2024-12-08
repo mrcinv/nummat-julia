@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": code_box, jlfb, jl, repl, blk
+#import "Julia.typ": code_box, jlfb, jl, repl, blk
 
 = Nelinearne enačbe v geometriji
 

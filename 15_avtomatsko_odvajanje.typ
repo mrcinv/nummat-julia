@@ -1,4 +1,4 @@
-#import "julia.typ": code_box, jlfb, jl, repl, blk
+#import "Julia.typ": code_box, jlfb, jl, repl, blk
 #import "admonitions.typ": opomba, naloga
 
 = Avtomatsko odvajanje z dualnimi števili

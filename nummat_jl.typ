@@ -31,7 +31,7 @@ Copyright © 2024 Založba UL FRI. All rights reserved.
 
 #include "00_uvod.typ"
 
-#include "01_julia.typ"
+#include "01_Julia.typ"
 
 #include "02_koren.typ"
 

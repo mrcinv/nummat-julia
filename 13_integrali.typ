@@ -1,5 +1,5 @@
 #import "admonitions.typ": opomba, naloga
-#import "julia.typ": code_box, jl, jlfb, repl, blk
+#import "Julia.typ": code_box, jl, jlfb, repl, blk
 
 = Integrali
 
