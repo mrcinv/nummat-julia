@@ -172,8 +172,11 @@ Najprej definiramo podatkovni tip, ki opiše linearno kombinacijo RBF @eq:05-rbf
   vaja05("# rbf")
 )
 
-Za podatkovni tip napiši funkcijo #jl("vrednost(x,rbf::RBF)"), ki izračuna vrednost linearne
-kombinacije @eq:05-rbf v dani točki `x` (rešitev @pr:05vrednost). Za primer ustvarimo mešanico
+#naloga[
+  Za podatkovni tip napiši funkcijo #jl("vrednost(x,rbf::RBF)"), ki izračuna vrednost linearne
+  kombinacije @eq:05-rbf v dani točki `x` (rešitev @pr:05vrednost).
+]
+Za primer ustvarimo mešanico
 dveh Gaussovih RBF v točkah $(1, 0)$ in $(2, 1)$ in izračunamo vrednost v točki $(1.5, 1.5)$:
 
 #let s_vaja05(koda) = jlfb(
@@ -197,7 +200,11 @@ Narišimo še graf funkcije dveh spremenljivk, podane z linearno kombinacijo RBF
   caption: [Linearna kombinacija dveh RBF s središčema v točkah $(1, 0)$ in $(2, 1)$ ter funkcijo oblike $phi(r) = exp(-r^2 slash 0.7^2)$]
 )
 
-Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija). Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
+#naloga[
+Rešimo še problem interpolacije. Zapiši funkcijo #jl("interpoliraj(tocke, vrednosti, phi)"), ki poišče koeficiente v linearni kombinaciji @eq:05-rbf in vrne objekt tipa #jl("RBF"), ki dane podatke interpolira (rešitev @pr:05interpolacija).
+]
+
+Funkcijo preskusimo na točkah, ki jih generiramo na parametrično podani krivulji @eq:05-cikloida. Sledimo @turk99 in
 točkam na krivulji dodamo točke znotraj krivulje, v smeri normal, ki poskrbijo, da ne dobimo trivialne rešitve.
 
 #code_box(
