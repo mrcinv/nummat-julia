@@ -3,7 +3,7 @@ using SparseArrays
 
 # lestev
 using Vaja06
-G = krozna_lestev(8)
+G = krožna_lestev(8)
 
 using GraphRecipes, Plots
 graphplot(G, curves=false)
@@ -20,7 +20,7 @@ točke = hcat(hcat(x, y)', zeros(2, 8))
 fix = 1:8
 
 vloži!(G, fix, točke)
-graphplot!(G, x=točke[1, :], y=točke[2, :], curves=false)
+graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 # lestev fiz
 savefig("img/06-lestev-fiz.svg")
 
@@ -48,10 +48,10 @@ vloži!(G, rob, točke)
 graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 scatter!(robne_točke)
 
-using Graphs
 # mreža
+using Graphs
 m, n = 6, 6
-G = grid((m, n), periodic=false)
+G = Graphs.grid((m, n), periodic=false)
 
 # vogali imajo stopnjo 2
 vogali = filter(v -> degree(G, v) <= 2, vertices(G))
@@ -65,7 +65,7 @@ savefig("img/06-mreža.svg")
 
 # krožna
 m, n = 6, 6
-G = grid((m, n), periodic=false)
+G = Graphs.grid((m, n), periodic=false)
 rob = filter(v -> degree(G, v) <= 3, vertices(G))
 urejen_rob = [rob[1]]
 
@@ -82,4 +82,4 @@ točke[:, urejen_rob] = hcat(cos.(t), sin.(t))'
 vloži!(G, urejen_rob, točke)
 graphplot(G, x=točke[1, :], y=točke[2, :], curves=false)
 # krožna
-savefig("img/06-mreza-krog.svg")
+savefig("img/06-mreža-krog.svg")

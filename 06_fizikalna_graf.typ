@@ -156,7 +156,7 @@ ki definira podatkovne tipe in vmesnike za lažje delo z grafi.
 
 #naloga[
 Napiši naslednje funkcije:
-- #jl("krozna_lestev(n)"), ki ustvari graf krožne lestve z $2n$ vozlišči (rešitev @pr:06-lestev).
+- #jl("krožna_lestev(n)"), ki ustvari graf krožne lestve z $2n$ vozlišči (rešitev @pr:06-lestev).
 - #jl("matrika(G::AbstractGraph, sprem)"), ki vrne matriko sistema @eq:06-matrika za
   dani graf `G` in seznam vozlišč `sprem`, ki niso pritrjena (rešitev @pr:06-matrika),
 - #jl("desne_strani(G::AbstractGraph, sprem, koordinate)"), ki vrne vektor desnih strani za
@@ -220,7 +220,7 @@ Sedaj pritrdimo cel rob in ga enakomerno razporedimo po krožnici.
 )
 
 #figure(
-  image("img/06-mreza-krog.svg", width: 60%),
+  image("img/06-mreža-krog.svg", width: 60%),
   caption: [Dvodimenzionalna mreža, vložena s fizikalno metodo. Rob mreže je enakomerno razporejen
     po krožnici.]
 )

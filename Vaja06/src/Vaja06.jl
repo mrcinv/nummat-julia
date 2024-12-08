@@ -2,11 +2,11 @@ module Vaja06
 # lestev
 using Graphs
 """
-    G = krozna_lestev(n)
+    G = krožna_lestev(n)
 
 Ustvari graf krožna lestev z `2n` točkami.
 """
-function krozna_lestev(n)
+function krožna_lestev(n)
   G = SimpleGraph(2 * n)
   # prvi cikel
   for i = 1:n-1
@@ -140,5 +140,5 @@ function cg(A, b; atol=1e-8)
 end
 # cg
 
-export cg, vloži!, krozna_lestev
+export cg, vloži!, krožna_lestev
 end # module Vaja06
