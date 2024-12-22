@@ -115,9 +115,10 @@ using BookUtils
 capture("03_Tridiag_1") do
 # poskus
 Random.seed!(691)
-n = 100_000
-k, p = 10, 0.5
+n = 100000
+k = 10
+p = 0.5
 kp = sum([simuliraj_sprehod(k, p) for _ in 1:n]) / n
-println("Vzorčno povprečje za vzorec velikosti $n je $kp.")
+println("Vzorčno povprečje za $n slučajnih sprehodov je $kp.")
 # poskus
 end

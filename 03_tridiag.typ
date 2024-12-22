@@ -130,7 +130,7 @@ obratno vstavljanje pa se časovna zahtevnost s kvadratne $cal(O)(n^2)$ zmanjša
 $cal(O)(n)$.
 
 #naloga[
-Priredimo splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala
+Priredi splošna algoritma Gaussove eliminacije in obratnega vstavljanja, da bosta upoštevala
 lastnosti tridiagonalnih matrik. Napiši funkcijo `\`:
 
 #code_box[ #jl("function \(T::Tridiag, b::Vector),")]
@@ -343,9 +343,9 @@ caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da 
 število korakov.]
 )
 
-
+#pagebreak()
 Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim
-povprečjem po velikem številu sprehodov.
+povprečjem po velikem številu sprehodov ($n=100 thin 000$):
 
 #demo03("# poskus")
 #code_box(

@@ -107,7 +107,8 @@ Preskusimo funkcijo #jl("koren_heron") na številu 3.
   naslov: "Metoda navadne iteracije in tangentna metoda",
   [Metoda računanja kvadratnega korena s Heronovim obrazcem je poseben primer
   #link("https://sl.wikipedia.org/wiki/Newtonova_metoda")[tangentne metode], ki je poseben
-  primer #link("https://sl.wikipedia.org/wiki/Metoda_navadne_iteracije")[metode fiksne točke]. Obe metodi sta si bomo podrobneje ogledali kasneje.
+  primer #link("https://sl.wikipedia.org/wiki/Metoda_navadne_iteracije")[metode fiksne točke].
+  Obe metodi si bomo podrobneje ogledali kasneje.
   ]
 )
 
