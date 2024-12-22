@@ -344,8 +344,9 @@ caption: [Simulacija z generatorjem naključnih števil. Vzorčno povprečje da 
 )
 
 #pagebreak()
-Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako se rezultat ujema z vzorčnim
-povprečjem po velikem številu sprehodov ($n=100 thin 000$):
+Za $k = 10$ je pričakovano število korakov enako $100$. Poglejmo, kako
+se izračunani rezultat ujema z vrednostjo, ki jo dobimo, če slučajni sprehod velikokrat
+($n=100 thin 000$) ponovimo in izračunamo vzorčno povprečje:
 
 #demo03("# poskus")
 #code_box(
