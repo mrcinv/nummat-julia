@@ -1,7 +1,8 @@
 #import "admonitions.typ": opomba, naloga
 #import "Julia.typ": code_box, jl, jlfb, pkg
-#import "@preview/fletcher:0.5.2": diagram, node, edge
-#import "@preview/cetz:0.3.1" as cetz: canvas, plot
+#import "@preview/fletcher:0.5.5": diagram, node, edge
+#import "@preview/cetz:0.3.2" as cetz: canvas
+#import "@preview/cetz-plot:0.1.1":  plot
 
 = Minimalne ploskve
 <minimalne-ploskve>

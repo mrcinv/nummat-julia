@@ -1,4 +1,5 @@
-#import "@preview/metro:0.3.0": unit
+// #import "@preview/metro:0.3.0": unit
+#let unit(input) = input
 
 = Tretja domača naloga
 

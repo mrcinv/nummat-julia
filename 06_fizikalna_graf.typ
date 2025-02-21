@@ -1,7 +1,7 @@
 #import "Julia.typ": code_box, jl, jlfb
 #import "admonitions.typ": opomba, naloga
-#import "@preview/cetz:0.3.1" as cetz: canvas
-#import "@preview/fletcher:0.5.2" as fletcher: diagram, node, edge
+#import "@preview/cetz:0.3.2" as cetz: canvas
+#import "@preview/fletcher:0.5.5" as fletcher: diagram, node, edge
 
 = Fizikalna metoda za vložitev grafov
 <sec:6-fizikalna-metoda>
@@ -135,7 +135,7 @@ Kakšne posebnosti ima matrika sistema @eq:06-matrika?  Matrika je simetrična i
 Res! Velja namreč $st(i) = |N(i)|$ in zato:
 
 $
-  |a_(i i)| = |N(i)| >= |N(i) sect F^C| =  sum_(j eq.not i) |a_(i j)|.
+  |a_(i i)| = |N(i)| >= |N(i) inter F^C| =  sum_(j eq.not i) |a_(i j)|.
 $
 
 Za sosede fiksnih vozlišč je neenakost stroga, zato je matrika diagonalno dominantna in vsaj za

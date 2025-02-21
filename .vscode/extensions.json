@@ -1,6 +1,6 @@
 {
   "recommendations": [
-    "nvarner.typst-lsp",
-    "julialang.language-julia"
+    "julialang.language-julia",
+    "myriad-dreamin.tinymist"
   ]
 }
