@@ -26,7 +26,12 @@ eksponenta za števila s plavajočo vejico.
 function začetni(x)
   d, ost = divrem(exponent(x), 2)
   m = significand(x) # mantisa
-  koren2ost = (ost == 0) ? 1.0 : 1.4142135623730951 # koren(2^ost)
+  koren2ost =  1.0 
+  if (ost == 1) 
+    koren2ost = 1.4142135623730951 # koren(2)
+  elseif (ost == -1)
+    koren2ost = 0.7071067811865475 # 1/koren(2)
+  end
   koren2e = ldexp(koren2ost, d) # koren(2^e) = koren(2^ost) * 2^d
   return (0.5 + m / 2) * koren2e
 end

@@ -44,14 +44,14 @@ end
 
 # koren6
 using Plots
-plot(sqrt, 0, 10, label="y=sqrt(x)")
-plot!(x -> 0.5 + x / 2, 0, 10, label="y=(1 + x)/2")
+plot(sqrt, 0, 10, label="\$y=\\sqrt{x}\$")
+plot!(x -> 0.5 + x / 2, 0, 10, label="\$y=\\frac{1}{2} + \\frac{x}{2}\$")
 # koren6
 savefig("img/02_koren_tangenta.svg")
 
 # koren7
-plot(sqrt, 0, 20, label="y=sqrt(x)")
-plot!(Vaja02.začetni, 0, 20, label="y = začetni(x)")
+plot(sqrt, 0, 20, label="\$y=\\sqrt{x}\$")
+plot!(Vaja02.začetni, 0, 20, label="\$y = začetni(x)\$")
 # koren7
 savefig("img/02_koren_začetni.svg")
 
