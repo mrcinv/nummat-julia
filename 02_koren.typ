@@ -243,7 +243,10 @@ $
   sqrt(x) approx (1/2 + m/2) dot 2^d dot cases(1","& quad o = 0",", sqrt(2)","& quad o=1.)
 $
 
-Potenco števila $2^n$ izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. V Julii za levi premik uporabimo operator #jl("<<"), s funkcijama #jl("exponent") in #jl("significand") pa dobimo eksponent in mantiso števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
+Potenco števila $2^n$ izračunamo s premikom binarnega zapisa števila $1$ v levo za $n$ mest. Julia
+ima fukcijo #jl("ldexp(x, n)"), ki uporabi premik eksponenta in učinkovito pomnoži $x$ s potenco 
+$2^n$. Funkciji #jl("exponent") in #jl("significand") pa vrneta eksponent in mantiso
+števila s plavajočo vejico. Tako lahko zapišemo naslednjo funkcijo za začetni približek:
 
 #figure(
     code_box(

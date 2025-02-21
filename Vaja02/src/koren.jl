@@ -24,15 +24,11 @@ Izračunaj začetni približek za kvadratni koren števila `x` z uporabo
 eksponenta za števila s plavajočo vejico. 
 """
 function začetni(x)
-  d, ost = divrem(abs(exponent(x)), 2)
+  d, ost = divrem(exponent(x), 2)
   m = significand(x) # mantisa
-  koren2ost = (ost == 0) ? 1 : 1.4142135623730951 # koren(2^ost)
-  koren2e = (1 << d) * koren2ost # koren(2^e)
-  if x > 1
-    return (0.5 + m / 2) * koren2e
-  else
-    return (0.5 + m / 2) / koren2e
-  end
+  koren2ost = (ost == 0) ? 1.0 : 1.4142135623730951 # koren(2^ost)
+  koren2e = ldexp(koren2ost, d) # koren(2^e) = koren(2^ost) * 2^d
+  return (0.5 + m / 2) * koren2e
 end
 # začetni
 
