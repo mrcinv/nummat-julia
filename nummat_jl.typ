@@ -9,25 +9,27 @@
   doc,
 )
 #rect[
-Kataložni zapis o publikaciji (CIP)
+Kataložni zapis o publikaciji (CIP) pripravili v Narodni in univerzitetni knjižnici
+v Ljubljani\
+#link("https://cobiss.si/")[COBISS.SI]-ID=#link("https://plus.cobiss.net/cobiss/si/sl/bib/218309379")[218309379]
+
+ISBN 978-961-7059-16-8 (PDF)
 ]
 
 #v(1fr)
 
-Digitalna izdaja je prosto dostopna\
-This digital publication is freely available\
-http://zalozba.fri.uni-lj.si/vuk2024.pdf\
+Copyright © 2025 Založba UL FRI. All rights reserved.
+
+Elektronska izdaja knjige je na voljo na:\
+URL: http://zalozba.fri.uni-lj.si/vuk2024.pdf\
 #let doi(id) = link("https://doi.org/" + id, id)
-DOI: #doi("XXXX/XXXX")
+DOI: #doi("10.51939/0005")\
+Datum izdelave PDF: #datetime.today().display("[day]. [month]. [year]")
 
-Recenzenta / Reviewers:\
-prof. dr. Emil Žagar in doc. dr. Aljaž Zalar
-
+Recenzenta: doc. dr. Aljaž Zalar, prof. dr. Emil Žagar\ 
 Založnik: Založba UL FRI, Ljubljana\
 Izdajatelj: UL Fakulteta za računalništvo in informatiko, Ljubljana\
 Urednik: prof. dr. Franc Solina
-
-Copyright © 2024 Založba UL FRI. All rights reserved.
 
 #include "00_uvod.typ"
 
