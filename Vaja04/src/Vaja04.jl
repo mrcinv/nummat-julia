@@ -106,7 +106,6 @@ function korak_jacobi(U0)
   # spremenimo le notranje vrednosti
   for i = 2:m-1
     for j = 2:n-1
-      # Jacobi
       U[i, j] = (U0[i+1, j] + U0[i, j+1] + U0[i-1, j] + U0[i, j-1]) / 4
     end
   end
@@ -127,7 +126,6 @@ function korak_gs(U0)
   # spremenimo le notranje vrednosti
   for i = 2:m-1
     for j = 2:n-1
-      # Gauss Seidel
       U[i, j] = (U[i+1, j] + U[i, j+1] + U[i-1, j] + U[i, j-1]) / 4
     end
   end

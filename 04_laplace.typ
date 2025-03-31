@@ -586,8 +586,8 @@ en korak Gauss-Seidlove iteracije podan s preprosto zanko.
 
 #naloga[
 Napišite še funkciji #jl("korak_jacobi(U0)") in  #jl("korak_sor(U0, omega)"), ki izračunata
-naslednji približek za Jacobijevo in SOR iteracijo za sistem za Laplaceovo enačbo. Nato napišite še
-funkcijo
+naslednji približek za Jacobijevo in SOR iteracijo za sistem za Laplaceovo enačbo. 
+Nato napišite funkcijo
 
 #code_box(jl("x, k = iteracija(korak, x0),"))
 
