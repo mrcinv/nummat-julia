@@ -6,10 +6,7 @@
 Pomemben del učenja je samostojno reševanje nalog. Naloge v tem poglavju
 so razdeljene v tri sklope. Prvi vsebuje naloge, ki zahtevajo izdelavo rešitve
 po točno določenih specifikacijah. Naloge iz drugih dveh sklopov so bolj odprtega
-tipa in zahtevajo več samostojnosti pri reševanju. Priporočam, da
-iz vsakega sklopa rešiš po eno nalogo in da naloge rešite v obliki
-paketa za Julio z vsem, kar sodi zraven (glej @sec:1-uvod-Julia in
-@sec:navodila-domače).
+tipa in zahtevajo več samostojnosti pri reševanju. Iz vsakega sklopa reši po eno nalogo. Naloge reši v obliki paketa za Julio z vsem, kar sodi zraven (glej @sec:1-uvod-Julia in @sec:navodila-domače).
 
 Namen nalog ni, da na internetu poiščeš optimalen algoritem in ga
 implementiraš, ampak da uporabiš lastno znanje, čeprav na koncu rešitev
