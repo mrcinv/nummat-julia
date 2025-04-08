@@ -226,6 +226,11 @@ Težava je, ker ima Laplaceova matrika grafa tudi lastno vrednost $0$, zato meto
 gradientov ne konvergira, če jo uporabimo na njej. To lahko rešimo s preprostim
 premikom Laplaceove matrike za $epsilon I$.
 
+#naloga[ Preveri ali funkcija #jl("cg") (@pr:06-cg) deluje za reševanje sistema linearnih enačb 
+$A X =B$, v katerem sta $X$ in $B$ tudi matriki. Če ne deluje za matrične enačbe,
+jo ustrezno priredi.
+]
+
 == Premik
 
 Inverzna iteracija @eq:9-inviter konvergira k lastnemu vektorju za najmanjšo lastno vrednost.
@@ -271,7 +276,6 @@ QR razcepom]
 in #emph[metoda konjugiranih gradientov].
 ]
 
-#pagebreak()
 == Rešitve
 
 #let vaja8(koda) = code_box(jlfb("Vaja08/src/Vaja08.jl", koda))

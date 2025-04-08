@@ -1,5 +1,6 @@
 # gauss mix
 using Plots
+
 using Random
 m = 100;
 Random.seed!(12)
@@ -39,11 +40,12 @@ scatter!(x_nov[201:300], y_nov[201:300], label="\$\\mu=(0, 1)\$")
 savefig("img/08_vlozitev.svg")
 
 using BookUtils
+using Vaja06
 capture("08_inviterqr") do
   # inviter
   A = L + 0.1 * I # premik, da dobimo pozitivno definitno matriko
   n = size(L, 1)
   # poiščemo prvih 10 lastnih vektorjev
-  X, lambda = inviterqr(B -> Vaja08.cgmat(A, B), ones(n, 10), 1000)
+  X, lambda = inviterqr(B -> Vaja06.cg(A, B), ones(n, 10), 1000)
   # inviter
 end

@@ -103,7 +103,7 @@ pa vrednosti -1 ali 0, odvisno, ali sta indeksa povezana v grafu ali ne.
 laplace(A) = spdiagm(vec(sum(A, dims=2))) - A
 # laplace
 
-# resi cg
+# cgmat
 import Vaja06: cg
 """
   X = cgmat(A, B)
@@ -118,5 +118,5 @@ function cgmat(A, B)
   end
   return X
 end
-# resi cg
+# cgmat
 end # module Vaja08
