@@ -154,7 +154,7 @@ rešitvam:
 #code_box[
   #repl(repl9("# ničle 1"), read("out/09_nicle_1.out"))
   #repl(repl9("# ničle 2"), read("out/09_nicle_2.out"))
-  #repl(repl9("# ničle 2"), read("out/09_nicle_2.out"))
+  #repl(repl9("# ničle 3"), read("out/09_nicle_3.out"))
 ]
 
 == Konvergenčno območje
