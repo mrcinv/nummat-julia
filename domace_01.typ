@@ -23,8 +23,7 @@ matriki $I$ pa so shranjeni indeksi stolpcev teh neničelnih elementov.
 Za podatkovni tip `RedkaMatrika` definiraj metode za naslednje
 funkcije:
 
-- indeksiranje: `Base.getindex`,`Base.setindex!`,`Base.firstindex` in
-  `Base.lastindex`
+- indeksiranje: `Base.getindex`,`Base.setindex!` in `Base.size`,
 - množenje z desne `Base.*` z vektorjem
 
 Več informacij o
@@ -103,7 +102,7 @@ Napiši funkcijo `Q, R = qr(H)`, ki izvede QR razcep matrike `H` tipa
 trikotna matrika enakih dimenzij kot `H`, v `Q` pa naj bo matrika tipa
 `Givens`.
 
-Podatkovni tip `Givens` definirajte sami tako, da hrani le zaporedje
+Podatkovni tip `Givens` definiraj sam tako, da hrani le zaporedje
 rotacij, ki se med razcepom izvedejo in indekse vrstic, na katere te
 rotacije delujejo. Posamezno rotacijo predstavite s parom
 
@@ -112,8 +111,7 @@ $
 $
 
 kjer je $alpha$ kot rotacije na posameznem koraku (kota $alpha$ ni treba računati). Za tip
-`Givens` definiraj še
-množenje `Base.*` z vektorji in matrikami.
+`Givens` definiraj še množenje `Base.*` z vektorji in matrikami.
 
 Uporabi QR razcep za QR iteracijo zgornje Hessenbergove matrike.
 Napišite funkcijo `lastne_vrednosti, lastni_vektorji = eigen(H)`, ki
@@ -133,14 +131,13 @@ Definiraj podatkovni tip `SimTridiag` za simetrično
 tridiagonalno matriko, ki hrani glavno in stransko diagonalo matrike. Za
 tip `SimTridiag` definiraj metode za naslednje funkcije:
 
-- indeksiranje: `Base.getindex`, `Base.setindex!`, `Base.firstindex` in
-  `Base.lastindex`,
+- indeksiranje: `Base.getindex`, `Base.setindex!` in `Base.size`,
 - množenje z desne `Base.*` z vektorjem ali matriko.
 
 Časovna zahtevnost omenjenih funkcij naj bo linearna.
 Napiši funkcijo `Q, R = qr(T)`, ki izvede QR razcep matrike `T` tipa
 `Tridiag` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
-trikotna tridiagonalna matrika tipa `ZgornjeTridiag`, v `Q` pa naj
+trikotna štiridiagonalna matrika tipa `ZgornjeTridiag`, v `Q` pa naj
 bo matrika tipa `Givens`.
 
 Definiraj podatkovna tipa `ZgornjeTridiag` in `Givens`
