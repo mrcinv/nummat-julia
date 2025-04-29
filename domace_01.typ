@@ -136,8 +136,8 @@ tip `SimTridiag` definiraj metode za naslednje funkcije:
 
 Časovna zahtevnost omenjenih funkcij naj bo linearna.
 Napiši funkcijo `Q, R = qr(T)`, ki izvede QR razcep matrike `T` tipa
-`Tridiag` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
-trikotna štiridiagonalna matrika tipa `ZgornjeTridiag`, v `Q` pa naj
+`SimTridiag` z Givensovimi rotacijami. Matrika `R` naj bo zgornje
+trikotna matrika s tremi neničelnimi diagonalami tipa `ZgornjeTridiag`, v `Q` pa naj
 bo matrika tipa `Givens`.
 
 Definiraj podatkovna tipa `ZgornjeTridiag` in `Givens`
